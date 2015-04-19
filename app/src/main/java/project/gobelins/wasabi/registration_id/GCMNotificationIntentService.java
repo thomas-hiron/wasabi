@@ -1,4 +1,4 @@
-package project.gobelins.wasabi;
+package project.gobelins.wasabi.registration_id;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -10,6 +10,9 @@ import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
+import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 
 public class GCMNotificationIntentService extends IntentService
 {
@@ -30,32 +33,30 @@ public class GCMNotificationIntentService extends IntentService
 
         String messageType = gcm.getMessageType(intent);
 
-        if (!extras.isEmpty())
+        if(!extras.isEmpty())
         {
-            if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
-                    .equals(messageType))
-            {
-                sendNotification("Send error: " + extras.toString());
-            }
-            else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED
-                    .equals(messageType))
-            {
-                sendNotification("Deleted messages on server: "
-                        + extras.toString());
-            }
-            else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE
-                    .equals(messageType))
-            {
-                sendNotification(extras.getString(ApplicationConstants.MSG_KEY));
-            }
+            if(GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType))
+                sendNotification("Error", extras.toString());
+            else if(GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType))
+                sendNotification("Deleted messages on server", extras.toString());
+            else if(GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType))
+                sendNotification(extras.getString(RegistrationIdManager.TITLE_KEY), extras.getString(RegistrationIdManager.MSG_KEY));
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
     }
 
-    private void sendNotification(String msg)
+    /**
+     * Envoie la notification
+     *
+     * @param title Le titre
+     * @param msg   Le message
+     */
+    private void sendNotification(String title, String msg)
     {
+        /* On passe des variables au clic sur la notification */
         Intent resultIntent = new Intent(this, Wasabi.class);
         resultIntent.putExtra("msg", msg);
+        resultIntent.putExtra("title", title);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                 resultIntent, PendingIntent.FLAG_ONE_SHOT);
 
@@ -65,7 +66,7 @@ public class GCMNotificationIntentService extends IntentService
         mNotificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         mNotifyBuilder = new NotificationCompat.Builder(this)
-                .setContentTitle("Nouveau message")
+                .setContentTitle(title)
                 .setContentText(msg)
                 .setSmallIcon(R.drawable.ic_launcher);
         // Set pending intent

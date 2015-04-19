@@ -1,4 +1,4 @@
-package project.gobelins.wasabi;
+package project.gobelins.wasabi.registration_id;
 
 import android.app.Activity;
 import android.content.ComponentName;
