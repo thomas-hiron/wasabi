@@ -87,7 +87,7 @@ public class RegistrationIdManager
      */
     private String getRegistrationId()
     {
-        final SharedPreferences prefs = getGCMPreferences(context);
+        final SharedPreferences prefs = getGCMPreferences();
         String registrationId = prefs.getString(PROPERTY_REG_ID, "");
         if(registrationId.isEmpty())
         {
@@ -98,7 +98,7 @@ public class RegistrationIdManager
         // since the existing registration ID is not guaranteed to work with
         // the new app version.
         int registeredVersion = prefs.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
-        int currentVersion = getAppVersion(context);
+        int currentVersion = getAppVersion();
         if(registeredVersion != currentVersion)
         {
             Log.i(Wasabi.TAG, "App version changed.");
@@ -107,7 +107,7 @@ public class RegistrationIdManager
         return registrationId;
     }
 
-    private SharedPreferences getGCMPreferences(Context context)
+    private SharedPreferences getGCMPreferences()
     {
         // This sample app persists the registration ID in shared preferences, but
         // how you store the registration ID in your app is up to you.
@@ -149,7 +149,7 @@ public class RegistrationIdManager
                     // message using the 'from' address in the message.
 
                     // Persist the registration ID - no need to register again.
-                    storeRegistrationId(context, regid);
+                    storeRegistrationId(regid);
                 }
                 catch(IOException ex)
                 {
@@ -172,10 +172,15 @@ public class RegistrationIdManager
         // TODO
     }
 
-    private void storeRegistrationId(Context context, String regId)
+    /**
+     * Enregistre le registration_id dans les préférences
+     *
+     * @param regId Le registration_id
+     */
+    private void storeRegistrationId(String regId)
     {
-        final SharedPreferences prefs = getGCMPreferences(context);
-        int appVersion = getAppVersion(context);
+        final SharedPreferences prefs = getGCMPreferences();
+        int appVersion = getAppVersion();
         Log.i(Wasabi.TAG, "Saving regId on app version " + appVersion);
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, regId);
@@ -183,7 +188,12 @@ public class RegistrationIdManager
         editor.apply();
     }
 
-    private static int getAppVersion(Context context)
+    /**
+     * Retourne la version de l'application
+     *
+     * @return
+     */
+    private int getAppVersion()
     {
         try
         {
