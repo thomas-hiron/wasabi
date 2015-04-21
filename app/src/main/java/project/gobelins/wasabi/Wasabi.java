@@ -1,24 +1,38 @@
 package project.gobelins.wasabi;
 
-import android.app.Activity;
 import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
 
-import project.gobelins.wasabi.notifications.RegistrationIdManager;
+import project.gobelins.wasabi.fragments.NotificationFragment;
+import project.gobelins.wasabi.viewPager.MyViewPager;
+import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
-public class Wasabi extends Activity
+public class Wasabi extends FragmentActivity
 {
     public final static String TAG = "Wasabi";
+
+    private MyViewPager mViewPager;
+    private ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_wasabi);
 
-        RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
-        registrationIdManager.getRegistrationID();
+        /* Création du viewPager */
+        mViewPager = new MyViewPager(this);
+        mViewPager.setId(R.id.appContainer);
+
+        /* Ajout de l'adapter au viewPager */
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+        mViewPagerAdapter.add(new NotificationFragment());
+        mViewPagerAdapter.add(new NotificationFragment());
+        mViewPagerAdapter.add(new NotificationFragment());
+        mViewPager.setAdapter(mViewPagerAdapter);
+
+        setContentView(mViewPager);
     }
 
     @Override
