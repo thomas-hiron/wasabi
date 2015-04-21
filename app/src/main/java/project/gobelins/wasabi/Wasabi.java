@@ -5,7 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.WindowManager;
 
-import project.gobelins.wasabi.registration_id.RegistrationIdManager;
+import project.gobelins.wasabi.notifications.RegistrationIdManager;
 
 public class Wasabi extends Activity
 {

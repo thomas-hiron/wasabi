@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.registration_id;
+package project.gobelins.wasabi.notifications;
 
 import android.app.IntentService;
 import android.app.Notification;
