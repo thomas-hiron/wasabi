@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.WindowManager;
 
 import project.gobelins.wasabi.fragments.NotificationFragment;
+import project.gobelins.wasabi.notifications.RegistrationIdManager;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
@@ -20,6 +21,9 @@ public class Wasabi extends FragmentActivity
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
+
+        RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
+        registrationIdManager.getRegistrationID();
 
         /* Création du viewPager */
         mViewPager = new MyViewPager(this);

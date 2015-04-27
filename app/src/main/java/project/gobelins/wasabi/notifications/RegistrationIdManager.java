@@ -12,9 +12,15 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.httpRequests.AsyncPostRequests;
 
 /**
  * Created by ThomasHiron on 19/04/2015.
@@ -142,7 +148,7 @@ public class RegistrationIdManager
                     // so it can use GCM/HTTP or CCS to send messages to your app.
                     // The request to your server should be authenticated if your app
                     // is using accounts.
-                    sendRegistrationIdToBackend();
+                    sendRegistrationIdToBackend(regid);
 
                     // For this demo: we don't need to send it because the device
                     // will send upstream messages to a server that echo back the
@@ -166,10 +172,18 @@ public class RegistrationIdManager
 
     /**
      * Envoi le registration_id au serveur
+     * @param regid registration_id
      */
-    private void sendRegistrationIdToBackend()
+    private void sendRegistrationIdToBackend(String regid)
     {
-        // TODO
+        /* Construction des données POST */
+        List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
+        nameValuePairs.add(new BasicNameValuePair("registration_id", regid));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                "http://wasabi.hiron.me/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/notifications/register-id"
+        );
     }
 
     /**
