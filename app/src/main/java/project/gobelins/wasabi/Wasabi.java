@@ -1,12 +1,18 @@
 package project.gobelins.wasabi;
 
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import project.gobelins.wasabi.fragments.NotificationFragment;
 import project.gobelins.wasabi.notifications.RegistrationIdManager;
+import project.gobelins.wasabi.sqlite.ContentProvider;
+import project.gobelins.wasabi.sqlite.tables.Notifications;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
@@ -22,6 +28,7 @@ public class Wasabi extends FragmentActivity
     {
         super.onCreate(savedInstanceState);
 
+        /* On envoie le registration_id si première connexion */
         RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
         registrationIdManager.getRegistrationID();
 
@@ -36,7 +43,29 @@ public class Wasabi extends FragmentActivity
         mViewPagerAdapter.add(new NotificationFragment());
         mViewPager.setAdapter(mViewPagerAdapter);
 
+        /* Affichage du viewPager */
         setContentView(mViewPager);
+
+        /* Les valeurs à insérer */
+//        ContentValues values = new ContentValues();
+//
+//        /* Ajout des valeurs */
+//        values.put(Notifications.NOTIFICATIONS_READ, 0);
+//        values.put(Notifications.NOTIFICATIONS_TYPE, 2);
+//
+//        getContentResolver().insert(Notifications.CONTENT_URI_NOTIFICATIONS, values);
+
+//        Cursor c = getContentResolver().query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, null, null, null);
+//
+//        if(c.moveToFirst())
+//        {
+//            do
+//            {
+//                Log.v("test", c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_READ))+"Read");
+//                Log.v("test", c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_TYPE))+"Type");
+//            }
+//            while(c.moveToNext());
+//        }
     }
 
     @Override

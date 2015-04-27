@@ -43,6 +43,12 @@
             android:exported="false">
         </service>
 
+        <provider
+            android:exported="false"
+            android:name=".sqlite.ContentProvider"
+            android:authorities="project.gobelins.wasabi.provider.Wasabi">
+        </provider>
+
     </application>
 
 </manifest>
