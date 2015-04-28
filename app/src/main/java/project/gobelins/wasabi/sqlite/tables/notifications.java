@@ -14,6 +14,7 @@ public class Notifications
     public static final String NOTIFICATIONS_ID = "id"; /* L'id */
     public static final String NOTIFICATIONS_READ = "read"; /* Si la notif a été lue */
     public static final String NOTIFICATIONS_TYPE = "type"; /* Permet de savoir comment afficher la notif (playlist,...) */
+    public static final String NOTIFICATIONS_RECEIVED_DATE = "received_date"; /* La date de réception */
 
     public static final String TABLE_NOTIFICATIONS = "notifications";
 
@@ -24,6 +25,7 @@ public class Notifications
             "(" +
             NOTIFICATIONS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             NOTIFICATIONS_READ + " INTEGER," +
-            NOTIFICATIONS_TYPE + " INTEGER" +
+            NOTIFICATIONS_TYPE + " INTEGER," +
+            NOTIFICATIONS_RECEIVED_DATE + " TEXT" +
             ")";
 }

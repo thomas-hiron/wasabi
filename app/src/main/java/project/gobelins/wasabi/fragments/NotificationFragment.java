@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
 import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
 
@@ -37,12 +38,12 @@ public class NotificationFragment extends Fragment
      * @param type Le type de la notification
      * @return Un nouveau fragment
      */
-    public static NotificationFragment newInstance(int type)
+    public static NotificationFragment newInstance(Notification notification)
     {
         NotificationFragment myFragment = new NotificationFragment();
 
         Bundle args = new Bundle();
-        args.putInt("type", type);
+        args.putParcelable("notification", notification);
         myFragment.setArguments(args);
 
         return myFragment;
@@ -60,9 +61,12 @@ public class NotificationFragment extends Fragment
         /* Inflate the layout for this fragment */
         View view = inflater.inflate(R.layout.fragment_notification, container, false);
 
+        /* Récupération de la notification */
+        Notification notification = getArguments().getParcelable("notification");
+
         /* Changement du texte */
         TextView textView = (TextView) view.findViewById(R.id.type);
-        textView.setText(getArguments().getInt("type", -1) + "");
+        textView.setText(notification.getId()+ " " + notification.isRead() + " " + notification.getType() + " " + notification.getDate().toString());
 
         /* Ajout du listener sur le bouton next */
         Button next = (Button) view.findViewById(R.id.next);
