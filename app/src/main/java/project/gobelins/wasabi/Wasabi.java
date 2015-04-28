@@ -1,9 +1,11 @@
 package project.gobelins.wasabi;
 
 import android.database.Cursor;
+import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
@@ -48,7 +50,11 @@ public class Wasabi extends FragmentActivity
 //
 //        getContentResolver().insert(Notifications.CONTENT_URI_NOTIFICATIONS, values);
 
-        Cursor c = getContentResolver().query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, null, null, null);
+        /* Tous les messages non lus */
+        String readCondition = Notifications.NOTIFICATIONS_READ + " = 0";
+        String sortOrder = Notifications.NOTIFICATIONS_ID + " DESC";
+
+        Cursor c = getContentResolver().query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, readCondition, null, sortOrder);
 
         if(c.moveToFirst())
         {

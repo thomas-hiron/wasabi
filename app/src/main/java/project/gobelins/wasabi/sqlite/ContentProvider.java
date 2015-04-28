@@ -61,7 +61,7 @@ public class ContentProvider extends android.content.ContentProvider
             case NOTIFICATIONS:
 
                 queryBuilder.setTables(Notifications.TABLE_NOTIFICATIONS);
-                sortOrder = Notifications.NOTIFICATIONS_ID;
+                sortOrder = sortOrder == null ? Notifications.NOTIFICATIONS_ID : sortOrder;
 
                 break;
 
