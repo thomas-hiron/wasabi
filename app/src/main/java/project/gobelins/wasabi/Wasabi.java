@@ -1,21 +1,21 @@
 package project.gobelins.wasabi;
 
 import android.database.Cursor;
-import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import project.gobelins.wasabi.fragments.NotificationFragment;
+import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
+import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
 import project.gobelins.wasabi.notifications.RegistrationIdManager;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
-public class Wasabi extends FragmentActivity
+public class Wasabi extends FragmentActivity implements OnNextNotificationListener, OnPreviousNotificationListener
 {
     public final static String TAG = "Wasabi";
 
@@ -73,7 +73,11 @@ public class Wasabi extends FragmentActivity
         mViewPager.setAdapter(mViewPagerAdapter);
     }
 
-
+    /**
+     * On cache la navigation bar et la notification bare
+     *
+     * @param hasFocus
+     */
     @Override
     public void onWindowFocusChanged(boolean hasFocus)
     {
@@ -90,5 +94,25 @@ public class Wasabi extends FragmentActivity
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+    }
+
+    /**
+     * Au clic sur le bouton notification suivanten on déplace le viewPager
+     */
+    @Override
+    public void onNextNotificationListener()
+    {
+        int nextItem = mViewPager.getCurrentItem() + 1;
+        mViewPager.setCurrentItem(nextItem, true);
+    }
+
+    /**
+     * Au clic sur le bouton notification suivante
+     */
+    @Override
+    public void onPreviousNotificationListener()
+    {
+        int prevItem = mViewPager.getCurrentItem() - 1;
+        mViewPager.setCurrentItem(prevItem, true);
     }
 }

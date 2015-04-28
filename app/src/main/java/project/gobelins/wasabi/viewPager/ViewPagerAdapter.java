@@ -1,11 +1,15 @@
 package project.gobelins.wasabi.viewPager;
 
+import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+
+import project.gobelins.wasabi.fragments.NotificationFragment;
 
 /**
  * Created by ThomasHiron on 16/10/2014.
@@ -30,19 +34,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
     public void add(Fragment fragment)
     {
         mList.add(fragment);
-    }
-
-    /**
-     * Supprime le dernier élément de la liste
-     */
-    public ViewPagerAdapter removeLast()
-    {
-        /* On supprime le dernier s'il y a plus d'un élément */
-        if(mList.size() > 1)
-            mList.remove(getCount() - 1);
-
-        /* Retour de l'instance */
-        return this;
     }
 
     @Override
