@@ -1,24 +1,17 @@
 package project.gobelins.wasabi;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
-import java.util.Date;
+import java.util.ArrayList;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fragments.NotificationFragment;
 import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
 import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
 import project.gobelins.wasabi.notifications.RegistrationIdManager;
-import project.gobelins.wasabi.sqlite.tables.Notifications;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
@@ -36,98 +29,49 @@ public class Wasabi extends FragmentActivity implements OnNextNotificationListen
     {
         super.onCreate(savedInstanceState);
 
-        /* Instanciation du manager des notifs */
-        mNotificationsManager = new NotificationsManager();
+        /* Instanciation du manager des notifications */
+        mNotificationsManager = new NotificationsManager(getContentResolver());
 
         /* On envoie le registration_id si première connexion */
         RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
         registrationIdManager.getRegistrationID();
 
-        /* Création du viewPager */
-        mViewPager = new MyViewPager(this);
-        mViewPager.setId(R.id.appContainer);
+        /* Récupération des notifications */
+        ArrayList<Notification> notifications = mNotificationsManager.getNotifications();
 
-        /* Ajout de l'adapter au viewPager */
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        /* Affichage du viewPager */
-        setContentView(mViewPager);
-
-        /* Les valeurs à insérer */
-        ContentValues values = new ContentValues();
-
-        /* Ajout de la date */
-        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT);
-        Date date = new Date();
-
-        /* Ajout des valeurs */
-        values.put(Notifications.NOTIFICATIONS_READ, 0);
-        values.put(Notifications.NOTIFICATIONS_TYPE, 5);
-        values.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, dateFormat.format(date));
-
-        /* Insertion des données */
-//        getContentResolver().insert(Notifications.CONTENT_URI_NOTIFICATIONS, values);
-
-
-
-        ContentResolver contentResolver = getContentResolver();
-
-        /* Insertion de la nouvelle valeur modifiée */
-        ContentValues contentValues = new ContentValues(1);
-        contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
-
-        /* La condition d'update */
-//        String condition = Notifications.NOTIFICATIONS_ID + " = " + notification.getId();
-
-        /* Exécution de la requête */
-//        contentResolver.update(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues, null, null);
-
-        /* Tous les messages non lus ou date égale à aujourd'hui */
-        String readCondition = Notifications.NOTIFICATIONS_READ + " = 0 OR " + Notifications.NOTIFICATIONS_RECEIVED_DATE + " = '" + dateFormat.format(date) + "'";
-        String sortOrder = Notifications.NOTIFICATIONS_ID + " DESC";
-
-        Cursor c = getContentResolver().query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, readCondition, null, sortOrder);
-
-        if(c.moveToFirst())
+        /* On a des notifications */
+        if(notifications.size() > 0)
         {
-            do
+            /* Création du viewPager */
+            mViewPager = new MyViewPager(this);
+            mViewPager.setId(R.id.appContainer);
+
+            /* Ajout de l'adapter au viewPager */
+            mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+            /* Ajout des notifications */
+            for(Notification notification : notifications)
             {
-                /* Instanciation de la notification */
-                Notification notification = new Notification();
-                notification.setId(c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_ID)));
-                notification.setRead(c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_READ)));
-                notification.setType(c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_TYPE)));
-                notification.setDate(c.getString(c.getColumnIndex(Notifications.NOTIFICATIONS_RECEIVED_DATE)));
-
-                /* Ajout de la notif au manager */
-                mNotificationsManager.add(notification);
-
-                /* Instanciation du fragment */
                 NotificationFragment notificationFragment = NotificationFragment.newInstance(notification);
-
                 mViewPagerAdapter.add(notificationFragment);
             }
-            while(c.moveToNext());
-        }
 
-        /* Ajout de l'adapter */
-        mViewPager.setAdapter(mViewPagerAdapter);
+            /* Ajout de l'adapter */
+            mViewPager.setAdapter(mViewPagerAdapter);
 
-        /* Des notifs, on traite les boutons suivant/précédent et on marque la première comme lue */
-        if(mViewPagerAdapter.getCount() > 0)
-        {
             /* On cache le bouton précédent du premier fragment et suivant du dernier */
             ((NotificationFragment) mViewPagerAdapter.getItem(0)).setHidePrevious(true);
             ((NotificationFragment) mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1)).setHideNext(true);
 
             /* On marque le premier comme lu */
-            mNotificationsManager.markRead(this, 0);
+            mNotificationsManager.markRead(0);
+
+            /* Affichage du viewPager */
+            setContentView(mViewPager);
         }
         /* Aucune notification */
         else
-        {
-            int yeah = 0;
-        }
+            setContentView(R.layout.activity_wasabi);
     }
 
     /**
@@ -166,7 +110,7 @@ public class Wasabi extends FragmentActivity implements OnNextNotificationListen
         Notification notification = mNotificationsManager.get(nextItem);
 
         if(!notification.isRead())
-            mNotificationsManager.markRead(this, nextItem);
+            mNotificationsManager.markRead(nextItem);
     }
 
     /**
