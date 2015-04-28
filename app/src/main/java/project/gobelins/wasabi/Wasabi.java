@@ -71,6 +71,10 @@ public class Wasabi extends FragmentActivity implements OnNextNotificationListen
         }
 
         mViewPager.setAdapter(mViewPagerAdapter);
+
+        /* On cache le bouton précédent du premier fragment et suivant du dernier */
+        ((NotificationFragment) mViewPagerAdapter.getItem(0)).setHidePrevious(true);
+        ((NotificationFragment) mViewPagerAdapter.getItem(mViewPagerAdapter.getCount()-1)).setHideNext(true);
     }
 
     /**
