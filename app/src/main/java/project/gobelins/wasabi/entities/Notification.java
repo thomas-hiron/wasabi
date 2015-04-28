@@ -9,6 +9,9 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import project.gobelins.wasabi.NotificationsManager;
+import project.gobelins.wasabi.Wasabi;
+
 /**
  * Created by ThomasHiron on 28/04/2015.
  */
@@ -31,7 +34,7 @@ public class Notification implements Parcelable
 
     public void setDate(String pDate)
     {
-        DateFormat format = new SimpleDateFormat("yyyy-MM-dd", Locale.FRANCE);
+        DateFormat format = new SimpleDateFormat(NotificationsManager.DATE_FORMAT, Locale.FRANCE);
         Date date;
         try
         {
@@ -100,7 +103,7 @@ public class Notification implements Parcelable
 
         /* La date */
         String dateString = in.readString();
-        DateFormat dateFormat = new SimpleDateFormat("MMMM d, yyyy", Locale.FRANCE);
+        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT, Locale.FRANCE);
         try
         {
             Date date = dateFormat.parse(dateString);

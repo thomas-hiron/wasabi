@@ -113,7 +113,21 @@ public class ContentProvider extends android.content.ContentProvider
     @Override
     public int update(Uri uri, ContentValues contentValues, String s, String[] strings)
     {
-        return 0;
+        int count;
+
+        switch(mUriMatcher.match(uri))
+        {
+            case NOTIFICATIONS:
+
+                count = mDatabase.update(Notifications.TABLE_NOTIFICATIONS, contentValues, s, strings);
+
+                break;
+
+            default:
+                throw new IllegalArgumentException("Unsupported URI " + uri);
+        }
+
+        return count;
     }
 
     @Override
