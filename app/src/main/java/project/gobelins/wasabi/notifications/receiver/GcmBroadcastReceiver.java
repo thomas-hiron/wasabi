@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.notifications;
+package project.gobelins.wasabi.notifications.receiver;
 
 import android.app.Activity;
 import android.content.ComponentName;

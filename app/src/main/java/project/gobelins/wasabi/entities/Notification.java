@@ -9,8 +9,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
-import project.gobelins.wasabi.NotificationsManager;
-import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.notifications.NotificationsManager;
 
 /**
  * Created by ThomasHiron on 28/04/2015.

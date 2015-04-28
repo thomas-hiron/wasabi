@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.notifications;
+package project.gobelins.wasabi.notifications.receiver;
 
 import android.app.IntentService;
 import android.app.Notification;
@@ -12,6 +12,7 @@ import android.support.v4.app.NotificationCompat;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.RegistrationIdManager;
 import project.gobelins.wasabi.Wasabi;
 
 public class GCMNotificationIntentService extends IntentService

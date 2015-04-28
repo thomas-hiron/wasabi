@@ -11,7 +11,7 @@ import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fragments.NotificationFragment;
 import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
 import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
-import project.gobelins.wasabi.notifications.RegistrationIdManager;
+import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 

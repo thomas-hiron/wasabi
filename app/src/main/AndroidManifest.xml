@@ -29,7 +29,7 @@
         </activity>
 
         <receiver
-            android:name=".notifications.GcmBroadcastReceiver"
+            android:name=".notifications.receiver.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND">
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE"/>
@@ -40,7 +40,7 @@
         </receiver>
 
         <service
-            android:name=".notifications.GCMNotificationIntentService"
+            android:name=".notifications.receiver.GCMNotificationIntentService"
             android:exported="false">
         </service>
 

@@ -1,4 +1,4 @@
-package project.gobelins.wasabi;
+package project.gobelins.wasabi.notifications;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
