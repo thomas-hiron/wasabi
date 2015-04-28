@@ -3,17 +3,19 @@ package project.gobelins.wasabi.fragments;
 import android.app.Activity;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
 import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
+import project.gobelins.wasabi.notifications.NotificationsTypes;
+import project.gobelins.wasabi.notifications.views.MessageView;
 
 
 /**
@@ -35,7 +37,7 @@ public class NotificationFragment extends Fragment
     /**
      * Nouvelle instance du fragment
      *
-     * @param type Le type de la notification
+     * @param notification La notification
      * @return Un nouveau fragment
      */
     public static NotificationFragment newInstance(Notification notification)
@@ -64,9 +66,29 @@ public class NotificationFragment extends Fragment
         /* Récupération de la notification */
         Notification notification = getArguments().getParcelable("notification");
 
-        /* Changement du texte */
-        TextView textView = (TextView) view.findViewById(R.id.type);
-        textView.setText(notification.getId()+ " " + notification.isRead() + " " + notification.getType() + " " + notification.getDate().toString());
+        /* En fonction de la notification */
+        switch(notification.getType())
+        {
+            /* Les messages (à faire apparaître ou non) */
+            case NotificationsTypes.MESSAGES:
+
+                /* Création de la vue */
+                MessageView messageView = new MessageView(getActivity());
+                LinearLayout layout = (LinearLayout) view.findViewById(R.id.notification_container);
+
+                /* Ajout du message à la vue */
+                layout.addView(messageView);
+
+                break;
+
+            default:
+
+                /* Changement du texte */
+                TextView textView = (TextView) view.findViewById(R.id.type);
+                textView.setText(notification.getId() + " " + notification.isRead() + " " + notification.getType() + " " + notification.getDate().toString());
+
+                break;
+        }
 
         /* Ajout du listener sur le bouton next */
         Button next = (Button) view.findViewById(R.id.next);
