@@ -1,17 +1,14 @@
 package project.gobelins.wasabi;
 
-import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 
 import project.gobelins.wasabi.fragments.NotificationFragment;
 import project.gobelins.wasabi.notifications.RegistrationIdManager;
-import project.gobelins.wasabi.sqlite.ContentProvider;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
@@ -38,15 +35,11 @@ public class Wasabi extends FragmentActivity
 
         /* Ajout de l'adapter au viewPager */
         mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-        mViewPagerAdapter.add(new NotificationFragment());
-        mViewPagerAdapter.add(new NotificationFragment());
-        mViewPagerAdapter.add(new NotificationFragment());
-        mViewPager.setAdapter(mViewPagerAdapter);
 
         /* Affichage du viewPager */
         setContentView(mViewPager);
 
-        /* Les valeurs à insérer */
+//        /* Les valeurs à insérer */
 //        ContentValues values = new ContentValues();
 //
 //        /* Ajout des valeurs */
@@ -55,18 +48,25 @@ public class Wasabi extends FragmentActivity
 //
 //        getContentResolver().insert(Notifications.CONTENT_URI_NOTIFICATIONS, values);
 
-//        Cursor c = getContentResolver().query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, null, null, null);
-//
-//        if(c.moveToFirst())
-//        {
-//            do
-//            {
-//                Log.v("test", c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_READ))+"Read");
-//                Log.v("test", c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_TYPE))+"Type");
-//            }
-//            while(c.moveToNext());
-//        }
+        Cursor c = getContentResolver().query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, null, null, null);
+
+        if(c.moveToFirst())
+        {
+            do
+            {
+                /* Instanciation du fragment */
+                NotificationFragment notificationFragment = NotificationFragment.newInstance(
+                        c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_TYPE))
+                );
+
+                mViewPagerAdapter.add(notificationFragment);
+            }
+            while(c.moveToNext());
+        }
+
+        mViewPager.setAdapter(mViewPagerAdapter);
     }
+
 
     @Override
     public void onWindowFocusChanged(boolean hasFocus)
