@@ -1,9 +1,12 @@
 package project.gobelins.wasabi.viewPager;
 
+import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.view.MotionEvent;
 
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.fragments.NotificationFragment;
 
 /**
  * Created by ThomasHiron on 16/10/2014.
@@ -12,6 +15,11 @@ import project.gobelins.wasabi.Wasabi;
  */
 public class MyViewPager extends ViewPager
 {
+    public MyViewPager(Context context)
+    {
+        super(context);
+    }
+
     public MyViewPager(final Wasabi wasabi)
     {
         super(wasabi);
@@ -34,12 +42,18 @@ public class MyViewPager extends ViewPager
             @Override
             public void onPageScrollStateChanged(int i)
             {
-                /* Si page à l'arrêt et on supprime le dernier */
-//                if(i == SCROLL_STATE_IDLE)
-//                {
-//                    /* Adapter */
-//                    ViewPagerAdapter viewPagerAdapter = getAdapter();
-//                }
+                /* On lance la notification */
+                if(i == SCROLL_STATE_IDLE)
+                {
+                    /* Adapter */
+                    ViewPagerAdapter viewPagerAdapter = getAdapter();
+
+                    /* Récupération de la notification */
+                    NotificationFragment fragment = (NotificationFragment) viewPagerAdapter.getItem(getCurrentItem());
+
+                    /* Initialisation de la notification */
+                    fragment.getCustomView().initialize();
+                }
             }
         });
     }

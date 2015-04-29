@@ -13,11 +13,12 @@ import project.gobelins.wasabi.notifications.utils.SoundMeter;
  * Affiche un message à l'écran, si caché, prend aléatoirement entre chant et toucher
  * Created by ThomasHiron on 28/04/2015.
  */
-public class MessageView extends LinearLayout
+public class MessageView extends MyLayout
 {
     private String mMessage;
     private String mCurrentMessage;
 
+    private SoundMeter mSoundMeter;
     private Handler mHandler;
     private Runnable mRunnable;
 
@@ -47,10 +48,6 @@ public class MessageView extends LinearLayout
         final TextView messageTv = (TextView) findViewById(R.id.message);
         messageTv.setText(mCurrentMessage);
 
-        /* Début de la détection du son */
-        final SoundMeter soundMeter = new SoundMeter();
-        soundMeter.start();
-
         /* Instanciation et initialisation du handler et du runnable */
         mHandler = new Handler();
         mRunnable = new Runnable()
@@ -60,7 +57,7 @@ public class MessageView extends LinearLayout
             @Override
             public void run()
             {
-                double amplitude = soundMeter.getAmplitude();
+                double amplitude = mSoundMeter.getAmplitude();
 
                 /* On affiche le texte */
                 if(amplitude >= MIN_AMPLITUDE || mInterval < MAX_INTERVAL)
@@ -84,11 +81,22 @@ public class MessageView extends LinearLayout
                     mHandler.postDelayed(this, mInterval);
                 /* Sinon on stoppe l'enregistrement */
                 else
-                    soundMeter.stop();
+                    mSoundMeter.stop();
             }
         };
+    }
 
-        /* Lancement */
+    /**
+     * Initialise la vue (lance le recorder pour le message,...)
+     */
+    @Override
+    public void initialize()
+    {
+        /* Début de la détection du son */
+        mSoundMeter = new SoundMeter();
+        mSoundMeter.start();
+
+        /* Lancement du runnable */
         mHandler.postDelayed(mRunnable, 0);
     }
 }

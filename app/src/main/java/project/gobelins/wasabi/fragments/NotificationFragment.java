@@ -16,6 +16,7 @@ import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
 import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MessageView;
+import project.gobelins.wasabi.notifications.views.MyLayout;
 
 
 /**
@@ -28,6 +29,7 @@ public class NotificationFragment extends Fragment
 
     private boolean mHidePrevious = false;
     private boolean mHideNext = false;
+    private MyLayout mCustomView;
 
     public NotificationFragment()
     {
@@ -73,11 +75,11 @@ public class NotificationFragment extends Fragment
             case NotificationsTypes.MESSAGES:
 
                 /* Création de la vue */
-                MessageView messageView = new MessageView(getActivity());
+                mCustomView = new MessageView(getActivity());
                 LinearLayout layout = (LinearLayout) view.findViewById(R.id.notification_container);
 
                 /* Ajout du message à la vue */
-                layout.addView(messageView);
+                layout.addView(mCustomView);
 
                 break;
 
@@ -146,5 +148,13 @@ public class NotificationFragment extends Fragment
     public void setHidePrevious(boolean hidePrevious)
     {
         this.mHidePrevious = hidePrevious;
+    }
+
+    /**
+     * @return La vue personnalisée : vidéo, son, message,...
+     */
+    public MyLayout getCustomView()
+    {
+        return mCustomView;
     }
 }
