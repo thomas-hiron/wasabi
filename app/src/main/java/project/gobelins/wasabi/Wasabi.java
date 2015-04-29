@@ -4,25 +4,24 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
+import android.widget.Button;
+import android.widget.FrameLayout;
 
-import java.util.ArrayList;
-
-import project.gobelins.wasabi.entities.Notification;
-import project.gobelins.wasabi.fragments.NotificationFragment;
-import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
-import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
+import io.codetail.animation.SupportAnimator;
+import io.codetail.animation.ViewAnimationUtils;
 import project.gobelins.wasabi.notifications.NotificationsManager;
-import project.gobelins.wasabi.viewPager.MyViewPager;
-import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
-public class Wasabi extends FragmentActivity implements OnNextNotificationListener, OnPreviousNotificationListener
+public class Wasabi extends FragmentActivity
 {
     public final static String TAG = "Wasabi";
 
-    private MyViewPager mViewPager;
-    private ViewPagerAdapter mViewPagerAdapter;
-
     private NotificationsManager mNotificationsManager;
+    private View mView;
+    private FrameLayout mAppContainer;
+    private View mRevealContainer;
+
+    private final int REVEAL_DURATION = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -36,42 +35,49 @@ public class Wasabi extends FragmentActivity implements OnNextNotificationListen
         RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
         registrationIdManager.getRegistrationID();
 
-        /* Récupération des notifications */
-        ArrayList<Notification> notifications = mNotificationsManager.getNotifications();
+        /* Ajout de la vue */
+        setContentView(R.layout.activity_wasabi);
 
-        /* On a des notifications */
-        if(notifications.size() > 0)
+        /* Ajout des listeners d'animation */
+        Button fresco = (Button) findViewById(R.id.fresco);
+        Button notification = (Button) findViewById(R.id.notification);
+
+        /* L'élément racine de la vue de l'application */
+        mAppContainer = (FrameLayout) findViewById(R.id.app_container);
+        /* Le conteneur qui va s'ouvrir */
+        mRevealContainer = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
+        /* Ajout du conteneur à la vue de l'application */
+        mAppContainer.addView(mRevealContainer);
+        /* Récupération de la vue */
+        mView = mRevealContainer.findViewById(R.id.test);
+
+        fresco.setOnClickListener(new View.OnClickListener()
         {
-            /* Création du viewPager */
-            mViewPager = new MyViewPager(this);
-            mViewPager.setId(R.id.appContainer);
-
-            /* Ajout de l'adapter au viewPager */
-            mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-            /* Ajout des notifications */
-            for(Notification notification : notifications)
+            @Override
+            public void onClick(View view)
             {
-                NotificationFragment notificationFragment = NotificationFragment.newInstance(notification);
-                mViewPagerAdapter.add(notificationFragment);
+                /* On affiche la vue */
+                mRevealContainer.setVisibility(View.VISIBLE);
+
+                /* Le centre du bouton */
+                int cx = (view.getLeft() + view.getRight()) / 2;
+                int cy = (view.getTop() + view.getBottom()) / 2;
+
+                /* Le rayon final */
+                float finalRadius = hypo(mView.getWidth(), mView.getHeight());
+
+                /* On démarre l'animation */
+                SupportAnimator reveal = ViewAnimationUtils.createCircularReveal(mView, cx, cy, 0, finalRadius);
+                reveal.setInterpolator(new AccelerateDecelerateInterpolator());
+                reveal.setDuration(REVEAL_DURATION);
+                reveal.start();
             }
+        });
+    }
 
-            /* Ajout de l'adapter */
-            mViewPager.setAdapter(mViewPagerAdapter);
-
-            /* On cache le bouton précédent du premier fragment et suivant du dernier */
-            ((NotificationFragment) mViewPagerAdapter.getItem(0)).setHidePrevious(true);
-            ((NotificationFragment) mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1)).setHideNext(true);
-
-            /* On marque le premier comme lu */
-            mNotificationsManager.markRead(0);
-
-            /* Affichage du viewPager */
-            setContentView(mViewPager);
-        }
-        /* Aucune notification */
-        else
-            setContentView(R.layout.activity_wasabi);
+    private float hypo(int width, int height)
+    {
+        return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
     }
 
     /**
@@ -95,31 +101,5 @@ public class Wasabi extends FragmentActivity implements OnNextNotificationListen
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
-    }
-
-    /**
-     * Au clic sur le bouton notification suivant on déplace le viewPager
-     */
-    @Override
-    public void onNextNotificationListener()
-    {
-        int nextItem = mViewPager.getCurrentItem() + 1;
-        mViewPager.setCurrentItem(nextItem, true);
-
-        /* On marque la notif comme lue */
-        Notification notification = mNotificationsManager.get(nextItem);
-
-        if(!notification.isRead())
-            mNotificationsManager.markRead(nextItem);
-    }
-
-    /**
-     * Au clic sur le bouton notification précédente
-     */
-    @Override
-    public void onPreviousNotificationListener()
-    {
-        int prevItem = mViewPager.getCurrentItem() - 1;
-        mViewPager.setCurrentItem(prevItem, true);
     }
 }

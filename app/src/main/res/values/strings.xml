@@ -7,5 +7,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="next">Suivant</string>
     <string name="previous">Précédent</string>
+    <string name="fresco">Fresque</string>
+    <string name="notif">Notif</string>
 
 </resources>
