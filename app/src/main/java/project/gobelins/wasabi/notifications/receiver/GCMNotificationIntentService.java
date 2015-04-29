@@ -58,6 +58,7 @@ public class GCMNotificationIntentService extends IntentService
         Intent resultIntent = new Intent(this, Wasabi.class);
         resultIntent.putExtra("msg", msg);
         resultIntent.putExtra("title", title);
+        resultIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
                 resultIntent, PendingIntent.FLAG_ONE_SHOT);
 
