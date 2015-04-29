@@ -9,6 +9,7 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 
 import project.gobelins.wasabi.entities.Notification;
+import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
@@ -18,6 +19,8 @@ import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
+import project.gobelins.wasabi.viewPager.MyViewPager;
+import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
 public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened, OnNotificationClosed
 {
@@ -31,6 +34,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private Button mNotificationButton;
     private MyLayout mCustomView;
     private Notification mLastNotification;
+    private MyViewPager mViewPager;
+    private ViewPagerAdapter mViewPagerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -103,7 +108,26 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     @Override
     public void onFrescoOpened()
     {
+        /* Ajout du viewPager */
+        mViewPager = (MyViewPager) mRevealContainerFresco.findViewById(R.id.view_pager_fresco);
 
+        /* Instanciation de l'adapter */
+        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
+
+        /* Ajout des fragments */
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(DrawingFragment.newInstance());
+
+        mViewPager.setAdapter(mViewPagerAdapter);
     }
 
     /**

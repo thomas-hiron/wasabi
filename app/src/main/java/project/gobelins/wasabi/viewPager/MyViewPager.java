@@ -2,6 +2,7 @@ package project.gobelins.wasabi.viewPager;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
+import android.util.AttributeSet;
 import android.view.MotionEvent;
 
 import project.gobelins.wasabi.Wasabi;
@@ -16,6 +17,11 @@ public class MyViewPager extends ViewPager
     public MyViewPager(Context context)
     {
         super(context);
+    }
+
+    public MyViewPager(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
     }
 
     public MyViewPager(final Wasabi wasabi)
@@ -55,9 +61,9 @@ public class MyViewPager extends ViewPager
         return (ViewPagerAdapter) super.getAdapter();
     }
 
-    @Override
-    public boolean onTouchEvent(MotionEvent ev)
-    {
-        return true;
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent ev)
+//    {
+//        return true;
+//    }
 }
