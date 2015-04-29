@@ -10,6 +10,7 @@ import android.widget.FrameLayout;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
+import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 
 public class Wasabi extends FragmentActivity
@@ -17,11 +18,8 @@ public class Wasabi extends FragmentActivity
     public final static String TAG = "Wasabi";
 
     private NotificationsManager mNotificationsManager;
-    private View mView;
     private FrameLayout mAppContainer;
     private View mRevealContainer;
-
-    private final int REVEAL_DURATION = 300;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -39,8 +37,8 @@ public class Wasabi extends FragmentActivity
         setContentView(R.layout.activity_wasabi);
 
         /* Ajout des listeners d'animation */
-        Button fresco = (Button) findViewById(R.id.fresco);
-        Button notification = (Button) findViewById(R.id.notification);
+        Button frescoButton = (Button) findViewById(R.id.fresco);
+        Button notificationButton = (Button) findViewById(R.id.notification);
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
@@ -48,36 +46,9 @@ public class Wasabi extends FragmentActivity
         mRevealContainer = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
         /* Ajout du conteneur à la vue de l'application */
         mAppContainer.addView(mRevealContainer);
-        /* Récupération de la vue */
-        mView = mRevealContainer.findViewById(R.id.test);
 
-        fresco.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                /* On affiche la vue */
-                mRevealContainer.setVisibility(View.VISIBLE);
-
-                /* Le centre du bouton */
-                int cx = (view.getLeft() + view.getRight()) / 2;
-                int cy = (view.getTop() + view.getBottom()) / 2;
-
-                /* Le rayon final */
-                float finalRadius = hypo(mView.getWidth(), mView.getHeight());
-
-                /* On démarre l'animation */
-                SupportAnimator reveal = ViewAnimationUtils.createCircularReveal(mView, cx, cy, 0, finalRadius);
-                reveal.setInterpolator(new AccelerateDecelerateInterpolator());
-                reveal.setDuration(REVEAL_DURATION);
-                reveal.start();
-            }
-        });
-    }
-
-    private float hypo(int width, int height)
-    {
-        return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
+        frescoButton.setOnClickListener(new CircleAnimationListener(mRevealContainer));
+        notificationButton.setOnClickListener(new CircleAnimationListener(mRevealContainer));
     }
 
     /**

@@ -9,5 +9,6 @@
     <string name="previous">Précédent</string>
     <string name="fresco">Fresque</string>
     <string name="notif">Notif</string>
+    <string name="close">Fermer</string>
 
 </resources>
