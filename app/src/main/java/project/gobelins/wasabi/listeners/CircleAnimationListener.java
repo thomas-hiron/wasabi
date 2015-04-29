@@ -103,7 +103,7 @@ public class CircleAnimationListener implements View.OnClickListener
                 else if(mClose && view.getId() == R.id.close_notification)
                     mListener.onNotificationClosed();
                     /* On initialise la fresque */
-                else if(view.getId() == R.id.close_fresco)
+                else if(view.getId() == R.id.fresco)
                     mListener.onFrescoOpened();
                 else
                     mListener.onNotificationOpened();

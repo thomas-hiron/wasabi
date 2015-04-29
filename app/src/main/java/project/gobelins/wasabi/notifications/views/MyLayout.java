@@ -19,4 +19,9 @@ public abstract class MyLayout extends LinearLayout
      * Initialise la vue (lance le recorder pour le message,...)
      */
     public abstract void initialize();
+
+    /**
+     * Stop (Met en pause la vidéo, le son,...)
+     */
+    public abstract void stop();
 }
