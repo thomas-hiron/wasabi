@@ -9,16 +9,19 @@ import android.widget.FrameLayout;
 
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
+import project.gobelins.wasabi.interfaces.OnNotificationClosed;
+import project.gobelins.wasabi.interfaces.OnNotificationOpened;
 import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 
-public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed
+public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened, OnNotificationClosed
 {
     public final static String TAG = "Wasabi";
 
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
-    private View mRevealContainer;
+    private View mRevealContainerFresco;
+    private View mRevealContainerNotification;
     private Button mFrescoButton;
     private Button mNotificationButton;
 
@@ -43,13 +46,17 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
-        /* Le conteneur qui va s'ouvrir */
-        mRevealContainer = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
-        /* Ajout du conteneur à la vue de l'application */
-        mAppContainer.addView(mRevealContainer);
 
-        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainer));
-        mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainer));
+        /* Les conteneurs qui vont s'ouvrir */
+        mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
+        mRevealContainerNotification = getLayoutInflater().inflate(R.layout.notification, mAppContainer, false);
+
+        /* Ajout des conteneurs à la vue de l'application */
+        mAppContainer.addView(mRevealContainerFresco);
+        mAppContainer.addView(mRevealContainerNotification);
+
+        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
+        mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerNotification));
     }
 
     /**
@@ -91,9 +98,31 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public void onFrescoClosed()
     {
         /* On remet le listener */
-        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainer));
+        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
 
         /* On cache la vue */
-        mRevealContainer.setVisibility(View.INVISIBLE);
+        mRevealContainerFresco.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * La notification a été fermée
+     */
+    @Override
+    public void onNotificationClosed()
+    {
+        /* On remet le listener */
+        mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerNotification));
+
+        /* On cache la vue */
+        mRevealContainerNotification.setVisibility(View.INVISIBLE);
+    }
+
+    /**
+     * La notification a été ouverte
+     */
+    @Override
+    public void onNotificationOpened()
+    {
+
     }
 }

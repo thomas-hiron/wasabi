@@ -1,5 +1,6 @@
 package project.gobelins.wasabi.listeners;
 
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -53,7 +54,7 @@ public class CircleAnimationListener implements View.OnClickListener
     }
 
     @Override
-    public void onClick(View view)
+    public void onClick(final View view)
     {
         /* Suppression du listener */
         view.setOnClickListener(null);
@@ -77,44 +78,49 @@ public class CircleAnimationListener implements View.OnClickListener
             reveal = ViewAnimationUtils.createCircularReveal(mView, cx, cy, 0, finalRadius);
 
         /* Ajout du listener sur fermer */
-        Button close = (Button) mRevealContainer.findViewById(R.id.close_fresco);
-        close.setOnClickListener(new CircleAnimationListener(mListener, mRevealContainer, true));
+        if(!mClose)
+        {
+            int id = view.getId() == R.id.fresco ? R.id.close_fresco : R.id.close_notification;
+            Button close = (Button) mRevealContainer.findViewById(id);
+            close.setOnClickListener(new CircleAnimationListener(mListener, mRevealContainer, true));
+        }
 
         /* Si animation fermante, on supprime la vue lorsque l'animation est terminée */
-        if(mClose)
+        reveal.addListener(new SupportAnimator.AnimatorListener()
         {
-            reveal.addListener(new SupportAnimator.AnimatorListener()
+            @Override
+            public void onAnimationStart()
             {
-                @Override
-                public void onAnimationStart()
-                {
 
-                }
+            }
 
-                @Override
-                public void onAnimationEnd()
-                {
+            @Override
+            public void onAnimationEnd()
+            {
                     /* On supprime la vue */
-                    if(mClose)
-                        mListener.onFrescoClosed();
+                if(mClose && view.getId() == R.id.close_fresco)
+                    mListener.onFrescoClosed();
+                else if(mClose && view.getId() == R.id.close_notification)
+                    mListener.onNotificationClosed();
                     /* On initialise la fresque */
-                    else
-                        mListener.onFrescoOpened();
-                }
+                else if(view.getId() == R.id.close_fresco)
+                    mListener.onFrescoOpened();
+                else
+                    mListener.onNotificationOpened();
+            }
 
-                @Override
-                public void onAnimationCancel()
-                {
+            @Override
+            public void onAnimationCancel()
+            {
 
-                }
+            }
 
-                @Override
-                public void onAnimationRepeat()
-                {
+            @Override
+            public void onAnimationRepeat()
+            {
 
-                }
-            });
-        }
+            }
+        });
 
         /* On paramètre et lance l'animation */
         reveal.setInterpolator(new AccelerateDecelerateInterpolator());

@@ -6,14 +6,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Notification;
-import project.gobelins.wasabi.interfaces.OnNextNotificationListener;
-import project.gobelins.wasabi.interfaces.OnPreviousNotificationListener;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
@@ -24,9 +21,6 @@ import project.gobelins.wasabi.notifications.views.MyLayout;
  */
 public class NotificationFragment extends Fragment
 {
-    private OnNextNotificationListener mListenerNext;
-    private OnPreviousNotificationListener mListenerPrevious;
-
     private boolean mHidePrevious = false;
     private boolean mHideNext = false;
     private MyLayout mCustomView;
@@ -92,28 +86,6 @@ public class NotificationFragment extends Fragment
                 break;
         }
 
-        /* Ajout du listener sur le bouton next */
-        Button next = (Button) view.findViewById(R.id.next);
-        next.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                mListenerNext.onNextNotificationListener();
-            }
-        });
-
-        /* Ajout du listener sur le bouton précédent */
-        Button prev = (Button) view.findViewById(R.id.previous);
-        prev.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                mListenerPrevious.onPreviousNotificationListener();
-            }
-        });
-
         /* On cache le précédent */
         if(mHidePrevious)
             view.findViewById(R.id.previous).setVisibility(View.INVISIBLE);
@@ -130,8 +102,7 @@ public class NotificationFragment extends Fragment
         super.onAttach(activity);
         try
         {
-            mListenerNext = (OnNextNotificationListener) activity;
-            mListenerPrevious = (OnPreviousNotificationListener) activity;
+
         }
         catch(ClassCastException e)
         {
