@@ -84,4 +84,18 @@ public class NotificationsManager extends ArrayList<Notification>
 
         return this;
     }
+
+    /**
+     * @return La dernière notification
+     */
+    public Notification getLast()
+    {
+        if(size() == 0)
+        {
+            /* On récupère toutes les notifs */
+            getNotifications();
+        }
+
+        return size() > 0 ? get(size() - 1) : null;
+    }
 }
