@@ -2,19 +2,22 @@ package project.gobelins.wasabi.listeners;
 
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewParent;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 
 /**
+ * Gère le clic sur le bouton ouvrir fresque ou notif et fermer
+ * <p/>
  * Created by ThomasHiron on 29/04/2015.
  */
 public class CircleAnimationListener implements View.OnClickListener
 {
+    private Wasabi mListener;
     private View mView;
     private View mRevealContainer;
     private boolean mClose; /* Animation fermante */
@@ -26,20 +29,24 @@ public class CircleAnimationListener implements View.OnClickListener
      *
      * @param revealContainer
      */
-    public CircleAnimationListener(View revealContainer)
+    public CircleAnimationListener(Wasabi wasabi, View revealContainer)
     {
         mRevealContainer = revealContainer;
         mView = ((ViewGroup) mRevealContainer).getChildAt(0);
         mClose = false;
+
+        mListener = wasabi;
     }
 
     /**
      * On ferme la page
+     *
      * @param revealContainer
      * @param b
      */
-    public CircleAnimationListener(View revealContainer, boolean b)
+    public CircleAnimationListener(Wasabi wasabi, View revealContainer, boolean b)
     {
+        mListener = wasabi;
         mRevealContainer = revealContainer;
         mView = ((ViewGroup) mRevealContainer).getChildAt(0);
         mClose = b;
@@ -71,7 +78,7 @@ public class CircleAnimationListener implements View.OnClickListener
 
         /* Ajout du listener sur fermer */
         Button close = (Button) mRevealContainer.findViewById(R.id.close_fresco);
-        close.setOnClickListener(new CircleAnimationListener(mRevealContainer, true));
+        close.setOnClickListener(new CircleAnimationListener(mListener, mRevealContainer, true));
 
         /* Si animation fermante, on supprime la vue lorsque l'animation est terminée */
         if(mClose)
@@ -87,8 +94,12 @@ public class CircleAnimationListener implements View.OnClickListener
                 @Override
                 public void onAnimationEnd()
                 {
-                    ViewGroup parent = (ViewGroup) mRevealContainer.getParent();
-                    parent.removeView(mRevealContainer);
+                    /* On supprime la vue */
+                    if(mClose)
+                        mListener.onFrescoClosed();
+                    /* On initialise la fresque */
+                    else
+                        mListener.onFrescoOpened();
                 }
 
                 @Override
@@ -112,8 +123,7 @@ public class CircleAnimationListener implements View.OnClickListener
     }
 
     /**
-     *
-     * @param width La taille
+     * @param width  La taille
      * @param height La hauteur
      * @return Le rayon de fin
      */

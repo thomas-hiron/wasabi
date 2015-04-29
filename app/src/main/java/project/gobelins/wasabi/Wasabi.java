@@ -4,22 +4,23 @@ import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.WindowManager;
-import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
+import project.gobelins.wasabi.interfaces.OnFrescoClosed;
+import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 
-public class Wasabi extends FragmentActivity
+public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed
 {
     public final static String TAG = "Wasabi";
 
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
     private View mRevealContainer;
+    private Button mFrescoButton;
+    private Button mNotificationButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -37,8 +38,8 @@ public class Wasabi extends FragmentActivity
         setContentView(R.layout.activity_wasabi);
 
         /* Ajout des listeners d'animation */
-        Button frescoButton = (Button) findViewById(R.id.fresco);
-        Button notificationButton = (Button) findViewById(R.id.notification);
+        mFrescoButton = (Button) findViewById(R.id.fresco);
+        mNotificationButton = (Button) findViewById(R.id.notification);
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
@@ -47,8 +48,8 @@ public class Wasabi extends FragmentActivity
         /* Ajout du conteneur à la vue de l'application */
         mAppContainer.addView(mRevealContainer);
 
-        frescoButton.setOnClickListener(new CircleAnimationListener(mRevealContainer));
-        notificationButton.setOnClickListener(new CircleAnimationListener(mRevealContainer));
+        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainer));
+        mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainer));
     }
 
     /**
@@ -72,5 +73,27 @@ public class Wasabi extends FragmentActivity
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+    }
+
+    /**
+     * La fresque a été ouverte
+     */
+    @Override
+    public void onFrescoOpened()
+    {
+
+    }
+
+    /**
+     * La fresque a été fermée
+     */
+    @Override
+    public void onFrescoClosed()
+    {
+        /* On remet le listener */
+        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainer));
+
+        /* On cache la vue */
+        mRevealContainer.setVisibility(View.INVISIBLE);
     }
 }
