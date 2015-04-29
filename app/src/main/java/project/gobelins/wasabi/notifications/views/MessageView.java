@@ -2,8 +2,6 @@ package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
@@ -98,5 +96,14 @@ public class MessageView extends MyLayout
 
         /* Lancement du runnable */
         mHandler.postDelayed(mRunnable, 0);
+    }
+
+    /**
+     * Stop (Met en pause la vidéo, le son,...)
+     */
+    @Override
+    public void stop()
+    {
+        mSoundMeter.stop();
     }
 }

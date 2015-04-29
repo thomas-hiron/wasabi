@@ -2,7 +2,6 @@ package project.gobelins.wasabi;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -170,5 +169,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
                 break;
         }
+
+        /* Récupération du premier enfant pour supprimer la customView */
+        FrameLayout child = (FrameLayout) ((ViewGroup) mRevealContainerNotification).getChildAt(0);
+        child.removeView(mCustomView);
     }
 }

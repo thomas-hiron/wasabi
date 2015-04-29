@@ -1,19 +1,15 @@
 package project.gobelins.wasabi.viewPager;
 
-import android.content.res.Resources;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
-import android.util.Log;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
-import project.gobelins.wasabi.fragments.NotificationFragment;
-
 /**
  * Created by ThomasHiron on 16/10/2014.
- *
+ * <p/>
  * Vue pager perso
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter
