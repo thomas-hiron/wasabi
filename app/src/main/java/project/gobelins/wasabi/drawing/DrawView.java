@@ -58,7 +58,7 @@ public class DrawView extends View
         mPath.reset();
 
         /* On dessine une ligne smooth au up */
-        if (mSmoothLine)
+        if(mSmoothLine)
         {
             drawSmoothLine();
             mSmoothLine = false;
@@ -67,9 +67,9 @@ public class DrawView extends View
         else
         {
             boolean first = true;
-            for (Point point : mPoints)
+            for(Point point : mPoints)
             {
-                if (first)
+                if(first)
                 {
                     first = false;
                     mPath.moveTo(point.x, point.y);
@@ -91,10 +91,10 @@ public class DrawView extends View
         /* Tous les nouveaux points */
         ArrayList<Point> points = getCurvePoints(0.5);
 
-        if (points.size() > 0)
+        if(points.size() > 0)
         {
             mPath.moveTo(points.get(0).x, points.get(0).y);
-            for (int i = 1 ; i < points.size() - 1 ; i++)
+            for(int i = 1; i < points.size() - 1; i++)
                 mPath.lineTo(points.get(i).x, points.get(i).y);
         }
     }
@@ -103,7 +103,6 @@ public class DrawView extends View
      * Smooth la courbe
      *
      * @param tension La tension
-     *
      * @return Le tableau de nouveaux points
      */
     private ArrayList<Point> getCurvePoints(double tension)
@@ -119,10 +118,10 @@ public class DrawView extends View
         points.add(points.get(points.size() - 1));
 
         /* On parcourt tous les points */
-        for (i = 1; i < (points.size() - 2) ; i++)
+        for(i = 1; i < (points.size() - 2); i++)
         {
             /* On rajoute les segments */
-            for (t = 0; t <= numOfSegments ; t++)
+            for(t = 0; t <= numOfSegments; t++)
             {
                 Point p = new Point();
 

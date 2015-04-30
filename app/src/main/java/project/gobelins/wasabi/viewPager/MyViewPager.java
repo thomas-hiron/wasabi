@@ -238,6 +238,12 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
     }
 
     @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev)
+    {
+        return false;
+    }
+
+    @Override
     public boolean onScroll(MotionEvent e1, MotionEvent e2, float distX, float distY)
     {
         mScrollingToLeft = distX < 0;

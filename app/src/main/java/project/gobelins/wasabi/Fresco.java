@@ -1,8 +1,11 @@
 package project.gobelins.wasabi;
 
 import android.support.v4.app.Fragment;
-import android.util.Log;
+import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.LinearLayout;
 
 import project.gobelins.wasabi.drawing.DrawView;
 import project.gobelins.wasabi.fragments.DrawingFragment;
@@ -21,6 +24,7 @@ public class Fresco
     private Button mDrawButton;
     private Button mPictureButton;
     private Button mSoundButton;
+    private View mLastFragmentView;
 
     public Fresco(Wasabi wasabi)
     {
@@ -31,8 +35,6 @@ public class Fresco
 
         /* Ajout du viewPager */
         mViewPager = (MyViewPager) wasabi.findViewById(R.id.view_pager_fresco);
-
-        Log.v("test", mViewPager == null ? "null" : "not null");
 
         /* Instanciation de l'adapter */
         mViewPagerAdapter = new ViewPagerAdapter(wasabi.getSupportFragmentManager());
@@ -72,7 +74,6 @@ public class Fresco
     public void lock()
     {
         mViewPager.lock();
-
     }
 
     /**
@@ -84,15 +85,53 @@ public class Fresco
         Fragment lastFragment = mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1);
 
         /* La vue du dessin */
-        DrawView drawView = null;
+        DrawView drawView;
 
         /* Récupération de la vue contenant le dessin */
         if(lastFragment.getView() != null)
         {
-            drawView = (DrawView) lastFragment.getView().findViewById(R.id.draw_view);
+            mLastFragmentView = lastFragment.getView();
+            drawView = (DrawView) mLastFragmentView.findViewById(R.id.draw_view);
 
             /* Ajout du listener sur la vue */
-            drawView.setOnTouchListener(new DrawingListener(drawView));
+            drawView.setOnTouchListener(new DrawingListener(drawView, this));
         }
+    }
+
+    /**
+     * Cache les boutons de l'interface
+     */
+    public void hideInterfaceButtons()
+    {
+        toggleInterfaceButtons(false);
+    }
+
+    /**
+     * Affiche les boutons de l'interface
+     */
+    public void showInterfaceButtons()
+    {
+        toggleInterfaceButtons(true);
+    }
+
+    private void toggleInterfaceButtons(boolean show)
+    {
+        /* Récupération du groupe de boutons et du bouton fermer */
+        FrameLayout parent = (FrameLayout) mViewPager.getParent();
+        LinearLayout buttons = (LinearLayout) parent.findViewById(R.id.fresco_buttons_group);
+        Button closeButton = (Button) parent.findViewById(R.id.close_fresco);
+
+        /* Les variables de départ et d'arrivée */
+        int from = show ? 0 : 1;
+        int to = show ? 1 : 0;
+
+        /* Instantiation de l'animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(from, to);
+        alphaAnimation.setDuration(200);
+        alphaAnimation.setFillAfter(true);
+
+        /* On lance les animations */
+        buttons.startAnimation(alphaAnimation);
+        closeButton.startAnimation(alphaAnimation);
     }
 }

@@ -3,6 +3,7 @@ package project.gobelins.wasabi.listeners;
 import android.view.MotionEvent;
 import android.view.View;
 
+import project.gobelins.wasabi.Fresco;
 import project.gobelins.wasabi.drawing.DrawView;
 import project.gobelins.wasabi.drawing.Point;
 
@@ -13,11 +14,13 @@ import project.gobelins.wasabi.drawing.Point;
  */
 public class DrawingListener implements View.OnTouchListener
 {
+    private Fresco mFresco;
     private DrawView mDrawView;
 
-    public DrawingListener(DrawView drawView)
+    public DrawingListener(DrawView drawView, Fresco fresco)
     {
         mDrawView = drawView;
+        mFresco = fresco;
     }
 
     @Override
@@ -29,6 +32,10 @@ public class DrawingListener implements View.OnTouchListener
             Point p = new Point();
             p.set(event.getX(), event.getY());
             mDrawView.setFirstPoint(p);
+
+            /* On cache les boutons d'action (dessiner, image, son, fermer) */
+            mFresco.hideInterfaceButtons();
+
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE)
         {
@@ -38,7 +45,12 @@ public class DrawingListener implements View.OnTouchListener
         }
         else if(event.getAction() == MotionEvent.ACTION_UP)
         {
+            /* Smooth de la courbe */
             mDrawView.smoothify();
+
+            /* On affiche les boutons d'interface */
+            mFresco.showInterfaceButtons();
+
             return false;
         }
 
