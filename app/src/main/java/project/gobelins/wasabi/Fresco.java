@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import project.gobelins.wasabi.drawing.DrawView;
 import project.gobelins.wasabi.fragments.DrawingFragment;
-import project.gobelins.wasabi.listeners.BeginFrescoDrawing;
+import project.gobelins.wasabi.listeners.BeginFrescoDrawingListener;
 import project.gobelins.wasabi.listeners.DrawingListener;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
@@ -57,7 +57,7 @@ public class Fresco
         mViewPager.setAdapter(mViewPagerAdapter);
 
         /* Ajout des listeners */
-        mDrawButton.setOnClickListener(new BeginFrescoDrawing(this));
+        mDrawButton.setOnClickListener(new BeginFrescoDrawingListener(this));
     }
 
     /**

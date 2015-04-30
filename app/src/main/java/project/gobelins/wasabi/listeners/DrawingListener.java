@@ -35,7 +35,6 @@ public class DrawingListener implements View.OnTouchListener
 
             /* On cache les boutons d'action (dessiner, image, son, fermer) */
             mFresco.hideInterfaceButtons();
-
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE)
         {

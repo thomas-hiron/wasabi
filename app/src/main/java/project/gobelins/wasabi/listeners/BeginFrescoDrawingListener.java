@@ -9,11 +9,11 @@ import project.gobelins.wasabi.Fresco;
  * <p/>
  * Created by ThomasHiron on 30/04/2015.
  */
-public class BeginFrescoDrawing implements View.OnClickListener
+public class BeginFrescoDrawingListener implements View.OnClickListener
 {
     private Fresco mFresco;
 
-    public BeginFrescoDrawing(Fresco fresco)
+    public BeginFrescoDrawingListener(Fresco fresco)
     {
         mFresco = fresco;
     }
