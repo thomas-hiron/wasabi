@@ -13,5 +13,6 @@
     <string name="draw">dessiner</string>
     <string name="picture">Image</string>
     <string name="sound">Son</string>
+    <string name="message_fresco">Envoyez un message à votre proche mystère</string>
 
 </resources>

@@ -7,49 +7,73 @@
     android:orientation="vertical"
     android:visibility="invisible">
 
+    <!-- Conteneur -->
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <!-- Le viewPager -->
         <project.gobelins.wasabi.viewPager.MyViewPager
             android:id="@+id/view_pager_fresco"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/red"/>
+            android:background="@color/fresco_background"/>
 
+        <!-- Header -->
         <LinearLayout
-            android:id="@+id/fresco_buttons_group"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|top"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:weightSum="1"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/begin_drawing"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="@string/draw"
-                />
+            <!-- Titre -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="0.07"
+                android:background="@color/white"
+                android:gravity="center"
+                android:text="@string/message_fresco"/>
 
-            <Button
-                android:id="@+id/take_picture"
+            <!-- Les boutons d'action -->
+            <LinearLayout
+                android:id="@+id/fresco_buttons_group"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="@string/picture"
-                />
+                android:layout_height="0dp"
+                android:layout_weight="0.23"
+                android:layout_gravity="end|top"
+                android:layout_marginTop="10dp"
+                android:orientation="vertical">
 
-            <Button
-                android:id="@+id/record_audio"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="end"
-                android:text="@string/sound"
-                />
+                <Button
+                    android:id="@+id/begin_drawing"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/draw"
+                    />
+
+                <Button
+                    android:id="@+id/take_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/picture"
+                    />
+
+                <Button
+                    android:id="@+id/record_audio"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end"
+                    android:text="@string/sound"
+                    />
+
+            </LinearLayout>
 
         </LinearLayout>
 
+        <!-- Le bouton fermer -->
         <Button
             android:id="@+id/close_fresco"
             android:layout_width="wrap_content"
