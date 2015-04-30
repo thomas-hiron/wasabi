@@ -132,7 +132,6 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
 
     private void trackMotion(float distX)
     {
-
         // The following mimics the underlying calculations in ViewPager
         float scrollX = getScrollX() - distX;
         final int width = getWidth();
@@ -154,12 +153,13 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
         }
 
         // Do the fake dragging
-        if(mScrolling)
+        if(mScrolling && isFakeDragging())
             this.fakeDragBy(distX);
-        else
+        else if(!mScrolling)
         {
             this.beginFakeDrag();
-            this.fakeDragBy(distX);
+            if(isFakeDragging())
+                this.fakeDragBy(distX);
             mScrolling = true;
         }
     }
@@ -167,7 +167,8 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
     private void endFlingMotion()
     {
         mScrolling = false;
-        this.endFakeDrag();
+        if(isFakeDragging())
+            this.endFakeDrag();
     }
 
     /**
@@ -208,7 +209,6 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
         @Override
         public void run()
         {
-
             final Scroller scroller = mScroller;
             boolean animationNotFinished = scroller.computeScrollOffset();
             final int x = scroller.getCurrX();
@@ -223,7 +223,6 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
             }
             else
                 endFling();
-
         }
     }
 
