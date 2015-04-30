@@ -10,5 +10,8 @@
     <string name="fresco">Fresque</string>
     <string name="notif">Notif</string>
     <string name="close">Fermer</string>
+    <string name="draw">dessiner</string>
+    <string name="picture">Image</string>
+    <string name="sound">Son</string>
 
 </resources>

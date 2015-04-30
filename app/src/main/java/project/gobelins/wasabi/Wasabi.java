@@ -36,6 +36,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private Notification mLastNotification;
     private MyViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
+    private Fresco mFresco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -66,6 +67,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
         mAppContainer.addView(mRevealContainerFresco);
         mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
+        mFresco = new Fresco(this);
 
         /* La notif si != null (inflate, ajout de la vue et du listener) */
         if(mLastNotification != null)
@@ -108,26 +110,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     @Override
     public void onFrescoOpened()
     {
-        /* Ajout du viewPager */
-        mViewPager = (MyViewPager) mRevealContainerFresco.findViewById(R.id.view_pager_fresco);
 
-        /* Instanciation de l'adapter */
-        mViewPagerAdapter = new ViewPagerAdapter(getSupportFragmentManager());
-
-        /* Ajout des fragments */
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-
-        mViewPager.setAdapter(mViewPagerAdapter);
     }
 
     /**

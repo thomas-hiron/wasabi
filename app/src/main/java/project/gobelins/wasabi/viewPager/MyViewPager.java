@@ -23,6 +23,7 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
     private FlingRunnable mFlingRunnable;
     private boolean mScrolling;
     private boolean mScrollingToLeft;
+    private boolean mLock;
 
     public MyViewPager(Context context)
     {
@@ -35,6 +36,7 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
 
         mGestureDetector = new GestureDetector(context, this);
         mFlingRunnable = new FlingRunnable();
+        mLock = false;
 
         /* Permet de changer la durée du scroll */
         try
@@ -93,7 +95,8 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
     {
         // give all the events to the gesture detector. I'm returning true here so the viewpager doesn't
         // get any events at all, I'm sure you could adjust this to make that not true.
-        mGestureDetector.onTouchEvent(event);
+        if(!mLock)
+            mGestureDetector.onTouchEvent(event);
 
         return true;
     }
@@ -169,6 +172,14 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
         mScrolling = false;
         if(isFakeDragging())
             this.endFakeDrag();
+    }
+
+    /**
+     * Verrouille le viewPager
+     */
+    public void lock()
+    {
+        mLock = true;
     }
 
     /**
