@@ -1,10 +1,13 @@
 package project.gobelins.wasabi;
 
+import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.widget.Button;
 
+import project.gobelins.wasabi.drawing.DrawView;
 import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.listeners.BeginFrescoDrawing;
+import project.gobelins.wasabi.listeners.DrawingListener;
 import project.gobelins.wasabi.viewPager.MyViewPager;
 import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
 
@@ -29,7 +32,7 @@ public class Fresco
         /* Ajout du viewPager */
         mViewPager = (MyViewPager) wasabi.findViewById(R.id.view_pager_fresco);
 
-        Log.v("test", mViewPager == null ? "null":"not null" );
+        Log.v("test", mViewPager == null ? "null" : "not null");
 
         /* Instanciation de l'adapter */
         mViewPagerAdapter = new ViewPagerAdapter(wasabi.getSupportFragmentManager());
@@ -60,7 +63,7 @@ public class Fresco
      */
     public void goToLastFragment()
     {
-        mViewPager.setCurrentItem(mViewPager.getAdapter().getCount()-1);
+        mViewPager.setCurrentItem(mViewPagerAdapter.getCount() - 1);
     }
 
     /**
@@ -70,5 +73,26 @@ public class Fresco
     {
         mViewPager.lock();
 
+    }
+
+    /**
+     * Initialise le dessin
+     */
+    public void initDrawing()
+    {
+        /* Récupération du dernier fragment */
+        Fragment lastFragment = mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1);
+
+        /* La vue du dessin */
+        DrawView drawView = null;
+
+        /* Récupération de la vue contenant le dessin */
+        if(lastFragment.getView() != null)
+        {
+            drawView = (DrawView) lastFragment.getView().findViewById(R.id.draw_view);
+
+            /* Ajout du listener sur la vue */
+            drawView.setOnTouchListener(new DrawingListener(drawView));
+        }
     }
 }

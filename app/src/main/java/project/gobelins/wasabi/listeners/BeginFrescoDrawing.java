@@ -6,7 +6,7 @@ import project.gobelins.wasabi.Fresco;
 
 /**
  * Listener au clic sur le bouton dessiner
- *
+ * <p/>
  * Created by ThomasHiron on 30/04/2015.
  */
 public class BeginFrescoDrawing implements View.OnClickListener
@@ -26,5 +26,8 @@ public class BeginFrescoDrawing implements View.OnClickListener
 
         /* On vérouille le viewPager */
         mFresco.lock();
+
+        /* Initialisation du dessin */
+        mFresco.initDrawing();
     }
 }
