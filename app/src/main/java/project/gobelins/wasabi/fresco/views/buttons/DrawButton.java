@@ -32,5 +32,8 @@ public class DrawButton extends FrescoActionButton
     {
         /* On cache les couleurs */
         mFresco.hideColorsButtons();
+
+        /* On supprime le listener pour dessiner */
+        mFresco.removeDrawingListener();
     }
 }

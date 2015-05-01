@@ -37,6 +37,7 @@ public class Fresco extends FrameLayout
     public final static int DRAW_BUTTON = 1;
     public final static int RECORD_BUTTON = 2;
     public final static int PICTURE_BUTTON = 3;
+    private DrawView mDrawView;
 
     public Fresco(Context context)
     {
@@ -121,25 +122,21 @@ public class Fresco extends FrameLayout
     }
 
     /**
-     * Initialise le dessin
+     * Initialise le dessin (au clic sur le bouton dessiner)
      */
     public void initDrawing()
     {
         /* Récupération du dernier fragment */
         Fragment lastFragment = mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1);
 
-        /* La vue du dessin */
-        DrawView drawView;
-
         /* Récupération de la vue contenant le dessin */
-        if(lastFragment.getView() != null)
-        {
-            mLastFragmentView = lastFragment.getView();
-            drawView = (DrawView) mLastFragmentView.findViewById(R.id.draw_view);
+        if(lastFragment.getView() != null && mDrawView == null)
+            mDrawView = (DrawView) lastFragment.getView().findViewById(R.id.draw_view);
 
-            /* Ajout du listener sur la vue */
-            drawView.setOnTouchListener(new DrawingListener(drawView, this));
-        }
+        assert mDrawView != null;
+
+        /* Ajout du listener sur la vue */
+        mDrawView.setOnTouchListener(new DrawingListener(mDrawView, this));
 
 //        /* On drag le bouton du son */
 //        mRecordButton.setOnLongClickListener(new View.OnLongClickListener()
@@ -240,6 +237,14 @@ public class Fresco extends FrameLayout
     {
         if(mDrawButton.isActive())
             toggleInterfaceButtons(false, R.id.colors_buttons);
+    }
+
+    /**
+     * Supprime le listener pour dessiner
+     */
+    public void removeDrawingListener()
+    {
+        mDrawView.setOnTouchListener(null);
     }
 
     /**
