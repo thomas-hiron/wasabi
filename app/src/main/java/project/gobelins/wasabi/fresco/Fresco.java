@@ -1,16 +1,14 @@
 package project.gobelins.wasabi.fresco;
 
-import android.content.ClipData;
+import android.content.Context;
 import android.support.v4.app.Fragment;
-import android.view.DragEvent;
-import android.view.MotionEvent;
+import android.support.v4.app.FragmentManager;
+import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
@@ -27,10 +25,8 @@ import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
 /**
  * Created by ThomasHiron on 30/04/2015.
  */
-public class Fresco
+public class Fresco extends FrameLayout
 {
-    private FrameLayout mParent;
-    private FrameLayout mFrescoContainer;
     private ViewPagerAdapter mViewPagerAdapter;
     private FrescoViewPager mViewPager;
     private FrescoActionButton mDrawButton;
@@ -42,14 +38,27 @@ public class Fresco
     public final static int RECORD_BUTTON = 2;
     public final static int PICTURE_BUTTON = 3;
 
-    public Fresco(Wasabi wasabi)
+    public Fresco(Context context)
     {
-        mFrescoContainer = (FrameLayout) wasabi.findViewById(R.id.fresco_container);
+        super(context);
+    }
 
+    public Fresco(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    /**
+     * Initialise la fresque
+     *
+     * @param supportFragmentManager
+     */
+    public void init(FragmentManager supportFragmentManager)
+    {
         /* Récupération des boutons */
-        mDrawButton = (DrawButton) mFrescoContainer.findViewById(R.id.begin_drawing);
-        mPictureButton = (PictureButton) mFrescoContainer.findViewById(R.id.take_picture);
-        mRecordButton = (RecordButton) mFrescoContainer.findViewById(R.id.record_audio);
+        mDrawButton = (DrawButton) findViewById(R.id.begin_drawing);
+        mPictureButton = (PictureButton) findViewById(R.id.take_picture);
+        mRecordButton = (RecordButton) findViewById(R.id.record_audio);
 
         /* Ajout des resources */
         mDrawButton.setResource(R.drawable.tool_pencil);
@@ -59,11 +68,16 @@ public class Fresco
         mRecordButton.setResource(R.drawable.tool_record);
         mRecordButton.setActiveResource(R.drawable.tool_record_active);
 
+        /* Ajout des listeners */
+        mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
+        mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
+        mPictureButton.setOnClickListener(new TakePictureListener(this, mPictureButton));
+
         /* Ajout du viewPager */
-        mViewPager = (FrescoViewPager) mFrescoContainer.findViewById(R.id.view_pager_fresco);
+        mViewPager = (FrescoViewPager) findViewById(R.id.view_pager_fresco);
 
         /* Instanciation de l'adapter */
-        mViewPagerAdapter = new ViewPagerAdapter(wasabi.getSupportFragmentManager());
+        mViewPagerAdapter = new ViewPagerAdapter(supportFragmentManager);
 
         /* Ajout des fragments de chaque jour */
         mViewPagerAdapter.add(DrawingFragment.newInstance());
@@ -81,14 +95,6 @@ public class Fresco
         mViewPagerAdapter.add(DrawingFragment.newInstance());
 
         mViewPager.setAdapter(mViewPagerAdapter);
-
-        /* Ajout des listeners */
-        mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
-        mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
-        mPictureButton.setOnClickListener(new TakePictureListener(this, mPictureButton));
-
-        /* Le parent */
-        mParent = (FrameLayout) mViewPager.getParent();
     }
 
     /**
@@ -197,7 +203,7 @@ public class Fresco
     private void toggleInterfaceButtons(boolean show, int resourceId)
     {
         /* Récupération de la ressource */
-        View view = mParent.findViewById(resourceId);
+        View view = findViewById(resourceId);
 
         /* Les variables de départ et d'arrivée */
         int from = show ? 0 : 1;

@@ -2,6 +2,7 @@ package project.gobelins.wasabi;
 
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -13,6 +14,7 @@ import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 import project.gobelins.wasabi.fresco.views.FrescoViewPager;
+import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
@@ -66,7 +68,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
         mAppContainer.addView(mRevealContainerFresco);
         mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
-        mFresco = new Fresco(this);
+
+        /* On initialise la fresque et le viewPager */
+        Fresco fresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
+        fresco.init(getSupportFragmentManager());
 
         /* La notif si != null (inflate, ajout de la vue et du listener) */
         if(mLastNotification != null)
