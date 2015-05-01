@@ -15,8 +15,8 @@
 
         <ImageView
             android:id="@+id/close_notification"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:layout_width="@dimen/action_buttons"
+            android:layout_height="@dimen/action_buttons"
             android:layout_gravity="end|bottom"
             android:layout_marginBottom="10dp"
             android:layout_marginRight="10dp"

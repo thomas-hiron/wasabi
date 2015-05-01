@@ -7,12 +7,11 @@ import android.graphics.Color;
  */
 public class Colors
 {
-    private final String WHITE = "#FFFFFF";
     private final String BLACK = "#1A1A1A";
-    private final String GREEN = "#4ed6c2";
-    private final String YELLOW = "#ffd646";
-    private final String RED = "#f26667";
-    private final String PINK = "#c190bd";
+    private final String RED1 = "#f26667";
+    private final String RED2 = "#f69494";
+    private final String BLUE1 = "#bde9eb";
+    private final String BLUE2 = "#82c7ca";
 
     private int[] mColors;
 
@@ -21,14 +20,13 @@ public class Colors
      */
     public Colors()
     {
-        mColors = new int[6];
+        mColors = new int[5];
 
-        mColors[0] = Color.parseColor(WHITE);
-        mColors[1] = Color.parseColor(BLACK);
-        mColors[2] = Color.parseColor(GREEN);
-        mColors[3] = Color.parseColor(YELLOW);
-        mColors[4] = Color.parseColor(RED);
-        mColors[5] = Color.parseColor(PINK);
+        mColors[0] = Color.parseColor(BLACK);
+        mColors[1] = Color.parseColor(RED1);
+        mColors[2] = Color.parseColor(RED2);
+        mColors[3] = Color.parseColor(BLUE1);
+        mColors[4] = Color.parseColor(BLUE2);
     }
 
     /**
