@@ -5,6 +5,7 @@ import android.support.v4.app.Fragment;
 import android.view.DragEvent;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewParent;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -12,18 +13,19 @@ import android.widget.LinearLayout;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
-import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fragments.DrawingFragment;
+import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.listeners.BeginFrescoDrawingListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
-import project.gobelins.wasabi.fresco.views.FrescoViewPager;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
+import project.gobelins.wasabi.fresco.views.FrescoViewPager;
 
 /**
  * Created by ThomasHiron on 30/04/2015.
  */
 public class Fresco
 {
+    private FrameLayout mParent;
     private FrameLayout mFrescoContainer;
     private ViewPagerAdapter mViewPagerAdapter;
     private FrescoViewPager mViewPager;
@@ -66,6 +68,9 @@ public class Fresco
 
         /* Ajout des listeners */
         mDrawButton.setOnClickListener(new BeginFrescoDrawingListener(this));
+
+        /* Le parent */
+        mParent = (FrameLayout) mViewPager.getParent();
     }
 
     /**
@@ -158,7 +163,8 @@ public class Fresco
      */
     public void hideInterfaceButtons()
     {
-        toggleInterfaceButtons(false);
+        toggleInterfaceButtons(false, R.id.fresco_buttons_group);
+        toggleInterfaceButtons(false, R.id.close_fresco);
     }
 
     /**
@@ -166,15 +172,19 @@ public class Fresco
      */
     public void showInterfaceButtons()
     {
-        toggleInterfaceButtons(true);
+        toggleInterfaceButtons(true, R.id.fresco_buttons_group);
+        toggleInterfaceButtons(true, R.id.close_fresco);
     }
 
-    private void toggleInterfaceButtons(boolean show)
+    /**
+     * Affiche ou cache les boutons d'action
+     *
+     * @param show Si on doit afficher le bouton
+     */
+    private void toggleInterfaceButtons(boolean show, int resourceId)
     {
-        /* Récupération du groupe de boutons et du bouton fermer */
-        FrameLayout parent = (FrameLayout) mViewPager.getParent();
-        LinearLayout buttons = (LinearLayout) parent.findViewById(R.id.fresco_buttons_group);
-        Button closeButton = (Button) parent.findViewById(R.id.close_fresco);
+        /* Récupération de la ressource */
+        View view = mParent.findViewById(resourceId);
 
         /* Les variables de départ et d'arrivée */
         int from = show ? 0 : 1;
@@ -185,8 +195,23 @@ public class Fresco
         alphaAnimation.setDuration(200);
         alphaAnimation.setFillAfter(true);
 
-        /* On lance les animations */
-        buttons.startAnimation(alphaAnimation);
-        closeButton.startAnimation(alphaAnimation);
+        /* On lance l'aanimations */
+        view.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Affiche les boutons permettant de changer la couleur du dessin
+     */
+    public void showColorsButtons()
+    {
+        toggleInterfaceButtons(true, R.id.colors_buttons);
+    }
+
+    /**
+     * Cache les boutons permettant de changer la couleur du dessin
+     */
+    public void hideColorsButtons()
+    {
+        toggleInterfaceButtons(false, R.id.colors_buttons);
     }
 }

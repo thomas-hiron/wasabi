@@ -27,6 +27,9 @@ public class BeginFrescoDrawingListener implements View.OnClickListener
         /* On vérouille le viewPager */
         mFresco.lock();
 
+        /* Affiche les boutons de couleur */
+        mFresco.showColorsButtons();
+
         /* Initialisation du dessin */
         mFresco.initDrawing();
     }
