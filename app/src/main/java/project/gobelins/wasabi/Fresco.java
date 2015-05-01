@@ -1,6 +1,9 @@
 package project.gobelins.wasabi;
 
+import android.content.ClipData;
 import android.support.v4.app.Fragment;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
@@ -19,6 +22,7 @@ import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
  */
 public class Fresco
 {
+    private FrameLayout mFrescoContainer;
     private ViewPagerAdapter mViewPagerAdapter;
     private MyViewPager mViewPager;
     private Button mDrawButton;
@@ -28,13 +32,15 @@ public class Fresco
 
     public Fresco(Wasabi wasabi)
     {
+        mFrescoContainer = (FrameLayout) wasabi.findViewById(R.id.fresco_container);
+
         /* Récupération des boutons */
-        mDrawButton = (Button) wasabi.findViewById(R.id.begin_drawing);
-        mPictureButton = (Button) wasabi.findViewById(R.id.take_picture);
-        mSoundButton = (Button) wasabi.findViewById(R.id.record_audio);
+        mDrawButton = (Button) mFrescoContainer.findViewById(R.id.begin_drawing);
+        mPictureButton = (Button) mFrescoContainer.findViewById(R.id.take_picture);
+        mSoundButton = (Button) mFrescoContainer.findViewById(R.id.record_audio);
 
         /* Ajout du viewPager */
-        mViewPager = (MyViewPager) wasabi.findViewById(R.id.view_pager_fresco);
+        mViewPager = (MyViewPager) mFrescoContainer.findViewById(R.id.view_pager_fresco);
 
         /* Instanciation de l'adapter */
         mViewPagerAdapter = new ViewPagerAdapter(wasabi.getSupportFragmentManager());
@@ -96,6 +102,53 @@ public class Fresco
             /* Ajout du listener sur la vue */
             drawView.setOnTouchListener(new DrawingListener(drawView, this));
         }
+
+        /* On drag le bouton du son */
+        mSoundButton.setOnTouchListener(new View.OnTouchListener()
+        {
+            @Override
+            public boolean onTouch(View view, MotionEvent motionEvent)
+            {
+                /* On démarre le drag et on cache la vue */
+                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
+                {
+                    ClipData data = ClipData.newPlainText("", "");
+                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                    view.startDrag(data, shadowBuilder, view, 0);
+                    view.setVisibility(View.GONE);
+
+                    return true;
+                }
+
+                return false;
+            }
+        });
+
+        mViewPager.setOnDragListener(new View.OnDragListener()
+        {
+            @Override
+            public boolean onDrag(View view, DragEvent dragEvent)
+            {
+                /* Pour accepter le drag et recevoir le drop */
+                if(dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
+                    return true;
+                /* Au drop, on repositionne l'objet */
+                else if(dragEvent.getAction() == DragEvent.ACTION_DROP)
+                {
+                    /* On raffiche le bouton */
+                    mSoundButton.setVisibility(View.VISIBLE);
+
+                    /* Le layout des boutons */
+                    LinearLayout buttonsContainer = (LinearLayout) mSoundButton.getParent();
+
+                    /* On replace le bouton */
+                    mSoundButton.setX(dragEvent.getX() - buttonsContainer.getX() - mSoundButton.getWidth() / 2);
+                    mSoundButton.setY(dragEvent.getY() - buttonsContainer.getY() - mSoundButton.getHeight() / 2);
+                }
+
+                return false;
+            }
+        });
     }
 
     /**
