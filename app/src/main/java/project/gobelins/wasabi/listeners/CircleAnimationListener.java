@@ -1,10 +1,8 @@
 package project.gobelins.wasabi.listeners;
 
-import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.Button;
 import android.widget.ImageView;
 
 import io.codetail.animation.SupportAnimator;
@@ -81,7 +79,7 @@ public class CircleAnimationListener implements View.OnClickListener
         /* Ajout du listener sur fermer */
         if(!mClose)
         {
-            int id = view.getId() == R.id.fresco ? R.id.close_fresco : R.id.close_notification;
+            int id = view.getId() == R.id.open_fresco ? R.id.close_fresco : R.id.close_notification;
             ImageView close = (ImageView) mRevealContainer.findViewById(id);
             close.setOnClickListener(new CircleAnimationListener(mListener, mRevealContainer, true));
         }
@@ -104,7 +102,7 @@ public class CircleAnimationListener implements View.OnClickListener
                 else if(mClose && view.getId() == R.id.close_notification)
                     mListener.onNotificationClosed();
                     /* On initialise la fresque */
-                else if(view.getId() == R.id.fresco)
+                else if(view.getId() == R.id.open_fresco)
                     mListener.onFrescoOpened();
                 else
                     mListener.onNotificationOpened();

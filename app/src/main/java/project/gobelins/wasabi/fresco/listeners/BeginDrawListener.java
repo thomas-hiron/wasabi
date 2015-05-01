@@ -39,12 +39,6 @@ public class BeginDrawListener implements View.OnClickListener
             /* Initialisation du dessin */
             mFresco.initDrawing();
         }
-        /* On quitte le mode dessin */
-        else
-        {
-            /* On cache les couleurs */
-            mFresco.hideColorsButtons();
-        }
 
         /* On change l'état du bouton */
         mFresco.changeButtonState(Fresco.DRAW_BUTTON, mDrawButton.isActive());

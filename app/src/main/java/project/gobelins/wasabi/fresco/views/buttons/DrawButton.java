@@ -30,12 +30,7 @@ public class DrawButton extends FrescoActionButton
     @Override
     public void buttonStateDisabled()
     {
-        /* Récupération de la vue parent */
-        LinearLayout parent = (LinearLayout) getParent();
-
-        /* Les couleurs */
-        View viewById = parent.findViewById(R.id.colors_buttons);
         /* On cache les couleurs */
-
+        mFresco.hideColorsButtons();
     }
 }

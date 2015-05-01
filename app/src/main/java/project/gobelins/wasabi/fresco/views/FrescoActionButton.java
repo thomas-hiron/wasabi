@@ -2,13 +2,19 @@ package project.gobelins.wasabi.fresco.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
+
+import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.Fresco;
 
 /**
  * Created by ThomasHiron on 01/05/2015.
  */
 public abstract class FrescoActionButton extends ImageView
 {
+    protected Fresco mFresco;
     private int mResource;
     private int mActiveResource;
     private boolean mStateActive;
@@ -23,6 +29,18 @@ public abstract class FrescoActionButton extends ImageView
         super(context, attrs);
 
         mStateActive = false;
+    }
+
+    @Override
+    protected void onAttachedToWindow()
+    {
+        super.onAttachedToWindow();
+
+        /* Le root */
+        View rootView = getRootView();
+
+        /* Initialisation de la fresque */
+        mFresco = (Fresco) rootView.findViewById(R.id.fresco_container);
     }
 
     /**
@@ -60,11 +78,12 @@ public abstract class FrescoActionButton extends ImageView
      */
     public void changeState(boolean active)
     {
-        mStateActive = active;
-
-        /* Le bouton a été désactivé */
-        if(!mStateActive)
+        /* Le bouton a été désactivé (encore actif) */
+        if(mStateActive)
             buttonStateDisabled();
+
+        /* On change l'état */
+        mStateActive = active;
     }
 
     /**

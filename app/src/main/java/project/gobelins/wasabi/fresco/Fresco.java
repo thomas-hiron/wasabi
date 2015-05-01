@@ -48,13 +48,11 @@ public class Fresco extends FrameLayout
         super(context, attrs);
     }
 
-    /**
-     * Initialise la fresque
-     *
-     * @param supportFragmentManager
-     */
-    public void init(FragmentManager supportFragmentManager)
+    @Override
+    protected void onAttachedToWindow()
     {
+        super.onAttachedToWindow();
+
         /* Récupération des boutons */
         mDrawButton = (DrawButton) findViewById(R.id.begin_drawing);
         mPictureButton = (PictureButton) findViewById(R.id.take_picture);
@@ -72,7 +70,15 @@ public class Fresco extends FrameLayout
         mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
         mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
         mPictureButton.setOnClickListener(new TakePictureListener(this, mPictureButton));
+    }
 
+    /**
+     * Initialise le viewPager
+     *
+     * @param supportFragmentManager
+     */
+    public void initViewPager(FragmentManager supportFragmentManager)
+    {
         /* Ajout du viewPager */
         mViewPager = (FrescoViewPager) findViewById(R.id.view_pager_fresco);
 
@@ -94,6 +100,7 @@ public class Fresco extends FrameLayout
         mViewPagerAdapter.add(DrawingFragment.newInstance());
         mViewPagerAdapter.add(DrawingFragment.newInstance());
 
+        /* Ajout de l'adapter */
         mViewPager.setAdapter(mViewPagerAdapter);
     }
 
@@ -262,14 +269,12 @@ public class Fresco extends FrameLayout
 
                 frescoActionButton = mRecordButton;
                 frescoActionButtons = new FrescoActionButton[]{mDrawButton, mPictureButton};
-                hideColorsButtons();
                 break;
 
             case PICTURE_BUTTON:
 
                 frescoActionButton = mPictureButton;
                 frescoActionButtons = new FrescoActionButton[]{mDrawButton, mRecordButton};
-                hideColorsButtons();
                 break;
         }
 
@@ -291,6 +296,5 @@ public class Fresco extends FrameLayout
             /* On force l'état du bouton à non actif */
             b.changeState(false);
         }
-
     }
 }
