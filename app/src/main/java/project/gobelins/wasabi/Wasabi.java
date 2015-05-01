@@ -7,9 +7,12 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
+import project.gobelins.wasabi.fresco.views.FrescoViewPager;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
@@ -19,8 +22,6 @@ import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
-import project.gobelins.wasabi.fresco.views.FrescoViewPager;
-import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 
 public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened, OnNotificationClosed
 {
@@ -30,12 +31,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private FrameLayout mAppContainer;
     private View mRevealContainerFresco;
     private View mRevealContainerNotification;
-    private Button mFrescoButton;
-    private Button mNotificationButton;
+    private ImageView mFrescoButton;
+    private ImageView mNotificationButton;
     private MyLayout mCustomView;
     private Notification mLastNotification;
-    private FrescoViewPager mViewPager;
-    private ViewPagerAdapter mViewPagerAdapter;
     private Fresco mFresco;
 
     @Override
@@ -57,8 +56,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         registrationIdManager.getRegistrationID();
 
         /* Ajout des listeners d'animation */
-        mFrescoButton = (Button) findViewById(R.id.fresco);
-        mNotificationButton = (Button) findViewById(R.id.notification);
+        mFrescoButton = (ImageView) findViewById(R.id.fresco);
+        mNotificationButton = (ImageView) findViewById(R.id.notification);
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);

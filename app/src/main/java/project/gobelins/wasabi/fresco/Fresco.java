@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.fresco;
 
 import android.content.ClipData;
+import android.graphics.Color;
 import android.support.v4.app.Fragment;
 import android.view.DragEvent;
 import android.view.MotionEvent;
@@ -9,6 +10,7 @@ import android.view.ViewParent;
 import android.view.animation.AlphaAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import project.gobelins.wasabi.R;
@@ -31,7 +33,7 @@ public class Fresco
     private FrescoViewPager mViewPager;
     private Button mDrawButton;
     private Button mPictureButton;
-    private Button mSoundButton;
+    private ImageView mSoundButton;
     private View mLastFragmentView;
 
     public Fresco(Wasabi wasabi)
@@ -41,7 +43,7 @@ public class Fresco
         /* Récupération des boutons */
         mDrawButton = (Button) mFrescoContainer.findViewById(R.id.begin_drawing);
         mPictureButton = (Button) mFrescoContainer.findViewById(R.id.take_picture);
-        mSoundButton = (Button) mFrescoContainer.findViewById(R.id.record_audio);
+        mSoundButton = (ImageView) mFrescoContainer.findViewById(R.id.record_audio);
 
         /* Ajout du viewPager */
         mViewPager = (FrescoViewPager) mFrescoContainer.findViewById(R.id.view_pager_fresco);
@@ -213,5 +215,19 @@ public class Fresco
     public void hideColorsButtons()
     {
         toggleInterfaceButtons(false, R.id.colors_buttons);
+    }
+
+    /**
+     * Change l'état du bouton dessiner (background)
+     * @param isDrawing
+     */
+    public void changeDrawingButtonState(boolean isDrawing)
+    {
+        /* On enlève la bg */
+        if(isDrawing)
+            mDrawButton.setBackgroundColor(Color.WHITE);
+        else
+            mDrawButton.setBackgroundColor(Color.BLACK);
+
     }
 }

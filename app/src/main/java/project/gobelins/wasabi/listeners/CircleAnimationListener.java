@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
@@ -81,7 +82,7 @@ public class CircleAnimationListener implements View.OnClickListener
         if(!mClose)
         {
             int id = view.getId() == R.id.fresco ? R.id.close_fresco : R.id.close_notification;
-            Button close = (Button) mRevealContainer.findViewById(id);
+            ImageView close = (ImageView) mRevealContainer.findViewById(id);
             close.setOnClickListener(new CircleAnimationListener(mListener, mRevealContainer, true));
         }
 

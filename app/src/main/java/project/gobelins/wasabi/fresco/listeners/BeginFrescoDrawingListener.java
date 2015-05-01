@@ -12,25 +12,43 @@ import project.gobelins.wasabi.fresco.Fresco;
 public class BeginFrescoDrawingListener implements View.OnClickListener
 {
     private Fresco mFresco;
+    private boolean mIsDrawing;
 
     public BeginFrescoDrawingListener(Fresco fresco)
     {
         mFresco = fresco;
+        mIsDrawing = false;
     }
 
     @Override
     public void onClick(View view)
     {
-        /* On se déplace */
-        mFresco.goToLastFragment();
+        /* Si on active le mode dessin */
+        if(!mIsDrawing)
+        {
+            /* On se déplace */
+            mFresco.goToLastFragment();
 
-        /* On vérouille le viewPager */
-        mFresco.lock();
+            /* On vérouille le viewPager */
+            mFresco.lock();
 
-        /* Affiche les boutons de couleur */
-        mFresco.showColorsButtons();
+            /* Affiche les boutons de couleur */
+            mFresco.showColorsButtons();
 
-        /* Initialisation du dessin */
-        mFresco.initDrawing();
+            /* Initialisation du dessin */
+            mFresco.initDrawing();
+        }
+        /* On quitte le mode dessin */
+        else
+        {
+            /* On cache les couleurs */
+            mFresco.hideColorsButtons();
+        }
+
+        /* On change l'état du bouton */
+        mFresco.changeDrawingButtonState(mIsDrawing);
+
+        /* On change l'état */
+        mIsDrawing = !mIsDrawing;
     }
 }

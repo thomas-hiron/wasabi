@@ -9,18 +9,26 @@
         android:layout_height="wrap_content"
         android:text="@string/hello_world"/>
 
-    <Button
+    <ImageView
         android:id="@+id/notification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="end|bottom"
-        android:text="@string/notif"/>
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:contentDescription="@string/notif"
+        android:src="@drawable/open_notification"/>
 
-    <Button
+    <ImageView
         android:id="@+id/fresco"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
         android:layout_gravity="start|bottom"
-        android:text="@string/fresco"/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginStart="10dp"
+        android:src="@drawable/open_fresco"
+        android:contentDescription="@string/fresco"/>
 
 </FrameLayout>
