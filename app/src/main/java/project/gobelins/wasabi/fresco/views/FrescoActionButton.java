@@ -7,10 +7,11 @@ import android.widget.ImageView;
 /**
  * Created by ThomasHiron on 01/05/2015.
  */
-public class FrescoActionButton extends ImageView
+public abstract class FrescoActionButton extends ImageView
 {
     private int mResource;
     private int mActiveResource;
+    private boolean mStateActive;
 
     public FrescoActionButton(Context context)
     {
@@ -20,6 +21,8 @@ public class FrescoActionButton extends ImageView
     public FrescoActionButton(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+
+        mStateActive = false;
     }
 
     /**
@@ -50,4 +53,38 @@ public class FrescoActionButton extends ImageView
     {
         mActiveResource = activeResourceId;
     }
+
+    /**
+     * Change l'état du bouton
+     * @param active
+     */
+    public void changeState(boolean active)
+    {
+        mStateActive = active;
+
+        /* Le bouton a été désactivé */
+        if(!mStateActive)
+            buttonStateDisabled();
+    }
+
+    /**
+     * Change l'état du bouton
+     */
+    public void changeState()
+    {
+        changeState(!mStateActive);
+    }
+
+    /**
+     * @return si le bouton est actif
+     */
+    public boolean isActive()
+    {
+        return mStateActive;
+    }
+
+    /**
+     * Traitement particuliers lorsque le bouton vient d'être désactivé
+     */
+    public abstract void buttonStateDisabled();
 }

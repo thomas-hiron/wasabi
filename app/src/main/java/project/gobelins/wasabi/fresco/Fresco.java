@@ -1,22 +1,28 @@
 package project.gobelins.wasabi.fresco;
 
+import android.content.ClipData;
 import android.support.v4.app.Fragment;
+import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-import android.widget.Switch;
+import android.widget.LinearLayout;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
-import project.gobelins.wasabi.fresco.listeners.BeginFrescoDrawingListener;
+import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.fresco.listeners.RecordAudioListener;
 import project.gobelins.wasabi.fresco.listeners.TakePictureListener;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 import project.gobelins.wasabi.fresco.views.FrescoViewPager;
+import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
+import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
+import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
 
 /**
  * Created by ThomasHiron on 30/04/2015.
@@ -41,9 +47,9 @@ public class Fresco
         mFrescoContainer = (FrameLayout) wasabi.findViewById(R.id.fresco_container);
 
         /* Récupération des boutons */
-        mDrawButton = (FrescoActionButton) mFrescoContainer.findViewById(R.id.begin_drawing);
-        mPictureButton = (FrescoActionButton) mFrescoContainer.findViewById(R.id.take_picture);
-        mRecordButton = (FrescoActionButton) mFrescoContainer.findViewById(R.id.record_audio);
+        mDrawButton = (DrawButton) mFrescoContainer.findViewById(R.id.begin_drawing);
+        mPictureButton = (PictureButton) mFrescoContainer.findViewById(R.id.take_picture);
+        mRecordButton = (RecordButton) mFrescoContainer.findViewById(R.id.record_audio);
 
         /* Ajout des resources */
         mDrawButton.setResource(R.drawable.tool_pencil);
@@ -77,9 +83,9 @@ public class Fresco
         mViewPager.setAdapter(mViewPagerAdapter);
 
         /* Ajout des listeners */
-        mDrawButton.setOnClickListener(new BeginFrescoDrawingListener(this));
-        mRecordButton.setOnClickListener(new RecordAudioListener(this));
-        mPictureButton.setOnClickListener(new TakePictureListener(this));
+        mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
+        mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
+        mPictureButton.setOnClickListener(new TakePictureListener(this, mPictureButton));
 
         /* Le parent */
         mParent = (FrameLayout) mViewPager.getParent();
@@ -123,23 +129,18 @@ public class Fresco
         }
 
 //        /* On drag le bouton du son */
-//        mSoundButton.setOnTouchListener(new View.OnTouchListener()
+//        mRecordButton.setOnLongClickListener(new View.OnLongClickListener()
 //        {
 //            @Override
-//            public boolean onTouch(View view, MotionEvent motionEvent)
+//            public boolean onLongClick(View view)
 //            {
 //                /* On démarre le drag et on cache la vue */
-//                if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
-//                {
-//                    ClipData data = ClipData.newPlainText("", "");
-//                    View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-//                    view.startDrag(data, shadowBuilder, view, 0);
-//                    view.setVisibility(View.GONE);
+//                ClipData data = ClipData.newPlainText("", "");
+//                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+//                view.startDrag(data, shadowBuilder, view, 0);
+//                view.setVisibility(View.GONE);
 //
-//                    return true;
-//                }
-//
-//                return false;
+//                return true;
 //            }
 //        });
 //
@@ -155,14 +156,14 @@ public class Fresco
 //                else if(dragEvent.getAction() == DragEvent.ACTION_DROP)
 //                {
 //                    /* On raffiche le bouton */
-//                    mSoundButton.setVisibility(View.VISIBLE);
+//                    mRecordButton.setVisibility(View.VISIBLE);
 //
 //                    /* Le layout des boutons */
-//                    LinearLayout buttonsContainer = (LinearLayout) mSoundButton.getParent();
+//                    LinearLayout buttonsContainer = (LinearLayout) mRecordButton.getParent();
 //
 //                    /* On replace le bouton */
-//                    mSoundButton.setX(dragEvent.getX() - buttonsContainer.getX() - mSoundButton.getWidth() / 2);
-//                    mSoundButton.setY(dragEvent.getY() - buttonsContainer.getY() - mSoundButton.getHeight() / 2);
+//                    mRecordButton.setX(dragEvent.getX() - buttonsContainer.getX() - mRecordButton.getWidth() / 2);
+//                    mRecordButton.setY(dragEvent.getY() - buttonsContainer.getY() - mRecordButton.getHeight() / 2);
 //                }
 //
 //                return false;
@@ -224,13 +225,14 @@ public class Fresco
      */
     public void hideColorsButtons()
     {
-        toggleInterfaceButtons(false, R.id.colors_buttons);
+        if(mDrawButton.isActive())
+            toggleInterfaceButtons(false, R.id.colors_buttons);
     }
 
     /**
      * Change l'état du bouton dessiner (background)
      *
-     * @param buttonId L'id du bouton
+     * @param buttonId  L'id du bouton
      * @param isDrawing S'il était en train de dessiner
      */
     public void changeButtonState(int buttonId, boolean isDrawing)
@@ -238,22 +240,30 @@ public class Fresco
         /* Le bouton d'action à changer */
         FrescoActionButton frescoActionButton = null;
 
+        /* Les autres boutons */
+        FrescoActionButton[] frescoActionButtons = null;
+
         /* On prend le bon bouton */
         switch(buttonId)
         {
-            case DRAW_BUTTON :
+            case DRAW_BUTTON:
 
                 frescoActionButton = mDrawButton;
+                frescoActionButtons = new FrescoActionButton[]{mRecordButton, mPictureButton};
                 break;
 
-            case RECORD_BUTTON :
+            case RECORD_BUTTON:
 
                 frescoActionButton = mRecordButton;
+                frescoActionButtons = new FrescoActionButton[]{mDrawButton, mPictureButton};
+                hideColorsButtons();
                 break;
 
-            case PICTURE_BUTTON :
+            case PICTURE_BUTTON:
 
                 frescoActionButton = mPictureButton;
+                frescoActionButtons = new FrescoActionButton[]{mDrawButton, mRecordButton};
+                hideColorsButtons();
                 break;
         }
 
@@ -265,6 +275,16 @@ public class Fresco
         /* On ajout l'état actif */
         else
             frescoActionButton.setImageResource(frescoActionButton.getActiveResource());
+
+        /* On enlève l'état actif des autres boutons */
+        for(FrescoActionButton b : frescoActionButtons)
+        {
+            /* On change le back */
+            b.setImageResource(b.getResource());
+
+            /* On force l'état du bouton à non actif */
+            b.changeState(false);
+        }
 
     }
 }

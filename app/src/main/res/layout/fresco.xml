@@ -45,7 +45,7 @@
                     android:orientation="horizontal"
                     android:visibility="invisible"/>
 
-                <project.gobelins.wasabi.fresco.views.FrescoActionButton
+                <project.gobelins.wasabi.fresco.views.buttons.DrawButton
                     android:id="@+id/begin_drawing"
                     android:layout_width="@dimen/fresco_tools"
                     android:layout_height="@dimen/fresco_tools"
@@ -57,7 +57,7 @@
             </LinearLayout>
 
             <!-- Enregistrer du son -->
-            <project.gobelins.wasabi.fresco.views.FrescoActionButton
+            <project.gobelins.wasabi.fresco.views.buttons.RecordButton
                 android:id="@+id/record_audio"
                 android:layout_width="@dimen/fresco_tools"
                 android:layout_height="@dimen/fresco_tools"
@@ -68,7 +68,7 @@
                 android:src="@drawable/tool_record"/>
 
             <!-- Prendre une photo -->
-            <project.gobelins.wasabi.fresco.views.FrescoActionButton
+            <project.gobelins.wasabi.fresco.views.buttons.PictureButton
                 android:id="@+id/take_picture"
                 android:layout_width="@dimen/fresco_tools"
                 android:layout_height="@dimen/fresco_tools"

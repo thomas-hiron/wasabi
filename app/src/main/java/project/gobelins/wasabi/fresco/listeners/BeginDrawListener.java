@@ -3,28 +3,29 @@ package project.gobelins.wasabi.fresco.listeners;
 import android.view.View;
 
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 
 /**
  * Listener au clic sur le bouton dessiner
  * <p/>
  * Created by ThomasHiron on 30/04/2015.
  */
-public class BeginFrescoDrawingListener implements View.OnClickListener
+public class BeginDrawListener implements View.OnClickListener
 {
     private Fresco mFresco;
-    private boolean mIsDrawing;
+    private FrescoActionButton mDrawButton;
 
-    public BeginFrescoDrawingListener(Fresco fresco)
+    public BeginDrawListener(Fresco fresco, FrescoActionButton drawButton)
     {
         mFresco = fresco;
-        mIsDrawing = false;
+        mDrawButton = drawButton;
     }
 
     @Override
     public void onClick(View view)
     {
         /* Si on active le mode dessin */
-        if(!mIsDrawing)
+        if(!mDrawButton.isActive())
         {
             /* On se déplace */
             mFresco.goToLastFragment();
@@ -46,9 +47,9 @@ public class BeginFrescoDrawingListener implements View.OnClickListener
         }
 
         /* On change l'état du bouton */
-        mFresco.changeButtonState(Fresco.DRAW_BUTTON, mIsDrawing);
+        mFresco.changeButtonState(Fresco.DRAW_BUTTON, mDrawButton.isActive());
 
         /* On change l'état */
-        mIsDrawing = !mIsDrawing;
+        mDrawButton.changeState();
     }
 }

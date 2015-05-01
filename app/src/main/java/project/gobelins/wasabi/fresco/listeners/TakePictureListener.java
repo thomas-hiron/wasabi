@@ -4,6 +4,7 @@ import android.view.View;
 import android.widget.Toast;
 
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 
 /**
  * Created by ThomasHiron on 01/05/2015.
@@ -12,7 +13,7 @@ public class TakePictureListener implements View.OnClickListener
 {
     private Fresco mFresco;
 
-    public TakePictureListener(Fresco fresco)
+    public TakePictureListener(Fresco fresco, FrescoActionButton mPictureButton)
     {
         mFresco = fresco;
     }
