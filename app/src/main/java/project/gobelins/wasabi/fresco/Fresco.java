@@ -1,13 +1,10 @@
 package project.gobelins.wasabi.fresco;
 
-import android.content.ClipData;
 import android.support.v4.app.Fragment;
-import android.view.DragEvent;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-import android.widget.LinearLayout;
+import android.widget.Switch;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
@@ -15,6 +12,8 @@ import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.listeners.BeginFrescoDrawingListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
+import project.gobelins.wasabi.fresco.listeners.RecordAudioListener;
+import project.gobelins.wasabi.fresco.listeners.TakePictureListener;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 import project.gobelins.wasabi.fresco.views.FrescoViewPager;
@@ -30,8 +29,12 @@ public class Fresco
     private FrescoViewPager mViewPager;
     private FrescoActionButton mDrawButton;
     private FrescoActionButton mPictureButton;
-    private FrescoActionButton mSoundButton;
+    private FrescoActionButton mRecordButton;
     private View mLastFragmentView;
+
+    public final static int DRAW_BUTTON = 1;
+    public final static int RECORD_BUTTON = 2;
+    public final static int PICTURE_BUTTON = 3;
 
     public Fresco(Wasabi wasabi)
     {
@@ -40,15 +43,15 @@ public class Fresco
         /* Récupération des boutons */
         mDrawButton = (FrescoActionButton) mFrescoContainer.findViewById(R.id.begin_drawing);
         mPictureButton = (FrescoActionButton) mFrescoContainer.findViewById(R.id.take_picture);
-        mSoundButton = (FrescoActionButton) mFrescoContainer.findViewById(R.id.record_audio);
+        mRecordButton = (FrescoActionButton) mFrescoContainer.findViewById(R.id.record_audio);
 
         /* Ajout des resources */
         mDrawButton.setResource(R.drawable.tool_pencil);
         mDrawButton.setActiveResource(R.drawable.tool_pencil_active);
         mPictureButton.setResource(R.drawable.tool_picture);
         mPictureButton.setActiveResource(R.drawable.tool_picture_active);
-        mSoundButton.setResource(R.drawable.tool_record);
-        mSoundButton.setActiveResource(R.drawable.tool_record_active);
+        mRecordButton.setResource(R.drawable.tool_record);
+        mRecordButton.setActiveResource(R.drawable.tool_record_active);
 
         /* Ajout du viewPager */
         mViewPager = (FrescoViewPager) mFrescoContainer.findViewById(R.id.view_pager_fresco);
@@ -75,6 +78,8 @@ public class Fresco
 
         /* Ajout des listeners */
         mDrawButton.setOnClickListener(new BeginFrescoDrawingListener(this));
+        mRecordButton.setOnClickListener(new RecordAudioListener(this));
+        mPictureButton.setOnClickListener(new TakePictureListener(this));
 
         /* Le parent */
         mParent = (FrameLayout) mViewPager.getParent();
@@ -225,16 +230,41 @@ public class Fresco
     /**
      * Change l'état du bouton dessiner (background)
      *
+     * @param buttonId L'id du bouton
      * @param isDrawing S'il était en train de dessiner
      */
-    public void changeDrawingButtonState(boolean isDrawing)
+    public void changeButtonState(int buttonId, boolean isDrawing)
     {
+        /* Le bouton d'action à changer */
+        FrescoActionButton frescoActionButton = null;
+
+        /* On prend le bon bouton */
+        switch(buttonId)
+        {
+            case DRAW_BUTTON :
+
+                frescoActionButton = mDrawButton;
+                break;
+
+            case RECORD_BUTTON :
+
+                frescoActionButton = mRecordButton;
+                break;
+
+            case PICTURE_BUTTON :
+
+                frescoActionButton = mPictureButton;
+                break;
+        }
+
+        assert frescoActionButton != null;
+
         /* On enlève l'état actif */
         if(isDrawing)
-            mDrawButton.setImageResource(mDrawButton.getResource());
+            frescoActionButton.setImageResource(frescoActionButton.getResource());
         /* On ajout l'état actif */
         else
-            mDrawButton.setImageResource(mDrawButton.getActiveResource());
+            frescoActionButton.setImageResource(frescoActionButton.getActiveResource());
 
     }
 }
