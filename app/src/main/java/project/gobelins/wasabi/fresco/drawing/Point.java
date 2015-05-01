@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.drawing;
+package project.gobelins.wasabi.fresco.drawing;
 
 /**
  * Created by thiron on 27/02/2015.

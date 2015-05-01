@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.viewPager;
+package project.gobelins.wasabi.fresco.viewPager;
 
 import android.content.Context;
 import android.view.animation.Interpolator;

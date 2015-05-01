@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.drawing;
+package project.gobelins.wasabi.fresco.drawing;
 
 import android.content.Context;
 import android.graphics.Canvas;

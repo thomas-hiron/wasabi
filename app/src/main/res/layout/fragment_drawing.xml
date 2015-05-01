@@ -4,7 +4,7 @@
              android:layout_height="match_parent"
              tools:context="project.gobelins.wasabi.fragments.DrawingFragment">
 
-    <project.gobelins.wasabi.drawing.DrawView
+    <project.gobelins.wasabi.fresco.drawing.DrawView
         android:id="@+id/draw_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

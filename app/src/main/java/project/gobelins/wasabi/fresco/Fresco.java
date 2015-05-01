@@ -1,4 +1,4 @@
-package project.gobelins.wasabi;
+package project.gobelins.wasabi.fresco;
 
 import android.content.ClipData;
 import android.support.v4.app.Fragment;
@@ -10,12 +10,14 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.LinearLayout;
 
-import project.gobelins.wasabi.drawing.DrawView;
+import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fragments.DrawingFragment;
-import project.gobelins.wasabi.listeners.BeginFrescoDrawingListener;
-import project.gobelins.wasabi.listeners.DrawingListener;
-import project.gobelins.wasabi.viewPager.MyViewPager;
-import project.gobelins.wasabi.viewPager.ViewPagerAdapter;
+import project.gobelins.wasabi.fresco.listeners.BeginFrescoDrawingListener;
+import project.gobelins.wasabi.fresco.listeners.DrawingListener;
+import project.gobelins.wasabi.fresco.viewPager.MyViewPager;
+import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 
 /**
  * Created by ThomasHiron on 30/04/2015.

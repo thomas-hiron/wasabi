@@ -1,8 +1,8 @@
-package project.gobelins.wasabi.listeners;
+package project.gobelins.wasabi.fresco.listeners;
 
 import android.view.View;
 
-import project.gobelins.wasabi.Fresco;
+import project.gobelins.wasabi.fresco.Fresco;
 
 /**
  * Listener au clic sur le bouton dessiner

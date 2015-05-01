@@ -1,11 +1,11 @@
-package project.gobelins.wasabi.listeners;
+package project.gobelins.wasabi.fresco.listeners;
 
 import android.view.MotionEvent;
 import android.view.View;
 
-import project.gobelins.wasabi.Fresco;
-import project.gobelins.wasabi.drawing.DrawView;
-import project.gobelins.wasabi.drawing.Point;
+import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.drawing.DrawView;
+import project.gobelins.wasabi.fresco.drawing.Point;
 
 /**
  * Permet de dessiner
