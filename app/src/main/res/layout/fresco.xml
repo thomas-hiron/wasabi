@@ -14,7 +14,7 @@
         android:layout_height="match_parent">
 
         <!-- Le viewPager -->
-        <project.gobelins.wasabi.fresco.viewPager.MyViewPager
+        <project.gobelins.wasabi.fresco.views.FrescoViewPager
             android:id="@+id/view_pager_fresco"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -53,7 +53,7 @@
                     android:layout_gravity="end"
                     android:orientation="horizontal">
 
-                    <project.gobelins.wasabi.fresco.ColorsView
+                    <project.gobelins.wasabi.fresco.views.ColorsView
                         android:orientation="horizontal"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"

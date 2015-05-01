@@ -1,16 +1,15 @@
-package project.gobelins.wasabi.fresco;
+package project.gobelins.wasabi.fresco.views;
 
 import android.content.Context;
-import android.graphics.Color;
 import android.graphics.LightingColorFilter;
-import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
-import android.widget.Button;
 import android.widget.LinearLayout;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.Colors;
+import project.gobelins.wasabi.fresco.listeners.ChangeDrawingColorListener;
 
 /**
  * Created by ThomasHiron on 01/05/2015.
@@ -37,14 +36,16 @@ public class ColorsView extends LinearLayout
         for(int color : colors)
         {
             /* Inflation du bouton */
-            Button b = (Button) inflater.inflate(R.layout.color_button, this, false);
+            ColorButton b = (ColorButton) inflater.inflate(R.layout.color_button, this, false);
 
-            /* Changement du background */
-            Drawable background = b.getBackground();
-            background.setColorFilter(new LightingColorFilter(color, color));
+            /* Ajout de la couleur du background */
+            b.setColor(color);
 
             /* Ajout de la vue */
             addView(b);
+
+            /* Ajout des listeners */
+            b.setOnClickListener(new ChangeDrawingColorListener());
         }
     }
 }

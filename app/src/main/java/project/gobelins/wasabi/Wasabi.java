@@ -19,7 +19,7 @@ import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
-import project.gobelins.wasabi.fresco.viewPager.MyViewPager;
+import project.gobelins.wasabi.fresco.views.FrescoViewPager;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 
 public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened, OnNotificationClosed
@@ -34,7 +34,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private Button mNotificationButton;
     private MyLayout mCustomView;
     private Notification mLastNotification;
-    private MyViewPager mViewPager;
+    private FrescoViewPager mViewPager;
     private ViewPagerAdapter mViewPagerAdapter;
     private Fresco mFresco;
 

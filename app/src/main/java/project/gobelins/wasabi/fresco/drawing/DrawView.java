@@ -3,6 +3,7 @@ package project.gobelins.wasabi.fresco.drawing;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
+import android.graphics.ColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
@@ -12,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  * La vue contenant le dessin
- *
+ * <p/>
  * Created by ThomasHiron on 30/04/2015.
  */
 public class DrawView extends View
@@ -23,6 +24,7 @@ public class DrawView extends View
     ArrayList<Point> mPoints;
     private Path mPath;
     private boolean mSmoothLine;
+    private int mColor;
 
     public DrawView(Context context)
     {
@@ -33,12 +35,15 @@ public class DrawView extends View
     {
         super(context, attrs);
 
+        /* Initialisation de la couleur de base */
+        mColor = Color.BLACK;
+
         /* Initialisation du canvas */
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setColor(Color.YELLOW);
+        mPaint.setColor(mColor);
         mPaint.setStrokeWidth(10);
 
         /* La liste */
@@ -185,6 +190,12 @@ public class DrawView extends View
     public void smoothify()
     {
         mSmoothLine = true;
+        invalidate();
+    }
+
+    public void changeColor(ColorFilter colorFilter)
+    {
+        mPaint.setColorFilter(colorFilter);
         invalidate();
     }
 }

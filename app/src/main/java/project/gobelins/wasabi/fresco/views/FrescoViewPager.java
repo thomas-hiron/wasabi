@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.fresco.viewPager;
+package project.gobelins.wasabi.fresco.views;
 
 import android.content.Context;
 import android.support.v4.view.ViewPager;
@@ -11,13 +11,15 @@ import android.widget.Scroller;
 import java.lang.reflect.Field;
 
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
+import project.gobelins.wasabi.fresco.viewPager.ViewPagerScroller;
 
 /**
  * Created by ThomasHiron on 16/10/2014.
  * <p/>
  * Classe héritant de ViewPager pour empêcher le scroll dans les vues
  */
-public class MyViewPager extends ViewPager implements GestureDetector.OnGestureListener
+public class FrescoViewPager extends ViewPager implements GestureDetector.OnGestureListener
 {
     private GestureDetector mGestureDetector;
     private FlingRunnable mFlingRunnable;
@@ -25,12 +27,12 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
     private boolean mScrollingToLeft;
     private boolean mLock;
 
-    public MyViewPager(Context context)
+    public FrescoViewPager(Context context)
     {
         super(context);
     }
 
-    public MyViewPager(Context context, AttributeSet attrs)
+    public FrescoViewPager(Context context, AttributeSet attrs)
     {
         super(context, attrs);
 
@@ -53,7 +55,7 @@ public class MyViewPager extends ViewPager implements GestureDetector.OnGestureL
         }
     }
 
-    public MyViewPager(final Wasabi wasabi)
+    public FrescoViewPager(final Wasabi wasabi)
     {
         super(wasabi);
 

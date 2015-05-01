@@ -16,7 +16,7 @@ import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.fresco.listeners.BeginFrescoDrawingListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
-import project.gobelins.wasabi.fresco.viewPager.MyViewPager;
+import project.gobelins.wasabi.fresco.views.FrescoViewPager;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 
 /**
@@ -26,7 +26,7 @@ public class Fresco
 {
     private FrameLayout mFrescoContainer;
     private ViewPagerAdapter mViewPagerAdapter;
-    private MyViewPager mViewPager;
+    private FrescoViewPager mViewPager;
     private Button mDrawButton;
     private Button mPictureButton;
     private Button mSoundButton;
@@ -42,7 +42,7 @@ public class Fresco
         mSoundButton = (Button) mFrescoContainer.findViewById(R.id.record_audio);
 
         /* Ajout du viewPager */
-        mViewPager = (MyViewPager) mFrescoContainer.findViewById(R.id.view_pager_fresco);
+        mViewPager = (FrescoViewPager) mFrescoContainer.findViewById(R.id.view_pager_fresco);
 
         /* Instanciation de l'adapter */
         mViewPagerAdapter = new ViewPagerAdapter(wasabi.getSupportFragmentManager());
