@@ -5,6 +5,7 @@ import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
+import android.support.v4.util.Pair;
 import android.util.AttributeSet;
 
 import java.util.ArrayList;
@@ -21,9 +22,8 @@ public class DrawedView extends DrawView
     /* Les points courants */
     private Path mPath;
 
-    private ArrayList<Path> mPaths;
     private ArrayList<Point> mPoints;
-    private ArrayList<Integer> mColors;
+    private ArrayList<Pair<Integer, Path>> mPathsColors;
 
 
     public DrawedView(Context context)
@@ -36,10 +36,7 @@ public class DrawedView extends DrawView
         super(context, attrs);
 
         /* Initialisation de la paire Path/Paint */
-        mPaths = new ArrayList<Path>();
-
-        /* Initialisation des couleurs */
-        mColors = new ArrayList<Integer>();
+        mPathsColors = new ArrayList<Pair<Integer, Path>>();
 
         /* Initialisation du paint */
         mPaint = new Paint();
@@ -62,12 +59,12 @@ public class DrawedView extends DrawView
             drawSmoothLine();
 
             /* Dessin du path */
-            for(int i = 0, l = mPaths.size(); i < l; ++i)
+            for(Pair<Integer, Path> pathColor : mPathsColors)
             {
                 /* Changement de la couleur */
-                mPaint.setColor(mColors.get(i));
+                mPaint.setColor(pathColor.first);
                 /* On dessine */
-                canvas.drawPath(mPaths.get(i), mPaint);
+                canvas.drawPath(pathColor.second, mPaint);
             }
         }
     }
@@ -151,14 +148,17 @@ public class DrawedView extends DrawView
     {
         /* Nouveau path */
         mPath = new Path();
-        mPaths.add(mPath);
 
-        /* Nouvelle couleur */
+        /* Nouvelle couleur, noir par défaut */
+        int newColor = Color.BLACK;
         Point point = points.get(0);
 
         /* On change la couleur */
         if(point instanceof ColorPoint)
-            mColors.add(((ColorPoint) point).getColor());
+            newColor = ((ColorPoint) point).getColor();
+
+        /* Ajout de la liste */
+        mPathsColors.add(new Pair<Integer, Path>(newColor, mPath));
 
         /* Changement des points */
         mPoints = points;
