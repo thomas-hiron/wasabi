@@ -253,11 +253,31 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
-     * Supprime le listener pour dessiner
+     * Affiche la flèche pour annuler
      */
-    public void removeDrawingListener()
+    public void showCancelButton()
+    {
+        /* Si le précédent état de la flèche est actif */
+        if(mCancelButton.isActive())
+            toggleInterfaceButtons(true, mCancelButton.getId());
+    }
+
+    /**
+     * Cache le bouton annuler le dernier dessin
+     */
+    public void hideCancelButton()
+    {
+        if(mCancelButton.isActive())
+            toggleInterfaceButtons(false, mCancelButton.getId());
+    }
+
+    /**
+     * Supprime les listeners pour dessiner et effacer
+     */
+    public void removeDrawingListeners()
     {
         mDrawView.setOnTouchListener(null);
+        mCancelButton.setOnClickListener(null);
     }
 
     /**

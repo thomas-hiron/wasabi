@@ -36,6 +36,9 @@ public class BeginDrawListener implements View.OnClickListener
             /* Affiche les boutons de couleur */
             mFresco.showColorsButtons();
 
+            /* Affiche la flèche annuler */
+            mFresco.showCancelButton();
+
             /* Initialisation du dessin */
             mFresco.initDrawing();
         }

@@ -2,11 +2,7 @@ package project.gobelins.wasabi.fresco.views.buttons;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.view.View;
-import android.widget.LinearLayout;
 
-import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 
 /**
@@ -33,7 +29,10 @@ public class DrawButton extends FrescoActionButton
         /* On cache les couleurs */
         mFresco.hideColorsButtons();
 
+        /* On cache la flèche */
+        mFresco.hideCancelButton();
+
         /* On supprime le listener pour dessiner */
-        mFresco.removeDrawingListener();
+        mFresco.removeDrawingListeners();
     }
 }
