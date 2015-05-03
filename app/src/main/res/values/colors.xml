@@ -5,4 +5,5 @@
     <color name="blue">#0000FF</color>
     <color name="fresco_background">#D2F2EF</color>
     <color name="white">#ffffff</color>
+    <color name="active">#f26667</color>
 </resources>
