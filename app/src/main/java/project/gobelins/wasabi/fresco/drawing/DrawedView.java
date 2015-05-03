@@ -10,6 +10,9 @@ import android.util.AttributeSet;
 
 import java.util.ArrayList;
 
+import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
+
 /**
  * La vue contenant le dessin dessiné
  * <p/>
@@ -24,6 +27,7 @@ public class DrawedView extends DrawView
 
     private ArrayList<Point> mPoints;
     private ArrayList<Pair<Integer, Path>> mPathsColors;
+    private OnToggleCancelArrowListener mListener;
 
 
     public DrawedView(Context context)
@@ -165,5 +169,18 @@ public class DrawedView extends DrawView
 
         /* On dessine */
         invalidate();
+
+        /* S'il y a plus d'un path, on affiche la flèche */
+        mListener.toggleCancelArrowListener(mPathsColors.size() > 0);
+    }
+
+    /**
+     * On ajoute le listener pour afficher ou non la flèche
+     *
+     * @param fresco
+     */
+    public void setOnToggleCancelArrowListener(Fresco fresco)
+    {
+        mListener = fresco;
     }
 }

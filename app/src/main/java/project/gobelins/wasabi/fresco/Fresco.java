@@ -13,26 +13,31 @@ import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
+import project.gobelins.wasabi.fresco.listeners.CancelLastDrawListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.fresco.listeners.RecordAudioListener;
 import project.gobelins.wasabi.fresco.listeners.TakePictureListener;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 import project.gobelins.wasabi.fresco.views.FrescoViewPager;
+import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
 import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
+import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 
 /**
  * Created by ThomasHiron on 30/04/2015.
  */
-public class Fresco extends FrameLayout
+public class Fresco extends FrameLayout implements OnToggleCancelArrowListener
 {
     private ViewPagerAdapter mViewPagerAdapter;
     private FrescoViewPager mViewPager;
+
     private FrescoActionButton mDrawButton;
     private FrescoActionButton mPictureButton;
     private FrescoActionButton mRecordButton;
+    private CancelButton mCancelButton;
 
     public final static int DRAW_BUTTON = 1;
     public final static int RECORD_BUTTON = 2;
@@ -60,6 +65,7 @@ public class Fresco extends FrameLayout
         mDrawButton = (DrawButton) findViewById(R.id.begin_drawing);
         mPictureButton = (PictureButton) findViewById(R.id.take_picture);
         mRecordButton = (RecordButton) findViewById(R.id.record_audio);
+        mCancelButton = (CancelButton) findViewById(R.id.cancel_last_draw);
 
         /* Ajout des resources */
         mDrawButton.setResource(R.drawable.tool_pencil);
@@ -138,6 +144,7 @@ public class Fresco extends FrameLayout
         {
             mDrawView = (DrawView) lastFragment.getView().findViewById(R.id.draw_view);
             mDrawedView = (DrawedView) lastFragment.getView().findViewById(R.id.drawed_view);
+            mDrawedView.setOnToggleCancelArrowListener(this);
         }
 
         assert mDrawView != null;
@@ -145,6 +152,9 @@ public class Fresco extends FrameLayout
 
         /* Ajout du listener sur la vue */
         mDrawView.setOnTouchListener(new DrawingListener(mDrawView, mDrawedView, this));
+
+        /* Ajout du listener sur annuler */
+        mCancelButton.setOnClickListener(new CancelLastDrawListener());
 
 //        /* On drag le bouton du son */
 //        mRecordButton.setOnLongClickListener(new View.OnLongClickListener()
@@ -316,5 +326,18 @@ public class Fresco extends FrameLayout
 
         if(!buttonActive)
             unlock();
+    }
+
+    /**
+     * On fait apparaître ou disparaitre la flèche pour annuler
+     *
+     * @param show
+     */
+    @Override
+    public void toggleCancelArrowListener(boolean show)
+    {
+        /* On l'affiche si non actif */
+        if(show && !mCancelButton.isActive())
+            toggleInterfaceButtons(true, mCancelButton.getId());
     }
 }

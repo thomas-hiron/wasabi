@@ -39,7 +39,7 @@
                 android:orientation="horizontal">
 
                 <!-- Annuler le dernier dessin -->
-                <ImageView
+                <project.gobelins.wasabi.fresco.views.buttons.CancelButton
                     android:id="@+id/cancel_last_draw"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
