@@ -94,12 +94,6 @@ public class Fresco extends FrameLayout
         mViewPagerAdapter.add(DrawingFragment.newInstance());
         mViewPagerAdapter.add(DrawingFragment.newInstance());
         mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
 
         /* Ajout de l'adapter */
         mViewPager.setAdapter(mViewPagerAdapter);
@@ -119,6 +113,14 @@ public class Fresco extends FrameLayout
     public void lock()
     {
         mViewPager.lock();
+    }
+
+    /**
+     * Déverrouille le viewPager
+     */
+    public void unlock()
+    {
+        mViewPager.unlock();
     }
 
     /**
@@ -255,10 +257,10 @@ public class Fresco extends FrameLayout
     /**
      * Change l'état du bouton dessiner (background)
      *
-     * @param buttonId  L'id du bouton
-     * @param isDrawing S'il était en train de dessiner
+     * @param buttonId L'id du bouton
+     * @param isActive S'il était en train de dessiner
      */
-    public void changeButtonState(int buttonId, boolean isDrawing)
+    public void changeButtonState(int buttonId, boolean isActive)
     {
         /* Le bouton d'action à changer */
         FrescoActionButton frescoActionButton = null;
@@ -288,10 +290,11 @@ public class Fresco extends FrameLayout
                 break;
         }
 
+
         assert frescoActionButton != null;
 
         /* On enlève l'état actif */
-        if(isDrawing)
+        if(!isActive)
             frescoActionButton.setImageResource(frescoActionButton.getResource());
         /* On ajout l'état actif */
         else
@@ -306,5 +309,11 @@ public class Fresco extends FrameLayout
             /* On force l'état du bouton à non actif */
             b.changeState(false);
         }
+
+        /* Si aucun bouton actif, on désactive le lock */
+        boolean buttonActive = mDrawButton.isActive() || mRecordButton.isActive() || mPictureButton.isActive();
+
+        if(!buttonActive)
+            unlock();
     }
 }

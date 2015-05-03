@@ -32,10 +32,10 @@ public class RecordAudioListener implements View.OnClickListener
             mFresco.lock();
         }
 
-        /* On change l'état du bouton */
-        mFresco.changeButtonState(Fresco.RECORD_BUTTON, mRecordButton.isActive());
-
         /* On change l'état */
         mRecordButton.changeState();
+
+        /* On change l'état du bouton */
+        mFresco.changeButtonState(Fresco.RECORD_BUTTON, mRecordButton.isActive());
     }
 }

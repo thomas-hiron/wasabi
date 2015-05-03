@@ -185,6 +185,14 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     }
 
     /**
+     * Déverouille le viewPager
+     */
+    public void unlock()
+    {
+        mLock = false;
+    }
+
+    /**
      * The fling runnable which moves the view pager and tracks decay
      */
     private class FlingRunnable implements Runnable

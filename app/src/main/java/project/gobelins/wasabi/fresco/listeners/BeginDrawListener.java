@@ -40,10 +40,10 @@ public class BeginDrawListener implements View.OnClickListener
             mFresco.initDrawing();
         }
 
-        /* On change l'état du bouton */
-        mFresco.changeButtonState(Fresco.DRAW_BUTTON, mDrawButton.isActive());
-
         /* On change l'état */
         mDrawButton.changeState();
+
+        /* On change l'état du bouton */
+        mFresco.changeButtonState(Fresco.DRAW_BUTTON, mDrawButton.isActive());
     }
 }
