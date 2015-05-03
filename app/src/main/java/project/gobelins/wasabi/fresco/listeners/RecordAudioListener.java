@@ -22,6 +22,16 @@ public class RecordAudioListener implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
+        /* Si on active le mode dessin */
+        if(!mRecordButton.isActive())
+        {
+            /* On se déplace */
+            mFresco.goToLastFragment();
+
+            /* On vérouille le viewPager */
+            mFresco.lock();
+        }
+
         /* On change l'état du bouton */
         mFresco.changeButtonState(Fresco.RECORD_BUTTON, mRecordButton.isActive());
 
