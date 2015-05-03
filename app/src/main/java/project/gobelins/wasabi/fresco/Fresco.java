@@ -11,6 +11,7 @@ import android.widget.FrameLayout;
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fragments.DrawingFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
+import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.fresco.listeners.RecordAudioListener;
@@ -32,7 +33,6 @@ public class Fresco extends FrameLayout
     private FrescoActionButton mDrawButton;
     private FrescoActionButton mPictureButton;
     private FrescoActionButton mRecordButton;
-    private View mLastFragmentView;
 
     public final static int DRAW_BUTTON = 1;
     public final static int RECORD_BUTTON = 2;
@@ -129,14 +129,19 @@ public class Fresco extends FrameLayout
         /* Récupération du dernier fragment */
         Fragment lastFragment = mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1);
 
+        DrawedView drawedView = null;
+
         /* Récupération de la vue contenant le dessin */
         if(lastFragment.getView() != null && mDrawView == null)
+        {
             mDrawView = (DrawView) lastFragment.getView().findViewById(R.id.draw_view);
+            drawedView = (DrawedView) lastFragment.getView().findViewById(R.id.drawed_view);
+        }
 
         assert mDrawView != null;
 
         /* Ajout du listener sur la vue */
-        mDrawView.setOnTouchListener(new DrawingListener(mDrawView, this));
+        mDrawView.setOnTouchListener(new DrawingListener(mDrawView, drawedView, this));
 
 //        /* On drag le bouton du son */
 //        mRecordButton.setOnLongClickListener(new View.OnLongClickListener()

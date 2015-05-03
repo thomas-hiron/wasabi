@@ -3,8 +3,11 @@ package project.gobelins.wasabi.fresco.listeners;
 import android.view.MotionEvent;
 import android.view.View;
 
+import java.util.ArrayList;
+
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
+import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.drawing.Point;
 
 /**
@@ -16,10 +19,12 @@ public class DrawingListener implements View.OnTouchListener
 {
     private Fresco mFresco;
     private DrawView mDrawView;
+    private DrawedView mDrawedView;
 
-    public DrawingListener(DrawView drawView, Fresco fresco)
+    public DrawingListener(DrawView drawView, DrawedView drawedView, Fresco fresco)
     {
         mDrawView = drawView;
+        mDrawedView = drawedView;
         mFresco = fresco;
     }
 
@@ -44,8 +49,17 @@ public class DrawingListener implements View.OnTouchListener
         }
         else if(event.getAction() == MotionEvent.ACTION_UP)
         {
-            /* Smooth de la courbe */
-            mDrawView.smoothify();
+            /* On supprime le path */
+            mDrawView.clear();
+
+            /* On récupére les points */
+            ArrayList<Point> points = (ArrayList<Point>) mDrawView.getPoints().clone();
+
+            /* On réinitialise les points */
+            mDrawView.clearPoints();
+
+            /* On dessine les points dans l'autre vue */
+            mDrawedView.draw(points);
 
             /* On affiche les boutons d'interface */
             mFresco.showInterfaceButtons();
