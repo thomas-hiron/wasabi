@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.fresco;
 
 import android.content.Context;
+import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
@@ -43,6 +44,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public final static int DRAW_BUTTON = 1;
     public final static int RECORD_BUTTON = 2;
     public final static int PICTURE_BUTTON = 3;
+    public final static int ANIMATION_DURATION = 200;
 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
@@ -234,7 +236,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Instantiation de l'animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(from, to);
-        alphaAnimation.setDuration(200);
+        alphaAnimation.setDuration(ANIMATION_DURATION);
         alphaAnimation.setFillAfter(true);
 
         /* On lance l'aanimations */
@@ -302,24 +304,33 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
                 break;
         }
 
-
         assert frescoActionButton != null;
+
+        /* Animation du background */
+        TransitionDrawable transition = (TransitionDrawable) frescoActionButton.getBackground();
 
         /* On enlève l'état actif */
         if(!isActive)
-            frescoActionButton.setImageResource(frescoActionButton.getResource());
+            transition.reverseTransition(ANIMATION_DURATION);
         /* On ajout l'état actif */
         else
-            frescoActionButton.setImageResource(frescoActionButton.getActiveResource());
+            transition.startTransition(ANIMATION_DURATION);
 
         /* On enlève l'état actif des autres boutons */
         for(FrescoActionButton b : frescoActionButtons)
         {
-            /* On change le back */
-            b.setImageResource(b.getResource());
+            /* Si bouton actif, on le désactive */
+            if(b.isActive())
+            {
+                /* Animation */
+                TransitionDrawable otherTransition = (TransitionDrawable) b.getBackground();
 
-            /* On force l'état du bouton à non actif */
-            b.changeState(false);
+                /* On change le back */
+                otherTransition.reverseTransition(ANIMATION_DURATION);
+
+                /* On force l'état du bouton à non actif */
+                b.changeState(false);
+            }
         }
 
         /* Si aucun bouton actif, on désactive le lock */

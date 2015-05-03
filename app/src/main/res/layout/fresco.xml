@@ -71,8 +71,8 @@
                         android:layout_height="@dimen/fresco_tools"
                         android:layout_marginEnd="20dp"
                         android:layout_marginRight="20dp"
+                        android:background="@drawable/transition_fresco_button_bg"
                         android:contentDescription="@string/draw"
-                        android:background="@drawable/round_stroke_button"
                         android:src="@drawable/tool_pencil"/>
 
                 </LinearLayout>
@@ -87,6 +87,7 @@
                 android:layout_gravity="end"
                 android:layout_marginEnd="20dp"
                 android:layout_marginRight="20dp"
+                android:background="@drawable/transition_fresco_button_bg"
                 android:contentDescription="@string/sound"
                 android:src="@drawable/tool_record"/>
 
