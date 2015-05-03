@@ -10,7 +10,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.fragments.DrawingFragment;
+import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
@@ -90,13 +90,13 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mViewPagerAdapter = new ViewPagerAdapter(supportFragmentManager);
 
         /* Ajout des fragments de chaque jour */
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
-        mViewPagerAdapter.add(DrawingFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance());
 
         /* Ajout de l'adapter */
         mViewPager.setAdapter(mViewPagerAdapter);

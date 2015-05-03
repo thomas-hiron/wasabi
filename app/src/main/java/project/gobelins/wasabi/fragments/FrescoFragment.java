@@ -11,13 +11,13 @@ import project.gobelins.wasabi.R;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link DrawingFragment#newInstance} factory method to
+ * Use the {@link FrescoFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class DrawingFragment extends Fragment
+public class FrescoFragment extends Fragment
 {
 
-    public DrawingFragment()
+    public FrescoFragment()
     {
         // Required empty public constructor
     }
@@ -28,9 +28,9 @@ public class DrawingFragment extends Fragment
      *
      * @return A new instance of fragment DayFragment.
      */
-    public static DrawingFragment newInstance()
+    public static FrescoFragment newInstance()
     {
-        return new DrawingFragment();
+        return new FrescoFragment();
     }
 
     @Override
@@ -43,7 +43,7 @@ public class DrawingFragment extends Fragment
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_drawing, container, false);
+        return inflater.inflate(R.layout.fragment_fresco, container, false);
     }
 
 

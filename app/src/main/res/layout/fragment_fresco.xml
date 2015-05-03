@@ -2,7 +2,7 @@
              xmlns:tools="http://schemas.android.com/tools"
              android:layout_width="match_parent"
              android:layout_height="match_parent"
-             tools:context="project.gobelins.wasabi.fragments.DrawingFragment">
+             tools:context="project.gobelins.wasabi.fragments.FrescoFragment">
 
     <project.gobelins.wasabi.fresco.drawing.DrawedView
         android:id="@+id/drawed_view"
