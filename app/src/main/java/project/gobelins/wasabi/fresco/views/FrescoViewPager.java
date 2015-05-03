@@ -96,7 +96,7 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        // Give all the events to the gesture detector. I'm returning true here so the viewpager doesn't get any events at all
+        // Give all the events to the gesture detector. Returning true here so the viewpager doesn't get any events at all
         if(!mLock)
             mGestureDetector.onTouchEvent(event);
 

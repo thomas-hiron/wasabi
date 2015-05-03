@@ -3,7 +3,7 @@
     <color name="red">#FF0000</color>
     <color name="green">#00FF00</color>
     <color name="blue">#0000FF</color>
-    <color name="fresco_background">#D2F2EF</color>
+    <color name="fresco_background">#FFFFFF</color>
     <color name="white">#ffffff</color>
     <color name="active_hide">#00f26667</color>
     <color name="active_show">#f26667</color>
