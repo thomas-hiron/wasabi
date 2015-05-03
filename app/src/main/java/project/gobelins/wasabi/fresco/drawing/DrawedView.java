@@ -16,12 +16,15 @@ import java.util.ArrayList;
  */
 public class DrawedView extends DrawView
 {
-    Paint mPaint;
+    private Paint mPaint;
 
     /* Les points courants */
     private Path mPath;
-    private int mColor;
-    private ArrayList<ArrayList<Point>> mPoints;
+
+    private ArrayList<Path> mPaths;
+    private ArrayList<Point> mPoints;
+    private ArrayList<Integer> mColors;
+
 
     public DrawedView(Context context)
     {
@@ -32,22 +35,19 @@ public class DrawedView extends DrawView
     {
         super(context, attrs);
 
-        /* Initialisation de la couleur de base */
-        mColor = Color.BLACK;
+        /* Initialisation de la paire Path/Paint */
+        mPaths = new ArrayList<Path>();
 
-        /* Initialisation du canvas */
+        /* Initialisation des couleurs */
+        mColors = new ArrayList<Integer>();
+
+        /* Initialisation du paint */
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setColor(mColor);
+        mPaint.setColor(Color.BLACK);
         mPaint.setStrokeWidth(10);
-
-        /* La liste */
-        mPoints = new ArrayList<ArrayList<Point>>();
-
-        /* Le path */
-        mPath = new Path();
     }
 
     @Override
@@ -55,27 +55,20 @@ public class DrawedView extends DrawView
     {
         super.onDraw(canvas);
 
-        /* Changement de couleur */
-        mPaint.setColor(mColor);
-
         /* On dessine une ligne smooth au up */
-        if(mPoints.size() > 0)
+        if(mPoints != null && mPoints.size() > 0)
         {
-            /* La dernière liste */
-            ArrayList<Point> points = mPoints.get(mPoints.size() - 1);
-
-            /* Le premier point */
-            Point point = points.get(0);
-
-            /* On change la couleur */
-            if(point instanceof ColorPoint)
-                mPaint.setColor(((ColorPoint) point).getColor());
-
             /* On dessine */
             drawSmoothLine();
 
             /* Dessin du path */
-            canvas.drawPath(mPath, mPaint);
+            for(int i = 0, l = mPaths.size(); i < l; ++i)
+            {
+                /* Changement de la couleur */
+                mPaint.setColor(mColors.get(i));
+                /* On dessine */
+                canvas.drawPath(mPaths.get(i), mPaint);
+            }
         }
     }
 
@@ -106,15 +99,14 @@ public class DrawedView extends DrawView
         int numOfSegments = 16;
 
         ArrayList<Point> returnPoints = new ArrayList<Point>();
-        ArrayList<Point> points = mPoints.get(mPoints.size() - 1);
         int i;
         double x, y, t1x, t2x, t1y, t2y, c1, c2, c3, c4, st, t;
 
         /* On duplique le point final pour les calculs */
-        points.add(points.get(points.size() - 1));
+        mPoints.add(mPoints.get(mPoints.size() - 1));
 
         /* On parcourt tous les points */
-        for(i = 1; i < (points.size() - 2); ++i)
+        for(i = 1; i < (mPoints.size() - 2); ++i)
         {
             /* On rajoute les segments */
             for(t = 0; t <= numOfSegments; ++t)
@@ -122,11 +114,11 @@ public class DrawedView extends DrawView
                 Point p = new Point();
 
                 /* Calcul des vecteurs */
-                t1x = (points.get(i + 1).x - points.get(i - 1).x) * tension;
-                t2x = (points.get(i + 2).x - points.get(i).x) * tension;
+                t1x = (mPoints.get(i + 1).x - mPoints.get(i - 1).x) * tension;
+                t2x = (mPoints.get(i + 2).x - mPoints.get(i).x) * tension;
 
-                t1y = (points.get(i + 1).y - points.get(i - 1).y) * tension;
-                t2y = (points.get(i + 2).y - points.get(i).y) * tension;
+                t1y = (mPoints.get(i + 1).y - mPoints.get(i - 1).y) * tension;
+                t2y = (mPoints.get(i + 2).y - mPoints.get(i).y) * tension;
 
                 /* Calcul du pas */
                 st = t / numOfSegments;
@@ -138,8 +130,8 @@ public class DrawedView extends DrawView
                 c4 = Math.pow(st, 3) - Math.pow(st, 2);
 
                 /* Calcul de x et y */
-                x = c1 * points.get(i).x + c2 * points.get(i + 1).x + c3 * t1x + c4 * t2x;
-                y = c1 * points.get(i).y + c2 * points.get(i + 1).y + c3 * t1y + c4 * t2y;
+                x = c1 * mPoints.get(i).x + c2 * mPoints.get(i + 1).x + c3 * t1x + c4 * t2x;
+                y = c1 * mPoints.get(i).y + c2 * mPoints.get(i + 1).y + c3 * t1y + c4 * t2y;
 
                 /* Ajout du point */
                 p.set(x, y);
@@ -157,7 +149,21 @@ public class DrawedView extends DrawView
      */
     public void draw(ArrayList<Point> points)
     {
-        mPoints.add(points);
+        /* Nouveau path */
+        mPath = new Path();
+        mPaths.add(mPath);
+
+        /* Nouvelle couleur */
+        Point point = points.get(0);
+
+        /* On change la couleur */
+        if(point instanceof ColorPoint)
+            mColors.add(((ColorPoint) point).getColor());
+
+        /* Changement des points */
+        mPoints = points;
+
+        /* On dessine */
         invalidate();
     }
 }
