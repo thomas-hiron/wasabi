@@ -5,7 +5,6 @@ import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
@@ -15,7 +14,6 @@ import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
-import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.listeners.CancelLastDrawListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.fresco.listeners.RecordAudioListener;
@@ -27,7 +25,6 @@ import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
 import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
-import project.gobelins.wasabi.fresco.views.buttons.StartRecordingButton;
 import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 
@@ -48,6 +45,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public final static int RECORD_BUTTON = 2;
     public final static int PICTURE_BUTTON = 3;
     public final static int ANIMATION_DURATION = 200;
+    public final static float DRAWED_VIEW_MIN_OPACITY = 0.3f;
 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
@@ -202,8 +200,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void hideInterfaceButtons()
     {
-        toggleInterfaceButtons(false, R.id.fresco_buttons_group);
-        toggleInterfaceButtons(false, R.id.close_fresco);
+        toggleViewOpacity(false, R.id.fresco_buttons_group);
+        toggleViewOpacity(false, R.id.close_fresco);
     }
 
     /**
@@ -211,25 +209,38 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void showInterfaceButtons()
     {
-        toggleInterfaceButtons(true, R.id.fresco_buttons_group);
-        toggleInterfaceButtons(true, R.id.close_fresco);
+        toggleViewOpacity(true, R.id.fresco_buttons_group);
+        toggleViewOpacity(true, R.id.close_fresco);
     }
 
     /**
-     * Affiche ou cache les boutons d'action
+     * Affiche ou cache les boutons d'action (de 0 à 1 ou inversement)
      *
-     * @param show Si on doit afficher le bouton
+     * @param show       Si on doit afficher le bouton
+     * @param resourceId L'id de la resource
      */
-    private void toggleInterfaceButtons(boolean show, int resourceId)
+    private void toggleViewOpacity(boolean show, int resourceId)
+    {
+        /* Les variables de départ et d'arrivée */
+        float from = show ? 0 : 1;
+        float to = show ? 1 : 0;
+
+        toggleViewOpacity(resourceId, from, to);
+    }
+
+    /**
+     * Animation avec des valeurs personnalisés
+     *
+     * @param resourceId L'id de la resource
+     * @param from       La valeur de départ
+     * @param to         La valeur finale
+     */
+    private void toggleViewOpacity(int resourceId, float from, float to)
     {
         /* Récupération de la ressource */
         View view = findViewById(resourceId);
 
-        /* Les variables de départ et d'arrivée */
-        int from = show ? 0 : 1;
-        int to = show ? 1 : 0;
-
-        /* On affiche la vue */
+        /* On affiche la vue si cachée */
         if(view.getVisibility() == View.INVISIBLE)
             view.setVisibility(VISIBLE);
 
@@ -247,7 +258,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void showColorsButtons()
     {
-        toggleInterfaceButtons(true, R.id.colors_buttons);
+        toggleViewOpacity(true, R.id.colors_buttons);
     }
 
     /**
@@ -256,7 +267,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void hideColorsButtons()
     {
         if(mDrawButton.isActive())
-            toggleInterfaceButtons(false, R.id.colors_buttons);
+            toggleViewOpacity(false, R.id.colors_buttons);
     }
 
     /**
@@ -266,7 +277,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         /* Si le précédent état de la flèche est actif */
         if(mCancelButton.isActive())
-            toggleInterfaceButtons(true, mCancelButton.getId());
+            toggleViewOpacity(true, mCancelButton.getId());
     }
 
     /**
@@ -275,7 +286,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void hideCancelButton()
     {
         if(mCancelButton.isActive())
-            toggleInterfaceButtons(false, mCancelButton.getId());
+            toggleViewOpacity(false, mCancelButton.getId());
     }
 
     /**
@@ -283,15 +294,21 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void showRecordView()
     {
-        toggleInterfaceButtons(true, R.id.record_view);
+        toggleViewOpacity(true, R.id.record_view);
+
+        /* On baisse l'opacité de la zone de dessin */
+        toggleViewOpacity(mDrawedView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
     }
 
     /**
-     * Affiche la vue pour l'enregistrement
+     * Cache la vue pour l'enregistrement
      */
     public void hideRecordView()
     {
-        toggleInterfaceButtons(false, R.id.record_view);
+        toggleViewOpacity(false, R.id.record_view);
+
+        /* On remonte l'opacité de la zone de dessin */
+        toggleViewOpacity(mDrawedView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
     }
 
     /**
@@ -385,9 +402,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         /* On l'affiche si non actif */
         if(show && !mCancelButton.isActive())
-            toggleInterfaceButtons(true, mCancelButton.getId());
+            toggleViewOpacity(true, mCancelButton.getId());
         else if(!show && mCancelButton.isActive())
-            toggleInterfaceButtons(false, mCancelButton.getId());
+            toggleViewOpacity(false, mCancelButton.getId());
 
         /* On change l'état de la flèche */
         mCancelButton.isActive(show);
@@ -407,6 +424,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public FrescoFragment getLastFragment()
     {
-        return mViewPagerAdapter.getItem(mViewPagerAdapter.getCount()-1);
+        return mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1);
     }
 }
