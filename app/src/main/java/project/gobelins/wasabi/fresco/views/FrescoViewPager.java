@@ -26,6 +26,7 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     private boolean mScrolling;
     private boolean mScrollingToLeft;
     private boolean mLock;
+    private float mVelocity;
 
     public FrescoViewPager(Context context)
     {
@@ -95,10 +96,16 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     @Override
     public boolean onTouchEvent(MotionEvent event)
     {
-        // give all the events to the gesture detector. I'm returning true here so the viewpager doesn't
-        // get any events at all, I'm sure you could adjust this to make that not true.
+        // Give all the events to the gesture detector. I'm returning true here so the viewpager doesn't get any events at all
         if(!mLock)
             mGestureDetector.onTouchEvent(event);
+
+        /* Un bug se produit (la vélocité est nulle au up), on force le scroll */
+        if(mVelocity == 0 && event.getAction() == MotionEvent.ACTION_UP)
+            stopScroll();
+
+        /* On réinitialise la vélocité */
+        mVelocity = 0;
 
         return true;
     }
@@ -126,8 +133,11 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     @Override
     public boolean onFling(MotionEvent e1, MotionEvent e2, float velX, float velY)
     {
+        /* On conserve la vélocité au cas ou  */
+        mVelocity = velX;
+
         /* Si gros scroll, on slide, sinon comportement normal */
-        if(Math.abs(velX) > 6000)
+        if(Math.abs(mVelocity) > 6000)
             mFlingRunnable.startUsingVelocity((int) velX);
         else
             stopScroll();
