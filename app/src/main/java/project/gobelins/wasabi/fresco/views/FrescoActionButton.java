@@ -15,8 +15,6 @@ import project.gobelins.wasabi.fresco.Fresco;
 public abstract class FrescoActionButton extends ImageView
 {
     protected Fresco mFresco;
-    private int mResource;
-    private int mActiveResource;
     private boolean mStateActive;
 
     public FrescoActionButton(Context context)
@@ -41,35 +39,6 @@ public abstract class FrescoActionButton extends ImageView
 
         /* Initialisation de la fresque */
         mFresco = (Fresco) rootView.findViewById(R.id.fresco_container);
-    }
-
-    /**
-     * @return L'id de la resource
-     */
-    public int getResource()
-    {
-        return mResource;
-    }
-
-    /**
-     * @param resourceId La resource par défaut
-     */
-    public void setResource(int resourceId)
-    {
-        mResource = resourceId;
-    }
-
-    /**
-     * @return L'id de la resource
-     */
-    public int getActiveResource()
-    {
-        return mActiveResource;
-    }
-
-    public void setActiveResource(int activeResourceId)
-    {
-        mActiveResource = activeResourceId;
     }
 
     /**

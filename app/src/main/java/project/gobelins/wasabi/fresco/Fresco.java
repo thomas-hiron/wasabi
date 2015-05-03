@@ -70,14 +70,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mRecordButton = (RecordButton) findViewById(R.id.record_audio);
         mCancelButton = (CancelButton) findViewById(R.id.cancel_last_draw);
 
-        /* Ajout des resources */
-        mDrawButton.setResource(R.drawable.tool_pencil);
-        mDrawButton.setActiveResource(R.drawable.tool_pencil_active);
-        mPictureButton.setResource(R.drawable.tool_picture);
-        mPictureButton.setActiveResource(R.drawable.tool_picture_active);
-        mRecordButton.setResource(R.drawable.tool_record);
-        mRecordButton.setActiveResource(R.drawable.tool_record_active);
-
         /* Ajout des listeners */
         mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
         mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
