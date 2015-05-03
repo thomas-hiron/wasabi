@@ -14,5 +14,6 @@
     <string name="picture">Image</string>
     <string name="sound">Son</string>
     <string name="message_fresco">Envoyez un message à votre proche mystère</string>
+    <string name="cancel_last_draw">Annuler dessin</string>
 
 </resources>

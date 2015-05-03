@@ -31,32 +31,52 @@
             android:orientation="vertical"
             android:weightSum="1">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <FrameLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="end"
                 android:layout_marginTop="10dp"
                 android:orientation="horizontal">
 
-                <!-- Les boutons de couleur -->
-                <project.gobelins.wasabi.fresco.views.ColorsView
-                    android:id="@+id/colors_buttons"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:orientation="horizontal"
+                <!-- Annuler le dernier dessin -->
+                <ImageView
+                    android:id="@+id/cancel_last_draw"
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="start|center"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:adjustViewBounds="true"
+                    android:contentDescription="@string/cancel_last_draw"
+                    android:src="@drawable/cancel_last_draw"
                     android:visibility="invisible"/>
 
-                <project.gobelins.wasabi.fresco.views.buttons.DrawButton
-                    android:id="@+id/begin_drawing"
-                    android:layout_width="@dimen/fresco_tools"
-                    android:layout_height="@dimen/fresco_tools"
-                    android:layout_marginEnd="20dp"
-                    android:layout_marginRight="20dp"
-                    android:contentDescription="@string/draw"
-                    android:src="@drawable/tool_pencil"/>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="end|center">
 
-            </LinearLayout>
+                    <!-- Les boutons de couleur -->
+                    <project.gobelins.wasabi.fresco.views.ColorsView
+                        android:id="@+id/colors_buttons"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:orientation="horizontal"
+                        android:visibility="invisible"/>
+
+                    <project.gobelins.wasabi.fresco.views.buttons.DrawButton
+                        android:id="@+id/begin_drawing"
+                        android:layout_width="@dimen/fresco_tools"
+                        android:layout_height="@dimen/fresco_tools"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginRight="20dp"
+                        android:contentDescription="@string/draw"
+                        android:src="@drawable/tool_pencil"/>
+
+                </LinearLayout>
+
+            </FrameLayout>
 
             <!-- Enregistrer du son -->
             <project.gobelins.wasabi.fresco.views.buttons.RecordButton
