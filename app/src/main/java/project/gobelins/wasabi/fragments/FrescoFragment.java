@@ -6,8 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
+import project.gobelins.wasabi.fresco.recording.RecordView;
+import project.gobelins.wasabi.fresco.views.buttons.StartRecordingButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -16,6 +20,9 @@ import project.gobelins.wasabi.R;
  */
 public class FrescoFragment extends Fragment
 {
+
+    private StartRecordingButton mStartRecordingButton;
+    private boolean mIsLastFragment;
 
     public FrescoFragment()
     {
@@ -30,7 +37,15 @@ public class FrescoFragment extends Fragment
      */
     public static FrescoFragment newInstance()
     {
-        return new FrescoFragment();
+        return newInstance(false);
+    }
+
+    public static FrescoFragment newInstance(boolean isLastFragment)
+    {
+        FrescoFragment frescoFragment = new FrescoFragment();
+        frescoFragment.isLastFragment(isLastFragment);
+
+        return frescoFragment;
     }
 
     @Override
@@ -42,9 +57,34 @@ public class FrescoFragment extends Fragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
     {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fresco, container, false);
+        /* Inflate the layout for this fragment */
+        FrameLayout view = (FrameLayout) inflater.inflate(R.layout.fragment_fresco, container, false);
+
+        /* Si dernier fragment, on ajoute recordAudio */
+        if(mIsLastFragment)
+        {
+            /* Inflate the RecordView */
+            RecordView recordView = (RecordView) inflater.inflate(
+                    R.layout.record_view, (ViewGroup) view.findViewById(R.id.fresco_fragment), false);
+
+            /* Add the RecordView */
+            view.addView(recordView);
+
+            /* Récupération du bouton enregistrer */
+            mStartRecordingButton = (StartRecordingButton) recordView.findViewById(R.id.start_recording);
+
+            /* Ajout du listener */
+            mStartRecordingButton.setOnTouchListener(new BeginRecordListener());
+        }
+
+        return view;
     }
 
-
+    /**
+     * @param isLastFragment Si c'est le dernier fragment, on ajoute la vue recordAudio
+     */
+    private void isLastFragment(boolean isLastFragment)
+    {
+        mIsLastFragment = isLastFragment;
+    }
 }

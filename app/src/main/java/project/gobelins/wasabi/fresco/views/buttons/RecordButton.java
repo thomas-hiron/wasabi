@@ -26,6 +26,7 @@ public class RecordButton extends FrescoActionButton
     @Override
     public void buttonStateDisabled()
     {
-
+        /* On cache la RecordView */
+        mFresco.hideRecordView();
     }
 }

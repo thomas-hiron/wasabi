@@ -5,6 +5,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
@@ -14,6 +15,7 @@ import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
+import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.listeners.CancelLastDrawListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.fresco.listeners.RecordAudioListener;
@@ -25,6 +27,7 @@ import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
 import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
+import project.gobelins.wasabi.fresco.views.buttons.StartRecordingButton;
 import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 
@@ -96,7 +99,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mViewPagerAdapter.add(FrescoFragment.newInstance());
         mViewPagerAdapter.add(FrescoFragment.newInstance());
         mViewPagerAdapter.add(FrescoFragment.newInstance());
-        mViewPagerAdapter.add(FrescoFragment.newInstance());
+        mViewPagerAdapter.add(FrescoFragment.newInstance(true));
 
         /* Ajout de l'adapter */
         mViewPager.setAdapter(mViewPagerAdapter);
@@ -226,6 +229,10 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         int from = show ? 0 : 1;
         int to = show ? 1 : 0;
 
+        /* On affiche la vue */
+        if(view.getVisibility() == View.INVISIBLE)
+            view.setVisibility(VISIBLE);
+
         /* Instantiation de l'animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(from, to);
         alphaAnimation.setDuration(ANIMATION_DURATION);
@@ -269,6 +276,22 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         if(mCancelButton.isActive())
             toggleInterfaceButtons(false, mCancelButton.getId());
+    }
+
+    /**
+     * Affiche la vue pour l'enregistrement
+     */
+    public void showRecordView()
+    {
+        toggleInterfaceButtons(true, R.id.record_view);
+    }
+
+    /**
+     * Affiche la vue pour l'enregistrement
+     */
+    public void hideRecordView()
+    {
+        toggleInterfaceButtons(false, R.id.record_view);
     }
 
     /**

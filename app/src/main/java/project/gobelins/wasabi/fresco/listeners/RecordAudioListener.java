@@ -30,6 +30,9 @@ public class RecordAudioListener implements View.OnClickListener
 
             /* On vérouille le viewPager */
             mFresco.lock();
+
+            /* On affiche la vue */
+            mFresco.showRecordView();
         }
 
         /* On change l'état */
