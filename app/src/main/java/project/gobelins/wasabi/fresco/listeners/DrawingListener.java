@@ -6,6 +6,7 @@ import android.view.View;
 import java.util.ArrayList;
 
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.drawing.Point;
@@ -34,7 +35,7 @@ public class DrawingListener implements View.OnTouchListener
         /* On dessine */
         if(event.getAction() == MotionEvent.ACTION_DOWN)
         {
-            Point p = new Point();
+            ColorPoint p = new ColorPoint();
             p.set(event.getX(), event.getY());
             mDrawView.setFirstPoint(p);
 

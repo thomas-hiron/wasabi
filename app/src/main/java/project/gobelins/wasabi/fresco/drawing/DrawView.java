@@ -4,12 +4,15 @@ import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.ColorFilter;
+import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.ArrayList;
+
+import project.gobelins.wasabi.fresco.views.ColorButton;
 
 /**
  * La vue contenant le dessin
@@ -96,19 +99,26 @@ public class DrawView extends View
      *
      * @param p Le point de départ
      */
-    public void setFirstPoint(Point p)
+    public void setFirstPoint(ColorPoint p)
     {
+        /* On ajoute la couleur au point */
+        p.setColor(mColor);
+
+        /* Ajout du point */
         mPoints.add(p);
     }
 
     /**
      * Change la couleur du path
      *
-     * @param colorFilter La nouvelle couleur du path
+     * @param color La nouvelle couleur du path
      */
-    public void changeColor(ColorFilter colorFilter)
+    public void changeColor(int color)
     {
-        mPaint.setColorFilter(colorFilter);
+        mColor = color;
+
+        /* Changement de la couleur du paint */
+        mPaint.setColor(mColor);
         invalidate();
     }
 

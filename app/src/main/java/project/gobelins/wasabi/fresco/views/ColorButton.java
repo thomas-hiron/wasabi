@@ -11,7 +11,7 @@ import android.widget.Button;
  */
 public class ColorButton extends Button
 {
-    private LightingColorFilter mColor;
+    private int mColor;
 
     public ColorButton(Context context)
     {
@@ -23,14 +23,14 @@ public class ColorButton extends Button
         super(context, attrs);
     }
 
-    public LightingColorFilter getColor()
+    public int getColor()
     {
         return mColor;
     }
 
     public void setColor(int color)
     {
-        mColor = new LightingColorFilter(color, color);
+        mColor = color;
 
         /* Changement du background */
         Drawable background = getBackground();

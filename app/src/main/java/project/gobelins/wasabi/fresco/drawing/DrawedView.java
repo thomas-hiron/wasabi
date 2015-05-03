@@ -6,7 +6,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -62,6 +61,17 @@ public class DrawedView extends DrawView
         /* On dessine une ligne smooth au up */
         if(mPoints.size() > 0)
         {
+            /* La dernière liste */
+            ArrayList<Point> points = mPoints.get(mPoints.size() - 1);
+
+            /* Le premier point */
+            Point point = points.get(0);
+
+            /* On change la couleur */
+            if(point instanceof ColorPoint)
+                mPaint.setColor(((ColorPoint) point).getColor());
+
+            /* On dessine */
             drawSmoothLine();
 
             /* Dessin du path */
