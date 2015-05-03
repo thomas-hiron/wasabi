@@ -28,5 +28,8 @@ public class RecordButton extends FrescoActionButton
     {
         /* On cache la RecordView */
         mFresco.hideRecordView();
+
+        /* On supprime le listener */
+        mFresco.getLastFragment().removeRecordingListener();
     }
 }

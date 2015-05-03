@@ -7,6 +7,8 @@ import android.view.ViewGroup;
 
 import java.util.ArrayList;
 
+import project.gobelins.wasabi.fragments.FrescoFragment;
+
 /**
  * Created by ThomasHiron on 16/10/2014.
  * <p/>
@@ -14,12 +16,12 @@ import java.util.ArrayList;
  */
 public class ViewPagerAdapter extends FragmentStatePagerAdapter
 {
-    ArrayList<Fragment> mList = null;
+    ArrayList<FrescoFragment> mList = null;
 
     public ViewPagerAdapter(FragmentManager fm)
     {
         super(fm);
-        mList = new ArrayList<Fragment>();
+        mList = new ArrayList<FrescoFragment>();
     }
 
     /**
@@ -27,13 +29,13 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter
      *
      * @param fragment Le fragment à ajouter
      */
-    public void add(Fragment fragment)
+    public void add(FrescoFragment fragment)
     {
         mList.add(fragment);
     }
 
     @Override
-    public Fragment getItem(int i)
+    public FrescoFragment getItem(int i)
     {
         return mList.get(i);
     }

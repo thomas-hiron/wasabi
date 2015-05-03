@@ -33,6 +33,9 @@ public class RecordAudioListener implements View.OnClickListener
 
             /* On affiche la vue */
             mFresco.showRecordView();
+
+            /* On ajoute le listener */
+            mFresco.getLastFragment().addRecordingListener();
         }
 
         /* On change l'état */

@@ -401,4 +401,12 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         mDrawedView.cancelLastDraw();
     }
+
+    /**
+     * @return Le dernier fragment
+     */
+    public FrescoFragment getLastFragment()
+    {
+        return mViewPagerAdapter.getItem(mViewPagerAdapter.getCount()-1);
+    }
 }

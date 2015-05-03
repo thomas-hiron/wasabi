@@ -72,9 +72,6 @@ public class FrescoFragment extends Fragment
 
             /* Récupération du bouton enregistrer */
             mStartRecordingButton = (StartRecordingButton) recordView.findViewById(R.id.start_recording);
-
-            /* Ajout du listener */
-            mStartRecordingButton.setOnTouchListener(new BeginRecordListener());
         }
 
         return view;
@@ -86,5 +83,21 @@ public class FrescoFragment extends Fragment
     private void isLastFragment(boolean isLastFragment)
     {
         mIsLastFragment = isLastFragment;
+    }
+
+    /**
+     * Ajoute le listener sur le bouton enregistrer
+     */
+    public void addRecordingListener()
+    {
+        mStartRecordingButton.setOnTouchListener(new BeginRecordListener());
+    }
+
+    /**
+     * Supprime le listener sur le bouton enregistrer
+     */
+    public void removeRecordingListener()
+    {
+        mStartRecordingButton.setOnTouchListener(null);
     }
 }
