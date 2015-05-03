@@ -5,6 +5,6 @@
     <color name="blue">#0000FF</color>
     <color name="fresco_background">#D2F2EF</color>
     <color name="white">#ffffff</color>
-    <color name="active_hide">@color/fresco_background</color>
+    <color name="active_hide">#00f26667</color>
     <color name="active_show">#f26667</color>
 </resources>
