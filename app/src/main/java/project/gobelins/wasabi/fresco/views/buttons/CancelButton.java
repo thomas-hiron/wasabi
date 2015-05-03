@@ -40,4 +40,9 @@ public class CancelButton extends FrescoActionButton
     {
         return mIsActive;
     }
+
+    public void isActive(boolean isActive)
+    {
+        mIsActive = isActive;
+    }
 }

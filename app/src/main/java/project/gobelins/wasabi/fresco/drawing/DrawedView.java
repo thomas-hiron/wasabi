@@ -175,6 +175,22 @@ public class DrawedView extends DrawView
     }
 
     /**
+     * Annule le dernier dessin
+     */
+    public void cancelLastDraw()
+    {
+        /* On enlève la dernière entrée */
+        if(mPathsColors.size() > 0)
+            mPathsColors.remove(mPathsColors.size() - 1);
+
+        /* On redessine */
+        invalidate();
+
+        /* On affiche ou non la flèche */
+        mListener.toggleCancelArrowListener(mPathsColors.size() > 0);
+    }
+
+    /**
      * On ajoute le listener pour afficher ou non la flèche
      *
      * @param fresco

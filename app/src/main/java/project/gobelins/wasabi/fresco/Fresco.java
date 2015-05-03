@@ -24,12 +24,13 @@ import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
 import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
+import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 
 /**
  * Created by ThomasHiron on 30/04/2015.
  */
-public class Fresco extends FrameLayout implements OnToggleCancelArrowListener
+public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, OnCanceledListener
 {
     private ViewPagerAdapter mViewPagerAdapter;
     private FrescoViewPager mViewPager;
@@ -154,7 +155,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener
         mDrawView.setOnTouchListener(new DrawingListener(mDrawView, mDrawedView, this));
 
         /* Ajout du listener sur annuler */
-        mCancelButton.setOnClickListener(new CancelLastDrawListener());
+        mCancelButton.setOnClickListener(new CancelLastDrawListener(this));
 
 //        /* On drag le bouton du son */
 //        mRecordButton.setOnLongClickListener(new View.OnLongClickListener()
@@ -339,5 +340,19 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener
         /* On l'affiche si non actif */
         if(show && !mCancelButton.isActive())
             toggleInterfaceButtons(true, mCancelButton.getId());
+        else if(!show && mCancelButton.isActive())
+            toggleInterfaceButtons(false, mCancelButton.getId());
+
+        /* On change l'état de la flèche */
+        mCancelButton.isActive(show);
+    }
+
+    /**
+     * On a cliqué sur le bouton annulé
+     */
+    @Override
+    public void onCanceled()
+    {
+        mDrawedView.cancelLastDraw();
     }
 }
