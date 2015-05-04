@@ -96,7 +96,7 @@ public class CircleAnimationListener implements View.OnClickListener
             @Override
             public void onAnimationEnd()
             {
-                    /* On supprime la vue */
+                /* On supprime la vue */
                 if(mClose && view.getId() == R.id.close_fresco)
                     mListener.onFrescoClosed();
                 else if(mClose && view.getId() == R.id.close_notification)

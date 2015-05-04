@@ -2,13 +2,12 @@ package project.gobelins.wasabi.fresco.recording;
 
 import android.content.Context;
 import android.util.AttributeSet;
-import android.util.Log;
-import android.widget.LinearLayout;
+import android.widget.FrameLayout;
 
 /**
  * Created by ThomasHiron on 03/05/2015.
  */
-public class RecordView extends LinearLayout
+public class RecordView extends FrameLayout
 {
     public RecordView(Context context)
     {
