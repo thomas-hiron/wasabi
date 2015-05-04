@@ -6,12 +6,12 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
-import project.gobelins.wasabi.fresco.views.buttons.StartRecordingButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -21,7 +21,7 @@ import project.gobelins.wasabi.fresco.views.buttons.StartRecordingButton;
 public class FrescoFragment extends Fragment
 {
 
-    private StartRecordingButton mStartRecordingButton;
+    private Button mStartRecordingButton;
     private boolean mIsLastFragment;
 
     public FrescoFragment()
@@ -71,7 +71,7 @@ public class FrescoFragment extends Fragment
             view.addView(recordView);
 
             /* Récupération du bouton enregistrer */
-            mStartRecordingButton = (StartRecordingButton) recordView.findViewById(R.id.start_recording);
+            mStartRecordingButton = (Button) recordView.findViewById(R.id.start_recording);
         }
 
         return view;

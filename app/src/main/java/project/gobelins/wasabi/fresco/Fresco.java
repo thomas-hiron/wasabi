@@ -297,7 +297,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         toggleViewOpacity(true, R.id.record_view);
 
         /* On baisse l'opacité de la zone de dessin */
-        toggleViewOpacity(mDrawedView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
+        if(mDrawedView != null)
+            toggleViewOpacity(mDrawedView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
     }
 
     /**
@@ -308,7 +309,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         toggleViewOpacity(false, R.id.record_view);
 
         /* On remonte l'opacité de la zone de dessin */
-        toggleViewOpacity(mDrawedView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
+        if(mDrawedView != null)
+            toggleViewOpacity(mDrawedView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
     }
 
     /**
