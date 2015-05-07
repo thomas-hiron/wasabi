@@ -4,7 +4,6 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +11,7 @@ import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 
+import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import project.gobelins.wasabi.R;
@@ -23,6 +23,7 @@ import project.gobelins.wasabi.fresco.Fresco;
 public class BeginRecordListener implements View.OnTouchListener
 {
     private FrameLayout mRevealContainer;
+    private ValueAnimator mAnimator;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -59,14 +60,24 @@ public class BeginRecordListener implements View.OnTouchListener
             gradient.setLayoutParams(params);
 
             /* On lance l'animation */
-            ValueAnimator animator = slideAnimator(0, height);
-            animator.setDuration(10000);
-            animator.setInterpolator(new LinearInterpolator());
-            animator.start();
+            mAnimator = slideAnimator(0, height);
+            mAnimator.setDuration(10000);
+            mAnimator.setInterpolator(new LinearInterpolator());
+            mAnimator.start();
         }
         else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
         {
-            Log.v("test", "Stop recording");
+            View rootView = view.getRootView();
+            Fresco fresco = (Fresco) rootView.findViewById(R.id.fresco_container);
+
+            /* On affiche les éléments */
+            fresco.showInterfaceButtons();
+            fresco.showDrawedView();
+            fresco.hideRecordingGradient();
+            /* On arrête l'anim */
+            mAnimator.cancel();
+            /* On supprime le listener */
+            view.setOnTouchListener(null);
         }
 
         return false;

@@ -346,6 +346,14 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * Cache le dégradé d'enregistrement
+     */
+    public void hideRecordingGradient()
+    {
+        toggleViewOpacity(false, R.id.record_gradient);
+    }
+
+    /**
      * Supprime les listeners pour dessiner et effacer
      */
     public void removeDrawingListeners()
