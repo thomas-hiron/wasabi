@@ -34,9 +34,14 @@ public class BeginRecordListener implements View.OnTouchListener
             View rootView = view.getRootView();
             Fresco fresco = (Fresco) rootView.findViewById(R.id.fresco_container);
 
+            /* On provoque le clic sur le bouton son pour le désactiver et cacher le rond */
+            fresco.disableRecordButton();
+
+            /* On remet le listener qui vient d'être supprimé par le fresco.disableRecordButton(); */
+            view.setOnTouchListener(this);
+
             /* On cache les éléments */
             fresco.hideInterfaceButtons();
-            fresco.hideRecordinContainergView();
             fresco.hideDrawedView();
 
             /* Le conteneur du dégradé qui sera animé */
@@ -44,6 +49,7 @@ public class BeginRecordListener implements View.OnTouchListener
 
             /* Le dégradé */
             View gradient = mRevealContainer.getChildAt(0);
+            fresco.showRecordingGradient();
 
             /* On récupère la hauteur de l'écran */
             DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -74,8 +80,10 @@ public class BeginRecordListener implements View.OnTouchListener
             fresco.showInterfaceButtons();
             fresco.showDrawedView();
             fresco.hideRecordingGradient();
+
             /* On arrête l'anim */
             mAnimator.cancel();
+
             /* On supprime le listener */
             view.setOnTouchListener(null);
         }

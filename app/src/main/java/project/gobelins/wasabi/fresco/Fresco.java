@@ -294,7 +294,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void showRecordView()
     {
-        toggleViewOpacity(true, R.id.record_view);
+        toggleViewOpacity(true, R.id.start_recording_container);
 
         /* On baisse l'opacité de la zone de dessin */
         if(mDrawedView != null)
@@ -306,27 +306,11 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void hideRecordView()
     {
-        toggleViewOpacity(false, R.id.record_view);
+        toggleViewOpacity(false, R.id.start_recording_container);
 
         /* On remonte l'opacité de la zone de dessin */
         if(mDrawedView != null)
             toggleViewOpacity(mDrawedView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
-    }
-
-    /**
-     * Affiche le conteneur du bouton pour lancer l'enregistrement
-     */
-    public void showRecordingContainerView()
-    {
-        toggleViewOpacity(true, R.id.start_recording_container);
-    }
-
-    /**
-     * Cache le conteneur du bouton pour lancer l'enregistrement
-     */
-    public void hideRecordinContainergView()
-    {
-        toggleViewOpacity(false, R.id.start_recording_container);
     }
 
     /**
@@ -346,11 +330,27 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * Affiche le dégradé d'enregistrement
+     */
+    public void showRecordingGradient()
+    {
+        toggleViewOpacity(true, R.id.record_gradient);
+    }
+
+    /**
      * Cache le dégradé d'enregistrement
      */
     public void hideRecordingGradient()
     {
         toggleViewOpacity(false, R.id.record_gradient);
+    }
+
+    /**
+     * On provoque le clic sur le bouton enregistrer pour le désactiver
+     */
+    public void disableRecordButton()
+    {
+        mRecordButton.performClick();
     }
 
     /**
