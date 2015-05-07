@@ -11,11 +11,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
-import android.widget.RelativeLayout;
 
 import com.nineoldandroids.animation.ValueAnimator;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.Fresco;
 
 /**
  * Created by ThomasHiron on 03/05/2015.
@@ -30,6 +30,14 @@ public class BeginRecordListener implements View.OnTouchListener
     {
         if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
         {
+            View rootView = view.getRootView();
+            Fresco fresco = (Fresco) rootView.findViewById(R.id.fresco_container);
+
+            /* On cache les éléments */
+            fresco.hideInterfaceButtons();
+            fresco.hideRecordinContainergView();
+            fresco.hideDrawedView();
+
             /* Le conteneur du dégradé qui sera animé */
             mRevealContainer = (FrameLayout) view.getRootView().findViewById(R.id.record_gradient);
 

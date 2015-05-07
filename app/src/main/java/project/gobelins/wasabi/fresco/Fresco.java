@@ -314,6 +314,38 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * Affiche le conteneur du bouton pour lancer l'enregistrement
+     */
+    public void showRecordingContainerView()
+    {
+        toggleViewOpacity(true, R.id.start_recording_container);
+    }
+
+    /**
+     * Cache le conteneur du bouton pour lancer l'enregistrement
+     */
+    public void hideRecordinContainergView()
+    {
+        toggleViewOpacity(false, R.id.start_recording_container);
+    }
+
+    /**
+     * Affiche la zone dessinée
+     */
+    public void showDrawedView()
+    {
+        toggleViewOpacity(true, R.id.drawed_view);
+    }
+
+    /**
+     * Cache la zone dessinée
+     */
+    public void hideDrawedView()
+    {
+        toggleViewOpacity(R.id.drawed_view, DRAWED_VIEW_MIN_OPACITY, 0);
+    }
+
+    /**
      * Supprime les listeners pour dessiner et effacer
      */
     public void removeDrawingListeners()
