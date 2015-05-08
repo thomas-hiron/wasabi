@@ -482,9 +482,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sound_container);
 
         /* Inflation de la vue */
-        View soundView = inflater.inflate(R.layout.fresco_sound, soundContainer, false);
-
-        /* Ajout de la vue */
-        soundContainer.addView(soundView);
+        inflater.inflate(R.layout.fresco_sound, soundContainer, true);
     }
 }
