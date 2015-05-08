@@ -9,11 +9,11 @@ import com.nineoldandroids.animation.Animator;
 /**
  * Created by ThomasHiron on 08/05/2015.
  */
-public class AlphaAnimatorListener implements Animator.AnimatorListener
+public class GradientAnimatorListener implements Animator.AnimatorListener
 {
     private View mView;
 
-    public AlphaAnimatorListener(View view)
+    public GradientAnimatorListener(View view)
     {
         mView = view;
     }

@@ -14,6 +14,7 @@ import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
+import project.gobelins.wasabi.fresco.listeners.AlphaAnimationListener;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
 import project.gobelins.wasabi.fresco.listeners.CancelLastDrawListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
@@ -155,48 +156,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout du listener sur annuler */
         mCancelButton.setOnClickListener(new CancelLastDrawListener(this));
-
-//        /* On drag le bouton du son */
-//        mRecordButton.setOnLongClickListener(new View.OnLongClickListener()
-//        {
-//            @Override
-//            public boolean onLongClick(View view)
-//            {
-//                /* On démarre le drag et on cache la vue */
-//                ClipData data = ClipData.newPlainText("", "");
-//                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-//                view.startDrag(data, shadowBuilder, view, 0);
-//                view.setVisibility(View.GONE);
-//
-//                return true;
-//            }
-//        });
-//
-//        mViewPager.setOnDragListener(new View.OnDragListener()
-//        {
-//            @Override
-//            public boolean onDrag(View view, DragEvent dragEvent)
-//            {
-//                /* Pour accepter le drag et recevoir le drop */
-//                if(dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
-//                    return true;
-//                /* Au drop, on repositionne l'objet */
-//                else if(dragEvent.getAction() == DragEvent.ACTION_DROP)
-//                {
-//                    /* On raffiche le bouton */
-//                    mRecordButton.setVisibility(View.VISIBLE);
-//
-//                    /* Le layout des boutons */
-//                    LinearLayout buttonsContainer = (LinearLayout) mRecordButton.getParent();
-//
-//                    /* On replace le bouton */
-//                    mRecordButton.setX(dragEvent.getX() - buttonsContainer.getX() - mRecordButton.getWidth() / 2);
-//                    mRecordButton.setY(dragEvent.getY() - buttonsContainer.getY() - mRecordButton.getHeight() / 2);
-//                }
-//
-//                return false;
-//            }
-//        });
     }
 
     /**
@@ -260,9 +219,10 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Instantiation de l'animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(from, to);
         alphaAnimation.setDuration(ANIMATION_DURATION);
-        alphaAnimation.setFillAfter(true);
+        alphaAnimation.setFillAfter(to != 0 && to != 1);
 
-        /* On lance l'aanimations */
+        /* On lance l'animation */
+        alphaAnimation.setAnimationListener(new AlphaAnimationListener(view, to));
         view.startAnimation(alphaAnimation);
     }
 

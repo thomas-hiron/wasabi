@@ -72,7 +72,7 @@ public class BeginRecordListener implements View.OnTouchListener
             mAnimator.start();
 
             /* Ajout listener pour animationEND */
-            mAnimator.addListener(new AlphaAnimatorListener(view));
+            mAnimator.addListener(new GradientAnimatorListener(view));
         }
         else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
         {
@@ -85,12 +85,12 @@ public class BeginRecordListener implements View.OnTouchListener
             fresco.showDrawedView();
             fresco.showSoundView();
 
-            /* On arrête l'anim */
-            mAnimator.cancel();
-
             /* On supprime les listener */
             view.setOnTouchListener(null);
             mAnimator.removeAllListeners();
+
+            /* On arrête l'anim */
+            mAnimator.cancel();
 
             /* Ajout du son */
             fresco.addNewSound();

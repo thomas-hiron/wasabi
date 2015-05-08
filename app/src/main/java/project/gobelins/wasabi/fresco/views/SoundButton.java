@@ -1,11 +1,18 @@
 package project.gobelins.wasabi.fresco.views;
 
+import android.content.ClipData;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.FrameLayout;
+
+import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.listeners.SoundDragListener;
 
 /**
  * Bouton qui apparaît lorsque l'enregistrement est terminé
@@ -33,5 +40,30 @@ public class SoundButton extends Button
 
         /* Début animation */
         startAnimation(scaleAnimation);
+    }
+
+    @Override
+    protected void onAttachedToWindow()
+    {
+        super.onAttachedToWindow();
+
+        /* Initialisation du drag n' drop */
+        setOnLongClickListener(new View.OnLongClickListener()
+        {
+            @Override
+            public boolean onLongClick(View view)
+            {
+                /* On démarre le drag et on cache la vue */
+                ClipData data = ClipData.newPlainText("", "");
+                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
+                view.startDrag(data, shadowBuilder, view, 0);
+                setVisibility(View.GONE);
+
+                return true;
+            }
+        });
+
+        FrameLayout parent = (FrameLayout) getParent();
+        parent.setOnDragListener(new SoundDragListener(this));
     }
 }
