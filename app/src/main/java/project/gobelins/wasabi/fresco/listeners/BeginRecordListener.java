@@ -42,6 +42,7 @@ public class BeginRecordListener implements View.OnTouchListener
             /* On cache les éléments */
             fresco.hideInterfaceButtons();
             fresco.hideDrawedView();
+            fresco.hideSoundView();
 
             /* Le conteneur du dégradé qui sera animé */
             mRevealContainer = (FrameLayout) view.getRootView().findViewById(R.id.record_gradient);
@@ -79,9 +80,10 @@ public class BeginRecordListener implements View.OnTouchListener
             Fresco fresco = (Fresco) rootView.findViewById(R.id.fresco_container);
 
             /* On affiche les éléments */
+            fresco.hideRecordingGradient();
             fresco.showInterfaceButtons();
             fresco.showDrawedView();
-            fresco.hideRecordingGradient();
+            fresco.showSoundView();
 
             /* On arrête l'anim */
             mAnimator.cancel();

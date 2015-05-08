@@ -21,7 +21,7 @@ import project.gobelins.wasabi.fresco.views.ColorButton;
  */
 public class DrawView extends View
 {
-    Paint mPaint;
+    protected Paint mPaint;
 
     /* Les points courants */
     ArrayList<Point> mPoints;
@@ -46,7 +46,7 @@ public class DrawView extends View
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeCap(Paint.Cap.ROUND);
         mPaint.setColor(mColor);
-        mPaint.setStrokeWidth(10);
+        mPaint.setStrokeWidth(15);
 
         /* La liste */
         mPoints = new ArrayList<Point>();

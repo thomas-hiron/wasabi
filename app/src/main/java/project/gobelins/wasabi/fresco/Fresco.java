@@ -30,6 +30,8 @@ import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 
 /**
+ * Classe qui gère toute la fresque
+ * <p/>
  * Created by ThomasHiron on 30/04/2015.
  */
 public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, OnCanceledListener
@@ -50,6 +52,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
+    private FrameLayout mSoundView;
 
     public Fresco(Context context)
     {
@@ -81,7 +84,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     /**
      * Initialise le viewPager
      *
-     * @param supportFragmentManager
+     * @param supportFragmentManager Le supportFragmentManager
      */
     public void initViewPager(FragmentManager supportFragmentManager)
     {
@@ -197,6 +200,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * Initialise le son
+     */
+    public void initSound()
+    {
+        if(mSoundView == null && getLastFragment().getView() != null)
+            mSoundView = (FrameLayout) getLastFragment().getView().findViewById(R.id.sound_view);
+    }
+
+    /**
      * Cache les boutons de l'interface
      */
     public void hideInterfaceButtons()
@@ -297,9 +309,11 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         toggleViewOpacity(true, R.id.start_recording_container);
 
-        /* On baisse l'opacité de la zone de dessin */
+        /* On baisse l'opacité de la zone de dessin et du son */
         if(mDrawedView != null)
             toggleViewOpacity(mDrawedView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
+        if(mSoundView != null)
+            toggleViewOpacity(mSoundView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
     }
 
     /**
@@ -309,9 +323,11 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         toggleViewOpacity(false, R.id.start_recording_container);
 
-        /* On remonte l'opacité de la zone de dessin */
+        /* On remonte l'opacité de la zone de dessin et du son */
         if(mDrawedView != null)
             toggleViewOpacity(mDrawedView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
+        if(mSoundView != null)
+            toggleViewOpacity(mSoundView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
     }
 
     /**
@@ -324,6 +340,22 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
     /**
      * Cache la zone dessinée
+     */
+    public void hideSoundView()
+    {
+        toggleViewOpacity(R.id.sound_view, DRAWED_VIEW_MIN_OPACITY, 0);
+    }
+
+    /**
+     * Affiche la zone des boutons de son
+     */
+    public void showSoundView()
+    {
+        toggleViewOpacity(true, R.id.sound_view);
+    }
+
+    /**
+     * Cache la zone des boutons de son
      */
     public void hideDrawedView()
     {
@@ -438,7 +470,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     /**
      * On fait apparaître ou disparaitre la flèche pour annuler
      *
-     * @param show
+     * @param show Si on doit afficher
      */
     @Override
     public void toggleCancelArrowListener(boolean show)
@@ -479,7 +511,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         /* La vue parent */
-        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sound_container);
+        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sound_view);
 
         /* Inflation de la vue */
         inflater.inflate(R.layout.fresco_sound, soundContainer, true);

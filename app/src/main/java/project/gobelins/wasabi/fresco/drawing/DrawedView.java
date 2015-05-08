@@ -20,8 +20,6 @@ import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
  */
 public class DrawedView extends DrawView
 {
-    private Paint mPaint;
-
     /* Les points courants */
     private Path mPath;
 
@@ -41,14 +39,6 @@ public class DrawedView extends DrawView
 
         /* Initialisation de la paire Path/Paint */
         mPathsColors = new ArrayList<Pair<Integer, Path>>();
-
-        /* Initialisation du paint */
-        mPaint = new Paint();
-        mPaint.setAntiAlias(true);
-        mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeCap(Paint.Cap.ROUND);
-        mPaint.setColor(Color.BLACK);
-        mPaint.setStrokeWidth(10);
     }
 
     @Override
