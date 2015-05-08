@@ -10,8 +10,10 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.listeners.PlaySoundListener;
 import project.gobelins.wasabi.fresco.listeners.SoundDragListener;
 
 /**
@@ -40,6 +42,9 @@ public class SoundButton extends Button
 
         /* Début animation */
         startAnimation(scaleAnimation);
+
+        /* Au clic sur le bouton, on écoute le son */
+        setOnClickListener(new PlaySoundListener());
     }
 
     @Override
