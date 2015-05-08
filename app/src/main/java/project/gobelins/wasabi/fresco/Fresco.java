@@ -5,6 +5,7 @@ import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
@@ -467,5 +468,23 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public FrescoFragment getLastFragment()
     {
         return mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1);
+    }
+
+    /**
+     * Ajoute un nouveau son
+     */
+    public void addNewSound()
+    {
+        /* L'inflater */
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        /* La vue parent */
+        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sound_container);
+
+        /* Inflation de la vue */
+        View soundView = inflater.inflate(R.layout.fresco_sound, soundContainer, false);
+
+        /* Ajout de la vue */
+        soundContainer.addView(soundView);
     }
 }

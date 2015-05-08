@@ -90,7 +90,8 @@ public class BeginRecordListener implements View.OnTouchListener
             view.setOnTouchListener(null);
             mAnimator.removeAllListeners();
 
-            // TODO : Ajouter l'élément draggable
+            /* Ajout du son */
+            fresco.addNewSound();
         }
 
         return false;

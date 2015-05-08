@@ -5,6 +5,11 @@
              android:layout_height="match_parent"
              tools:context="project.gobelins.wasabi.fragments.FrescoFragment">
 
+    <FrameLayout
+        android:id="@+id/sound_container"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
     <project.gobelins.wasabi.fresco.drawing.DrawedView
         android:id="@+id/drawed_view"
         android:layout_width="match_parent"
