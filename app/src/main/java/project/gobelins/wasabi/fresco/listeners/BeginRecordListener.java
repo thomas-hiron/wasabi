@@ -3,7 +3,6 @@ package project.gobelins.wasabi.fresco.listeners;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.os.SystemClock;
 import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +11,6 @@ import android.view.WindowManager;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
 
-import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import project.gobelins.wasabi.R;
@@ -25,7 +23,6 @@ public class BeginRecordListener implements View.OnTouchListener
 {
     private FrameLayout mRevealContainer;
     private ValueAnimator mAnimator;
-    private View mView;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -33,8 +30,6 @@ public class BeginRecordListener implements View.OnTouchListener
     {
         if(motionEvent.getAction() == MotionEvent.ACTION_DOWN)
         {
-            mView = view;
-
             View rootView = view.getRootView();
             Fresco fresco = (Fresco) rootView.findViewById(R.id.fresco_container);
 
@@ -70,10 +65,13 @@ public class BeginRecordListener implements View.OnTouchListener
             gradient.setLayoutParams(params);
 
             /* On lance l'animation */
-            mAnimator = slideAnimator(0, height, this);
+            mAnimator = slideAnimator(0, height);
             mAnimator.setDuration(10000);
             mAnimator.setInterpolator(new LinearInterpolator());
             mAnimator.start();
+
+            /* Ajout listener pour animationEND */
+            mAnimator.addListener(new AlphaAnimatorListener(view));
         }
         else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
         {
@@ -88,8 +86,9 @@ public class BeginRecordListener implements View.OnTouchListener
             /* On arrête l'anim */
             mAnimator.cancel();
 
-            /* On supprime le listener */
+            /* On supprime les listener */
             view.setOnTouchListener(null);
+            mAnimator.removeAllListeners();
 
             // TODO : Ajouter l'élément draggable
         }
@@ -98,24 +97,14 @@ public class BeginRecordListener implements View.OnTouchListener
     }
 
     /**
-     * @return La vue
-     */
-    public View getView()
-    {
-        return mView;
-    }
-
-    /**
      * Anime la hauteur du conteneur du dégradé
      *
-     * @param start               La valeur de départ
-     * @param end                 La hauteur finale
-     * @param beginRecordListener Le listener
+     * @param start La valeur de départ
+     * @param end   La hauteur finale
      * @return L'animator
      */
-    private ValueAnimator slideAnimator(int start, int end, final BeginRecordListener beginRecordListener)
+    private ValueAnimator slideAnimator(int start, int end)
     {
-
         ValueAnimator animator = ValueAnimator.ofInt(start, end);
 
         animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
@@ -128,40 +117,6 @@ public class BeginRecordListener implements View.OnTouchListener
                 ViewGroup.LayoutParams layoutParams = mRevealContainer.getLayoutParams();
                 layoutParams.height = value;
                 mRevealContainer.setLayoutParams(layoutParams);
-            }
-        });
-
-        animator.addListener(new Animator.AnimatorListener()
-        {
-            @Override
-            public void onAnimationStart(Animator animation)
-            {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation)
-            {
-                MotionEvent motionEvent = MotionEvent.obtain(
-                        SystemClock.uptimeMillis(),
-                        SystemClock.uptimeMillis() + 100,
-                        MotionEvent.ACTION_UP, 0, 0, 0
-                );
-
-                /* Dispatch touch event to view */
-                beginRecordListener.getView().dispatchTouchEvent(motionEvent);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation)
-            {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation)
-            {
-
             }
         });
 
