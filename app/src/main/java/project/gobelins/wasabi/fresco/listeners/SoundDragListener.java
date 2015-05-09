@@ -34,6 +34,8 @@ public class SoundDragListener implements View.OnDragListener
             /* On replace le bouton */
             mSoundButton.setX(dragEvent.getX() - mSoundButton.getWidth() / 2);
             mSoundButton.setY(dragEvent.getY() - mSoundButton.getHeight() / 2);
+
+            view.setOnDragListener(null);
         }
 
         return false;
