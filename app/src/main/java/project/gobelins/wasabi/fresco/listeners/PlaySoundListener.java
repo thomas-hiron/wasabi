@@ -4,6 +4,9 @@ import android.content.Context;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.Toast;
 
 import java.io.IOException;
@@ -34,6 +37,16 @@ public class PlaySoundListener implements View.OnClickListener
 
         /* On cast le bouton pour récupérer le nom du fichier */
         SoundButton soundButton = (SoundButton) view;
+
+        /* Animation du bouton */
+        ScaleAnimation scaleAnimation = new ScaleAnimation(0.95f, 1, 0.95f, 1, /* Début/fin pour X/Y */
+                Animation.RELATIVE_TO_SELF, 0.5f, /* X */
+                Animation.RELATIVE_TO_SELF, 0.5f); /* Y */
+        scaleAnimation.setDuration(250);
+        scaleAnimation.setInterpolator(new OvershootInterpolator());
+
+        /* Début animation */
+        soundButton.startAnimation(scaleAnimation);
 
         /* Instanciation et lecture du fichier audio */
         try
