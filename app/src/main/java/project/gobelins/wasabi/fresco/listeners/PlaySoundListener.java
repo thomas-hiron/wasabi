@@ -1,7 +1,6 @@
 package project.gobelins.wasabi.fresco.listeners;
 
 import android.content.Context;
-import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.Log;
 import android.view.View;
@@ -10,6 +9,8 @@ import android.widget.Toast;
 import java.io.IOException;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.MediaPlayer;
 import project.gobelins.wasabi.fresco.views.SoundButton;
 
 /**
@@ -19,16 +20,31 @@ import project.gobelins.wasabi.fresco.views.SoundButton;
  */
 public class PlaySoundListener implements View.OnClickListener
 {
+    private Fresco mFresco;
+
     @Override
     public void onClick(View view)
     {
+        /* Récupération de la fresque */
+        if(mFresco == null)
+        {
+            View rootView = view.getRootView();
+            mFresco = (Fresco) rootView.findViewById(R.id.fresco_container);
+        }
+
         /* On cast le bouton pour récupérer le nom du fichier */
         SoundButton soundButton = (SoundButton) view;
 
         /* Instanciation et lecture du fichier audio */
         try
         {
-            MediaPlayer mediaPlayer = new MediaPlayer();
+            /* Récupération du player */
+            MediaPlayer mediaPlayer = mFresco.getMediaPlayer();
+
+            /* Réinitialisation */
+            mediaPlayer.stop();
+
+            /* Nouvelle piste */
             mediaPlayer.setDataSource(soundButton.getContext(), Uri.parse(soundButton.getFileName()));
             mediaPlayer.prepare();
             mediaPlayer.start();

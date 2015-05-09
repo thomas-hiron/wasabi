@@ -7,7 +7,6 @@ import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
@@ -56,6 +55,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
     private FrameLayout mSoundView;
+    private MediaPlayer mMediaPlayer;
 
     public Fresco(Context context)
     {
@@ -485,5 +485,14 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout de la vue */
         soundContainer.addView(soundButton);
+    }
+
+    public MediaPlayer getMediaPlayer()
+    {
+        /* Instanciation que si besoin */
+        if(mMediaPlayer == null)
+            mMediaPlayer = new MediaPlayer();
+
+        return mMediaPlayer;
     }
 }
