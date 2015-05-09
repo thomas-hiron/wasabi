@@ -44,9 +44,6 @@ public class SoundButton extends Button
 
         /* Début animation */
         startAnimation(scaleAnimation);
-
-        /* Au clic sur le bouton, on écoute le son */
-        setOnClickListener(new PlaySoundListener());
     }
 
     /**
@@ -70,6 +67,27 @@ public class SoundButton extends Button
     {
         super.onAttachedToWindow();
 
+        /* Ajout des listeners */
+        addListeners();
+    }
+
+    /**
+     * On supprime tous les listeners
+     */
+    public void removeListeners()
+    {
+        setOnClickListener(null);
+        setOnLongClickListener(null);
+    }
+
+    /**
+     * Ajoute les listeners drag et click
+     */
+    public void addListeners()
+    {
+        /* Au clic sur le bouton, on écoute le son */
+        setOnClickListener(new PlaySoundListener());
+
         /* Initialisation du drag n' drop */
         setOnLongClickListener(new View.OnLongClickListener()
         {
@@ -88,5 +106,6 @@ public class SoundButton extends Button
 
         FrameLayout parent = (FrameLayout) getParent();
         parent.setOnDragListener(new SoundDragListener(this));
+
     }
 }

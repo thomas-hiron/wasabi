@@ -465,6 +465,18 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * @return Le MediaPlayer
+     */
+    public MediaPlayer getMediaPlayer()
+    {
+        /* Instanciation que si besoin */
+        if(mMediaPlayer == null)
+            mMediaPlayer = new MediaPlayer();
+
+        return mMediaPlayer;
+    }
+
+    /**
      * Ajoute un nouveau son
      *
      * @param fileName Le nom du fichier enregistré
@@ -485,14 +497,5 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout de la vue */
         soundContainer.addView(soundButton);
-    }
-
-    public MediaPlayer getMediaPlayer()
-    {
-        /* Instanciation que si besoin */
-        if(mMediaPlayer == null)
-            mMediaPlayer = new MediaPlayer();
-
-        return mMediaPlayer;
     }
 }

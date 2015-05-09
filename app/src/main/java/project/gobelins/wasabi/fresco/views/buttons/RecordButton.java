@@ -31,5 +31,8 @@ public class RecordButton extends FrescoActionButton
 
         /* On supprime le listener */
         mFresco.getLastFragment().removeRecordingListener();
+
+        /* On ajoute les listeners sur les sons */
+        mFresco.getLastFragment().addDragSoundListeners();
     }
 }

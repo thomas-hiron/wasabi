@@ -12,6 +12,7 @@ import android.widget.FrameLayout;
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
+import project.gobelins.wasabi.fresco.views.SoundButton;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -20,7 +21,6 @@ import project.gobelins.wasabi.fresco.recording.RecordView;
  */
 public class FrescoFragment extends Fragment
 {
-
     private Button mStartRecordingButton;
     private boolean mIsLastFragment;
 
@@ -99,5 +99,43 @@ public class FrescoFragment extends Fragment
     public void removeRecordingListener()
     {
         mStartRecordingButton.setOnTouchListener(null);
+    }
+
+    /**
+     * Supprime tous les listeners drag/click sur les boutons de son
+     */
+    public void removeDragSoundListeners()
+    {
+        View fragmentView = getView();
+
+        if(fragmentView != null)
+        {
+            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sound_view);
+
+            for(int i = 0, l = soundView.getChildCount(); i < l; ++i)
+            {
+                SoundButton soundButton = (SoundButton) soundView.getChildAt(i);
+                soundButton.removeListeners();
+            }
+        }
+    }
+
+    /**
+     * Rajoute les listeners drag/click sur les boutons de son
+     */
+    public void addDragSoundListeners()
+    {
+        View fragmentView = getView();
+
+        if(fragmentView != null)
+        {
+            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sound_view);
+
+            for(int i = 0, l = soundView.getChildCount(); i < l; ++i)
+            {
+                SoundButton soundButton = (SoundButton) soundView.getChildAt(i);
+                soundButton.addListeners();
+            }
+        }
     }
 }

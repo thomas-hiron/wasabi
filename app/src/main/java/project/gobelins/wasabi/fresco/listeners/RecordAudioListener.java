@@ -37,7 +37,10 @@ public class RecordAudioListener implements View.OnClickListener
             /* On ajoute le listener */
             mFresco.getLastFragment().addRecordingListener();
 
-            /* Initialisation du dessin */
+            /* On supprime les listeners des drags */
+            mFresco.getLastFragment().removeDragSoundListeners();
+
+            /* Initialisation du son */
             mFresco.initSound();
         }
 
