@@ -28,6 +28,7 @@ public class PlaySoundListener implements View.OnClickListener
         /* Instanciation et lecture du fichier audio */
         try
         {
+            Log.v("test", soundButton.getFileName());
             MediaPlayer mediaPlayer = new MediaPlayer();
             mediaPlayer.setDataSource(soundButton.getContext(), Uri.parse(soundButton.getFileName()));
             mediaPlayer.prepare();

@@ -6,6 +6,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by ThomasHiron on 09/05/2015.
@@ -17,8 +18,9 @@ public class RecordManager
 
     public RecordManager()
     {
+        Date date = new Date();
         mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/audio_record_test.3gp";
+        mFileName += "/" + date.getTime() + ".3gp";
     }
 
     /**
