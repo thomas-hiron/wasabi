@@ -23,6 +23,8 @@ import project.gobelins.wasabi.fresco.listeners.SoundDragListener;
  */
 public class SoundButton extends Button
 {
+    private String mFileName;
+
     public SoundButton(Context context)
     {
         super(context);
@@ -45,6 +47,22 @@ public class SoundButton extends Button
 
         /* Au clic sur le bouton, on écoute le son */
         setOnClickListener(new PlaySoundListener());
+    }
+
+    /**
+     * @param fileName Le chemin du fichier
+     */
+    public void setFileName(String fileName)
+    {
+        mFileName = fileName;
+    }
+
+    /**
+     * @return Le chemin du fichier
+     */
+    public String getFileName()
+    {
+        return mFileName;
     }
 
     @Override

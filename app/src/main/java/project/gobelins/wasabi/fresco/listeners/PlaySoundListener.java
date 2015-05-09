@@ -3,6 +3,8 @@ package project.gobelins.wasabi.fresco.listeners;
 import android.view.View;
 import android.widget.Toast;
 
+import project.gobelins.wasabi.fresco.views.SoundButton;
+
 /**
  * Joue le son
  *
@@ -13,6 +15,7 @@ public class PlaySoundListener implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
-        Toast.makeText(view.getContext(), "Clic !", Toast.LENGTH_SHORT).show();
+        SoundButton soundButton = (SoundButton) view;
+        Toast.makeText(view.getContext(), soundButton.getFileName(), Toast.LENGTH_SHORT).show();
     }
 }

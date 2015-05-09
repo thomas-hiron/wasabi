@@ -7,6 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
@@ -23,6 +24,7 @@ import project.gobelins.wasabi.fresco.listeners.TakePictureListener;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 import project.gobelins.wasabi.fresco.views.FrescoViewPager;
+import project.gobelins.wasabi.fresco.views.SoundButton;
 import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
@@ -464,8 +466,10 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
     /**
      * Ajoute un nouveau son
+     *
+     * @param fileName Le nom du fichier enregistré
      */
-    public void addNewSound()
+    public void addNewSound(String fileName)
     {
         /* L'inflater */
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -474,6 +478,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sound_view);
 
         /* Inflation de la vue */
-        inflater.inflate(R.layout.fresco_sound, soundContainer, true);
+        ViewGroup soundButtonContainer = (ViewGroup) inflater.inflate(R.layout.fresco_sound, soundContainer, true);
+
+        /* Ajout du chemin */
+        ((SoundButton) soundButtonContainer.getChildAt(0)).setFileName(fileName);
     }
 }

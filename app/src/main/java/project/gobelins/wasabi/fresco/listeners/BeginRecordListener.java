@@ -15,6 +15,7 @@ import com.nineoldandroids.animation.ValueAnimator;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.recording.RecordManager;
 
 /**
  * Created by ThomasHiron on 03/05/2015.
@@ -23,6 +24,7 @@ public class BeginRecordListener implements View.OnTouchListener
 {
     private FrameLayout mRevealContainer;
     private ValueAnimator mAnimator;
+    private RecordManager mRecordManager;
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
@@ -65,13 +67,17 @@ public class BeginRecordListener implements View.OnTouchListener
             params.height = height;
             gradient.setLayoutParams(params);
 
+            /* On lance l'enregistrement */
+            mRecordManager = new RecordManager();
+            mRecordManager.start();
+
             /* On lance l'animation */
             mAnimator = slideAnimator(0, height);
             mAnimator.setDuration(10000);
             mAnimator.setInterpolator(new LinearInterpolator());
             mAnimator.start();
 
-            /* Ajout listener pour animationEND */
+            /* Ajout listener pour animationEnd */
             mAnimator.addListener(new GradientAnimatorListener(view));
         }
         else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
@@ -92,8 +98,11 @@ public class BeginRecordListener implements View.OnTouchListener
             /* On arrête l'anim */
             mAnimator.cancel();
 
+            /* On stoppe l'enregistrement */
+            mRecordManager.stop();
+
             /* Ajout du son */
-            fresco.addNewSound();
+            fresco.addNewSound(mRecordManager.getFileName());
         }
 
         return false;
