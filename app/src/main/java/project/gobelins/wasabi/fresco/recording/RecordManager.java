@@ -13,6 +13,7 @@ import java.util.Date;
  */
 public class RecordManager
 {
+    private File mFile;
     private String mFileName;
     private MediaRecorder mRecorder;
 
@@ -29,6 +30,7 @@ public class RecordManager
         /* Formatage du fichier */
         Date date = new Date();
         mFileName += date.getTime() + ".3gp";
+        mFile = new File(mFileName);
     }
 
     /**
@@ -40,7 +42,7 @@ public class RecordManager
         mRecorder = new MediaRecorder();
         mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
         mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
-        mRecorder.setOutputFile(mFileName);
+        mRecorder.setOutputFile(mFile.getAbsolutePath());
         mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
 
         try
@@ -62,17 +64,34 @@ public class RecordManager
 
     /**
      * Stoppe l'enregistrement
+     *
+     * @return Si enregistrement effectué avec succès
      */
-    public void stop()
+    public boolean stop()
     {
+        boolean success = true;
         /* Suppression de l'enregistrement en cours */
         if(mRecorder != null)
         {
-            mRecorder.stop();
-            mRecorder.reset();
-            mRecorder.release();
-            mRecorder = null;
+            try
+            {
+                mRecorder.stop();
+            }
+            catch(RuntimeException e)
+            {
+                /* Suppression du fichier si simple click sur le bouton */
+                mFile.delete();
+                success = false;
+            }
+            finally
+            {
+                mRecorder.reset();
+                mRecorder.release();
+                mRecorder = null;
+            }
         }
+
+        return success;
     }
 
     /**

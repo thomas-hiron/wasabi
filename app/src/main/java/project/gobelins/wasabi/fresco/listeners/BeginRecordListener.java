@@ -98,11 +98,9 @@ public class BeginRecordListener implements View.OnTouchListener
             /* On arrête l'anim */
             mAnimator.cancel();
 
-            /* On stoppe l'enregistrement */
-            mRecordManager.stop();
-
-            /* Ajout du son */
-            fresco.addNewSound(mRecordManager.getFileName());
+            /* On stoppe l'enregistrement et on ajoute le son */
+            if(mRecordManager.stop())
+                fresco.addNewSound(mRecordManager.getFileName());
         }
 
         return false;
