@@ -3,6 +3,8 @@ package project.gobelins.wasabi.fresco.views;
 import android.content.ClipData;
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
@@ -91,15 +93,8 @@ public class SoundButton extends Button
             @Override
             public boolean onLongClick(View view)
             {
-                /* Ajout du drag */
-                FrameLayout parent = (FrameLayout) getParent();
-                parent.setOnDragListener(new SoundDragListener((SoundButton) view));
-
-                /* On démarre le drag et on cache la vue */
-                ClipData data = ClipData.newPlainText("", "");
-                View.DragShadowBuilder shadowBuilder = new View.DragShadowBuilder(view);
-                view.startDrag(data, shadowBuilder, view, 0);
-                setVisibility(View.GONE);
+                /* Sorte de drag perso */
+                setOnTouchListener(new SoundDragListener());
 
                 return true;
             }

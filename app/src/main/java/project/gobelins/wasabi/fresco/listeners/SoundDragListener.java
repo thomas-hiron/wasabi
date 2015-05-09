@@ -1,43 +1,32 @@
 package project.gobelins.wasabi.fresco.listeners;
 
-import android.view.DragEvent;
+import android.view.MotionEvent;
 import android.view.View;
-
-import project.gobelins.wasabi.fresco.views.SoundButton;
 
 /**
  * Classe perso qui gère le drag
  * <p/>
  * Created by ThomasHiron on 08/05/2015.
  */
-public class SoundDragListener implements View.OnDragListener
+public class SoundDragListener implements View.OnTouchListener
 {
-    private SoundButton mSoundButton;
-
-    public SoundDragListener(SoundButton soundButton)
-    {
-        mSoundButton = soundButton;
-    }
-
     @Override
-    public boolean onDrag(View view, DragEvent dragEvent)
+    public boolean onTouch(View view, MotionEvent motionEvent)
     {
-        /* Pour accepter le drag et recevoir le drop */
-        if(dragEvent.getAction() == DragEvent.ACTION_DRAG_STARTED)
-            return true;
-        /* Au drop, on repositionne l'objet */
-        else if(dragEvent.getAction() == DragEvent.ACTION_DROP)
+        /* On replace l'élément */
+        if(motionEvent.getAction() == MotionEvent.ACTION_MOVE)
         {
-            /* On raffiche le bouton */
-            mSoundButton.setVisibility(View.VISIBLE);
+            view.setX(motionEvent.getRawX() - view.getWidth() / 2);
+            view.setY(motionEvent.getRawY() - view.getHeight() / 2);
+        }
+        else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
+        {
+            /* Suppression du listener */
+            view.setOnTouchListener(null);
 
-            /* On replace le bouton */
-            mSoundButton.setX(dragEvent.getX() - mSoundButton.getWidth() / 2);
-            mSoundButton.setY(dragEvent.getY() - mSoundButton.getHeight() / 2);
-
-            view.setOnDragListener(null);
+            // TODO : Enregistrement de la position du son
         }
 
-        return false;
+        return true;
     }
 }
