@@ -3,8 +3,8 @@ package project.gobelins.wasabi.fresco.recording;
 import android.media.MediaRecorder;
 import android.os.Environment;
 import android.util.Log;
-import android.widget.Toast;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -18,9 +18,17 @@ public class RecordManager
 
     public RecordManager()
     {
+        /* Le dossier de base */
+        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Wasabi/sounds/";
+
+        /* Création si non existant */
+        File folder = new File(mFileName);
+        if(!folder.exists())
+            folder.mkdirs();
+
+        /* Formatage du fichier */
         Date date = new Date();
-        mFileName = Environment.getExternalStorageDirectory().getAbsolutePath();
-        mFileName += "/" + date.getTime() + ".3gp";
+        mFileName += date.getTime() + ".3gp";
     }
 
     /**
@@ -39,7 +47,11 @@ public class RecordManager
         {
             mRecorder.prepare();
         }
-        catch (IOException e)
+        catch(IOException e)
+        {
+            Log.v("test", "Recording failed");
+        }
+        catch(IllegalStateException e) /* Si on supprime un dossier, erreur */
         {
             Log.v("test", "Recording failed");
         }
@@ -54,7 +66,7 @@ public class RecordManager
     public void stop()
     {
         /* Suppression de l'enregistrement en cours */
-        if (mRecorder != null)
+        if(mRecorder != null)
         {
             mRecorder.stop();
             mRecorder.reset();
