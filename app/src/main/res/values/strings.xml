@@ -16,5 +16,6 @@
     <string name="message_fresco">Envoyez un message à votre proche mystère</string>
     <string name="cancel_last_draw">Annuler dessin</string>
     <string name="record_instructions">Maintenez votre doigt sur\nle bouton rouge pour enregistrer</string>
+    <string name="error_play_sound">Une erreur s\'est produite lors de la lecture</string>
 
 </resources>
