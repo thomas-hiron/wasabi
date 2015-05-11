@@ -44,7 +44,6 @@ import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
-import project.gobelins.wasabi.sqlite.tables.Notifications;
 
 /**
  * Classe qui gère toute la fresque
@@ -621,10 +620,10 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         ContentValues contentValues = new ContentValues(3);
         contentValues.put(Drawings.DRAWINGS_DATE, dateFormat.format(date));
-        contentValues.put(Drawings.DRAWINGS_POINTS, points.toString());
+        contentValues.put(Drawings.DRAWINGS_POINTS, points.toString().replaceAll("\\[(.*)\\]", "$1"));
         contentValues.put(Drawings.DRAWINGS_COLOR, color);
 
         ContentResolver contentResolver = getContext().getContentResolver();
-        contentResolver.insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues  );
+        contentResolver.insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);
     }
 }
