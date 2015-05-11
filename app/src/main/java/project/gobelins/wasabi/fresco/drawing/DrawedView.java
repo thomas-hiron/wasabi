@@ -48,9 +48,6 @@ public class DrawedView extends DrawView
         /* On dessine une ligne smooth au up */
         if(mPoints != null && mPoints.size() > 0)
         {
-            /* On dessine */
-            drawSmoothLine();
-
             /* Dessin du path */
             for(Pair<Integer, Path> pathColor : mPathsColors)
             {
@@ -155,6 +152,9 @@ public class DrawedView extends DrawView
 
         /* Changement des points */
         mPoints = points;
+
+        /* Lissage de la courbe */
+        drawSmoothLine();
 
         /* On dessine */
         invalidate();
