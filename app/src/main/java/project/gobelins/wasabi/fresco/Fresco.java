@@ -330,7 +330,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     /**
      * Cache la zone dessinée
      */
-    public void hideSoundView()
+    public void hideSoundsView()
     {
         toggleViewOpacity(R.id.sounds_view, DRAWED_VIEW_MIN_OPACITY, 0);
     }
@@ -338,9 +338,25 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     /**
      * Affiche la zone des boutons de son
      */
-    public void showSoundView()
+    public void showSoundsView()
     {
         toggleViewOpacity(true, R.id.sounds_view);
+    }
+
+    /**
+     * Cache la zone dessinée
+     */
+    public void hideImagesView()
+    {
+        toggleViewOpacity(R.id.pictures_view, DRAWED_VIEW_MIN_OPACITY, 0);
+    }
+
+    /**
+     * Affiche la zone des boutons des images
+     */
+    public void showImagesView()
+    {
+        toggleViewOpacity(true, R.id.pictures_view);
     }
 
     /**
