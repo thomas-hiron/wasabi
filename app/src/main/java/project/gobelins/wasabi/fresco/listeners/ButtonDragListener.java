@@ -20,9 +20,7 @@ public class ButtonDragListener implements View.OnTouchListener
             view.setY(motionEvent.getRawY() - view.getHeight() / 2);
 
             /* Pour ne pas laisser de traces lors du drag */
-            View viewParent = (View) view.getParent();
-            viewParent.invalidate();
-            viewParent.postInvalidate();
+            ((View) view.getParent()).invalidate();
         }
         else if(motionEvent.getAction() == MotionEvent.ACTION_UP)
         {
