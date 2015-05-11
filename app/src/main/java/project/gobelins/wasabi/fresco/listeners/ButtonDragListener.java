@@ -8,7 +8,7 @@ import android.view.View;
  * <p/>
  * Created by ThomasHiron on 08/05/2015.
  */
-public class SoundDragListener implements View.OnTouchListener
+public class ButtonDragListener implements View.OnTouchListener
 {
     @Override
     public boolean onTouch(View view, MotionEvent motionEvent)
