@@ -1,7 +1,6 @@
 package project.gobelins.wasabi.fresco;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.support.v4.app.Fragment;
@@ -492,16 +491,20 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         /* La vue parent */
-        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sounds_view);
+        View fragmentView = getLastFragment().getView();
+        FrameLayout soundsContainer = null;
+        if(fragmentView != null)
+            soundsContainer = (FrameLayout) fragmentView.findViewById(R.id.sounds_view);
 
         /* Inflation de la vue */
-        SoundButton soundButton = (SoundButton) inflater.inflate(R.layout.fresco_sound, soundContainer, false);
+        SoundButton soundButton = (SoundButton) inflater.inflate(R.layout.fresco_sound, soundsContainer, false);
 
         /* Ajout du chemin */
         soundButton.setFileName(fileName);
 
         /* Ajout de la vue */
-        soundContainer.addView(soundButton);
+        if(soundsContainer != null)
+            soundsContainer.addView(soundButton);
     }
 
     /**
@@ -515,12 +518,17 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         /* La vue parent */
-        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.pictures_view);
+        View fragmentView = getLastFragment().getView();
+        FrameLayout imagesContainer = null;
+        if(fragmentView != null)
+            imagesContainer = (FrameLayout) getLastFragment().getView().findViewById(R.id.pictures_view);
 
         /* Ajout de la vue */
         ImageView imageView = new ImageView(getContext());
         imageView.setImageURI(Uri.parse(imageUrl));
-        soundContainer.addView(imageView);
+
+        if(imagesContainer != null)
+            imagesContainer.addView(imageView);
     }
 
     /**

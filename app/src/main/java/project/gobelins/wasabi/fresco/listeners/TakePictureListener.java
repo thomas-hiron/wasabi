@@ -1,11 +1,8 @@
 package project.gobelins.wasabi.fresco.listeners;
 
-import android.content.Intent;
-import android.provider.MediaStore;
 import android.view.View;
 
 import project.gobelins.wasabi.fresco.Fresco;
-import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 import project.gobelins.wasabi.interfaces.OnPictureListener;
 
 /**
@@ -13,9 +10,9 @@ import project.gobelins.wasabi.interfaces.OnPictureListener;
  */
 public class TakePictureListener implements View.OnClickListener
 {
-    private OnPictureListener mListener;
+    private Fresco mListener;
 
-    public TakePictureListener(OnPictureListener listener)
+    public TakePictureListener(Fresco listener)
     {
         mListener = listener;
     }
@@ -23,6 +20,9 @@ public class TakePictureListener implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
+        /* On se déplace */
+        mListener.goToLastFragment();
+
         /* On ouvre l'appareil photo */
         mListener.onTakePicture();
     }
