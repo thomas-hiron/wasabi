@@ -110,7 +110,7 @@ public class FrescoFragment extends Fragment
 
         if(fragmentView != null)
         {
-            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sound_view);
+            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sounds_view);
 
             for(int i = 0, l = soundView.getChildCount(); i < l; ++i)
             {
@@ -129,7 +129,7 @@ public class FrescoFragment extends Fragment
 
         if(fragmentView != null)
         {
-            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sound_view);
+            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sounds_view);
 
             for(int i = 0, l = soundView.getChildCount(); i < l; ++i)
             {

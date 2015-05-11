@@ -1,7 +1,9 @@
 package project.gobelins.wasabi.fresco;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
@@ -9,9 +11,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
@@ -169,7 +171,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void initSound()
     {
         if(mSoundView == null && getLastFragment().getView() != null)
-            mSoundView = (FrameLayout) getLastFragment().getView().findViewById(R.id.sound_view);
+            mSoundView = (FrameLayout) getLastFragment().getView().findViewById(R.id.sounds_view);
     }
 
     /**
@@ -308,7 +310,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void hideSoundView()
     {
-        toggleViewOpacity(R.id.sound_view, DRAWED_VIEW_MIN_OPACITY, 0);
+        toggleViewOpacity(R.id.sounds_view, DRAWED_VIEW_MIN_OPACITY, 0);
     }
 
     /**
@@ -316,7 +318,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void showSoundView()
     {
-        toggleViewOpacity(true, R.id.sound_view);
+        toggleViewOpacity(true, R.id.sounds_view);
     }
 
     /**
@@ -490,7 +492,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         /* La vue parent */
-        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sound_view);
+        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.sounds_view);
 
         /* Inflation de la vue */
         SoundButton soundButton = (SoundButton) inflater.inflate(R.layout.fresco_sound, soundContainer, false);
@@ -500,6 +502,25 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout de la vue */
         soundContainer.addView(soundButton);
+    }
+
+    /**
+     * Ajoute une nouvelle image
+     *
+     * @param imageUrl L'image
+     */
+    public void addNewPicture(String imageUrl)
+    {
+        /* L'inflater */
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        /* La vue parent */
+        FrameLayout soundContainer = (FrameLayout) findViewById(R.id.pictures_view);
+
+        /* Ajout de la vue */
+        ImageView imageView = new ImageView(getContext());
+        imageView.setImageURI(Uri.parse(imageUrl));
+        soundContainer.addView(imageView);
     }
 
     /**

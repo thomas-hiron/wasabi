@@ -1,6 +1,7 @@
 package project.gobelins.wasabi;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -46,6 +47,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private MyLayout mCustomView;
     private Notification mLastNotification;
     private String mCurrentPhotoPath;
+    private Fresco mFresco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -78,9 +80,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
 
         /* On initialise la fresque et le viewPager */
-        Fresco fresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
-        fresco.initViewPager(getSupportFragmentManager());
-        fresco.setPictureListener(this);
+        mFresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
+        mFresco.initViewPager(getSupportFragmentManager());
+        mFresco.setPictureListener(this);
 
         /* La notif si != null (inflate, ajout de la vue et du listener) */
         if(mLastNotification != null)
@@ -244,9 +246,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Photo bien prise */
         if(requestCode == REQUEST_IMAGE && resultCode == RESULT_OK)
         {
-//            Bundle extras = data.getExtras();
-//            Bitmap imageBitmap = (Bitmap) extras.get("data");
-//            mImageView.setImageBitmap(imageBitmap);
+            /* On l'ajoute à la fresque */
+            if(mFresco != null)
+                mFresco.addNewPicture(mCurrentPhotoPath);
 
             /* On met à jour la galerie */
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
