@@ -113,14 +113,13 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Instanciation de l'adapter */
         mViewPagerAdapter = new ViewPagerAdapter(supportFragmentManager);
 
+        /* Date du jour */
+        Date date = new Date();
+
         /* Ajout des fragments de chaque jour */
-        mViewPagerAdapter.add(FrescoFragment.newInstance());
-        mViewPagerAdapter.add(FrescoFragment.newInstance());
-        mViewPagerAdapter.add(FrescoFragment.newInstance());
-        mViewPagerAdapter.add(FrescoFragment.newInstance());
-        mViewPagerAdapter.add(FrescoFragment.newInstance());
-        mViewPagerAdapter.add(FrescoFragment.newInstance());
-        mViewPagerAdapter.add(FrescoFragment.newInstance(true));
+        FrescoFragment frescoFragment = FrescoFragment.newInstance(date, true);
+
+        mViewPagerAdapter.add(frescoFragment);
 
         /* Ajout de l'adapter */
         mViewPager.setAdapter(mViewPagerAdapter);

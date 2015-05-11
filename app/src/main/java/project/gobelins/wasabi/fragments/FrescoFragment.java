@@ -9,11 +9,18 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
+
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
 import project.gobelins.wasabi.fresco.views.SoundButton;
 import project.gobelins.wasabi.interfaces.Listeners;
+import project.gobelins.wasabi.notifications.NotificationsManager;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,6 +31,7 @@ public class FrescoFragment extends Fragment
 {
     private Button mStartRecordingButton;
     private boolean mIsLastFragment;
+    private Date mDate;
 
     public FrescoFragment()
     {
@@ -36,17 +44,36 @@ public class FrescoFragment extends Fragment
      *
      * @return A new instance of fragment DayFragment.
      */
-    public static FrescoFragment newInstance()
+    public static FrescoFragment newInstance(Date date)
     {
-        return newInstance(false);
+        return newInstance(date, false);
     }
 
-    public static FrescoFragment newInstance(boolean isLastFragment)
+    public static FrescoFragment newInstance(Date date, boolean isLastFragment)
     {
         FrescoFragment frescoFragment = new FrescoFragment();
         frescoFragment.isLastFragment(isLastFragment);
+        frescoFragment.setDate(date);
 
         return frescoFragment;
+    }
+
+    private void setDate(Date date)
+    {
+        mDate = date;
+    }
+
+    public void setDate(String date)
+    {
+        DateFormat format = new SimpleDateFormat(NotificationsManager.DATE_FORMAT, Locale.FRANCE);
+        try
+        {
+            mDate = format.parse(date);
+        }
+        catch(ParseException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @Override
