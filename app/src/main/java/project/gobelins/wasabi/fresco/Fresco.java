@@ -2,18 +2,13 @@ package project.gobelins.wasabi.fresco;
 
 import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
-import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
-import android.widget.ImageView;
-
-import com.squareup.picasso.Picasso;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fragments.FrescoFragment;
@@ -377,7 +372,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void disableRecordButton()
     {
-        mRecordButton.performClick();
+        if(mRecordButton.isActive())
+            mRecordButton.performClick();
     }
 
     /**
