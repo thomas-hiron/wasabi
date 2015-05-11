@@ -26,6 +26,8 @@ public class TakePictureListener implements View.OnClickListener
         /* Initialisation de l'image */
         mListener.initImages();
 
+        /* On cache le bouton d'enregistrement si ouvert */
+
         /* On ouvre l'appareil photo */
         mListener.onTakePicture();
     }
