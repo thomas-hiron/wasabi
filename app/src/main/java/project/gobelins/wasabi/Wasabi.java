@@ -2,6 +2,8 @@ package project.gobelins.wasabi;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
@@ -15,6 +17,8 @@ import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -37,6 +41,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 {
     public final static String TAG = "Wasabi";
     private final int REQUEST_IMAGE = 1;
+    private final int IMAGE_WIDTH = 500;
 
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
@@ -246,6 +251,56 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Photo bien prise */
         if(requestCode == REQUEST_IMAGE && resultCode == RESULT_OK)
         {
+            /* Dimensions de la source */
+            BitmapFactory.Options options = new BitmapFactory.Options();
+            options.inJustDecodeBounds = true;
+            BitmapFactory.decodeFile(mCurrentPhotoPath, options);
+
+            int srcWidth = options.outWidth;
+            int desiredWidth = IMAGE_WIDTH;
+
+            /* On redimensionne uniquement si besoin */
+            if(desiredWidth > srcWidth)
+                desiredWidth = srcWidth;
+
+            /* Calcul du bon rapport inSampleSize/scale, réduction de l'utilisation de la mémoire */
+            int inSampleSize = 1;
+            while(srcWidth / 2 > desiredWidth)
+            {
+                srcWidth /= 2;
+                inSampleSize *= 2;
+            }
+
+            float desiredScale = (float) desiredWidth / srcWidth;
+
+            /* Decodage avec inSampleSize */
+            options.inJustDecodeBounds = false;
+            options.inDither = false;
+            options.inSampleSize = inSampleSize;
+            options.inScaled = false;
+            options.inPreferredConfig = Bitmap.Config.ARGB_8888;
+            Bitmap sampledSrcBitmap = BitmapFactory.decodeFile(mCurrentPhotoPath, options);
+
+            /* Redimensionnement */
+            Matrix matrix = new Matrix();
+            matrix.postScale(desiredScale, desiredScale);
+            Bitmap scaledBitmap = Bitmap.createBitmap(sampledSrcBitmap, 0, 0, sampledSrcBitmap.getWidth(), sampledSrcBitmap.getHeight(), matrix, true);
+            sampledSrcBitmap = null;
+
+            /* Enregistrement */
+            FileOutputStream out = null;
+            try
+            {
+                out = new FileOutputStream(mCurrentPhotoPath);
+                scaledBitmap.compress(Bitmap.CompressFormat.JPEG, 80, out);
+            }
+            catch(FileNotFoundException e)
+            {
+                e.printStackTrace();
+            }
+
+            scaledBitmap = null;
+
             /* On l'ajoute à la fresque */
             if(mFresco != null)
                 mFresco.addNewPicture(mCurrentPhotoPath);
