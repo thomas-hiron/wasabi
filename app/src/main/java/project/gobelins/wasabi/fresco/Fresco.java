@@ -6,6 +6,7 @@ import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -61,6 +62,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
     private FrameLayout mSoundView;
+    private FrameLayout mImagesView;
     private MediaPlayer mMediaPlayer;
     private OnPictureListener mPictureListener;
 
@@ -187,6 +189,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * Initialise les images
+     */
+    public void initImages()
+    {
+        if(mImagesView == null && getLastFragment().getView() != null)
+            mImagesView = (FrameLayout) getLastFragment().getView().findViewById(R.id.pictures_view);
+    }
+
+    /**
      * Cache les boutons de l'interface
      */
     public void hideInterfaceButtons()
@@ -293,6 +304,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
             toggleViewOpacity(mDrawedView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
         if(mSoundView != null)
             toggleViewOpacity(mSoundView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
+        if(mImagesView != null)
+            toggleViewOpacity(mImagesView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
     }
 
     /**
@@ -307,6 +320,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
             toggleViewOpacity(mDrawedView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
         if(mSoundView != null)
             toggleViewOpacity(mSoundView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
+        if(mImagesView != null)
+            toggleViewOpacity(mImagesView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
     }
 
     /**

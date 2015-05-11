@@ -23,6 +23,9 @@ public class TakePictureListener implements View.OnClickListener
         /* On se déplace */
         mListener.goToLastFragment(false);
 
+        /* Initialisation de l'image */
+        mListener.initImages();
+
         /* On ouvre l'appareil photo */
         mListener.onTakePicture();
     }
