@@ -1,9 +1,11 @@
 package project.gobelins.wasabi;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -27,6 +29,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         OnNotificationClosed, OnPictureListener
 {
     public final static String TAG = "Wasabi";
+    private final int REQUEST_IMAGE = 1;
 
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
@@ -36,7 +39,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private ImageView mNotificationButton;
     private MyLayout mCustomView;
     private Notification mLastNotification;
-    private Fresco mFresco;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -203,6 +205,20 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if(takePictureIntent.resolveActivity(getPackageManager()) != null)
-            startActivityForResult(takePictureIntent, 1);
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data)
+    {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        /* Photo bien prise */
+        if(requestCode == REQUEST_IMAGE && resultCode == RESULT_OK)
+        {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            mImageView.setImageBitmap(imageBitmap);
+        }
     }
 }
