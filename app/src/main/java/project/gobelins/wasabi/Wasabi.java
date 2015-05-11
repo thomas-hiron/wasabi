@@ -1,8 +1,9 @@
 package project.gobelins.wasabi;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
@@ -11,6 +12,11 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+
+import java.io.File;
+import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
@@ -39,6 +45,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private ImageView mNotificationButton;
     private MyLayout mCustomView;
     private Notification mLastNotification;
+    private String mCurrentPhotoPath;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -204,8 +211,29 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public void onTakePicture()
     {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+
+        /* Il y a bien une activité pour le résultat */
         if(takePictureIntent.resolveActivity(getPackageManager()) != null)
-            startActivityForResult(takePictureIntent, REQUEST_IMAGE);
+        {
+            /* Création du fichier de sortie */
+            File photoFile = null;
+            try
+            {
+                photoFile = createImageFile();
+            }
+            catch(IOException ex)
+            {
+                Log.v(TAG, "Une erreur s'est produite");
+            }
+
+            /* On continue uniquement si le fichier est bien créé */
+            if(photoFile != null)
+            {
+                takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
+                        Uri.fromFile(photoFile));
+                startActivityForResult(takePictureIntent, REQUEST_IMAGE);
+            }
+        }
     }
 
     @Override
@@ -216,9 +244,45 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Photo bien prise */
         if(requestCode == REQUEST_IMAGE && resultCode == RESULT_OK)
         {
-            Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            Bundle extras = data.getExtras();
+//            Bitmap imageBitmap = (Bitmap) extras.get("data");
 //            mImageView.setImageBitmap(imageBitmap);
+
+            /* On met à jour la galerie */
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            File f = new File(mCurrentPhotoPath);
+            Uri contentUri = Uri.fromFile(f);
+            mediaScanIntent.setData(contentUri);
+            sendBroadcast(mediaScanIntent);
         }
+    }
+
+    /**
+     * Créer un fichier temporaire pour la photo
+     *
+     * @return Un fichier temporaire
+     * @throws IOException
+     */
+    private File createImageFile() throws IOException
+    {
+        /* Nom du fichier */
+        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String imageFileName = "JPEG_" + timeStamp + "_";
+        String storageString = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/wasabi";
+
+        /* On créer le fichier si besoin */
+        File storageDir = new File(storageString);
+        if(!storageDir.exists())
+            storageDir.mkdirs();
+
+        File image = File.createTempFile(
+                imageFileName,  /* prefixe */
+                ".jpg",         /* suffixe */
+                storageDir      /* dossier */
+        );
+
+        /* Fichier à utiliser ensuite */
+        mCurrentPhotoPath = image.getAbsolutePath();
+        return image;
     }
 }
