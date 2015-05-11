@@ -10,13 +10,14 @@ import android.widget.Button;
 
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.fresco.listeners.PlaySoundListener;
+import project.gobelins.wasabi.interfaces.Listeners;
 
 /**
  * Bouton qui apparaît lorsque l'enregistrement est terminé
  * <p/>
  * Created by ThomasHiron on 08/05/2015.
  */
-public class SoundButton extends Button
+public class SoundButton extends Button implements Listeners
 {
     private String mFileName;
 

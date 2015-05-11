@@ -11,13 +11,14 @@ import com.squareup.picasso.Target;
 
 import project.gobelins.wasabi.fresco.PicassoTarget;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
+import project.gobelins.wasabi.interfaces.Listeners;
 
 /**
  * Bouton qui apparaît lorsque l'enregistrement est terminé
  * <p/>
  * Created by ThomasHiron on 08/05/2015.
  */
-public class ImageButton extends CircularImageView
+public class ImageButton extends CircularImageView implements Listeners
 {
     private String mFileName;
     private Target mTarget;

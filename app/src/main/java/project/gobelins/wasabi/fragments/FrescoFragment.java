@@ -13,6 +13,7 @@ import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
 import project.gobelins.wasabi.fresco.views.SoundButton;
+import project.gobelins.wasabi.interfaces.Listeners;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -104,18 +105,36 @@ public class FrescoFragment extends Fragment
     /**
      * Supprime tous les listeners drag/click sur les boutons de son
      */
-    public void removeDragSoundListeners()
+    public void removeDragSoundsListeners()
+    {
+        removeDragListeners(R.id.sounds_view);
+    }
+
+    /**
+     * Supprime tous les listeners drag/click sur les boutons des images
+     */
+    public void removeDragImagesListeners()
+    {
+        removeDragListeners(R.id.pictures_view);
+    }
+
+    /**
+     * Supprime tous les listeners de la resource
+     *
+     * @param resourceId La vue container
+     */
+    public void removeDragListeners(int resourceId)
     {
         View fragmentView = getView();
 
         if(fragmentView != null)
         {
-            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sounds_view);
+            FrameLayout viewContainer = (FrameLayout) fragmentView.findViewById(resourceId);
 
-            for(int i = 0, l = soundView.getChildCount(); i < l; ++i)
+            for(int i = 0, l = viewContainer.getChildCount(); i < l; ++i)
             {
-                SoundButton soundButton = (SoundButton) soundView.getChildAt(i);
-                soundButton.removeListeners();
+                Listeners button = (Listeners) viewContainer.getChildAt(i);
+                button.removeListeners();
             }
         }
     }
@@ -123,18 +142,36 @@ public class FrescoFragment extends Fragment
     /**
      * Rajoute les listeners drag/click sur les boutons de son
      */
-    public void addDragSoundListeners()
+    public void addDragSoundsListeners()
+    {
+        addDragListeners(R.id.sounds_view);
+    }
+
+    /**
+     * Rajoute les listeners drag/click sur les boutons des images
+     */
+    public void addDragImagesListeners()
+    {
+        addDragListeners(R.id.pictures_view);
+    }
+
+    /**
+     * Rajoute les listeners drag/click sur les boutons
+     *
+     * @param resourceId L'id de la resource
+     */
+    public void addDragListeners(int resourceId)
     {
         View fragmentView = getView();
 
         if(fragmentView != null)
         {
-            FrameLayout soundView = (FrameLayout) fragmentView.findViewById(R.id.sounds_view);
+            FrameLayout viewContainer = (FrameLayout) fragmentView.findViewById(resourceId);
 
-            for(int i = 0, l = soundView.getChildCount(); i < l; ++i)
+            for(int i = 0, l = viewContainer.getChildCount(); i < l; ++i)
             {
-                SoundButton soundButton = (SoundButton) soundView.getChildAt(i);
-                soundButton.addListeners();
+                Listeners button = (Listeners) viewContainer.getChildAt(i);
+                button.addListeners();
             }
         }
     }
