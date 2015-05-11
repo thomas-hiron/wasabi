@@ -5,7 +5,6 @@ import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +19,7 @@ import java.util.Locale;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
+import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
@@ -36,8 +36,8 @@ public class FrescoFragment extends Fragment
 {
     private boolean mIsLastFragment;
     private Date mDate;
-    private Button mStartRecordingButton;
     private DrawedView mDrawedView;
+    private Button mStartRecordingButton;
 
     public FrescoFragment()
     {
@@ -94,6 +94,9 @@ public class FrescoFragment extends Fragment
         /* Inflate the layout for this fragment */
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.fragment_fresco, container, false);
 
+        /* La vue du dessin */
+        mDrawedView = (DrawedView) view.findViewById(R.id.drawed_view);
+
         /* Si dernier fragment, on ajoute recordAudio */
         if(mIsLastFragment)
         {
@@ -107,9 +110,6 @@ public class FrescoFragment extends Fragment
             /* Récupération du bouton enregistrer */
             mStartRecordingButton = (Button) recordView.findViewById(R.id.start_recording);
         }
-        
-        /* La vue du dessin */
-        mDrawedView = (DrawedView) view.findViewById(R.id.drawed_view);
 
         /* Récupération des dessins */
         DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT);

@@ -41,6 +41,9 @@ public class BeginDrawListener implements View.OnClickListener
 
             /* Initialisation du dessin */
             mFresco.initDrawing();
+
+            /* Affichage ou non de la flèche pour annuler le dernier dessin */
+            mFresco.toggleCancelArrowListener();
         }
 
         /* On change l'état */

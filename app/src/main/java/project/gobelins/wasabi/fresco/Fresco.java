@@ -508,6 +508,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * On fait apparaître ou disparaitre la flèche pour annuler
+     */
+    public void toggleCancelArrowListener()
+    {
+        int nbCurbs = mDrawedView.getCount();
+        toggleCancelArrowListener(nbCurbs > 0);
+    }
+
+    /**
      * On a cliqué sur le bouton annulé
      */
     @Override

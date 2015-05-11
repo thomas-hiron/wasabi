@@ -190,4 +190,12 @@ public class DrawedView extends DrawView
     {
         mListener = fresco;
     }
+
+    /**
+     * @return Le nombre de courbes
+     */
+    public int getCount()
+    {
+        return mPathsColors.size();
+    }
 }
