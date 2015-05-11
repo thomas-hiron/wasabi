@@ -21,7 +21,7 @@ public class TakePictureListener implements View.OnClickListener
     public void onClick(View view)
     {
         /* On se déplace */
-        mListener.goToLastFragment();
+        mListener.goToLastFragment(false);
 
         /* On ouvre l'appareil photo */
         mListener.onTakePicture();

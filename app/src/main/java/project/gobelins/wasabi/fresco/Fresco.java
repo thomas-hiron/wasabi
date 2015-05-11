@@ -118,11 +118,21 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
-     * Se déplace jusqu'au dernier fragment
+     * Se déplace jusqu'au dernier fragment avec scmooth scroll par défaut
      */
     public void goToLastFragment()
     {
-        mViewPager.setCurrentItem(mViewPagerAdapter.getCount() - 1);
+        goToLastFragment(true);
+    }
+
+    /**
+     * Se déplace jusqu'au dernier fragment
+     *
+     * @param smoothScroll Si on doit effectuer un smooth scroll
+     */
+    public void goToLastFragment(boolean smoothScroll)
+    {
+        mViewPager.setCurrentItem(mViewPagerAdapter.getCount() - 1, smoothScroll);
     }
 
     /**
