@@ -1,6 +1,8 @@
 package project.gobelins.wasabi;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,13 +16,15 @@ import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
 import project.gobelins.wasabi.interfaces.OnNotificationOpened;
+import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
 
-public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened, OnNotificationClosed
+public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened,
+        OnNotificationClosed, OnPictureListener
 {
     public final static String TAG = "Wasabi";
 
@@ -67,6 +71,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* On initialise la fresque et le viewPager */
         Fresco fresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
         fresco.initViewPager(getSupportFragmentManager());
+        fresco.setPictureListener(this);
 
         /* La notif si != null (inflate, ajout de la vue et du listener) */
         if(mLastNotification != null)
@@ -188,5 +193,16 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Récupération du premier enfant pour supprimer la customView */
         FrameLayout child = (FrameLayout) ((ViewGroup) mRevealContainerNotification).getChildAt(0);
         child.removeView(mCustomView);
+    }
+
+    /**
+     * On a cliqué sur le bouton prendre une photo
+     */
+    @Override
+    public void onTakePicture()
+    {
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if(takePictureIntent.resolveActivity(getPackageManager()) != null)
+            startActivityForResult(takePictureIntent, 1);
     }
 }

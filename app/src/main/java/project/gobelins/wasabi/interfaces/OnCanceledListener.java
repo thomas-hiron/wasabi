@@ -6,7 +6,7 @@ package project.gobelins.wasabi.interfaces;
 public interface OnCanceledListener
 {
     /**
-     * On a cliqué sur le bouton annulé
+     * On a cliqué sur le bouton annuler
      */
     public void onCanceled();
 }

@@ -11,6 +11,7 @@ import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
@@ -29,6 +30,7 @@ import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
 import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
 import project.gobelins.wasabi.interfaces.OnCanceledListener;
+import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 
 /**
@@ -36,7 +38,7 @@ import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
  * <p/>
  * Created by ThomasHiron on 30/04/2015.
  */
-public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, OnCanceledListener
+public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, OnCanceledListener, OnPictureListener
 {
     private ViewPagerAdapter mViewPagerAdapter;
     private FrescoViewPager mViewPager;
@@ -56,6 +58,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private DrawedView mDrawedView;
     private FrameLayout mSoundView;
     private MediaPlayer mMediaPlayer;
+    private OnPictureListener mPictureListener;
 
     public Fresco(Context context)
     {
@@ -81,7 +84,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Ajout des listeners */
         mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
         mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
-        mPictureButton.setOnClickListener(new TakePictureListener(this, mPictureButton));
+        mPictureButton.setOnClickListener(new TakePictureListener(this));
     }
 
     /**
@@ -497,5 +500,24 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout de la vue */
         soundContainer.addView(soundButton);
+    }
+
+    /**
+     * Ajout du listener pour la prise de photo
+     *
+     * @param listener
+     */
+    public void setPictureListener(OnPictureListener listener)
+    {
+        mPictureListener = listener;
+    }
+
+    /**
+     * On a cliqué sur le bouton prendre une photo
+     */
+    @Override
+    public void onTakePicture()
+    {
+        mPictureListener.onTakePicture();
     }
 }
