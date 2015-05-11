@@ -100,6 +100,11 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mPictureButton.setOnClickListener(new TakePictureListener(this));
     }
 
+    public DrawedView getDrawedView()
+    {
+        return mDrawedView;
+    }
+
     /**
      * Initialise le viewPager
      *

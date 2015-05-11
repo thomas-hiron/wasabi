@@ -1,8 +1,11 @@
 package project.gobelins.wasabi.fragments;
 
 
+import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,11 +19,13 @@ import java.util.Date;
 import java.util.Locale;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.entities.Drawing;
+import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
-import project.gobelins.wasabi.fresco.views.SoundButton;
 import project.gobelins.wasabi.interfaces.Listeners;
 import project.gobelins.wasabi.notifications.NotificationsManager;
+import project.gobelins.wasabi.sqlite.tables.Drawings;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -29,9 +34,10 @@ import project.gobelins.wasabi.notifications.NotificationsManager;
  */
 public class FrescoFragment extends Fragment
 {
-    private Button mStartRecordingButton;
     private boolean mIsLastFragment;
     private Date mDate;
+    private Button mStartRecordingButton;
+    private DrawedView mDrawedView;
 
     public FrescoFragment()
     {
@@ -100,6 +106,30 @@ public class FrescoFragment extends Fragment
 
             /* Récupération du bouton enregistrer */
             mStartRecordingButton = (Button) recordView.findViewById(R.id.start_recording);
+        }
+        
+        /* La vue du dessin */
+        mDrawedView = (DrawedView) view.findViewById(R.id.drawed_view);
+
+        /* Récupération des dessins */
+        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT);
+        String condition = Drawings.DRAWINGS_DATE + " = '" + dateFormat.format(mDate) + "'";
+        Cursor c = view.getContext().getContentResolver().query(Uri.parse(Drawings.URL_DRAWINGS), null, condition, null, null);
+
+        if(c.moveToFirst())
+        {
+            do
+            {
+                /* Instanciation de la notification */
+                Drawing drawing = new Drawing();
+                drawing.setId(c.getInt(c.getColumnIndex(Drawings.DRAWINGS_ID)));
+                drawing.setDate(c.getString(c.getColumnIndex(Drawings.DRAWINGS_DATE)));
+                drawing.setColor(c.getInt(c.getColumnIndex(Drawings.DRAWINGS_COLOR)));
+                drawing.setPoints(c.getString(c.getColumnIndex(Drawings.DRAWINGS_POINTS)));
+
+                mDrawedView.draw(drawing.getPoints());
+            }
+            while(c.moveToNext());
         }
 
         return view;

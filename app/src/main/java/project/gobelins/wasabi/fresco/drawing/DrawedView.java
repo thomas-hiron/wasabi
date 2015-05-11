@@ -3,7 +3,6 @@ package project.gobelins.wasabi.fresco.drawing;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.Paint;
 import android.graphics.Path;
 import android.support.v4.util.Pair;
 import android.util.AttributeSet;
@@ -161,7 +160,8 @@ public class DrawedView extends DrawView
         invalidate();
 
         /* S'il y a plus d'un path, on affiche la flèche */
-        mListener.toggleCancelArrowListener(mPathsColors.size() > 0);
+        if(mListener != null)
+            mListener.toggleCancelArrowListener(mPathsColors.size() > 0);
     }
 
     /**
@@ -177,7 +177,8 @@ public class DrawedView extends DrawView
         invalidate();
 
         /* On affiche ou non la flèche */
-        mListener.toggleCancelArrowListener(mPathsColors.size() > 0);
+        if(mListener != null)
+            mListener.toggleCancelArrowListener(mPathsColors.size() > 0);
     }
 
     /**

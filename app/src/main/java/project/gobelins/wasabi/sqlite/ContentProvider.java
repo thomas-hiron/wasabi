@@ -60,11 +60,19 @@ public class ContentProvider extends android.content.ContentProvider
         /* Si on récupère les playlists ou les sons */
         switch(mUriMatcher.match(uri))
         {
-            /* Les playlists */
+            /* Les notifications */
             case NOTIFICATIONS:
 
                 queryBuilder.setTables(Notifications.TABLE_NOTIFICATIONS);
                 sortOrder = sortOrder == null ? Notifications.NOTIFICATIONS_ID : sortOrder;
+
+                break;
+
+            /* Les dessins */
+            case DRAWINGS:
+
+                queryBuilder.setTables(Drawings.TABLE_DRAWINGS);
+                sortOrder = sortOrder == null ? Drawings.DRAWINGS_ID : sortOrder;
 
                 break;
 
