@@ -1,7 +1,10 @@
 package project.gobelins.wasabi.fresco;
 
+import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
@@ -10,10 +13,17 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fragments.FrescoFragment;
+import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
+import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.AlphaAnimationListener;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
 import project.gobelins.wasabi.fresco.listeners.CancelLastDrawListener;
@@ -32,6 +42,9 @@ import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
 import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
+import project.gobelins.wasabi.notifications.NotificationsManager;
+import project.gobelins.wasabi.sqlite.tables.Drawings;
+import project.gobelins.wasabi.sqlite.tables.Notifications;
 
 /**
  * Classe qui gère toute la fresque
@@ -40,6 +53,12 @@ import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
  */
 public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, OnCanceledListener, OnPictureListener
 {
+    public final static int DRAW_BUTTON = 1;
+    public final static int RECORD_BUTTON = 2;
+    public final static int PICTURE_BUTTON = 3;
+    public final static int ANIMATION_DURATION = 200;
+    public final static float DRAWED_VIEW_MIN_OPACITY = 0.3f;
+
     private ViewPagerAdapter mViewPagerAdapter;
     private FrescoViewPager mViewPager;
 
@@ -47,12 +66,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private FrescoActionButton mPictureButton;
     private FrescoActionButton mRecordButton;
     private CancelButton mCancelButton;
-
-    public final static int DRAW_BUTTON = 1;
-    public final static int RECORD_BUTTON = 2;
-    public final static int PICTURE_BUTTON = 3;
-    public final static int ANIMATION_DURATION = 200;
-    public final static float DRAWED_VIEW_MIN_OPACITY = 0.3f;
 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
@@ -591,5 +604,27 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void onTakePicture()
     {
         mPictureListener.onTakePicture();
+    }
+
+    /**
+     * Enregistre tous les points
+     *
+     * @param points Le tableau de points
+     */
+    public void saveDrawing(ArrayList<Point> points)
+    {
+        /* La couleur */
+        int color = ((ColorPoint) points.get(0)).getColor();
+        /* La date du jour */
+        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT);
+        Date date = new Date();
+
+        ContentValues contentValues = new ContentValues(3);
+        contentValues.put(Drawings.DRAWINGS_DATE, dateFormat.format(date));
+        contentValues.put(Drawings.DRAWINGS_POINTS, points.toString());
+        contentValues.put(Drawings.DRAWINGS_COLOR, color);
+
+        ContentResolver contentResolver = getContext().getContentResolver();
+        contentResolver.insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues  );
     }
 }

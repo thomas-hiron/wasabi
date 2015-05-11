@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
 
 /**
@@ -22,6 +23,7 @@ public class ContentProvider extends android.content.ContentProvider
 
     /* Les valeurs utilisées dans le content uri */
     private static final int NOTIFICATIONS = 1;
+    private static final int DRAWINGS = 2;
 
     /* L'helper sqlite */
     DatabaseHelper mDBHelper;
@@ -31,6 +33,7 @@ public class ContentProvider extends android.content.ContentProvider
     {
         mUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         mUriMatcher.addURI(PROVIDER_NAME, Notifications.TABLE_NOTIFICATIONS, NOTIFICATIONS);
+        mUriMatcher.addURI(PROVIDER_NAME, Drawings.TABLE_DRAWINGS, DRAWINGS);
     }
 
     /* LA BDD */
@@ -94,6 +97,11 @@ public class ContentProvider extends android.content.ContentProvider
         {
             table = Notifications.TABLE_NOTIFICATIONS;
             contentUri = Notifications.CONTENT_URI_NOTIFICATIONS;
+        }
+        else if(id == DRAWINGS)
+        {
+            table = Drawings.TABLE_DRAWINGS;
+            contentUri = Drawings.CONTENT_URI_DRAWINGS;
         }
 
         /* Insertion et récupération de l'id inséré */

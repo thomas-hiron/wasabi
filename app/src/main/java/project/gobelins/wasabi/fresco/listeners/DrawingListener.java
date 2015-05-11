@@ -1,5 +1,6 @@
 package project.gobelins.wasabi.fresco.listeners;
 
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -50,19 +51,22 @@ public class DrawingListener implements View.OnTouchListener
         }
         else if(event.getAction() == MotionEvent.ACTION_UP)
         {
-            /* On supprime le path */
+            /* Suppression du path */
             mDrawView.clear();
 
-            /* On récupére les points */
+            /* Récupération des points */
             ArrayList<Point> points = (ArrayList<Point>) mDrawView.getPoints().clone();
 
-            /* On réinitialise les points */
+            /* Réinitialisation des points */
             mDrawView.clearPoints();
 
-            /* On dessine les points dans l'autre vue */
+            /* Enregistrement des points */
+            mFresco.saveDrawing(points);
+
+            /* Dessin des points dans l'autre vue */
             mDrawedView.draw(points);
 
-            /* On affiche les boutons d'interface */
+            /* Affichage des boutons d'interface */
             mFresco.showInterfaceButtons();
 
             return false;

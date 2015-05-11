@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
 
 /**
@@ -27,6 +28,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     public void onCreate(SQLiteDatabase sqLiteDatabase)
     {
         sqLiteDatabase.execSQL(Notifications.CREATE_TABLE_NOTIFICATIONS);
+        sqLiteDatabase.execSQL(Drawings.CREATE_TABLE_DRAWINGS);
     }
 
     @Override
@@ -34,6 +36,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
     {
         /* Suppression des tables */
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE_NOTIFICATIONS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Drawings.TABLE_DRAWINGS);
 
         /* Recréation */
         onCreate(sqLiteDatabase);
