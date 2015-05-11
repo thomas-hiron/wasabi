@@ -91,7 +91,7 @@ public class SoundButton extends Button implements Listeners
             public boolean onLongClick(View view)
             {
                 /* Sorte de drag perso */
-                setOnTouchListener(new ButtonDragListener());
+                setOnTouchListener(new ButtonDragListener(getContext()));
 
                 return true;
             }
