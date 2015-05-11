@@ -8,8 +8,8 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 
+import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.fresco.listeners.PlaySoundListener;
-import project.gobelins.wasabi.fresco.listeners.SoundDragListener;
 
 /**
  * Bouton qui apparaît lorsque l'enregistrement est terminé
@@ -90,7 +90,7 @@ public class SoundButton extends Button
             public boolean onLongClick(View view)
             {
                 /* Sorte de drag perso */
-                setOnTouchListener(new SoundDragListener());
+                setOnTouchListener(new ButtonDragListener());
 
                 return true;
             }

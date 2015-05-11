@@ -12,6 +12,8 @@ import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import com.squareup.picasso.Picasso;
+
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
@@ -529,8 +531,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout du chemin */
         imageButton.setFileName(imageUrl);
-        imageButton.appear();
 
+        /* Ajout de la vue */
         if(imagesContainer != null)
             imagesContainer.addView(imageButton);
     }

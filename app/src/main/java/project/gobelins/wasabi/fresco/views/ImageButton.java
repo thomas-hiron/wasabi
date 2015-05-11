@@ -1,24 +1,33 @@
 package project.gobelins.wasabi.fresco.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
-import android.widget.ImageView;
 
-import project.gobelins.wasabi.fresco.listeners.SoundDragListener;
+import com.github.siyamed.shapeimageview.CircularImageView;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
+
+import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.PicassoTarget;
+import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 
 /**
  * Bouton qui apparaît lorsque l'enregistrement est terminé
  * <p/>
  * Created by ThomasHiron on 08/05/2015.
  */
-public class ImageButton extends ImageView
+public class ImageButton extends CircularImageView
 {
     private String mFileName;
+    private Target mTarget;
 
     public ImageButton(Context context)
     {
@@ -28,6 +37,7 @@ public class ImageButton extends ImageView
     public ImageButton(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+        mTarget = new PicassoTarget(this);
     }
 
     /**
@@ -38,18 +48,13 @@ public class ImageButton extends ImageView
         mFileName = fileName;
     }
 
-    /**
-     * @return Le chemin du fichier
-     */
-    public String getFileName()
-    {
-        return mFileName;
-    }
-
     @Override
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
+
+        /* On charge l'image */
+        Picasso.with(getContext()).load(Uri.parse("file:" + mFileName)).into(mTarget);
 
         /* Ajout des listeners */
         addListeners();
@@ -75,30 +80,10 @@ public class ImageButton extends ImageView
             public boolean onLongClick(View view)
             {
                 /* Sorte de drag perso */
-                setOnTouchListener(new SoundDragListener());
+                setOnTouchListener(new ButtonDragListener());
 
                 return true;
             }
         });
-    }
-
-    /**
-     * Affiche l'image et l'animation
-     */
-    public void appear()
-    {
-        /* Ajout du background */
-        setImageURI(Uri.parse(mFileName));
-
-        /* Animation du bouton */
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 0, 1, /* Début/fin pour X/Y */
-                Animation.RELATIVE_TO_SELF, 0.5f, /* X */
-                Animation.RELATIVE_TO_SELF, 0.5f); /* Y */
-        scaleAnimation.setDuration(250);
-        scaleAnimation.setInterpolator(new OvershootInterpolator());
-        scaleAnimation.setStartTime(500);
-
-        /* Début animation */
-        startAnimation(scaleAnimation);
     }
 }
