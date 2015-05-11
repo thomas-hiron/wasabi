@@ -25,6 +25,7 @@ import project.gobelins.wasabi.fresco.listeners.TakePictureListener;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 import project.gobelins.wasabi.fresco.views.FrescoActionButton;
 import project.gobelins.wasabi.fresco.views.FrescoViewPager;
+import project.gobelins.wasabi.fresco.views.ImageButton;
 import project.gobelins.wasabi.fresco.views.SoundButton;
 import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
@@ -523,12 +524,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         if(fragmentView != null)
             imagesContainer = (FrameLayout) getLastFragment().getView().findViewById(R.id.pictures_view);
 
-        /* Ajout de la vue */
-        ImageView imageView = new ImageView(getContext());
-        imageView.setImageURI(Uri.parse(imageUrl));
+        /* Inflation de la vue */
+        ImageButton imageButton = (ImageButton) inflater.inflate(R.layout.fresco_picture, imagesContainer, false);
+
+        /* Ajout du chemin */
+        imageButton.setFileName(imageUrl);
+        imageButton.appear();
 
         if(imagesContainer != null)
-            imagesContainer.addView(imageView);
+            imagesContainer.addView(imageButton);
     }
 
     /**
