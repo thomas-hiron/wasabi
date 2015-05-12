@@ -768,11 +768,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void saveImage(ImageButton imageButton)
     {
-        Point point = new Point();
-        point.set(imageButton.getX(), imageButton.getY());
-
         /* Enregistrement et renseignement de l'id */
-        int id = mImagesManager.saveImage(point, imageButton.getFileName());
+        int id = mImagesManager.saveImage(imageButton.getFileName());
         imageButton.setId(id);
     }
 

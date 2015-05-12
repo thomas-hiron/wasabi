@@ -44,6 +44,7 @@ public class PicassoTarget implements com.squareup.picasso.Target
     {
         mImageButton.setImageBitmap(bitmap);
 
+        /* Animation si on enregistre */
         if(mSave)
         {
             /* Animation du bouton */
@@ -55,8 +56,13 @@ public class PicassoTarget implements com.squareup.picasso.Target
 
             /* Début animation */
             mImageButton.startAnimation(scaleAnimation);
+        }
 
-            mImageButton.setLayoutParams(new FrameLayout.LayoutParams(mImageButton.getWidth(), mImageButton.getHeight(), Gravity.CENTER));
+        /* On le place au milieu */
+        if(mImageButton.getPoint() == null)
+        {
+            mImageButton.setLayoutParams(new FrameLayout.LayoutParams(
+                    mImageButton.getWidth(), mImageButton.getHeight(), Gravity.CENTER));
         }
     }
 

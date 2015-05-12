@@ -68,15 +68,14 @@ public class ImagesManager
     /**
      * Enregistre une image
      *
-     * @param point    Les coordonnées
      * @param fileName Le fichier
      */
-    public int saveImage(Point point, String fileName)
+    public int saveImage(String fileName)
     {
         /* Nouvelles valeurs */
         ContentValues contentValues = new ContentValues(3);
         contentValues.put(Images.IMAGES_DATE, DateFormater.getTodayAsString());
-        contentValues.put(Images.IMAGES_POINT, point.toString());
+        contentValues.put(Images.IMAGES_POINT, (byte[]) null);
         contentValues.put(Images.IMAGES_FILE_NAME, fileName);
 
         /* Insertion */

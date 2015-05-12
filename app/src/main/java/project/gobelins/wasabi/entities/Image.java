@@ -64,10 +64,17 @@ public class Image extends Entity
 
     public void setPoint(String string)
     {
-        String[] coords = string.split(",");
-        Point point = new Point();
-        point.set(Float.valueOf(coords[0]), Float.valueOf(coords[1]));
+        /*
+         * Le point n'a pas été déplacé donc non enregistré, on le placera au milieu
+         * Sinon on le récupère
+         */
+        if(string != null)
+        {
+            String[] coords = string.split(",");
+            Point point = new Point();
+            point.set(Float.valueOf(coords[0]), Float.valueOf(coords[1]));
 
-        setPoint(point);
+            setPoint(point);
+        }
     }
 }
