@@ -470,6 +470,22 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * Affiche la poubelle
+     */
+    public void showDustbin()
+    {
+        toggleViewOpacity(true, R.id.fresco_dustbin);
+    }
+
+    /**
+     * Cache la poubelle
+     */
+    public void hideDustbin()
+    {
+        toggleViewOpacity(false, R.id.fresco_dustbin);
+    }
+
+    /**
      * On provoque le clic sur le bouton enregistrer pour le désactiver
      */
     public void disableRecordButton()

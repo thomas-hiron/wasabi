@@ -52,6 +52,9 @@ public class ButtonDragListener implements View.OnTouchListener
 
                 /* On verrouille le viewPager */
                 fresco.lock();
+
+                /* Affichage de la corbeille */
+                fresco.showDustbin();
             }
 
             /* Les nouvelles coordonnées */
@@ -91,6 +94,9 @@ public class ButtonDragListener implements View.OnTouchListener
 
             /* On déverouille le viewPager */
             fresco.unlock();
+
+            /* On cache la poubelle */
+            fresco.hideDustbin();
 
             /* Enregistrement de la position de l'élement */
             if(view instanceof ImageButton)
