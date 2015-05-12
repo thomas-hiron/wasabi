@@ -61,6 +61,12 @@ public class FrescoViewPager extends ViewPager
         return mLock || super.onTouchEvent(ev);
     }
 
+    @Override
+    public boolean onInterceptTouchEvent(MotionEvent ev)
+    {
+        return false;
+    }
+
     /**
      * Verrouille le viewPager
      */

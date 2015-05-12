@@ -48,6 +48,9 @@ public class ButtonDragListener implements View.OnTouchListener
 
                 fresco.hideInterfaceButtons();
                 mInterfaceHidden = true;
+
+                /* On verrouille le viewPager */
+                fresco.lock();
             }
 
             /* Les nouvelles coordonnées */
@@ -85,7 +88,10 @@ public class ButtonDragListener implements View.OnTouchListener
             fresco.showInterfaceButtons();
             mInterfaceHidden = false;
 
-            // TODO : Enregistrement de la position du son
+            /* On déverouille le viewPager */
+            fresco.unlock();
+
+            // TODO : Enregistrement de la position de l'élement
         }
 
         return true;
