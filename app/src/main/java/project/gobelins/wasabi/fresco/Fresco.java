@@ -479,6 +479,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * On provoque le clic sur le bouton dessiner pour le désactiver
+     */
+    public void disableDrawing()
+    {
+        if(mDrawButton.isActive())
+            mDrawButton.performClick();
+    }
+
+    /**
      * Supprime les listeners pour dessiner et effacer
      */
     public void removeDrawingListeners()
@@ -767,6 +776,11 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         imageButton.setId(id);
     }
 
+    /**
+     * Met à jour la position d'une image
+     *
+     * @param imageButton L'image
+     */
     public void updateImage(ImageButton imageButton)
     {
         Point point = new Point();

@@ -29,6 +29,9 @@ public class TakePictureListener implements View.OnClickListener
         /* On cache le bouton d'enregistrement si ouvert */
         mListener.disableRecordButton();
 
+        /* On cache le dessin si ouvert */
+        mListener.disableDrawing();
+
         /* On ouvre l'appareil photo */
         mListener.onTakePicture();
     }

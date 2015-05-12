@@ -114,7 +114,6 @@ public class ImageButton extends CircularImageView implements Listeners
         /* Enregistrement de l'image */
         if(mSave)
             mFresco.saveImage(this);
-
     }
 
     /**
