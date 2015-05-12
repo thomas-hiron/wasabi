@@ -17,8 +17,11 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.entities.Drawing;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
@@ -100,11 +103,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mPictureButton.setOnClickListener(new TakePictureListener(this));
     }
 
-    public DrawedView getDrawedView()
-    {
-        return mDrawedView;
-    }
-
     /**
      * Initialise le viewPager
      *
@@ -118,13 +116,33 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Instanciation de l'adapter */
         mViewPagerAdapter = new ViewPagerAdapter(supportFragmentManager);
 
-        /* Date du jour */
-        Date date = new Date();
+        /* Récupération de tous les dessins */
+        DrawingsManager drawingsManager = new DrawingsManager(getContext().getContentResolver());
+        HashMap<Date, ArrayList<Drawing>> drawings = drawingsManager.getDrawings();
+        Date today = new Date();
+        boolean isLastFragment = false;
 
-        /* Ajout des fragments de chaque jour */
-        FrescoFragment frescoFragment = FrescoFragment.newInstance(date, true);
+        /* Création d'un fragment pour chaque date */
+        for(Map.Entry<Date, ArrayList<Drawing>> dateDrawings : drawings.entrySet())
+        {
+            /* Si dernier fragment */
+            isLastFragment = today.compareTo(dateDrawings.getKey()) == 0;
 
-        mViewPagerAdapter.add(frescoFragment);
+            /* Instanciation */
+            FrescoFragment frescoFragment = FrescoFragment.newInstance(
+                    dateDrawings.getKey(),
+                    isLastFragment
+            );
+            /* Ajout au viewPager */
+            mViewPagerAdapter.add(frescoFragment);
+        }
+
+        /* On test si fragment à la date du jour existe */
+        if(!isLastFragment)
+        {
+            FrescoFragment frescoFragment = FrescoFragment.newInstance(today, true);
+            mViewPagerAdapter.add(frescoFragment);
+        }
 
         /* Ajout de l'adapter */
         mViewPager.setAdapter(mViewPagerAdapter);

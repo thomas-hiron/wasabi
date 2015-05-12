@@ -19,7 +19,6 @@ import java.util.Locale;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
-import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
