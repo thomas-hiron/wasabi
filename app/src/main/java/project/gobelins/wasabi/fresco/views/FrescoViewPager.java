@@ -19,14 +19,9 @@ import project.gobelins.wasabi.fresco.viewPager.ViewPagerScroller;
  * <p/>
  * Classe héritant de ViewPager pour empêcher le scroll dans les vues
  */
-public class FrescoViewPager extends ViewPager implements GestureDetector.OnGestureListener
+public class FrescoViewPager extends ViewPager
 {
-    private GestureDetector mGestureDetector;
-    private FlingRunnable mFlingRunnable;
-    private boolean mScrolling;
-    private boolean mScrollingToLeft;
     private boolean mLock;
-    private float mVelocity;
 
     public FrescoViewPager(Context context)
     {
@@ -37,54 +32,21 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     {
         super(context, attrs);
 
-        mGestureDetector = new GestureDetector(context, this);
-        mFlingRunnable = new FlingRunnable();
         mLock = false;
 
         /* Permet de changer la durée du scroll */
         try
         {
-            Field mScroller;
-            mScroller = ViewPager.class.getDeclaredField("mScroller");
-            mScroller.setAccessible(true);
-            ViewPagerScroller scroller = new ViewPagerScroller(getContext());
-            mScroller.set(this, scroller);
+            Field scroller;
+            scroller = ViewPager.class.getDeclaredField("mScroller");
+            scroller.setAccessible(true);
+            ViewPagerScroller scrollerViewPager = new ViewPagerScroller(getContext());
+            scroller.set(this, scrollerViewPager);
         }
         catch(Exception e)
         {
             Log.e(Wasabi.TAG, "Error of change scroller ", e);
         }
-    }
-
-    public FrescoViewPager(final Wasabi wasabi)
-    {
-        super(wasabi);
-
-        /* Listener de scroll */
-        setOnPageChangeListener(new OnPageChangeListener()
-        {
-            @Override
-            public void onPageScrolled(int i, float v, int i2)
-            {
-
-            }
-
-            @Override
-            public void onPageSelected(int i)
-            {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i)
-            {
-                /* On lance la notification */
-                if(i == SCROLL_STATE_IDLE)
-                {
-
-                }
-            }
-        });
     }
 
     @Override
@@ -94,96 +56,9 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     }
 
     @Override
-    public boolean onTouchEvent(MotionEvent event)
+    public boolean onTouchEvent(MotionEvent ev)
     {
-        // Give all the events to the gesture detector. Returning true here so the viewpager doesn't get any events at all
-        if(!mLock)
-            mGestureDetector.onTouchEvent(event);
-
-        /* Un bug se produit (la vélocité est nulle au up), on force le scroll */
-        if(mVelocity == 0 && event.getAction() == MotionEvent.ACTION_UP)
-            stopScroll();
-
-        /* On réinitialise la vélocité */
-        mVelocity = 0;
-
-        return true;
-    }
-
-    /**
-     * Pas assez rapide, on stoppe le scroll
-     */
-    private void stopScroll()
-    {
-        /* Scroll à gauche */
-        if(mScrollingToLeft)
-        {
-            // Now we know that we've hit the bound, flip the page
-            if(this.getCurrentItem() > 0)
-                setCurrentItem(this.getCurrentItem() - 1);
-        }
-        else
-        {
-            // Now we know that we've hit the bound, flip the page
-            if(this.getCurrentItem() < (this.getAdapter().getCount() - 1))
-                setCurrentItem(this.getCurrentItem() + 1);
-        }
-    }
-
-    @Override
-    public boolean onFling(MotionEvent e1, MotionEvent e2, float velX, float velY)
-    {
-        /* On conserve la vélocité au cas ou  */
-        mVelocity = velX;
-
-        /* Si gros scroll, on slide, sinon comportement normal */
-        if(Math.abs(mVelocity) > 6000)
-            mFlingRunnable.startUsingVelocity((int) velX);
-        else
-            stopScroll();
-
-        return true;
-    }
-
-    private void trackMotion(float distX)
-    {
-        // The following mimics the underlying calculations in ViewPager
-        float scrollX = getScrollX() - distX;
-        final int width = getWidth();
-        final int widthWithMargin = width + this.getPageMargin();
-        final float leftBound = Math.max(0, (this.getCurrentItem() - 1) * widthWithMargin);
-        final float rightBound = Math.min(this.getCurrentItem() + 1, this.getAdapter().getCount() - 1) * widthWithMargin;
-
-        if(scrollX < leftBound)
-        {
-            // Now we know that we've hit the bound, flip the page
-            if(this.getCurrentItem() > 0)
-                this.setCurrentItem(this.getCurrentItem() - 1, false);
-        }
-        else if(scrollX > rightBound)
-        {
-            // Now we know that we've hit the bound, flip the page
-            if(this.getCurrentItem() < (this.getAdapter().getCount() - 1))
-                this.setCurrentItem(this.getCurrentItem() + 1, false);
-        }
-
-        // Do the fake dragging
-        if(mScrolling && isFakeDragging())
-            this.fakeDragBy(distX);
-        else if(!mScrolling)
-        {
-            this.beginFakeDrag();
-            if(isFakeDragging())
-                this.fakeDragBy(distX);
-            mScrolling = true;
-        }
-    }
-
-    private void endFlingMotion()
-    {
-        mScrolling = false;
-        if(isFakeDragging())
-            this.endFakeDrag();
+        return mLock || super.onTouchEvent(ev);
     }
 
     /**
@@ -200,98 +75,5 @@ public class FrescoViewPager extends ViewPager implements GestureDetector.OnGest
     public void unlock()
     {
         mLock = false;
-    }
-
-    /**
-     * The fling runnable which moves the view pager and tracks decay
-     */
-    private class FlingRunnable implements Runnable
-    {
-        private Scroller mScroller; // use this to store the points which will be used to create the scroll
-        private int mLastFlingX;
-
-        private FlingRunnable()
-        {
-            mScroller = new Scroller(getContext());
-        }
-
-        public void startUsingVelocity(int initialVel)
-        {
-            // there is no velocity to fling!
-            if(initialVel == 0)
-                return;
-
-            removeCallbacks(this); // stop pending flings
-
-            int initialX = initialVel < 0 ? Integer.MAX_VALUE : 0;
-            mLastFlingX = initialX;
-            // setup the scroller to calulate the new x positions based on the initial velocity. Impose no cap on the min/max x values.
-            mScroller.fling(initialX, 0, initialVel, 0, 0, Integer.MAX_VALUE, 0, Integer.MAX_VALUE);
-
-            post(this);
-        }
-
-        private void endFling()
-        {
-            mScroller.forceFinished(true);
-            endFlingMotion();
-        }
-
-        @Override
-        public void run()
-        {
-            final Scroller scroller = mScroller;
-            boolean animationNotFinished = scroller.computeScrollOffset();
-            final int x = scroller.getCurrX();
-            int delta = x - mLastFlingX;
-
-            trackMotion(delta);
-
-            if(animationNotFinished)
-            {
-                mLastFlingX = x;
-                post(this);
-            }
-            else
-                endFling();
-        }
-    }
-
-    @Override
-    public boolean onInterceptTouchEvent(MotionEvent ev)
-    {
-        return false;
-    }
-
-    @Override
-    public boolean onScroll(MotionEvent e1, MotionEvent e2, float distX, float distY)
-    {
-        mScrollingToLeft = distX < 0;
-        trackMotion(-distX);
-        return false;
-    }
-
-    @Override
-    public boolean onDown(MotionEvent event)
-    {
-        return false;
-    }
-
-    @Override
-    public void onLongPress(MotionEvent event)
-    {
-
-    }
-
-    @Override
-    public void onShowPress(MotionEvent event)
-    {
-
-    }
-
-    @Override
-    public boolean onSingleTapUp(MotionEvent event)
-    {
-        return false;
     }
 }
