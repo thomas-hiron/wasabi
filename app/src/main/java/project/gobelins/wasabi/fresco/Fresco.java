@@ -1,11 +1,7 @@
 package project.gobelins.wasabi.fresco;
 
-import android.content.ContentResolver;
-import android.content.ContentValues;
 import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
-import android.net.Uri;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.view.LayoutInflater;
@@ -21,7 +17,6 @@ import java.util.Map;
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
 import project.gobelins.wasabi.fragments.FrescoFragment;
-import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.drawing.Point;
@@ -43,7 +38,6 @@ import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
 import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
-import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.utils.DateFormater;
 
 /**
@@ -73,6 +67,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private FrameLayout mImagesView;
     private MediaPlayer mMediaPlayer;
     private OnPictureListener mPictureListener;
+    private DrawingsManager mDrawingsManager;
 
     public Fresco(Context context)
     {
@@ -82,6 +77,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public Fresco(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+
+        mDrawingsManager = new DrawingsManager(getContext().getContentResolver());
     }
 
     @Override
@@ -115,8 +112,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mViewPagerAdapter = new ViewPagerAdapter(supportFragmentManager);
 
         /* Récupération de tous les dessins */
-        DrawingsManager drawingsManager = new DrawingsManager(getContext().getContentResolver());
-        HashMap<Date, ArrayList<Drawing>> drawings = drawingsManager.getDrawings();
+        HashMap<Date, ArrayList<Drawing>> drawings = mDrawingsManager.getDrawings();
         Date today = DateFormater.getStrictToday();
         boolean isLastFragment = false;
 
@@ -585,6 +581,14 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
+     * @return La vue de dessin
+     */
+    public DrawView getDrawView()
+    {
+        return mDrawView;
+    }
+
+    /**
      * Ajoute un nouveau son
      *
      * @param fileName Le nom du fichier enregistré
@@ -664,15 +668,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void saveDrawing(ArrayList<Point> points)
     {
-        /* La couleur */
-        int color = ((ColorPoint) points.get(0)).getColor();
-
-        ContentValues contentValues = new ContentValues(3);
-        contentValues.put(Drawings.DRAWINGS_DATE, DateFormater.getTodayAsString());
-        contentValues.put(Drawings.DRAWINGS_POINTS, points.toString().replaceAll("\\[(.*)\\]", "$1"));
-        contentValues.put(Drawings.DRAWINGS_COLOR, color);
-
-        ContentResolver contentResolver = getContext().getContentResolver();
-        contentResolver.insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);
+        mDrawingsManager.saveDrawing(points);
     }
 }

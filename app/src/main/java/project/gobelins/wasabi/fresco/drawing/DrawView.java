@@ -3,16 +3,12 @@ package project.gobelins.wasabi.fresco.drawing;
 import android.content.Context;
 import android.graphics.Canvas;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
-import android.graphics.LightingColorFilter;
 import android.graphics.Paint;
 import android.graphics.Path;
 import android.util.AttributeSet;
 import android.view.View;
 
 import java.util.ArrayList;
-
-import project.gobelins.wasabi.fresco.views.ColorButton;
 
 /**
  * La vue contenant le dessin

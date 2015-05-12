@@ -1,20 +1,19 @@
 package project.gobelins.wasabi.fresco;
 
 import android.content.ContentResolver;
+import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
-import android.util.Log;
 
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Dictionary;
-import java.util.Enumeration;
 import java.util.HashMap;
-import java.util.Map;
 
 import project.gobelins.wasabi.entities.Drawing;
+import project.gobelins.wasabi.fresco.drawing.ColorPoint;
+import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
+import project.gobelins.wasabi.utils.DateFormater;
 
 /**
  * Permet de récupérer tous les dessins
@@ -63,5 +62,25 @@ public class DrawingsManager
         }
 
         return drawings;
+    }
+
+    /**
+     * Enregistre un dessin
+     *
+     * @param points Les points
+     */
+    public void saveDrawing(ArrayList<Point> points)
+    {
+        /* La couleur */
+        int color = ((ColorPoint) points.get(0)).getColor();
+
+        /* Nouvelles valeurs */
+        ContentValues contentValues = new ContentValues(3);
+        contentValues.put(Drawings.DRAWINGS_DATE, DateFormater.getTodayAsString());
+        contentValues.put(Drawings.DRAWINGS_POINTS, points.toString().replaceAll("\\[(.*)\\]", "$1"));
+        contentValues.put(Drawings.DRAWINGS_COLOR, color);
+
+        /* Insertion */
+        mContentResolver.insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);
     }
 }
