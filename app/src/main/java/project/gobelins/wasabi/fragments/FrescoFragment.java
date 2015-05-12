@@ -1,8 +1,6 @@
 package project.gobelins.wasabi.fragments;
 
 
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,12 +9,8 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
@@ -24,8 +18,6 @@ import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
 import project.gobelins.wasabi.interfaces.Listeners;
-import project.gobelins.wasabi.notifications.NotificationsManager;
-import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.utils.DateFormater;
 
 /**
@@ -59,7 +51,7 @@ public class FrescoFragment extends Fragment
 
     public static FrescoFragment newInstance(Date date, boolean isLastFragment)
     {
-        return newInstance(new ArrayList<Drawing>(), date, isLastFragment);
+        return newInstance(null, date, isLastFragment);
     }
 
     public static FrescoFragment newInstance(ArrayList<Drawing> drawings, Date date, boolean isLastFragment)
@@ -85,7 +77,7 @@ public class FrescoFragment extends Fragment
     /**
      * @param drawings Les dessins du fragment
      */
-    public void setDrawings (ArrayList<Drawing> drawings)
+    public void setDrawings(ArrayList<Drawing> drawings)
     {
         mDrawings = drawings;
     }
@@ -120,8 +112,11 @@ public class FrescoFragment extends Fragment
         }
 
         /* On dessine toutes les courbes */
-        for(Drawing drawing : mDrawings)
-            mDrawedView.draw(drawing.getPoints());
+        if(mDrawings != null)
+        {
+            for(Drawing drawing : mDrawings)
+                mDrawedView.draw(drawing.getPoints());
+        }
 
         return view;
     }
