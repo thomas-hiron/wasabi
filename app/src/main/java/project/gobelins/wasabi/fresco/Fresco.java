@@ -680,6 +680,19 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void addNewPicture(FrameLayout container, String imageUrl, boolean save)
     {
+        addNewPicture(container, imageUrl, 0, save);
+    }
+
+    /**
+     * Ajoute une nouvelle image dans le container spécifié, avec un paramètre pour spécifier si enregistrement
+     *
+     * @param container Le conteneur
+     * @param imageUrl  L'image
+     * @param id        L'id
+     * @param save      Si on enregistre
+     */
+    public void addNewPicture(FrameLayout container, String imageUrl, int id, boolean save)
+    {
         /* L'inflater */
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
@@ -690,6 +703,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         imageButton.setFileName(imageUrl);
         imageButton.setFresco(this);
         imageButton.setSave(save);
+        if(id != 0)
+            imageButton.setDbId(id);
 
         /* Ajout de la vue */
         if(container != null)
@@ -728,11 +743,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     /**
      * On enregistre l'image
      *
-     * @param point     Les coordonnées
-     * @param mFileName Le fichier
+     * @param imageButton L'image
      */
-    public void saveImage(Point point, String mFileName)
+    public void saveImage(ImageButton imageButton)
     {
-        mImagesManager.saveImage(point, mFileName);
+        Point point = new Point();
+        point.set(getX(), getY());
+
+        /* Enregistrement et renseignement de l'id */
+        int id = mImagesManager.saveImage(point, imageButton.getFileName());
+        imageButton.setId(id);
     }
 }

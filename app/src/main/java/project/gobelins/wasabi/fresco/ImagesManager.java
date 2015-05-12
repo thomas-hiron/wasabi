@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.fresco;
 
 import android.content.ContentResolver;
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
@@ -66,11 +67,10 @@ public class ImagesManager
 
     /**
      * Enregistre une image
-     *
-     * @param point    Les coordonnées
+     *  @param point    Les coordonnées
      * @param fileName Le fichier
      */
-    public void saveImage(Point point, String fileName)
+    public int saveImage(Point point, String fileName)
     {
         /* Nouvelles valeurs */
         ContentValues contentValues = new ContentValues(3);
@@ -79,6 +79,9 @@ public class ImagesManager
         contentValues.put(Images.IMAGES_FILE_NAME, fileName);
 
         /* Insertion */
-        mContentResolver.insert(Uri.parse(Images.URL_IMAGES), contentValues);
+        Uri inserted = mContentResolver.insert(Uri.parse(Images.URL_IMAGES), contentValues);
+        long id = ContentUris.parseId(inserted);
+
+        return (int) id;
     }
 }

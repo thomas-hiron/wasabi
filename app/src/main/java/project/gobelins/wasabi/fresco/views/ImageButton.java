@@ -25,6 +25,7 @@ public class ImageButton extends CircularImageView implements Listeners
     private String mFileName;
     private Target mTarget;
     private Fresco mFresco;
+    private int mId;
 
     private boolean mSave;
 
@@ -45,6 +46,29 @@ public class ImageButton extends CircularImageView implements Listeners
     public void setFileName(String fileName)
     {
         mFileName = fileName;
+    }
+
+    /**
+     * @param id L'id de la BDD
+     */
+    public void setId(int id)
+    {
+        mId = id;
+    }
+
+    public String getFileName()
+    {
+        return mFileName;
+    }
+
+    public void setDbId(int mId)
+    {
+        this.mId = mId;
+    }
+
+    public int getDbId()
+    {
+        return mId;
     }
 
     /**
@@ -75,11 +99,9 @@ public class ImageButton extends CircularImageView implements Listeners
         addListeners();
 
         /* Enregistrement de l'image */
-        Point point = new Point();
-        point.set(getX(), getY());
 
         if(mSave)
-            mFresco.saveImage(point, mFileName);
+            mFresco.saveImage(this);
 
     }
 

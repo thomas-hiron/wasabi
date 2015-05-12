@@ -150,7 +150,7 @@ public class FrescoFragment extends Fragment
         {
             FrameLayout picturesView = (FrameLayout) view.findViewById(R.id.pictures_view);
             for(Image image : mImages)
-                fresco.addNewPicture(picturesView, image.getFileName(), false);
+                fresco.addNewPicture(picturesView, image.getFileName(), image.getId(), false);
         }
 
         return view;
