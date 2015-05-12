@@ -159,6 +159,12 @@ public class ContentProvider extends android.content.ContentProvider
 
                 break;
 
+            case DRAWINGS:
+
+                count = mDatabase.delete(Drawings.TABLE_DRAWINGS, selection, selectionArgs);
+
+                break;
+
             default:
                 throw new IllegalArgumentException("Unsupported URI " + uri);
         }

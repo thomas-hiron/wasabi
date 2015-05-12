@@ -558,6 +558,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void onCanceled()
     {
         mDrawedView.cancelLastDraw();
+        mDrawingsManager.deleteLastDraw();
     }
 
     /**

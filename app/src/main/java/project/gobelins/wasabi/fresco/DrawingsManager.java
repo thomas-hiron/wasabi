@@ -83,4 +83,16 @@ public class DrawingsManager
         /* Insertion */
         mContentResolver.insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);
     }
+
+    /**
+     * Supprime le dernier dessin
+     */
+    public void deleteLastDraw()
+    {
+        /* Condition pour le dernier */
+        String condition = Drawings.DRAWINGS_ID + " = (SELECT MAX(" + Drawings.DRAWINGS_ID + ") FROM " + Drawings.TABLE_DRAWINGS + ")";
+
+        /* Suppression */
+        mContentResolver.delete(Uri.parse(Drawings.URL_DRAWINGS), condition, null);
+    }
 }
