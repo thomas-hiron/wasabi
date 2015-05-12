@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
@@ -37,6 +38,7 @@ public class FrescoFragment extends Fragment
     private Date mDate;
     private DrawedView mDrawedView;
     private Button mStartRecordingButton;
+    private ArrayList<Drawing> mDrawings;
 
     public FrescoFragment()
     {
@@ -56,9 +58,15 @@ public class FrescoFragment extends Fragment
 
     public static FrescoFragment newInstance(Date date, boolean isLastFragment)
     {
+        return newInstance(new ArrayList<Drawing>(), date, isLastFragment);
+    }
+
+    public static FrescoFragment newInstance(ArrayList<Drawing> drawings, Date date, boolean isLastFragment)
+    {
         FrescoFragment frescoFragment = new FrescoFragment();
         frescoFragment.isLastFragment(isLastFragment);
         frescoFragment.setDate(date);
+        frescoFragment.setDrawings(drawings);
 
         return frescoFragment;
     }
@@ -79,6 +87,14 @@ public class FrescoFragment extends Fragment
         {
             e.printStackTrace();
         }
+    }
+
+    /**
+     * @param drawings Les dessins du fragment
+     */
+    public void setDrawings (ArrayList<Drawing> drawings)
+    {
+        mDrawings = drawings;
     }
 
     @Override
@@ -110,26 +126,9 @@ public class FrescoFragment extends Fragment
             mStartRecordingButton = (Button) recordView.findViewById(R.id.start_recording);
         }
 
-        /* Récupération des dessins */
-        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT);
-        String condition = Drawings.DRAWINGS_DATE + " = '" + dateFormat.format(mDate) + "'";
-        Cursor c = view.getContext().getContentResolver().query(Uri.parse(Drawings.URL_DRAWINGS), null, condition, null, null);
-
-        if(c.moveToFirst())
-        {
-            do
-            {
-                /* Instanciation de la notification */
-                Drawing drawing = new Drawing();
-                drawing.setId(c.getInt(c.getColumnIndex(Drawings.DRAWINGS_ID)));
-                drawing.setDate(c.getString(c.getColumnIndex(Drawings.DRAWINGS_DATE)));
-                drawing.setColor(c.getInt(c.getColumnIndex(Drawings.DRAWINGS_COLOR)));
-                drawing.setPoints(c.getString(c.getColumnIndex(Drawings.DRAWINGS_POINTS)));
-
-                mDrawedView.draw(drawing.getPoints());
-            }
-            while(c.moveToNext());
-        }
+        /* On dessine toutes les courbes */
+        for(Drawing drawing : mDrawings)
+            mDrawedView.draw(drawing.getPoints());
 
         return view;
     }

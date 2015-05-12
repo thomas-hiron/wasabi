@@ -130,6 +130,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
             /* Instanciation */
             FrescoFragment frescoFragment = FrescoFragment.newInstance(
+                    dateDrawings.getValue(),
                     dateDrawings.getKey(),
                     isLastFragment
             );

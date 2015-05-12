@@ -58,8 +58,6 @@ public class DrawingsManager
                 /* Ajout du dessin */
                 dateDrawings.add(drawing);
                 drawings.put(drawing.getDate(), dateDrawings);
-
-//                mDrawedView.draw(drawing.getPoints());
             }
             while(c.moveToNext());
         }
