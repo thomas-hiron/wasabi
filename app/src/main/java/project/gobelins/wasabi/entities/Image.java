@@ -15,6 +15,17 @@ public class Image
     private int id;
     private Date date;
     private Point point;
+    private String fileName;
+
+    public String getFileName()
+    {
+        return fileName;
+    }
+
+    public void setFileName(String fileName)
+    {
+        this.fileName = fileName;
+    }
 
     public Date getDate()
     {
@@ -49,5 +60,14 @@ public class Image
     public void setPoint(Point point)
     {
         this.point = point;
+    }
+
+    public void setPoint(String string)
+    {
+        String[] coords = string.split(",");
+        Point point = new Point();
+        point.set(Float.valueOf(coords[0]), Float.valueOf(coords[1]));
+
+        setPoint(point);
     }
 }

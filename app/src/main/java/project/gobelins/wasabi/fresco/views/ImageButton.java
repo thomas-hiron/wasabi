@@ -9,7 +9,9 @@ import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
+import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.PicassoTarget;
+import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.interfaces.Listeners;
 
@@ -22,6 +24,7 @@ public class ImageButton extends CircularImageView implements Listeners
 {
     private String mFileName;
     private Target mTarget;
+    private Fresco mFresco;
 
     public ImageButton(Context context)
     {
@@ -42,6 +45,14 @@ public class ImageButton extends CircularImageView implements Listeners
         mFileName = fileName;
     }
 
+    /**
+     * @param fresco La fresque
+     */
+    public void setFresco(Fresco fresco)
+    {
+        mFresco = fresco;
+    }
+
     @Override
     protected void onAttachedToWindow()
     {
@@ -52,6 +63,12 @@ public class ImageButton extends CircularImageView implements Listeners
 
         /* Ajout des listeners */
         addListeners();
+
+        /* Enregistrement de l'image */
+        Point point = new Point();
+        point.set(getX(), getY());
+        mFresco.saveImage(point, mFileName);
+
     }
 
     /**

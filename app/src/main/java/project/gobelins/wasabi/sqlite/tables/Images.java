@@ -14,6 +14,7 @@ public class Images
     public static final String IMAGES_ID = "id"; /* L'id */
     public static final String IMAGES_DATE = "date"; /* La date du dessin */
     public static final String IMAGES_POINT = "point"; /* Les coordonnées */
+    public static final String IMAGES_FILE_NAME = "file_name"; /* Les coordonnées */
 
     public static final String TABLE_IMAGES = "images";
 
@@ -25,5 +26,6 @@ public class Images
             IMAGES_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             IMAGES_DATE + " TEXT," +
             IMAGES_POINT + " TEXT," +
+            IMAGES_FILE_NAME + " TEXT" +
             ")";
 }

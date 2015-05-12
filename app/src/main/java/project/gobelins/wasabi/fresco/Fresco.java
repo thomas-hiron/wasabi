@@ -68,6 +68,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private MediaPlayer mMediaPlayer;
     private OnPictureListener mPictureListener;
     private DrawingsManager mDrawingsManager;
+    private ImagesManager mImagesManager;
 
     public Fresco(Context context)
     {
@@ -79,6 +80,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         super(context, attrs);
 
         mDrawingsManager = new DrawingsManager(getContext().getContentResolver());
+        mImagesManager = new ImagesManager(getContext().getContentResolver());
     }
 
     @Override
@@ -637,6 +639,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout du chemin */
         imageButton.setFileName(imageUrl);
+        imageButton.setFresco(this);
 
         /* Ajout de la vue */
         if(imagesContainer != null)
@@ -670,5 +673,16 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void saveDrawing(ArrayList<Point> points)
     {
         mDrawingsManager.saveDrawing(points);
+    }
+
+    /**
+     * On enregistre l'image
+     *
+     * @param point     Les coordonnées
+     * @param mFileName Le fichier
+     */
+    public void saveImage(Point point, String mFileName)
+    {
+        mImagesManager.saveImage(point, mFileName);
     }
 }
