@@ -231,6 +231,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Pour récupérer la vue du dessin si non initialisée */
         initDrawedView();
+        initImagesView();
     }
 
     /**
@@ -238,8 +239,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void initImages()
     {
-        if(mImagesView == null && getLastFragment().getView() != null)
-            mImagesView = (FrameLayout) getLastFragment().getView().findViewById(R.id.pictures_view);
+        initImagesView();
     }
 
     /**
@@ -255,6 +255,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
             mDrawedView = (DrawedView) lastFragment.getView().findViewById(R.id.drawed_view);
             mDrawedView.setOnToggleCancelArrowListener(this);
         }
+    }
+
+    /**
+     * Initialise la vue des images
+     */
+    public void initImagesView()
+    {
+        if(mImagesView == null && getLastFragment().getView() != null)
+            mImagesView = (FrameLayout) getLastFragment().getView().findViewById(R.id.pictures_view);
     }
 
     /**
