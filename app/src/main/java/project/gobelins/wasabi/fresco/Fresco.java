@@ -186,16 +186,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void initDrawing()
     {
-        /* Récupération du dernier fragment */
-        Fragment lastFragment = mViewPagerAdapter.getItem(mViewPagerAdapter.getCount() - 1);
-
-        /* Récupération de la vue contenant le dessin */
-        if(lastFragment.getView() != null && mDrawView == null && mDrawedView == null)
-        {
-            mDrawView = (DrawView) lastFragment.getView().findViewById(R.id.draw_view);
-            mDrawedView = (DrawedView) lastFragment.getView().findViewById(R.id.drawed_view);
-            mDrawedView.setOnToggleCancelArrowListener(this);
-        }
+        /* Initialise la zone de dessin */
+        initDrawedView();
 
         assert mDrawView != null;
         assert mDrawedView != null;
@@ -210,10 +202,13 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     /**
      * Initialise le son
      */
-    public void initSound()
+    public void initSounds()
     {
         if(mSoundView == null && getLastFragment().getView() != null)
             mSoundView = (FrameLayout) getLastFragment().getView().findViewById(R.id.sounds_view);
+
+        /* Pour récupérer la vue du dessin si non initialisée */
+        initDrawedView();
     }
 
     /**
@@ -223,6 +218,21 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         if(mImagesView == null && getLastFragment().getView() != null)
             mImagesView = (FrameLayout) getLastFragment().getView().findViewById(R.id.pictures_view);
+    }
+
+    /**
+     * Initialise la zone de dessin
+     */
+    public void initDrawedView()
+    {
+        /* Récupération de la vue contenant le dessin */
+        FrescoFragment lastFragment = getLastFragment();
+        if(lastFragment.getView() != null && mDrawView == null && mDrawedView == null)
+        {
+            mDrawView = (DrawView) lastFragment.getView().findViewById(R.id.draw_view);
+            mDrawedView = (DrawedView) lastFragment.getView().findViewById(R.id.drawed_view);
+            mDrawedView.setOnToggleCancelArrowListener(this);
+        }
     }
 
     /**
@@ -270,6 +280,18 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Récupération de la ressource */
         View view = findViewById(resourceId);
 
+        toggleViewOpacity(view, from, to);
+    }
+
+    /**
+     * Animation avec des valeurs personnalisés
+     *
+     * @param view L'id de la resource
+     * @param from La valeur de départ
+     * @param to   La valeur finale
+     */
+    private void toggleViewOpacity(View view, float from, float to)
+    {
         /* On affiche la vue si cachée */
         if(view.getVisibility() == View.INVISIBLE)
             view.setVisibility(VISIBLE);
@@ -329,11 +351,11 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* On baisse l'opacité de la zone de dessin et du son */
         if(mDrawedView != null)
-            toggleViewOpacity(mDrawedView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
+            toggleViewOpacity(mDrawedView, 1f, DRAWED_VIEW_MIN_OPACITY);
         if(mSoundView != null)
-            toggleViewOpacity(mSoundView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
+            toggleViewOpacity(mSoundView, 1f, DRAWED_VIEW_MIN_OPACITY);
         if(mImagesView != null)
-            toggleViewOpacity(mImagesView.getId(), 1f, DRAWED_VIEW_MIN_OPACITY);
+            toggleViewOpacity(mImagesView, 1f, DRAWED_VIEW_MIN_OPACITY);
     }
 
     /**
@@ -345,11 +367,11 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* On remonte l'opacité de la zone de dessin et du son */
         if(mDrawedView != null)
-            toggleViewOpacity(mDrawedView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
+            toggleViewOpacity(mDrawedView, DRAWED_VIEW_MIN_OPACITY, 1f);
         if(mSoundView != null)
-            toggleViewOpacity(mSoundView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
+            toggleViewOpacity(mSoundView, DRAWED_VIEW_MIN_OPACITY, 1f);
         if(mImagesView != null)
-            toggleViewOpacity(mImagesView.getId(), DRAWED_VIEW_MIN_OPACITY, 1f);
+            toggleViewOpacity(mImagesView, DRAWED_VIEW_MIN_OPACITY, 1f);
     }
 
     /**

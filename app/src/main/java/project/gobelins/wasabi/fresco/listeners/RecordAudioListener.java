@@ -28,6 +28,9 @@ public class RecordAudioListener implements View.OnClickListener
             /* On se déplace */
             mFresco.goToLastFragment();
 
+            /* Initialisation du son */
+            mFresco.initSounds();
+
             /* On vérouille le viewPager */
             mFresco.lock();
 
@@ -40,9 +43,6 @@ public class RecordAudioListener implements View.OnClickListener
             /* On supprime les listeners des drags */
             mFresco.getLastFragment().removeDragSoundsListeners();
             mFresco.getLastFragment().removeDragImagesListeners();
-
-            /* Initialisation du son */
-            mFresco.initSound();
         }
 
         /* On change l'état */
