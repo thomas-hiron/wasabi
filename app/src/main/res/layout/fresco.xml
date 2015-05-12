@@ -116,6 +116,17 @@
             android:contentDescription="@string/close"
             android:src="@drawable/back_arrow"/>
 
+        <!-- La corbeille -->
+        <ImageView
+            android:id="@+id/fresco_dustbin"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center|bottom"
+            android:layout_marginBottom="10dp"
+            android:contentDescription="@string/delete"
+            android:src="@drawable/fresco_dustbin"
+            android:visibility="invisible"/>
+
     </project.gobelins.wasabi.fresco.Fresco>
 
 </io.codetail.widget.RevealFrameLayout>
