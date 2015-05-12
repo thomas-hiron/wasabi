@@ -155,6 +155,12 @@ public class ContentProvider extends android.content.ContentProvider
 
                 break;
 
+            case IMAGES:
+
+                count = mDatabase.update(Images.TABLE_IMAGES, contentValues, s, strings);
+
+                break;
+
             default:
                 throw new IllegalArgumentException("Unsupported URI " + uri);
         }

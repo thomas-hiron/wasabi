@@ -1,13 +1,14 @@
 package project.gobelins.wasabi.fresco.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.PicassoTarget;
@@ -23,8 +24,9 @@ import project.gobelins.wasabi.interfaces.Listeners;
 public class ImageButton extends CircularImageView implements Listeners
 {
     private String mFileName;
-    private Target mTarget;
+    private PicassoTarget mTarget;
     private Fresco mFresco;
+    private Point mPoint;
     private int mId;
 
     private boolean mSave;
@@ -84,22 +86,32 @@ public class ImageButton extends CircularImageView implements Listeners
         this.mSave = save;
     }
 
+    public void setPoint(Point point)
+    {
+        mPoint = point;
+    }
+
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
 
         /* On charge l'image avec animation */
-        if(mSave)
-            Picasso.with(getContext()).load(Uri.parse("file:" + mFileName)).into(mTarget);
-        else
-            Picasso.with(getContext()).load(Uri.parse("file:" + mFileName)).into(this);
+        mTarget.setSave(mSave);
+        Picasso.with(getContext()).load(Uri.parse("file:" + mFileName)).into(mTarget);
 
         /* Ajout des listeners */
         addListeners();
 
-        /* Enregistrement de l'image */
+        /* Placement du point */
+        if(mPoint != null)
+        {
+            setX(mPoint.x);
+            setY(mPoint.y);
+        }
 
+        /* Enregistrement de l'image */
         if(mSave)
             mFresco.saveImage(this);
 

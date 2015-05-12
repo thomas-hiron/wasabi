@@ -10,6 +10,7 @@ import android.view.WindowManager;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.views.ImageButton;
 
 /**
  * Classe perso qui gère le drag
@@ -91,7 +92,9 @@ public class ButtonDragListener implements View.OnTouchListener
             /* On déverouille le viewPager */
             fresco.unlock();
 
-            // TODO : Enregistrement de la position de l'élement
+            /* Enregistrement de la position de l'élement */
+            if(view instanceof ImageButton)
+                fresco.updateImage((ImageButton) view);
         }
 
         return true;

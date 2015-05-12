@@ -67,7 +67,8 @@ public class ImagesManager
 
     /**
      * Enregistre une image
-     *  @param point    Les coordonnées
+     *
+     * @param point    Les coordonnées
      * @param fileName Le fichier
      */
     public int saveImage(Point point, String fileName)
@@ -83,5 +84,23 @@ public class ImagesManager
         long id = ContentUris.parseId(inserted);
 
         return (int) id;
+    }
+
+    /**
+     * Met à jour les coordonées de l'image
+     *
+     * @param point Le nouveau point
+     * @param id    L'id
+     */
+    public void updateImage(Point point, int id)
+    {
+        /* Nouvelles valeurs */
+        ContentValues contentValues = new ContentValues(1);
+        contentValues.put(Images.IMAGES_POINT, point.toString());
+
+        String condition = Images.IMAGES_ID + " = " + id;
+
+        /* Mise à jour */
+        mContentResolver.update(Uri.parse(Images.URL_IMAGES), contentValues, condition, null);
     }
 }
