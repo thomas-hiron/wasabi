@@ -45,4 +45,20 @@ public class DateFormater
 
         return date;
     }
+
+    /**
+     * @return La date du jour sans les heures
+     */
+    public static Date getStrictToday()
+    {
+        return getDateFromString(getTodayAsString());
+    }
+
+    /**
+     * @return La date du jour avec les heures
+     */
+    public static Date getToday()
+    {
+        return mToday;
+    }
 }

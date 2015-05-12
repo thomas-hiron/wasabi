@@ -13,8 +13,6 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -45,7 +43,6 @@ import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
 import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
-import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -120,7 +117,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Récupération de tous les dessins */
         DrawingsManager drawingsManager = new DrawingsManager(getContext().getContentResolver());
         HashMap<Date, ArrayList<Drawing>> drawings = drawingsManager.getDrawings();
-        Date today = new Date();
+        Date today = DateFormater.getStrictToday();
         boolean isLastFragment = false;
 
         /* Création d'un fragment pour chaque date */

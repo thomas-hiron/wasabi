@@ -8,6 +8,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import project.gobelins.wasabi.utils.DateFormater;
+
 /**
  * Created by ThomasHiron on 09/05/2015.
  */
@@ -28,8 +30,7 @@ public class RecordManager
             folder.mkdirs();
 
         /* Formatage du fichier */
-        Date date = new Date();
-        mFileName += date.getTime() + ".3gp";
+        mFileName += DateFormater.getToday().getTime() + ".3gp";
         mFile = new File(mFileName);
     }
 
