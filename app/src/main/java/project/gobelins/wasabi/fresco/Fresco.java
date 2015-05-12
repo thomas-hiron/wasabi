@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -14,12 +13,9 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Set;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.entities.Drawing;
 import project.gobelins.wasabi.entities.Entity;
-import project.gobelins.wasabi.entities.Image;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
@@ -145,8 +141,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
             /* On remet la liste */
             entities.put(dateEntities.getKey(), currentDateEntities);
         }
-
-        /* Récupération de tous les dessins */
 
         /* Création d'un fragment pour chaque date */
         for(Map.Entry<Date, ArrayList<Entity>> dateEntities : entities.entrySet())
@@ -649,37 +643,63 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
-     * Ajoute une nouvelle image
+     * Ajoute une nouvelle image dans le dernier fragment
      *
      * @param imageUrl L'image
      */
     public void addNewPicture(String imageUrl)
     {
-        /* L'inflater */
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         /* La vue parent */
         View fragmentView = getLastFragment().getView();
         FrameLayout imagesContainer = null;
         if(fragmentView != null)
             imagesContainer = (FrameLayout) getLastFragment().getView().findViewById(R.id.pictures_view);
 
+        /* Ajout de la vue */
+        if(imagesContainer != null)
+            addNewPicture(imagesContainer, imageUrl);
+    }
+
+    /**
+     * Ajoute une nouvelle image dans le container spécifié
+     *
+     * @param container Le conteneur
+     * @param imageUrl  L'image
+     */
+    public void addNewPicture(FrameLayout container, String imageUrl)
+    {
+        addNewPicture(container, imageUrl, true);
+    }
+
+    /**
+     * Ajoute une nouvelle image dans le container spécifié, avec un paramètre pour spécifier si enregistrement
+     *
+     * @param container Le conteneur
+     * @param imageUrl  L'image
+     * @param save      Si on enregistre
+     */
+    public void addNewPicture(FrameLayout container, String imageUrl, boolean save)
+    {
+        /* L'inflater */
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         /* Inflation de la vue */
-        ImageButton imageButton = (ImageButton) inflater.inflate(R.layout.fresco_picture, imagesContainer, false);
+        ImageButton imageButton = (ImageButton) inflater.inflate(R.layout.fresco_picture, container, false);
 
         /* Ajout du chemin */
         imageButton.setFileName(imageUrl);
         imageButton.setFresco(this);
+        imageButton.setSave(save);
 
         /* Ajout de la vue */
-        if(imagesContainer != null)
-            imagesContainer.addView(imageButton);
+        if(container != null)
+            container.addView(imageButton);
     }
 
     /**
      * Ajout du listener pour la prise de photo
      *
-     * @param listener
+     * @param listener Le listener
      */
     public void setPictureListener(OnPictureListener listener)
     {

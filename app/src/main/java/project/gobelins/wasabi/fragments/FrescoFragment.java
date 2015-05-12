@@ -3,6 +3,7 @@ package project.gobelins.wasabi.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +17,11 @@ import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
 import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.entities.Image;
+import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
+import project.gobelins.wasabi.fresco.views.FrescoViewPager;
 import project.gobelins.wasabi.interfaces.Listeners;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -56,7 +59,7 @@ public class FrescoFragment extends Fragment
 
     public static FrescoFragment newInstance(Date date, boolean isLastFragment)
     {
-        return newInstance(null, date, isLastFragment);
+        return newInstance(new ArrayList<Entity>(), date, isLastFragment);
     }
 
     public static FrescoFragment newInstance(ArrayList<Entity> entities, Date date, boolean isLastFragment)
@@ -115,6 +118,9 @@ public class FrescoFragment extends Fragment
         /* Inflate the layout for this fragment */
         FrameLayout view = (FrameLayout) inflater.inflate(R.layout.fragment_fresco, container, false);
 
+        /* La fresque */
+        Fresco fresco = (Fresco) container.getParent();
+
         /* La vue du dessin */
         mDrawedView = (DrawedView) view.findViewById(R.id.drawed_view);
 
@@ -138,13 +144,13 @@ public class FrescoFragment extends Fragment
             for(Drawing drawing : mDrawings)
                 mDrawedView.draw(drawing.getPoints());
         }
+
         /* On ajoute toutes les images */
         if(mImages != null)
         {
+            FrameLayout picturesView = (FrameLayout) view.findViewById(R.id.pictures_view);
             for(Image image : mImages)
-            {
-
-            }
+                fresco.addNewPicture(picturesView, image.getFileName(), false);
         }
 
         return view;

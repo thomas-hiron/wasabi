@@ -26,6 +26,8 @@ public class ImageButton extends CircularImageView implements Listeners
     private Target mTarget;
     private Fresco mFresco;
 
+    private boolean mSave;
+
     public ImageButton(Context context)
     {
         super(context);
@@ -53,13 +55,21 @@ public class ImageButton extends CircularImageView implements Listeners
         mFresco = fresco;
     }
 
+    public void setSave(boolean save)
+    {
+        this.mSave = save;
+    }
+
     @Override
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
 
-        /* On charge l'image */
-        Picasso.with(getContext()).load(Uri.parse("file:" + mFileName)).into(mTarget);
+        /* On charge l'image avec animation */
+        if(mSave)
+            Picasso.with(getContext()).load(Uri.parse("file:" + mFileName)).into(mTarget);
+        else
+            Picasso.with(getContext()).load(Uri.parse("file:" + mFileName)).into(this);
 
         /* Ajout des listeners */
         addListeners();
@@ -67,7 +77,9 @@ public class ImageButton extends CircularImageView implements Listeners
         /* Enregistrement de l'image */
         Point point = new Point();
         point.set(getX(), getY());
-        mFresco.saveImage(point, mFileName);
+
+        if(mSave)
+            mFresco.saveImage(point, mFileName);
 
     }
 
