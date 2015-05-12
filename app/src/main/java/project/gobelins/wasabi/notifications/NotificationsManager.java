@@ -12,13 +12,13 @@ import java.util.Date;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
+import project.gobelins.wasabi.utils.DateFormater;
 
 /**
  * Created by ThomasHiron on 28/04/2015.
  */
 public class NotificationsManager extends ArrayList<Notification>
 {
-    public final static String DATE_FORMAT = "yyyy-MM-dd";
     private final ContentResolver mContentResolver;
 
     public NotificationsManager(ContentResolver contentResolver)
@@ -55,12 +55,11 @@ public class NotificationsManager extends ArrayList<Notification>
     public ArrayList<Notification> getNotifications()
     {
         /* La date du jour */
-        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT);
-        Date date = new Date();
+        String date = DateFormater.getTodayAsString();
 
         /* Tous les messages non lus ou date égale à aujourd'hui */
         String readCondition = Notifications.NOTIFICATIONS_READ + " = 0 OR " +
-                Notifications.NOTIFICATIONS_RECEIVED_DATE + " = '" + dateFormat.format(date) + "'";
+                Notifications.NOTIFICATIONS_RECEIVED_DATE + " = '" + date + "'";
         String sortOrder = Notifications.NOTIFICATIONS_ID + " DESC";
 
         Cursor c = mContentResolver.query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, readCondition, null, sortOrder);

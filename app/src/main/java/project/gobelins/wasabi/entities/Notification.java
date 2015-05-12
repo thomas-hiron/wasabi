@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.Locale;
 
 import project.gobelins.wasabi.notifications.NotificationsManager;
+import project.gobelins.wasabi.utils.DateFormater;
 
 /**
  * Created by ThomasHiron on 28/04/2015.
@@ -33,17 +34,7 @@ public class Notification implements Parcelable
 
     public void setDate(String pDate)
     {
-        DateFormat format = new SimpleDateFormat(NotificationsManager.DATE_FORMAT, Locale.FRANCE);
-        Date date;
-        try
-        {
-            date = format.parse(pDate);
-            this.date = date;
-        }
-        catch(ParseException e)
-        {
-            e.printStackTrace();
-        }
+        date = DateFormater.getDateFromString(pDate);
     }
 
     public int getType()
@@ -102,16 +93,7 @@ public class Notification implements Parcelable
 
         /* La date */
         String dateString = in.readString();
-        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT, Locale.FRANCE);
-        try
-        {
-            Date date = dateFormat.parse(dateString);
-            setDate(date);
-        }
-        catch(ParseException e)
-        {
-            e.printStackTrace();
-        }
+        setDate(DateFormater.getDateFromString(dateString));
     }
 
     public Notification()

@@ -47,6 +47,7 @@ import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
+import project.gobelins.wasabi.utils.DateFormater;
 
 /**
  * Classe qui gère toute la fresque
@@ -646,12 +647,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         /* La couleur */
         int color = ((ColorPoint) points.get(0)).getColor();
-        /* La date du jour */
-        DateFormat dateFormat = new SimpleDateFormat(NotificationsManager.DATE_FORMAT);
-        Date date = new Date();
 
         ContentValues contentValues = new ContentValues(3);
-        contentValues.put(Drawings.DRAWINGS_DATE, dateFormat.format(date));
+        contentValues.put(Drawings.DRAWINGS_DATE, DateFormater.getTodayAsString());
         contentValues.put(Drawings.DRAWINGS_POINTS, points.toString().replaceAll("\\[(.*)\\]", "$1"));
         contentValues.put(Drawings.DRAWINGS_COLOR, color);
 

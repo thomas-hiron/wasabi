@@ -26,6 +26,7 @@ import project.gobelins.wasabi.fresco.recording.RecordView;
 import project.gobelins.wasabi.interfaces.Listeners;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
+import project.gobelins.wasabi.utils.DateFormater;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -78,15 +79,7 @@ public class FrescoFragment extends Fragment
 
     public void setDate(String date)
     {
-        DateFormat format = new SimpleDateFormat(NotificationsManager.DATE_FORMAT, Locale.FRANCE);
-        try
-        {
-            mDate = format.parse(date);
-        }
-        catch(ParseException e)
-        {
-            e.printStackTrace();
-        }
+        mDate = DateFormater.getDateFromString(date);
     }
 
     /**

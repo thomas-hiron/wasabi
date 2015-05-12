@@ -10,6 +10,7 @@ import java.util.Locale;
 import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.notifications.NotificationsManager;
+import project.gobelins.wasabi.utils.DateFormater;
 
 /**
  * Classe représentative de la table des notifications
@@ -35,17 +36,7 @@ public class Drawing
 
     public void setDate(String pDate)
     {
-        DateFormat format = new SimpleDateFormat(NotificationsManager.DATE_FORMAT, Locale.FRANCE);
-        Date date;
-        try
-        {
-            date = format.parse(pDate);
-            this.date = date;
-        }
-        catch(ParseException e)
-        {
-            e.printStackTrace();
-        }
+        date = DateFormater.getDateFromString(pDate);
     }
 
     public int getId()
