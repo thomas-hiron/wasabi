@@ -14,6 +14,8 @@ import java.util.Date;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
+import project.gobelins.wasabi.entities.Entity;
+import project.gobelins.wasabi.entities.Image;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
@@ -32,10 +34,13 @@ public class FrescoFragment extends Fragment
     private DrawedView mDrawedView;
     private Button mStartRecordingButton;
     private ArrayList<Drawing> mDrawings;
+    private ArrayList<Image> mImages;
 
     public FrescoFragment()
     {
         // Required empty public constructor
+        mDrawings = new ArrayList<>();
+        mImages = new ArrayList<>();
     }
 
     /**
@@ -54,14 +59,38 @@ public class FrescoFragment extends Fragment
         return newInstance(null, date, isLastFragment);
     }
 
-    public static FrescoFragment newInstance(ArrayList<Drawing> drawings, Date date, boolean isLastFragment)
+    public static FrescoFragment newInstance(ArrayList<Entity> entities, Date date, boolean isLastFragment)
     {
         FrescoFragment frescoFragment = new FrescoFragment();
         frescoFragment.isLastFragment(isLastFragment);
         frescoFragment.setDate(date);
-        frescoFragment.setDrawings(drawings);
+
+        /* Ajout de toutes les entités */
+        for(Entity entity : entities)
+        {
+            if(entity instanceof Drawing)
+                frescoFragment.addDrawing((Drawing) entity);
+            else if(entity instanceof Image)
+                frescoFragment.addImage((Image) entity);
+        }
 
         return frescoFragment;
+    }
+
+    /**
+     * @param drawing Le dessin à ajouter
+     */
+    public void addDrawing(Drawing drawing)
+    {
+        mDrawings.add(drawing);
+    }
+
+    /**
+     * @param image L'image à ajouter
+     */
+    public void addImage(Image image)
+    {
+        mImages.add(image);
     }
 
     private void setDate(Date date)
@@ -72,14 +101,6 @@ public class FrescoFragment extends Fragment
     public void setDate(String date)
     {
         mDate = DateFormater.getDateFromString(date);
-    }
-
-    /**
-     * @param drawings Les dessins du fragment
-     */
-    public void setDrawings(ArrayList<Drawing> drawings)
-    {
-        mDrawings = drawings;
     }
 
     @Override
@@ -116,6 +137,14 @@ public class FrescoFragment extends Fragment
         {
             for(Drawing drawing : mDrawings)
                 mDrawedView.draw(drawing.getPoints());
+        }
+        /* On ajoute toutes les images */
+        if(mImages != null)
+        {
+            for(Image image : mImages)
+            {
+
+            }
         }
 
         return view;

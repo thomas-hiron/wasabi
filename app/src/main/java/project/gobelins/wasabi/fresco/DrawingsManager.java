@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 import project.gobelins.wasabi.entities.Drawing;
+import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
@@ -32,11 +33,11 @@ public class DrawingsManager
     /**
      * Récupération des dessins
      */
-    public HashMap<Date, ArrayList<Drawing>> getDrawings()
+    public HashMap<Date, ArrayList<Entity>> getDrawings()
     {
         Cursor c = mContentResolver.query(Uri.parse(Drawings.URL_DRAWINGS), null, null, null, null);
 
-        HashMap<Date, ArrayList<Drawing>> drawings = new HashMap<>();
+        HashMap<Date, ArrayList<Entity>> drawings = new HashMap<>();
 
         if(c.moveToFirst())
         {
@@ -50,7 +51,7 @@ public class DrawingsManager
                 drawing.setPoints(c.getString(c.getColumnIndex(Drawings.DRAWINGS_POINTS)));
 
                 /* Récupération et initialisation si null */
-                ArrayList<Drawing> dateDrawings = drawings.get(drawing.getDate());
+                ArrayList<Entity> dateDrawings = drawings.get(drawing.getDate());
                 if(dateDrawings == null)
                     dateDrawings = new ArrayList<>();
 

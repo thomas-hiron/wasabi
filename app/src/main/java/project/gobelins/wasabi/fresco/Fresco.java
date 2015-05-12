@@ -4,6 +4,7 @@ import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -13,9 +14,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
+import project.gobelins.wasabi.entities.Entity;
+import project.gobelins.wasabi.entities.Image;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
@@ -113,21 +117,47 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Instanciation de l'adapter */
         mViewPagerAdapter = new ViewPagerAdapter(supportFragmentManager);
 
-        /* Récupération de tous les dessins */
-        HashMap<Date, ArrayList<Drawing>> drawings = mDrawingsManager.getDrawings();
         Date today = DateFormater.getStrictToday();
         boolean isLastFragment = false;
 
+        /* Les dessins */
+        HashMap<Date, ArrayList<Entity>> drawings = mDrawingsManager.getDrawings();
+        /* Les images */
+        HashMap<Date, ArrayList<Entity>> images = mImagesManager.getImages();
+        /* Tous les éléments */
+        HashMap<Date, ArrayList<Entity>> entities = new HashMap<>();
+
+        /* Ajout du tableau de dessin */
+        entities.putAll(drawings);
+
+        /* Parcourt de toutes les images */
+        for(Map.Entry<Date, ArrayList<Entity>> dateEntities : images.entrySet())
+        {
+            /* Récupération de la date correspondante du tableau final */
+            ArrayList<Entity> currentDateEntities = entities.get(dateEntities.getKey());
+            /* Instanciation si null */
+            if(currentDateEntities == null)
+                currentDateEntities = new ArrayList<>();
+
+            /* Ajout de toutes les images */
+            currentDateEntities.addAll(dateEntities.getValue());
+
+            /* On remet la liste */
+            entities.put(dateEntities.getKey(), currentDateEntities);
+        }
+
+        /* Récupération de tous les dessins */
+
         /* Création d'un fragment pour chaque date */
-        for(Map.Entry<Date, ArrayList<Drawing>> dateDrawings : drawings.entrySet())
+        for(Map.Entry<Date, ArrayList<Entity>> dateEntities : entities.entrySet())
         {
             /* Si dernier fragment */
-            isLastFragment = today.compareTo(dateDrawings.getKey()) == 0;
+            isLastFragment = today.compareTo(dateEntities.getKey()) == 0;
 
             /* Instanciation */
             FrescoFragment frescoFragment = FrescoFragment.newInstance(
-                    dateDrawings.getValue(),
-                    dateDrawings.getKey(),
+                    dateEntities.getValue(),
+                    dateEntities.getKey(),
                     isLastFragment
             );
             /* Ajout au viewPager */

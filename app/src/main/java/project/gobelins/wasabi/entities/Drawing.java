@@ -17,7 +17,7 @@ import project.gobelins.wasabi.utils.DateFormater;
  * <p/>
  * Created by ThomasHiron on 11/05/2015.
  */
-public class Drawing
+public class Drawing extends Entity
 {
     private int id;
     private Date date;

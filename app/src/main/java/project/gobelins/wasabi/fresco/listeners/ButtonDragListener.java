@@ -22,6 +22,7 @@ public class ButtonDragListener implements View.OnTouchListener
     private int mScreenHeight;
     private boolean mInterfaceHidden;
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public ButtonDragListener(Context context)
     {
         /* On récupère la hauteur de l'écran */
