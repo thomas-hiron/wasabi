@@ -6,7 +6,6 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -14,9 +13,6 @@ import android.widget.FrameLayout;
 
 import java.io.File;
 import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -133,26 +129,35 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         HashMap<Date, ArrayList<Entity>> images = mImagesManager.getImages();
         /* Les sons */
         HashMap<Date, ArrayList<Entity>> sounds = mSoundsManager.getSounds();
+
         /* Tous les éléments */
         HashMap<Date, ArrayList<Entity>> entities = new HashMap<>();
+
+        /* Création d'un tableau pour boucler */
+        ArrayList<HashMap<Date, ArrayList<Entity>>> imagesSounds = new ArrayList<>(2);
+        imagesSounds.add(images);
+        imagesSounds.add(sounds);
 
         /* Ajout du tableau de dessin */
         entities.putAll(drawings);
 
-        /* Parcourt de toutes les images */
-        for(Map.Entry<Date, ArrayList<Entity>> dateEntities : images.entrySet())
+        for(HashMap<Date, ArrayList<Entity>> typedEntities : imagesSounds)
         {
-            /* Récupération de la date correspondante du tableau final */
-            ArrayList<Entity> currentDateEntities = entities.get(dateEntities.getKey());
-            /* Instanciation si null */
-            if(currentDateEntities == null)
-                currentDateEntities = new ArrayList<>();
+            /* Parcourt de toutes les images puis sons */
+            for(Map.Entry<Date, ArrayList<Entity>> dateEntities : typedEntities.entrySet())
+            {
+               /* Récupération de la date correspondante du tableau final */
+                ArrayList<Entity> currentDateEntities = entities.get(dateEntities.getKey());
+                /* Instanciation si null */
+                if(currentDateEntities == null)
+                    currentDateEntities = new ArrayList<>();
 
-            /* Ajout de toutes les images */
-            currentDateEntities.addAll(dateEntities.getValue());
+                /* Ajout de toutes les images */
+                currentDateEntities.addAll(dateEntities.getValue());
 
-            /* On remet la liste */
-            entities.put(dateEntities.getKey(), currentDateEntities);
+                /* On remet la liste */
+                entities.put(dateEntities.getKey(), currentDateEntities);
+            }
         }
 
         /* On trie le tableau */

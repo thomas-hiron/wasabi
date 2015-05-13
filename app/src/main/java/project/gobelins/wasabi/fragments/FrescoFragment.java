@@ -17,6 +17,7 @@ import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
 import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.entities.Image;
+import project.gobelins.wasabi.entities.Sound;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
@@ -38,12 +39,14 @@ public class FrescoFragment extends Fragment
     private Button mStartRecordingButton;
     private ArrayList<Drawing> mDrawings;
     private ArrayList<Image> mImages;
+    private ArrayList<Sound> mSounds;
 
     public FrescoFragment()
     {
         // Required empty public constructor
         mDrawings = new ArrayList<>();
         mImages = new ArrayList<>();
+        mSounds = new ArrayList<>();
     }
 
     /**
@@ -75,6 +78,8 @@ public class FrescoFragment extends Fragment
                 frescoFragment.addDrawing((Drawing) entity);
             else if(entity instanceof Image)
                 frescoFragment.addImage((Image) entity);
+            else if(entity instanceof Sound)
+                frescoFragment.addSound((Sound) entity);
         }
 
         return frescoFragment;
@@ -94,6 +99,14 @@ public class FrescoFragment extends Fragment
     public void addImage(Image image)
     {
         mImages.add(image);
+    }
+
+    /**
+     * @param sound Le son à ajouter
+     */
+    public void addSound(Sound sound)
+    {
+        mSounds.add(sound);
     }
 
     private void setDate(Date date)
@@ -151,6 +164,17 @@ public class FrescoFragment extends Fragment
             FrameLayout picturesView = (FrameLayout) view.findViewById(R.id.pictures_view);
             for(Image image : mImages)
                 fresco.addNewPicture(picturesView, image.getFileName(), image.getId(), image.getPoint(), false, mIsLastFragment);
+        }
+
+        /* On ajoute tous les sons */
+        if(mSounds != null)
+        {
+            FrameLayout soundsView = (FrameLayout) view.findViewById(R.id.sounds_view);
+            for(Sound sound : mSounds)
+            {
+                Log.v("test", sound.getFileName());
+//                fresco.addNewSound(soundsView, sound.getFileName(), sound.getId(), sound.getPoint(), false, mIsLastFragment);
+            }
         }
 
         return view;
