@@ -12,10 +12,11 @@ import android.net.Uri;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.sqlite.tables.Images;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
+import project.gobelins.wasabi.sqlite.tables.Sounds;
 
 /**
  * Created by ThomasHiron on 24/10/2014.
- *
+ * <p/>
  * Interagit avec le DatabaseHelper et construit les requêtes
  */
 public class ContentProvider extends android.content.ContentProvider
@@ -26,17 +27,20 @@ public class ContentProvider extends android.content.ContentProvider
     private static final int NOTIFICATIONS = 1;
     private static final int DRAWINGS = 2;
     private static final int IMAGES = 3;
+    private static final int SOUNDS = 4;
 
     /* L'helper sqlite */
     DatabaseHelper mDBHelper;
 
     private static final UriMatcher mUriMatcher;
+
     static
     {
         mUriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
         mUriMatcher.addURI(PROVIDER_NAME, Notifications.TABLE_NOTIFICATIONS, NOTIFICATIONS);
         mUriMatcher.addURI(PROVIDER_NAME, Drawings.TABLE_DRAWINGS, DRAWINGS);
         mUriMatcher.addURI(PROVIDER_NAME, Images.TABLE_IMAGES, IMAGES);
+        mUriMatcher.addURI(PROVIDER_NAME, Sounds.TABLE_SOUNDS, SOUNDS);
     }
 
     /* LA BDD */
@@ -87,6 +91,14 @@ public class ContentProvider extends android.content.ContentProvider
 
                 break;
 
+            /* Les sons */
+            case SOUNDS:
+
+                queryBuilder.setTables(Sounds.TABLE_SOUNDS);
+                sortOrder = sortOrder == null ? Sounds.SOUNDS_ID : sortOrder;
+
+                break;
+
             /* Erreur */
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -126,6 +138,11 @@ public class ContentProvider extends android.content.ContentProvider
         {
             table = Images.TABLE_IMAGES;
             contentUri = Images.CONTENT_URI_IMAGES;
+        }
+        else if(id == SOUNDS)
+        {
+            table = Sounds.TABLE_SOUNDS;
+            contentUri = Sounds.CONTENT_URI_SOUNDS;
         }
 
         /* Insertion et récupération de l'id inséré */

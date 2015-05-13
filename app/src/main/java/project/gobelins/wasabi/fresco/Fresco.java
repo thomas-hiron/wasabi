@@ -78,6 +78,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private OnPictureListener mPictureListener;
     private DrawingsManager mDrawingsManager;
     private ImagesManager mImagesManager;
+    private SoundsManager mSoundsManager;
 
     public Fresco(Context context)
     {
@@ -90,6 +91,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         mDrawingsManager = new DrawingsManager(getContext().getContentResolver());
         mImagesManager = new ImagesManager(getContext().getContentResolver());
+        mSoundsManager = new SoundsManager(getContext().getContentResolver());
     }
 
     @Override
@@ -129,6 +131,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         HashMap<Date, ArrayList<Entity>> drawings = mDrawingsManager.getDrawings();
         /* Les images */
         HashMap<Date, ArrayList<Entity>> images = mImagesManager.getImages();
+        /* Les sons */
+        HashMap<Date, ArrayList<Entity>> sounds = mSoundsManager.getSounds();
         /* Tous les éléments */
         HashMap<Date, ArrayList<Entity>> entities = new HashMap<>();
 
@@ -682,6 +686,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout du chemin */
         soundButton.setFileName(fileName);
+        soundButton.setFresco(this);
 
         /* Ajout de la vue */
         if(soundsContainer != null)
@@ -840,5 +845,17 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         getContext().sendBroadcast(mediaScanIntent);
+    }
+
+    /**
+     * On enregistre le son
+     *
+     * @param soundButton Le son
+     */
+    public void saveSound(SoundButton soundButton)
+    {
+        /* Enregistrement et renseignement de l'id */
+        int id = mSoundsManager.saveSound(soundButton.getFileName());
+        soundButton.setId(id);
     }
 }

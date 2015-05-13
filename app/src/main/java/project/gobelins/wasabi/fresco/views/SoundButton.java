@@ -13,6 +13,7 @@ import org.json.JSONObject;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.Dustbin;
+import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.fresco.listeners.PlaySoundListener;
 import project.gobelins.wasabi.interfaces.DraggableElement;
@@ -28,6 +29,7 @@ public class SoundButton extends Button implements Listeners, DraggableElement
     private String mFileName;
     private boolean mHoveringDustbin;
     private final float SCALE_DUST = 0.5f;
+    private Fresco mFresco;
 
     public SoundButton(Context context)
     {
@@ -68,6 +70,11 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         return mFileName;
     }
 
+    public void setFresco(Fresco fresco)
+    {
+        mFresco = fresco;
+    }
+
     @Override
     protected void onAttachedToWindow()
     {
@@ -75,6 +82,9 @@ public class SoundButton extends Button implements Listeners, DraggableElement
 
         /* Ajout des listeners */
         addListeners();
+
+        /* Enregistrement */
+        mFresco.saveSound(this);
     }
 
     /**

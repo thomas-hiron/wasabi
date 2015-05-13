@@ -7,6 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.sqlite.tables.Images;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
+import project.gobelins.wasabi.sqlite.tables.Sounds;
 
 /**
  * Created by ThomasHiron on 24/10/2014.
@@ -31,6 +32,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL(Notifications.CREATE_TABLE_NOTIFICATIONS);
         sqLiteDatabase.execSQL(Drawings.CREATE_TABLE_DRAWINGS);
         sqLiteDatabase.execSQL(Images.CREATE_TABLE_IMAGES);
+        sqLiteDatabase.execSQL(Sounds.CREATE_TABLE_SOUNDS);
     }
 
     @Override
@@ -40,6 +42,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Notifications.TABLE_NOTIFICATIONS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Drawings.TABLE_DRAWINGS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Images.TABLE_IMAGES);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Sounds.TABLE_SOUNDS);
 
         /* Recréation */
         onCreate(sqLiteDatabase);
