@@ -732,30 +732,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout de la vue */
         if(imagesContainer != null)
-            addNewPicture(imagesContainer, imageUrl);
-    }
-
-    /**
-     * Ajoute une nouvelle image dans le container spécifié
-     *
-     * @param container Le conteneur
-     * @param imageUrl  L'image
-     */
-    public void addNewPicture(FrameLayout container, String imageUrl)
-    {
-        addNewPicture(container, imageUrl, true);
-    }
-
-    /**
-     * Ajoute une nouvelle image dans le container spécifié, avec un paramètre pour spécifier si enregistrement
-     *
-     * @param container Le conteneur
-     * @param imageUrl  L'image
-     * @param save      Si on enregistre
-     */
-    public void addNewPicture(FrameLayout container, String imageUrl, boolean save)
-    {
-        addNewPicture(container, imageUrl, 0, null, save, true);
+            addNewPicture(imagesContainer, imageUrl, 0, null, true, true);
     }
 
     /**
