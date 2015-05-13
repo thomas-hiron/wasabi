@@ -23,6 +23,7 @@ import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.PicassoTarget;
 import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
+import project.gobelins.wasabi.interfaces.DraggableElement;
 import project.gobelins.wasabi.interfaces.Listeners;
 
 /**
@@ -30,7 +31,7 @@ import project.gobelins.wasabi.interfaces.Listeners;
  * <p/>
  * Created by ThomasHiron on 08/05/2015.
  */
-public class ImageButton extends CircularImageView implements Listeners
+public class ImageButton extends CircularImageView implements Listeners, DraggableElement
 {
     private String mFileName;
     private PicassoTarget mTarget;
@@ -231,7 +232,6 @@ public class ImageButton extends CircularImageView implements Listeners
             /* Début animation */
             startAnimation(scaleAnimation);
         }
-
     }
 
     /**

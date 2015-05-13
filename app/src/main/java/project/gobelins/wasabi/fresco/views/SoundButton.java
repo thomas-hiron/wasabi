@@ -15,6 +15,7 @@ import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.fresco.listeners.PlaySoundListener;
+import project.gobelins.wasabi.interfaces.DraggableElement;
 import project.gobelins.wasabi.interfaces.Listeners;
 
 /**
@@ -22,9 +23,11 @@ import project.gobelins.wasabi.interfaces.Listeners;
  * <p/>
  * Created by ThomasHiron on 08/05/2015.
  */
-public class SoundButton extends Button implements Listeners
+public class SoundButton extends Button implements Listeners, DraggableElement
 {
     private String mFileName;
+    private boolean mHoveringDustbin;
+    private final float SCALE_DUST = 0.5f;
 
     public SoundButton(Context context)
     {
@@ -34,6 +37,8 @@ public class SoundButton extends Button implements Listeners
     public SoundButton(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+
+        mHoveringDustbin = false;
 
         /* Animation du bouton */
         ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 0, 1, /* Début/fin pour X/Y */
@@ -113,5 +118,81 @@ public class SoundButton extends Button implements Listeners
                 return true;
             }
         });
+    }
+
+    /**
+     * @return La largeur en fonction du scale
+     */
+    @Override
+    public int getCustomWidth()
+    {
+        return mHoveringDustbin ? (int) (getWidth() * SCALE_DUST) : getWidth();
+    }
+
+    /**
+     * @return La hauteur en fonction du scale
+     */
+    @Override
+    public int getCustomHeight()
+    {
+        return mHoveringDustbin ? (int) (getHeight() * SCALE_DUST) : getHeight();
+    }
+
+    /**
+     * Scale down pour préparer la suppression
+     *
+     * @param eventX
+     * @param eventY
+     */
+    @Override
+    public void scaleToDelete(int eventX, int eventY)
+    {
+        if(!mHoveringDustbin)
+        {
+            mHoveringDustbin = true;
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1, SCALE_DUST, 1, SCALE_DUST, /* Début/fin pour X/Y */
+                    Animation.ABSOLUTE, eventX, /* X */
+                    Animation.ABSOLUTE, eventY); /* Y */
+            scaleAnimation.setDuration(250);
+            scaleAnimation.setFillAfter(true);
+            scaleAnimation.setInterpolator(new OvershootInterpolator());
+
+            /* Début animation */
+            startAnimation(scaleAnimation);
+        }
+    }
+
+    /**
+     * Scale normal
+     *
+     * @param eventX
+     * @param eventY
+     */
+    @Override
+    public void scaleToNormal(int eventX, int eventY)
+    {
+        if(mHoveringDustbin)
+        {
+            mHoveringDustbin = false;
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_DUST, 1, SCALE_DUST, 1, /* Début/fin pour X/Y */
+                    Animation.ABSOLUTE, eventX, /* X */
+                    Animation.ABSOLUTE, eventY); /* Y */
+            scaleAnimation.setDuration(250);
+            scaleAnimation.setInterpolator(new OvershootInterpolator());
+
+            /* Début animation */
+            startAnimation(scaleAnimation);
+        }
+    }
+
+    /**
+     * Si l'objet est en train d'être supprimé au drop
+     */
+    @Override
+    public boolean isDeleting()
+    {
+        return mHoveringDustbin;
     }
 }
