@@ -10,6 +10,11 @@ import android.view.View;
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.PicassoTarget;
 import project.gobelins.wasabi.fresco.drawing.Point;
@@ -140,8 +145,20 @@ public class ImageButton extends CircularImageView implements Listeners
             @Override
             public boolean onLongClick(View view)
             {
-                /* Sorte de drag perso */
-                setOnTouchListener(new ButtonDragListener(getContext()));
+                /* Récupération des coordonnées de la poubelle */
+                View rootView = getRootView();
+                Dustbin dustbin = (Dustbin) rootView.findViewById(R.id.fresco_dustbin);
+                try
+                {
+                    JSONObject coordinates = dustbin.getCoordinates();
+
+                    /* Sorte de drag perso */
+                    setOnTouchListener(new ButtonDragListener(getContext(), coordinates));
+                }
+                catch(JSONException e)
+                {
+                    e.printStackTrace();
+                }
 
                 return true;
             }

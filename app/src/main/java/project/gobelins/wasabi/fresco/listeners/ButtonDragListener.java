@@ -4,9 +4,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.Fresco;
@@ -23,8 +27,13 @@ public class ButtonDragListener implements View.OnTouchListener
     private int mScreenHeight;
     private boolean mInterfaceHidden;
 
+    private int mDustWidth;
+    private int mDustHeight;
+    private int mDustX;
+    private int mDustY;
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public ButtonDragListener(Context context)
+    public ButtonDragListener(Context context, JSONObject dustbinCoordinates)
     {
         /* On récupère la hauteur de l'écran */
         DisplayMetrics displayMetrics = new DisplayMetrics();
@@ -32,6 +41,29 @@ public class ButtonDragListener implements View.OnTouchListener
         windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
         mScreenWidth = displayMetrics.widthPixels;
         mScreenHeight = displayMetrics.heightPixels;
+
+        try
+        {
+            /* Dimensions */
+            mDustWidth = dustbinCoordinates.getInt("width");
+            mDustHeight = dustbinCoordinates.getInt("height");
+
+            /* Position */
+            mDustX = dustbinCoordinates.getInt("x");
+            mDustY = dustbinCoordinates.getInt("y");
+
+            /* On Supprime un tier de la poubelle */
+            int excess = mDustWidth / 4;
+
+            mDustWidth -= excess*2;
+            mDustHeight -= excess*2;
+            mDustX += excess;
+            mDustY += excess;
+        }
+        catch(JSONException e)
+        {
+            e.printStackTrace();
+        }
     }
 
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -76,6 +108,16 @@ public class ButtonDragListener implements View.OnTouchListener
                 view.setY(mScreenHeight - view.getHeight());
             else
                 view.setY(y);
+
+            /* On test si on est sur la poubelle */
+            int eventX = (int) motionEvent.getRawX();
+            int eventY = (int) motionEvent.getRawY();
+
+            if(eventX >= mDustX
+                    && eventX <= mDustX + mDustWidth
+                    && eventY >= mDustY
+                    && eventY <= mDustY + mDustHeight)
+                Log.v("test", "Poubelle !!");
 
             /* Pour ne pas laisser de traces lors du drag */
             ((View) view.getParent()).invalidate();

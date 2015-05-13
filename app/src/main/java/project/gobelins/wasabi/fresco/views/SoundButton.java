@@ -8,6 +8,11 @@ import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.fresco.listeners.PlaySoundListener;
 import project.gobelins.wasabi.interfaces.Listeners;
@@ -90,8 +95,20 @@ public class SoundButton extends Button implements Listeners
             @Override
             public boolean onLongClick(View view)
             {
-                /* Sorte de drag perso */
-                setOnTouchListener(new ButtonDragListener(getContext()));
+                /* Récupération des coordonnées de la poubelle */
+                View rootView = getRootView();
+                Dustbin dustbin = (Dustbin) rootView.findViewById(R.id.fresco_dustbin);
+                try
+                {
+                    JSONObject coordinates = dustbin.getCoordinates();
+
+                    /* Sorte de drag perso */
+                    setOnTouchListener(new ButtonDragListener(getContext(), coordinates));
+                }
+                catch(JSONException e)
+                {
+                    e.printStackTrace();
+                }
 
                 return true;
             }
