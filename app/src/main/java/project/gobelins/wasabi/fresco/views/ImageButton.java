@@ -7,6 +7,7 @@ import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 
@@ -239,5 +240,56 @@ public class ImageButton extends CircularImageView implements Listeners
     public boolean isDeleting()
     {
         return mHoveringDustbin;
+    }
+
+    /**
+     * Up, test si on supprime
+     */
+    public boolean testDelete()
+    {
+        return mHoveringDustbin;
+    }
+
+    /**
+     * Suppression de l'image
+     * @param eventX
+     * @param eventY
+     */
+    public void delete(float eventX, float eventY)
+    {
+        mHoveringDustbin = false;
+
+        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_DUST, 0, SCALE_DUST, 0, /* Début/fin pour X/Y */
+                Animation.ABSOLUTE, eventX, /* X */
+                Animation.ABSOLUTE, eventY); /* Y */
+        scaleAnimation.setDuration(250);
+        scaleAnimation.setInterpolator(new LinearInterpolator());
+
+        /* Début animation */
+        startAnimation(scaleAnimation);
+
+        final ImageButton view = this;
+
+        /* Listener de fin */
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                mFresco.deleteImage(view);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
     }
 }

@@ -146,7 +146,16 @@ public class ButtonDragListener implements View.OnTouchListener
 
             /* Enregistrement de la position de l'élement */
             if(view instanceof ImageButton)
-                fresco.updateImage((ImageButton) view);
+            {
+                boolean delete = ((ImageButton) view).testDelete();
+
+                /* Suppression */
+                if(delete)
+                    ((ImageButton) view).delete(motionEvent.getRawX(), motionEvent.getRawY());
+                /* Mise à jour */
+                else
+                    fresco.updateImage((ImageButton) view);
+            }
         }
 
         return true;

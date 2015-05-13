@@ -811,4 +811,12 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Mise à jour des coordonnées */
         mImagesManager.updateImage(point, imageButton.getDbId());
     }
+
+    public void deleteImage(ImageButton view)
+    {
+        if(mImagesView == null)
+            initImagesView();
+
+        mImagesView.removeView(view);
+    }
 }
