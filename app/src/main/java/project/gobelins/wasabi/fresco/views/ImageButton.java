@@ -42,6 +42,7 @@ public class ImageButton extends CircularImageView implements Listeners
 
     private boolean mSave;
     private boolean mHoveringDustbin;
+    private boolean mAddListeners;
 
     public ImageButton(Context context)
     {
@@ -109,6 +110,11 @@ public class ImageButton extends CircularImageView implements Listeners
         mPoint = point;
     }
 
+    public void setAddListeners(boolean addListeners)
+    {
+        mAddListeners = addListeners;
+    }
+
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR2)
     @Override
     protected void onAttachedToWindow()
@@ -147,6 +153,9 @@ public class ImageButton extends CircularImageView implements Listeners
      */
     public void addListeners()
     {
+        if(!mAddListeners)
+            return;
+
         /* Initialisation du drag n' drop au clic long */
         setOnLongClickListener(new OnLongClickListener()
         {

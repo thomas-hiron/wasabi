@@ -723,7 +723,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void addNewPicture(FrameLayout container, String imageUrl, boolean save)
     {
-        addNewPicture(container, imageUrl, 0, null, save);
+        addNewPicture(container, imageUrl, 0, null, save, true);
     }
 
     /**
@@ -735,7 +735,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      * @param point     Le point
      * @param save      Si on enregistre
      */
-    public void addNewPicture(FrameLayout container, String imageUrl, int id, Point point, boolean save)
+    public void addNewPicture(FrameLayout container, String imageUrl, int id, Point point, boolean save, boolean addListeners)
     {
         /* L'inflater */
         LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -748,6 +748,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         imageButton.setFresco(this);
         imageButton.setSave(save);
         imageButton.setPoint(point);
+        imageButton.setAddListeners(addListeners);
 
         if(id != 0)
             imageButton.setDbId(id);
