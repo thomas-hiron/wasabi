@@ -172,8 +172,6 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         /* Au clic sur le bouton, on écoute le son */
         setOnClickListener(new PlaySoundListener());
 
-        final SoundButton soundButton = this;
-
         /* Initialisation du drag n' drop au clic long */
         setOnLongClickListener(new View.OnLongClickListener()
         {

@@ -163,8 +163,6 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
         if(!mAddListeners)
             return;
 
-        final ImageButton imageButton = this;
-
         /* Initialisation du drag n' drop au clic long */
         setOnLongClickListener(new OnLongClickListener()
         {
