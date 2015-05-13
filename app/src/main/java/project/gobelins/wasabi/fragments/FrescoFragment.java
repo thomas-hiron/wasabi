@@ -171,10 +171,7 @@ public class FrescoFragment extends Fragment
         {
             FrameLayout soundsView = (FrameLayout) view.findViewById(R.id.sounds_view);
             for(Sound sound : mSounds)
-            {
-                Log.v("test", sound.getFileName());
-//                fresco.addNewSound(soundsView, sound.getFileName(), sound.getId(), sound.getPoint(), false, mIsLastFragment);
-            }
+                fresco.addNewSound(soundsView, sound.getFileName(), sound.getId(), sound.getPoint(), false, mIsLastFragment);
         }
 
         return view;

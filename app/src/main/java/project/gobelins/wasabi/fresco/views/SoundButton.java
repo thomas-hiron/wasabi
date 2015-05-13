@@ -14,6 +14,7 @@ import org.json.JSONObject;
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.fresco.listeners.PlaySoundListener;
 import project.gobelins.wasabi.interfaces.DraggableElement;
@@ -30,6 +31,10 @@ public class SoundButton extends Button implements Listeners, DraggableElement
     private boolean mHoveringDustbin;
     private final float SCALE_DUST = 0.5f;
     private Fresco mFresco;
+    private int mId;
+    private Point mPoint;
+    private boolean mAddListeners;
+    private boolean mSave;
 
     public SoundButton(Context context)
     {
@@ -41,17 +46,6 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         super(context, attrs);
 
         mHoveringDustbin = false;
-
-        /* Animation du bouton */
-        ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 0, 1, /* Début/fin pour X/Y */
-                Animation.RELATIVE_TO_SELF, 0.5f, /* X */
-                Animation.RELATIVE_TO_SELF, 0.5f); /* Y */
-        scaleAnimation.setDuration(250);
-        scaleAnimation.setInterpolator(new OvershootInterpolator());
-        scaleAnimation.setStartTime(200);
-
-        /* Début animation */
-        startAnimation(scaleAnimation);
     }
 
     /**
@@ -75,6 +69,26 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         mFresco = fresco;
     }
 
+    public void setDbId(int id)
+    {
+        mId = id;
+    }
+
+    public void setPoint(Point point)
+    {
+        mPoint = point;
+    }
+
+    public void setAddListeners(boolean addListeners)
+    {
+        mAddListeners = addListeners;
+    }
+
+    public void setSave(boolean save)
+    {
+        mSave = save;
+    }
+
     @Override
     protected void onAttachedToWindow()
     {
@@ -84,7 +98,28 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         addListeners();
 
         /* Enregistrement */
-        mFresco.saveSound(this);
+        if(mSave)
+            mFresco.saveSound(this);
+    }
+
+    /**
+     * Affiche le bouton
+     */
+    public void appear()
+    {
+        if(mSave)
+        {
+            /* Animation du bouton */
+            ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 0, 1, /* Début/fin pour X/Y */
+                    Animation.RELATIVE_TO_SELF, 0.5f, /* X */
+                    Animation.RELATIVE_TO_SELF, 0.5f); /* Y */
+            scaleAnimation.setDuration(250);
+            scaleAnimation.setInterpolator(new OvershootInterpolator());
+            scaleAnimation.setStartTime(200);
+
+            /* Début animation */
+            startAnimation(scaleAnimation);
+        }
     }
 
     /**

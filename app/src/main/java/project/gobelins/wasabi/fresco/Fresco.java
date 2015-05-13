@@ -671,31 +671,50 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
-     * Ajoute un nouveau son
+     * Ajoute un nouveau son (création)
      *
      * @param fileName Le nom du fichier enregistré
      */
     public void addNewSound(String fileName)
     {
-        /* L'inflater */
-        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-
         /* La vue parent */
         View fragmentView = getLastFragment().getView();
         FrameLayout soundsContainer = null;
         if(fragmentView != null)
             soundsContainer = (FrameLayout) fragmentView.findViewById(R.id.sounds_view);
 
+        addNewSound(soundsContainer, fileName, 0, null, true, true);
+    }
+
+    /**
+     * Ajoute un nouveau son déjà existant
+     *
+     * @param container Le conteneur
+     * @param soundUrl  L'image
+     * @param id        L'id
+     * @param point     Le point
+     * @param save      Si on enregistre
+     */
+    public void addNewSound(FrameLayout container, String soundUrl, int id, Point point, boolean save, boolean addListeners)
+    {
+        /* L'inflater */
+        LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
         /* Inflation de la vue */
-        SoundButton soundButton = (SoundButton) inflater.inflate(R.layout.fresco_sound, soundsContainer, false);
+        SoundButton soundButton = (SoundButton) inflater.inflate(R.layout.fresco_sound, container, false);
 
         /* Ajout du chemin */
-        soundButton.setFileName(fileName);
+        soundButton.setFileName(soundUrl);
         soundButton.setFresco(this);
+        soundButton.setDbId(id);
+        soundButton.setPoint(point);
+        soundButton.setSave(save);
+        soundButton.setAddListeners(addListeners);
+        soundButton.appear();
 
         /* Ajout de la vue */
-        if(soundsContainer != null)
-            soundsContainer.addView(soundButton);
+        if(container != null)
+            container.addView(soundButton);
     }
 
     /**
@@ -809,7 +828,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         /* Enregistrement et renseignement de l'id */
         int id = mImagesManager.saveImage(imageButton.getFileName());
-        imageButton.setId(id);
+        imageButton.setDbId(id);
     }
 
     /**
@@ -861,6 +880,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         /* Enregistrement et renseignement de l'id */
         int id = mSoundsManager.saveSound(soundButton.getFileName());
-        soundButton.setId(id);
+        soundButton.setDbId(id);
     }
 }
