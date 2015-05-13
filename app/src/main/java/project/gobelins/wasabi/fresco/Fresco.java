@@ -4,15 +4,21 @@ import android.content.Context;
 import android.graphics.drawable.TransitionDrawable;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.SortedSet;
+import java.util.TreeSet;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Entity;
@@ -142,16 +148,19 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
             entities.put(dateEntities.getKey(), currentDateEntities);
         }
 
+        /* On trie le tableau */
+        SortedSet<Date> orderedDates = new TreeSet<>(entities.keySet());
+
         /* Création d'un fragment pour chaque date */
-        for(Map.Entry<Date, ArrayList<Entity>> dateEntities : entities.entrySet())
+        for(Date date : orderedDates)
         {
             /* Si dernier fragment */
-            isLastFragment = today.compareTo(dateEntities.getKey()) == 0;
+            isLastFragment = today.compareTo(date) == 0;
 
             /* Instanciation */
             FrescoFragment frescoFragment = FrescoFragment.newInstance(
-                    dateEntities.getValue(),
-                    dateEntities.getKey(),
+                    entities.get(date),
+                    date,
                     isLastFragment
             );
             /* Ajout au viewPager */
