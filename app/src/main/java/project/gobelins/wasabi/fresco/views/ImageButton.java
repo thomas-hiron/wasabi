@@ -4,12 +4,16 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.view.Gravity;
 import android.view.View;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.FrameLayout;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
@@ -18,10 +22,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.PicassoTarget;
 import project.gobelins.wasabi.fresco.drawing.Point;
+import project.gobelins.wasabi.fresco.listeners.AlphaAnimationListener;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.interfaces.DraggableElement;
 import project.gobelins.wasabi.interfaces.Listeners;
@@ -157,6 +163,8 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
         if(!mAddListeners)
             return;
 
+        final ImageButton imageButton = this;
+
         /* Initialisation du drag n' drop au clic long */
         setOnLongClickListener(new OnLongClickListener()
         {
@@ -195,13 +203,9 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
         {
             mHoveringDustbin = true;
 
-            /* Bugfix rapide si image prise */
-            int x = eventX - (mPoint == null ? getWidth() / 2 : 1);
-            int y = eventY - (mPoint == null ? getHeight() : 1);
-
             ScaleAnimation scaleAnimation = new ScaleAnimation(1, SCALE_DUST, 1, SCALE_DUST, /* Début/fin pour X/Y */
-                    Animation.ABSOLUTE, x, /* X */
-                    Animation.ABSOLUTE, y); /* Y */
+                    Animation.ABSOLUTE, eventX, /* X */
+                    Animation.ABSOLUTE, eventY); /* Y */
             scaleAnimation.setDuration(250);
             scaleAnimation.setFillAfter(true);
             scaleAnimation.setInterpolator(new OvershootInterpolator());

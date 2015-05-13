@@ -59,6 +59,8 @@ public class SoundsManager
             while(c.moveToNext());
         }
 
+        c.close();
+
         return sounds;
     }
 

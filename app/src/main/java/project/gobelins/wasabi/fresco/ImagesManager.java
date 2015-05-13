@@ -63,6 +63,8 @@ public class ImagesManager
             while(c.moveToNext());
         }
 
+        c.close();
+
         return images;
     }
 

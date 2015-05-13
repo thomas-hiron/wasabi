@@ -2,7 +2,6 @@ package project.gobelins.wasabi.fresco;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
 import android.view.Gravity;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
@@ -11,6 +10,7 @@ import android.widget.FrameLayout;
 
 import com.squareup.picasso.Picasso;
 
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.views.ImageButton;
 
 /**

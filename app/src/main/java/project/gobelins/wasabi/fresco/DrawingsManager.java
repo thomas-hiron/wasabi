@@ -62,6 +62,8 @@ public class DrawingsManager
             while(c.moveToNext());
         }
 
+        c.close();
+
         return drawings;
     }
 

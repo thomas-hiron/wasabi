@@ -33,7 +33,7 @@ public class SoundButton extends Button implements Listeners, DraggableElement
 {
     private String mFileName;
     private boolean mHoveringDustbin;
-    private final float SCALE_DUST = 0.5f;
+    private final float SCALE_DUST = 0.7f;
     private Fresco mFresco;
     private int mId;
     private Point mPoint;
@@ -168,6 +168,8 @@ public class SoundButton extends Button implements Listeners, DraggableElement
     {
         /* Au clic sur le bouton, on écoute le son */
         setOnClickListener(new PlaySoundListener());
+
+        final SoundButton soundButton = this;
 
         /* Initialisation du drag n' drop au clic long */
         setOnLongClickListener(new View.OnLongClickListener()

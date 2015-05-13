@@ -1,10 +1,11 @@
 package project.gobelins.wasabi.fresco.listeners;
 
 import android.annotation.TargetApi;
-import android.content.Context;
 import android.os.Build;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.FrameLayout;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -84,6 +85,19 @@ public class ButtonDragListener implements View.OnTouchListener
 
                 /* Affichage de la corbeille */
                 fresco.showDustbin();
+
+                /* Suppression de la gravité pour les images */
+                if(view instanceof ImageButton)
+                {
+                    view.setLayoutParams(new FrameLayout.LayoutParams(view.getWidth(), view.getHeight(), Gravity.NO_GRAVITY));
+
+                    /* Centrage de l'élément */
+                    view.setX(Wasabi.SCREEN_WIDTH / 2 - view.getWidth() / 2);
+                    view.setY(Wasabi.SCREEN_HEIGHT / 2 - view.getHeight() / 2);
+                    view.invalidate();
+                    view.postInvalidate();
+                    ((View) view.getParent()).invalidate();
+                }
             }
 
             /* On test si on est sur la poubelle */
