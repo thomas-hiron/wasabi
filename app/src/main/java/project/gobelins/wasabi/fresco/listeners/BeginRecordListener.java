@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import com.nineoldandroids.animation.ValueAnimator;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.recording.RecordManager;
 
@@ -55,10 +56,7 @@ public class BeginRecordListener implements View.OnTouchListener
             fresco.showRecordingGradient();
 
             /* On récupère la hauteur de l'écran */
-            DisplayMetrics displayMetrics = new DisplayMetrics();
-            WindowManager windowManager = (WindowManager) view.getContext().getSystemService(Context.WINDOW_SERVICE);
-            windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
-            int height = displayMetrics.heightPixels;
+            int height = Wasabi.SCREEN_HEIGHT;
 
             /* On affiche la vue */
             mRevealContainer.setVisibility(View.VISIBLE);

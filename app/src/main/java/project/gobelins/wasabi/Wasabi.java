@@ -1,14 +1,18 @@
 package project.gobelins.wasabi;
 
+import android.annotation.TargetApi;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
+import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,6 +47,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private final int REQUEST_IMAGE = 1;
     private final int IMAGE_WIDTH = 500;
 
+    public static int SCREEN_WIDTH;
+    public static int SCREEN_HEIGHT;
+
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
     private View mRevealContainerFresco;
@@ -61,6 +68,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* Ajout de la vue */
         setContentView(R.layout.activity_wasabi);
+
+        /* Récupération des dimensions de l'écran */
+        getScreenMetrics();
 
         /* Instanciation du manager des notifications */
         mNotificationsManager = new NotificationsManager(getContentResolver());
@@ -341,5 +351,22 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Fichier à utiliser ensuite */
         mCurrentPhotoPath = image.getAbsolutePath();
         return image;
+    }
+
+    /**
+     * Récupère les dimensions de l'appareil
+     */
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public void getScreenMetrics()
+    {
+        if(SCREEN_WIDTH == 0)
+        {
+            /* On récupère la hauteur de l'écran */
+            DisplayMetrics displayMetrics = new DisplayMetrics();
+            WindowManager windowManager = (WindowManager) getSystemService(Context.WINDOW_SERVICE);
+            windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
+            SCREEN_WIDTH = displayMetrics.widthPixels;
+            SCREEN_HEIGHT = displayMetrics.heightPixels;
+        }
     }
 }

@@ -3,17 +3,17 @@ package project.gobelins.wasabi.fresco.listeners;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.os.Build;
-import android.util.DisplayMetrics;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.WindowManager;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.views.ImageButton;
+import project.gobelins.wasabi.fresco.views.SoundButton;
 import project.gobelins.wasabi.interfaces.DraggableElement;
 
 /**
@@ -32,15 +32,10 @@ public class ButtonDragListener implements View.OnTouchListener
     private int mDustX;
     private int mDustY;
 
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    public ButtonDragListener(Context context, JSONObject dustbinCoordinates)
+    public ButtonDragListener(JSONObject dustbinCoordinates)
     {
-        /* On récupère la hauteur de l'écran */
-        DisplayMetrics displayMetrics = new DisplayMetrics();
-        WindowManager windowManager = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
-        windowManager.getDefaultDisplay().getRealMetrics(displayMetrics);
-        mScreenWidth = displayMetrics.widthPixels;
-        mScreenHeight = displayMetrics.heightPixels;
+        mScreenWidth = Wasabi.SCREEN_WIDTH;
+        mScreenHeight = Wasabi.SCREEN_HEIGHT;
 
         try
         {
@@ -55,8 +50,8 @@ public class ButtonDragListener implements View.OnTouchListener
             /* On Supprime un tier de la poubelle */
             int excess = mDustWidth / 4;
 
-            mDustWidth -= excess*2;
-            mDustHeight -= excess*2;
+            mDustWidth -= excess * 2;
+            mDustHeight -= excess * 2;
             mDustX += excess;
             mDustY += excess;
         }
@@ -145,16 +140,19 @@ public class ButtonDragListener implements View.OnTouchListener
             fresco.hideDustbin();
 
             /* Enregistrement de la position de l'élement */
-            if(view instanceof ImageButton)
-            {
-                boolean delete = ((ImageButton) view).testDelete();
+            DraggableElement draggableElement = (DraggableElement) view;
+            boolean delete = draggableElement.isDeleting();
 
-                /* Suppression */
-                if(delete)
-                    ((ImageButton) view).delete(motionEvent.getRawX(), motionEvent.getRawY());
-                /* Mise à jour */
-                else
+            /* Suppression */
+            if(delete)
+                draggableElement.delete(motionEvent.getRawX(), motionEvent.getRawY());
+            /* Mise à jour */
+            else
+            {
+                if(view instanceof ImageButton)
                     fresco.updateImage((ImageButton) view);
+                else
+                    fresco.updateSound((SoundButton) view);
             }
         }
 
