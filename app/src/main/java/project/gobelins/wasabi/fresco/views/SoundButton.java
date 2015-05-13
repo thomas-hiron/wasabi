@@ -166,6 +166,9 @@ public class SoundButton extends Button implements Listeners, DraggableElement
      */
     public void addListeners()
     {
+        if(!mAddListeners)
+            return;
+
         /* Au clic sur le bouton, on écoute le son */
         setOnClickListener(new PlaySoundListener());
 

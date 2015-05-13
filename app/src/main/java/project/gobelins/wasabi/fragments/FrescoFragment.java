@@ -3,7 +3,6 @@ package project.gobelins.wasabi.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,6 @@ import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
-import project.gobelins.wasabi.fresco.views.FrescoViewPager;
 import project.gobelins.wasabi.interfaces.Listeners;
 import project.gobelins.wasabi.utils.DateFormater;
 
