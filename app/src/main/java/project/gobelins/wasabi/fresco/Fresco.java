@@ -1,7 +1,9 @@
 package project.gobelins.wasabi.fresco;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -10,6 +12,7 @@ import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -813,11 +816,26 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mImagesManager.updateImage(point, imageButton.getDbId());
     }
 
-    public void deleteImage(ImageButton view)
+    public void deleteImage(ImageButton imageButton)
     {
         if(mImagesView == null)
             initImagesView();
 
-        mImagesView.removeView(view);
+        /* Suppression de la vue */
+        mImagesView.removeView(imageButton);
+
+        /* Suppression dans la base */
+        mImagesManager.delete(imageButton);
+
+        /* Suppression sur le téléphone */
+        File file = new File(imageButton.getFileName());
+        file.delete();
+
+        /* On met à jour la galerie */
+        Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+        File f = new File(imageButton.getFileName());
+        Uri contentUri = Uri.fromFile(f);
+        mediaScanIntent.setData(contentUri);
+        getContext().sendBroadcast(mediaScanIntent);
     }
 }

@@ -13,6 +13,7 @@ import java.util.HashMap;
 import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.entities.Image;
 import project.gobelins.wasabi.fresco.drawing.Point;
+import project.gobelins.wasabi.fresco.views.ImageButton;
 import project.gobelins.wasabi.sqlite.tables.Images;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -101,5 +102,15 @@ public class ImagesManager
 
         /* Mise à jour */
         mContentResolver.update(Uri.parse(Images.URL_IMAGES), contentValues, condition, null);
+    }
+
+    /**
+     * @param imageButton L'image à supprimer
+     */
+    public void delete(ImageButton imageButton)
+    {
+        String condition = Images.IMAGES_ID + " = " + imageButton.getDbId();
+
+        mContentResolver.delete(Uri.parse(Images.URL_IMAGES), condition, null);
     }
 }
