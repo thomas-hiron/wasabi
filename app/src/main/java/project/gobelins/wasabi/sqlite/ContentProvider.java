@@ -178,6 +178,12 @@ public class ContentProvider extends android.content.ContentProvider
 
                 break;
 
+            case SOUNDS:
+
+                count = mDatabase.update(Sounds.TABLE_SOUNDS, contentValues, s, strings);
+
+                break;
+
             default:
                 throw new IllegalArgumentException("Unsupported URI " + uri);
         }
@@ -204,10 +210,15 @@ public class ContentProvider extends android.content.ContentProvider
 
                 break;
 
-
             case IMAGES:
 
                 count = mDatabase.delete(Images.TABLE_IMAGES, selection, selectionArgs);
+
+                break;
+
+            case SOUNDS:
+
+                count = mDatabase.delete(Sounds.TABLE_SOUNDS, selection, selectionArgs);
 
                 break;
 

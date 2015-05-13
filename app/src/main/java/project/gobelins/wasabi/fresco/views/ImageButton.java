@@ -171,7 +171,7 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
                     JSONObject coordinates = dustbin.getCoordinates();
 
                     /* Sorte de drag perso */
-                    setOnTouchListener(new ButtonDragListener(getContext(), coordinates));
+                    setOnTouchListener(new ButtonDragListener(coordinates));
                 }
                 catch(JSONException e)
                 {
@@ -251,14 +251,6 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
     }
 
     public boolean isDeleting()
-    {
-        return mHoveringDustbin;
-    }
-
-    /**
-     * Up, test si on supprime
-     */
-    public boolean testDelete()
     {
         return mHoveringDustbin;
     }

@@ -1,9 +1,12 @@
 package project.gobelins.wasabi.fresco.views;
 
+import android.annotation.TargetApi;
 import android.content.Context;
+import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.Animation;
+import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
@@ -12,6 +15,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.Point;
@@ -74,6 +78,11 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         mId = id;
     }
 
+    public int getDbId()
+    {
+        return mId;
+    }
+
     public void setPoint(Point point)
     {
         mPoint = point;
@@ -89,6 +98,7 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         mSave = save;
     }
 
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     @Override
     protected void onAttachedToWindow()
     {
@@ -97,9 +107,29 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         /* Ajout des listeners */
         addListeners();
 
+        /* Placement du point */
+        if(mPoint != null)
+        {
+            setX(mPoint.x);
+            setY(mPoint.y);
+        }
+
         /* Enregistrement */
         if(mSave)
             mFresco.saveSound(this);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh)
+    {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        /* On le place au milieu si apparition */
+        if(mPoint == null)
+        {
+            setX(Wasabi.SCREEN_WIDTH / 2 - getWidth() / 2);
+            setY(Wasabi.SCREEN_HEIGHT / 2 - getHeight() / 2);
+        }
     }
 
     /**
@@ -111,8 +141,8 @@ public class SoundButton extends Button implements Listeners, DraggableElement
         {
             /* Animation du bouton */
             ScaleAnimation scaleAnimation = new ScaleAnimation(0, 1, 0, 1, /* Début/fin pour X/Y */
-                    Animation.RELATIVE_TO_SELF, 0.5f, /* X */
-                    Animation.RELATIVE_TO_SELF, 0.5f); /* Y */
+                    Animation.ABSOLUTE, Wasabi.SCREEN_WIDTH / 2, /* X */
+                    Animation.ABSOLUTE, Wasabi.SCREEN_HEIGHT / 2); /* Y */
             scaleAnimation.setDuration(250);
             scaleAnimation.setInterpolator(new OvershootInterpolator());
             scaleAnimation.setStartTime(200);
@@ -153,7 +183,7 @@ public class SoundButton extends Button implements Listeners, DraggableElement
                     JSONObject coordinates = dustbin.getCoordinates();
 
                     /* Sorte de drag perso */
-                    setOnTouchListener(new ButtonDragListener(getContext(), coordinates));
+                    setOnTouchListener(new ButtonDragListener(coordinates));
                 }
                 catch(JSONException e)
                 {
@@ -239,5 +269,50 @@ public class SoundButton extends Button implements Listeners, DraggableElement
     public boolean isDeleting()
     {
         return mHoveringDustbin;
+    }
+
+    /**
+     * Supprime l'élément
+     *
+     * @param eventX
+     * @param eventY
+     */
+    @Override
+    public void delete(float eventX, float eventY)
+    {
+        mHoveringDustbin = false;
+
+        ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_DUST, 0, SCALE_DUST, 0, /* Début/fin pour X/Y */
+                Animation.ABSOLUTE, eventX, /* X */
+                Animation.ABSOLUTE, eventY); /* Y */
+        scaleAnimation.setDuration(250);
+        scaleAnimation.setInterpolator(new LinearInterpolator());
+
+        /* Début animation */
+        startAnimation(scaleAnimation);
+
+        final SoundButton view = this;
+
+        /* Listener de fin */
+        scaleAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                mFresco.deleteSound(view);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
     }
 }

@@ -12,6 +12,9 @@ import java.util.HashMap;
 
 import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.entities.Sound;
+import project.gobelins.wasabi.fresco.drawing.Point;
+import project.gobelins.wasabi.fresco.views.SoundButton;
+import project.gobelins.wasabi.sqlite.tables.Images;
 import project.gobelins.wasabi.sqlite.tables.Sounds;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -78,5 +81,33 @@ public class SoundsManager
         long id = ContentUris.parseId(inserted);
 
         return (int) id;
+    }
+
+    /**
+     * Met à jour les coordonées du son
+     *
+     * @param point Le nouveau point
+     * @param id    L'id
+     */
+    public void updateSound(Point point, int id)
+    {
+        /* Nouvelles valeurs */
+        ContentValues contentValues = new ContentValues(1);
+        contentValues.put(Sounds.SOUNDS_POINT, point.toString());
+
+        String condition = Sounds.SOUNDS_ID + " = " + id;
+
+        /* Mise à jour */
+        mContentResolver.update(Uri.parse(Sounds.URL_SOUNDS), contentValues, condition, null);
+    }
+
+    /**
+     * @param soundButton Le bouton à supprimer
+     */
+    public void delete(SoundButton soundButton)
+    {
+        String condition = Sounds.SOUNDS_ID + " = " + soundButton.getDbId();
+
+        mContentResolver.delete(Uri.parse(Sounds.URL_SOUNDS), condition, null);
     }
 }

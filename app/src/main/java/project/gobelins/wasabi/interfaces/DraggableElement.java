@@ -29,4 +29,9 @@ public interface DraggableElement
      * Si l'objet est en train d'être supprimé au drop
      */
     public boolean isDeleting();
+
+    /**
+     * Supprime l'élément
+     */
+    public void delete(float eventX, float eventY);
 }

@@ -68,7 +68,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
-    private FrameLayout mSoundView;
+    private FrameLayout mSoundsView;
     private FrameLayout mImagesView;
     private MediaPlayer mMediaPlayer;
     private OnPictureListener mPictureListener;
@@ -247,12 +247,17 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void initSounds()
     {
-        if(mSoundView == null && getLastFragment().getView() != null)
-            mSoundView = (FrameLayout) getLastFragment().getView().findViewById(R.id.sounds_view);
+        initSoundsView();
 
         /* Pour récupérer la vue du dessin si non initialisée */
         initDrawedView();
         initImagesView();
+    }
+
+    public void initSoundsView()
+    {
+        if(mSoundsView == null && getLastFragment().getView() != null)
+            mSoundsView = (FrameLayout) getLastFragment().getView().findViewById(R.id.sounds_view);
     }
 
     /**
@@ -404,8 +409,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* On baisse l'opacité de la zone de dessin et du son */
         if(mDrawedView != null)
             toggleViewOpacity(mDrawedView, 1f, DRAWED_VIEW_MIN_OPACITY);
-        if(mSoundView != null)
-            toggleViewOpacity(mSoundView, 1f, DRAWED_VIEW_MIN_OPACITY);
+        if(mSoundsView != null)
+            toggleViewOpacity(mSoundsView, 1f, DRAWED_VIEW_MIN_OPACITY);
         if(mImagesView != null)
             toggleViewOpacity(mImagesView, 1f, DRAWED_VIEW_MIN_OPACITY);
     }
@@ -420,8 +425,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* On remonte l'opacité de la zone de dessin et du son */
         if(mDrawedView != null)
             toggleViewOpacity(mDrawedView, DRAWED_VIEW_MIN_OPACITY, 1f);
-        if(mSoundView != null)
-            toggleViewOpacity(mSoundView, DRAWED_VIEW_MIN_OPACITY, 1f);
+        if(mSoundsView != null)
+            toggleViewOpacity(mSoundsView, DRAWED_VIEW_MIN_OPACITY, 1f);
         if(mImagesView != null)
             toggleViewOpacity(mImagesView, DRAWED_VIEW_MIN_OPACITY, 1f);
     }
@@ -858,5 +863,35 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Enregistrement et renseignement de l'id */
         int id = mSoundsManager.saveSound(soundButton.getFileName());
         soundButton.setDbId(id);
+    }
+
+    /**
+     * Met à jour la position d'un son
+     *
+     * @param soundButton Le son
+     */
+    public void updateSound(SoundButton soundButton)
+    {
+        Point point = new Point();
+        point.set(soundButton.getX(), soundButton.getY());
+
+        /* Mise à jour des coordonnées */
+        mSoundsManager.updateSound(point, soundButton.getDbId());
+    }
+
+    public void deleteSound(SoundButton soundButton)
+    {
+        if(mSoundsView == null)
+            initSoundsView();
+
+        /* Suppression de la vue */
+        mSoundsView.removeView(soundButton);
+
+        /* Suppression dans la base */
+        mSoundsManager.delete(soundButton);
+
+        /* Suppression sur le téléphone */
+        File file = new File(soundButton.getFileName());
+        file.delete();
     }
 }
