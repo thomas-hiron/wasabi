@@ -816,6 +816,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mImagesManager.updateImage(point, imageButton.getDbId());
     }
 
+    /**
+     * @param imageButton L'image à supprimer
+     */
     public void deleteImage(ImageButton imageButton)
     {
         if(mImagesView == null)

@@ -194,9 +194,13 @@ public class ImageButton extends CircularImageView implements Listeners
         {
             mHoveringDustbin = true;
 
+            /* Bugfix rapide si image prise */
+            int x = eventX - (mPoint == null ? getWidth() / 2 : 1);
+            int y = eventY - (mPoint == null ? getHeight() : 1);
+
             ScaleAnimation scaleAnimation = new ScaleAnimation(1, SCALE_DUST, 1, SCALE_DUST, /* Début/fin pour X/Y */
-                    Animation.ABSOLUTE, eventX, /* X */
-                    Animation.ABSOLUTE, eventY); /* Y */
+                    Animation.ABSOLUTE, x, /* X */
+                    Animation.ABSOLUTE, y); /* Y */
             scaleAnimation.setDuration(250);
             scaleAnimation.setFillAfter(true);
             scaleAnimation.setInterpolator(new OvershootInterpolator());
@@ -261,6 +265,7 @@ public class ImageButton extends CircularImageView implements Listeners
 
     /**
      * Suppression de l'image
+     *
      * @param eventX
      * @param eventY
      */

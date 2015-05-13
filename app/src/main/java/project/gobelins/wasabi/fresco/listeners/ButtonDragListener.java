@@ -5,9 +5,12 @@ import android.content.Context;
 import android.os.Build;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.WindowManager;
+import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,6 +77,7 @@ public class ButtonDragListener implements View.OnTouchListener
         if(motionEvent.getAction() == MotionEvent.ACTION_MOVE)
         {
             ImageButton imageButton = (ImageButton) view;
+
             /* Si interface non cachée (bool action ACTION_DOWN non appelé) */
             if(!mInterfaceHidden)
             {
@@ -103,8 +107,8 @@ public class ButtonDragListener implements View.OnTouchListener
                 imageButton.scaleToNormal(eventX, eventY);
 
             /* Les nouvelles coordonnées */
-            float x = motionEvent.getRawX() - imageButton.getCustomWidth() / (imageButton.isDeleting() ? 1 : 2);
-            float y = motionEvent.getRawY() - imageButton.getCustomHeight() / (imageButton.isDeleting() ? 1 : 2);
+            float x = eventX - imageButton.getCustomWidth() / (imageButton.isDeleting() ? 1 : 2);
+            float y = eventY - imageButton.getCustomHeight() / (imageButton.isDeleting() ? 1 : 2);
 
             /* Tests sur le nouveau x */
             if(x < 0)
@@ -121,7 +125,6 @@ public class ButtonDragListener implements View.OnTouchListener
                 imageButton.setY(mScreenHeight - imageButton.getCustomHeight());
             else
                 imageButton.setY(y);
-
 
             /* Pour ne pas laisser de traces lors du drag */
             ((View) view.getParent()).invalidate();
