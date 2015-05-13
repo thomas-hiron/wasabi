@@ -73,6 +73,7 @@ public class ButtonDragListener implements View.OnTouchListener
         /* On replace l'élément */
         if(motionEvent.getAction() == MotionEvent.ACTION_MOVE)
         {
+            ImageButton imageButton = (ImageButton) view;
             /* Si interface non cachée (bool action ACTION_DOWN non appelé) */
             if(!mInterfaceHidden)
             {
@@ -89,26 +90,6 @@ public class ButtonDragListener implements View.OnTouchListener
                 fresco.showDustbin();
             }
 
-            /* Les nouvelles coordonnées */
-            float x = motionEvent.getRawX() - view.getWidth() / 2;
-            float y = motionEvent.getRawY() - view.getHeight() / 2;
-
-            /* Tests sur le nouveau x */
-            if(x < 0)
-                view.setX(0);
-            else if(x > mScreenWidth - view.getWidth())
-                view.setX(mScreenWidth - view.getWidth());
-            else
-                view.setX(x);
-
-            /* Tests sur le nouveau y */
-            if(y < 0)
-                view.setY(0);
-            else if(y > mScreenHeight - view.getHeight())
-                view.setY(mScreenHeight - view.getHeight());
-            else
-                view.setY(y);
-
             /* On test si on est sur la poubelle */
             int eventX = (int) motionEvent.getRawX();
             int eventY = (int) motionEvent.getRawY();
@@ -117,7 +98,30 @@ public class ButtonDragListener implements View.OnTouchListener
                     && eventX <= mDustX + mDustWidth
                     && eventY >= mDustY
                     && eventY <= mDustY + mDustHeight)
-                Log.v("test", "Poubelle !!");
+                imageButton.scaleToDelete(eventX, eventY);
+            else
+                imageButton.scaleToNormal(eventX, eventY);
+
+            /* Les nouvelles coordonnées */
+            float x = motionEvent.getRawX() - imageButton.getCustomWidth() / (imageButton.isDeleting() ? 1 : 2);
+            float y = motionEvent.getRawY() - imageButton.getCustomHeight() / (imageButton.isDeleting() ? 1 : 2);
+
+            /* Tests sur le nouveau x */
+            if(x < 0)
+                imageButton.setX(0);
+            else if(x > mScreenWidth - imageButton.getCustomWidth())
+                imageButton.setX(mScreenWidth - imageButton.getCustomWidth());
+            else
+                imageButton.setX(x);
+
+            /* Tests sur le nouveau y */
+            if(y < 0)
+                imageButton.setY(0);
+            else if(y > mScreenHeight - imageButton.getCustomHeight())
+                imageButton.setY(mScreenHeight - imageButton.getCustomHeight());
+            else
+                imageButton.setY(y);
+
 
             /* Pour ne pas laisser de traces lors du drag */
             ((View) view.getParent()).invalidate();

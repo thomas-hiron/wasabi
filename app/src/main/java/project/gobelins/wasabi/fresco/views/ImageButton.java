@@ -6,6 +6,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
@@ -34,7 +37,10 @@ public class ImageButton extends CircularImageView implements Listeners
     private Point mPoint;
     private int mId;
 
+    private final float SCALE_DUST = 0.5f;
+
     private boolean mSave;
+    private boolean mHoveringDustbin;
 
     public ImageButton(Context context)
     {
@@ -45,6 +51,7 @@ public class ImageButton extends CircularImageView implements Listeners
     {
         super(context, attrs);
         mTarget = new PicassoTarget(this);
+        mHoveringDustbin = false;
     }
 
     /**
@@ -163,5 +170,74 @@ public class ImageButton extends CircularImageView implements Listeners
                 return true;
             }
         });
+    }
+
+    /**
+     * On scale l'image pour la faire coller à la poubelle
+     *
+     * @param eventX
+     * @param eventY
+     */
+    public void scaleToDelete(final int eventX, final int eventY)
+    {
+        if(!mHoveringDustbin)
+        {
+            mHoveringDustbin = true;
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(1, SCALE_DUST, 1, SCALE_DUST, /* Début/fin pour X/Y */
+                    Animation.ABSOLUTE, eventX, /* X */
+                    Animation.ABSOLUTE, eventY); /* Y */
+            scaleAnimation.setDuration(250);
+            scaleAnimation.setFillAfter(true);
+            scaleAnimation.setInterpolator(new OvershootInterpolator());
+
+            /* Début animation */
+            startAnimation(scaleAnimation);
+        }
+    }
+
+    /**
+     * Leave poubelle, scale normal
+     *
+     * @param eventX
+     * @param eventY
+     */
+    public void scaleToNormal(int eventX, int eventY)
+    {
+        if(mHoveringDustbin)
+        {
+            mHoveringDustbin = false;
+
+            ScaleAnimation scaleAnimation = new ScaleAnimation(SCALE_DUST, 1, SCALE_DUST, 1, /* Début/fin pour X/Y */
+                    Animation.ABSOLUTE, eventX, /* X */
+                    Animation.ABSOLUTE, eventY); /* Y */
+            scaleAnimation.setDuration(250);
+            scaleAnimation.setInterpolator(new OvershootInterpolator());
+
+            /* Début animation */
+            startAnimation(scaleAnimation);
+        }
+
+    }
+
+    /**
+     * @return width perso
+     */
+    public int getCustomWidth()
+    {
+        return mHoveringDustbin ? (int) (getWidth() * SCALE_DUST) : getWidth();
+    }
+
+    /**
+     * @return height perso
+     */
+    public int getCustomHeight()
+    {
+        return mHoveringDustbin ? (int) (getHeight() * SCALE_DUST) : getHeight();
+    }
+
+    public boolean isDeleting()
+    {
+        return mHoveringDustbin;
     }
 }
