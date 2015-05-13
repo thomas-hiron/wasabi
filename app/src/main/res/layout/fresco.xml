@@ -117,7 +117,7 @@
             android:src="@drawable/back_arrow"/>
 
         <!-- La corbeille -->
-        <ImageView
+        <project.gobelins.wasabi.fresco.Dustbin
             android:id="@+id/fresco_dustbin"
             android:layout_width="80dp"
             android:layout_height="80dp"
