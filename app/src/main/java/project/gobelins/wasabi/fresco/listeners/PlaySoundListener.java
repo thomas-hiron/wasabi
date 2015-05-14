@@ -2,7 +2,6 @@ package project.gobelins.wasabi.fresco.listeners;
 
 import android.content.Context;
 import android.net.Uri;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
@@ -40,8 +39,8 @@ public class PlaySoundListener implements View.OnClickListener
 
         /* Animation du bouton */
         ScaleAnimation scaleAnimation = new ScaleAnimation(0.95f, 1, 0.95f, 1, /* Début/fin pour X/Y */
-                Animation.RELATIVE_TO_SELF, 0.5f, /* X */
-                Animation.RELATIVE_TO_SELF, 0.5f); /* Y */
+                Animation.ABSOLUTE, view.getX() + view.getWidth() / 2, /* X */
+                Animation.ABSOLUTE, view.getY() + view.getHeight() / 2); /* Y */
         scaleAnimation.setDuration(250);
         scaleAnimation.setInterpolator(new OvershootInterpolator());
 
