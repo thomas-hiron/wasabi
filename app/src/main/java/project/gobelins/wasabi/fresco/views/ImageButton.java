@@ -5,7 +5,6 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
@@ -19,6 +18,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.PicassoTarget;
@@ -133,7 +133,6 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
         /* Placement du point */
         if(mPoint != null)
         {
-            Log.v("test", mPoint.toString());
             setX(mPoint.x);
             setY(mPoint.y);
         }
@@ -141,6 +140,23 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
         /* Enregistrement de l'image */
         if(mSave)
             mFresco.saveImage(this);
+    }
+
+    @Override
+    protected void onSizeChanged(int w, int h, int oldw, int oldh)
+    {
+        super.onSizeChanged(w, h, oldw, oldh);
+
+        /* Vue chargée, si déjà enregistrée et au milieu, on met à jour */
+        if(mPoint == null && !mSave)
+        {
+            setX(Wasabi.SCREEN_WIDTH / 2 - getWidth() / 2);
+            setY(Wasabi.SCREEN_HEIGHT / 2 - getHeight() / 2);
+
+            /* Mise à jour */
+            mFresco.updateImage(this);
+        }
+
     }
 
     /**

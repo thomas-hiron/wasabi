@@ -95,13 +95,13 @@ public class PicassoTarget implements com.squareup.picasso.Target
 
                 }
             });
-        }
 
-        /* On le place au milieu */
-        if(mImageButton.getPoint() == null)
-        {
-            mImageButton.setLayoutParams(new FrameLayout.LayoutParams(
-                    mImageButton.getWidth(), mImageButton.getHeight(), Gravity.CENTER));
+            /* On le place au milieu */
+            if(mImageButton.getPoint() == null)
+            {
+                mImageButton.setLayoutParams(new FrameLayout.LayoutParams(
+                        mImageButton.getWidth(), mImageButton.getHeight(), Gravity.CENTER));
+            }
         }
     }
 
