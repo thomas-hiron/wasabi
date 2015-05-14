@@ -2,7 +2,9 @@ package project.gobelins.wasabi.fresco;
 
 import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.Gravity;
+import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
@@ -10,7 +12,9 @@ import android.widget.FrameLayout;
 
 import com.squareup.picasso.Picasso;
 
+import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.views.ImageButton;
 
 /**
@@ -56,6 +60,41 @@ public class PicassoTarget implements com.squareup.picasso.Target
 
             /* Début animation */
             mImageButton.startAnimation(scaleAnimation);
+
+            scaleAnimation.setAnimationListener(new Animation.AnimationListener()
+            {
+                @Override
+                public void onAnimationStart(Animation animation)
+                {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation)
+                {
+                    FrameLayout parent = (FrameLayout) mImageButton.getParent();
+                    parent.removeView(mImageButton);
+
+                    /* Nouveau point */
+                    Point point = new Point();
+                    point.set(Wasabi.SCREEN_WIDTH / 2 - mImageButton.getWidth() / 2, Wasabi.SCREEN_HEIGHT / 2 - mImageButton.getHeight() / 2);
+
+                    /* Récupération de la fresque */
+                    View rootView = mImageButton.getRootView();
+                    Fresco fresco = (Fresco) rootView.findViewById(R.id.fresco_container);
+
+                    /* Ajout de la nouvelle vue */
+                    fresco.addNewPicture(
+                            parent, mImageButton.getFileName(), mImageButton.getDbId(),
+                            point, false, true);
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation)
+                {
+
+                }
+            });
         }
 
         /* On le place au milieu */

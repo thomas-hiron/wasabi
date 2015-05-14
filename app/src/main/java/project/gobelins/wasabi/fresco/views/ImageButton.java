@@ -4,16 +4,13 @@ import android.annotation.TargetApi;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.Gravity;
+import android.util.Log;
 import android.view.View;
-import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.LinearInterpolator;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
-import android.widget.FrameLayout;
 
 import com.github.siyamed.shapeimageview.CircularImageView;
 import com.squareup.picasso.Picasso;
@@ -22,12 +19,10 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.Dustbin;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.PicassoTarget;
 import project.gobelins.wasabi.fresco.drawing.Point;
-import project.gobelins.wasabi.fresco.listeners.AlphaAnimationListener;
 import project.gobelins.wasabi.fresco.listeners.ButtonDragListener;
 import project.gobelins.wasabi.interfaces.DraggableElement;
 import project.gobelins.wasabi.interfaces.Listeners;
@@ -138,6 +133,7 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
         /* Placement du point */
         if(mPoint != null)
         {
+            Log.v("test", mPoint.toString());
             setX(mPoint.x);
             setY(mPoint.y);
         }
