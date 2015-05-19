@@ -854,6 +854,16 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Mise à jour des coordonnées */
         mImagesManager.updateImage(point, imageButton.getDbId());
+
+        /* Appel à l'API */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+        nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(imageButton.getDbId())));
+        nameValuePairs.add(new BasicNameValuePair("points", point.toString()));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/updateImage"
+        );
     }
 
     /**
