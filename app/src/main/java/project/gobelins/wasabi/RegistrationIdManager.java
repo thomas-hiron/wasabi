@@ -19,7 +19,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.httpRequests.AsyncPostRequests;
 
 /**
@@ -172,6 +171,7 @@ public class RegistrationIdManager
 
     /**
      * Envoi le registration_id au serveur
+     *
      * @param regid registration_id
      */
     private void sendRegistrationIdToBackend(String regid)
@@ -182,7 +182,7 @@ public class RegistrationIdManager
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
-                "http://wasabi.hiron.me/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/notifications/register-id"
+                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/notifications/register-id"
         );
     }
 

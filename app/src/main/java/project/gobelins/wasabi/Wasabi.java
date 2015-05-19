@@ -50,6 +50,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
 
+    public static final String URL = "http://www.wasabi-experience.fr";
+
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
     private View mRevealContainerFresco;

@@ -6,21 +6,25 @@ import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.SortedSet;
 import java.util.TreeSet;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.fragments.FrescoFragment;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
@@ -41,6 +45,7 @@ import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 import project.gobelins.wasabi.fresco.views.buttons.PictureButton;
 import project.gobelins.wasabi.fresco.views.buttons.RecordButton;
+import project.gobelins.wasabi.httpRequests.AsyncPostRequests;
 import project.gobelins.wasabi.interfaces.OnCanceledListener;
 import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.interfaces.OnToggleCancelArrowListener;
@@ -812,6 +817,17 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Enregistrement et renseignement de l'id */
         int id = mImagesManager.saveImage(imageButton.getFileName());
         imageButton.setDbId(id);
+
+        /* Appel à l'API */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+        nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(imageButton.getDbId())));
+        nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
+        nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/image"
+        );
     }
 
     /**
