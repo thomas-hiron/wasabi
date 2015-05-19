@@ -2,10 +2,13 @@ package project.gobelins.wasabi.fresco;
 
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.TransitionDrawable;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -14,6 +17,7 @@ import android.widget.FrameLayout;
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
@@ -818,11 +822,19 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         int id = mImagesManager.saveImage(imageButton.getFileName());
         imageButton.setDbId(id);
 
+        /* Encodage du fichier en base64 */
+        Bitmap bitmap = BitmapFactory.decodeFile(imageButton.getFileName());
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String picture64 = Base64.encodeToString(b, Base64.DEFAULT);
+
         /* Appel à l'API */
-        List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+        List<NameValuePair> nameValuePairs = new ArrayList<>(4);
         nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(imageButton.getDbId())));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
         nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
+        nameValuePairs.add(new BasicNameValuePair("picture64", picture64));
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
