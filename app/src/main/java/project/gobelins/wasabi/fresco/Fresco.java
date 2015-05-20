@@ -890,6 +890,15 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         Uri contentUri = Uri.fromFile(f);
         mediaScanIntent.setData(contentUri);
         getContext().sendBroadcast(mediaScanIntent);
+
+        /* Suppression dans la base */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(imageButton.getDbId())));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/deleteImage"
+        );
     }
 
     /**
