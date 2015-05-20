@@ -649,13 +649,21 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     }
 
     /**
-     * On a cliqué sur le bouton annulé
+     * On a cliqué sur le bouton annuler
      */
     @Override
     public void onCanceled()
     {
         mDrawedView.cancelLastDraw();
         mDrawingsManager.deleteLastDraw();
+
+        /* Appel à l'API */
+        List<NameValuePair> nameValuePairs = new ArrayList<>();
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/deleteLastDrawing"
+        );
     }
 
     /**
