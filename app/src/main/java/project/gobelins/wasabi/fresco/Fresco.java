@@ -31,6 +31,7 @@ import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.fragments.FrescoFragment;
+import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.drawing.Point;
@@ -809,6 +810,19 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void saveDrawing(ArrayList<Point> points)
     {
         mDrawingsManager.saveDrawing(points);
+
+        /* Appel à l'API */
+        ColorPoint colorPoint = (ColorPoint) points.get(0);
+        List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+        nameValuePairs.add(new BasicNameValuePair("points", String.valueOf(points.toString())));
+        nameValuePairs.add(new BasicNameValuePair("color", String.format("#%06X", (0xFFFFFF & colorPoint.getColor()))));
+        nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
+        nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/drawing"
+        );
     }
 
     /**
