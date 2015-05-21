@@ -416,7 +416,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* Animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(1000);
+        alphaAnimation.setDuration(1500);
         form.startAnimation(alphaAnimation);
     }
 }
