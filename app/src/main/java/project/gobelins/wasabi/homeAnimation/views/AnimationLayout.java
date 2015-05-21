@@ -42,6 +42,7 @@ public class AnimationLayout extends RevealFrameLayout
         mImagesInt = new int[]{R.drawable.anim1, R.drawable.anim2, R.drawable.anim3,
                 R.drawable.anim4, R.drawable.anim5, R.drawable.anim6, R.drawable.anim7};
 
+        final AnimationLayout animationLayout = this;
         mHandler = new Handler();
         mRunnable = new Runnable()
         {
@@ -65,7 +66,7 @@ public class AnimationLayout extends RevealFrameLayout
 
                     /* On supprime la vue */
                     FrameLayout parent = (FrameLayout) getParent();
-                    parent.removeView(parent.getChildAt(0));
+                    parent.removeView(animationLayout);
                     parent.setBackgroundResource(R.drawable.home);
                 }
 
