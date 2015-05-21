@@ -28,6 +28,7 @@ import java.text.SimpleDateFormat;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
@@ -64,6 +65,22 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private Fresco mFresco;
 
     @Override
+    public void onStart()
+    {
+        super.onStart();
+
+        /* Le parent */
+        FrameLayout container = (FrameLayout) findViewById(R.id.app_container);
+
+        /* Inflation de la home */
+        AnimationLayout animLayout = (AnimationLayout) getLayoutInflater().inflate(
+                R.layout.home_animation, container, false);
+
+        /* Ajout de la vue */
+        container.addView(animLayout);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState)
     {
         super.onCreate(savedInstanceState);
@@ -71,11 +88,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Ajout de la vue */
         setContentView(R.layout.activity_wasabi);
 
-        /* On joue l'animation */
+        /* Récupération des dimensions de l'écran */
+        getScreenMetrics();
 
-//        /* Récupération des dimensions de l'écran */
-//        getScreenMetrics();
-//
 //        /* Instanciation du manager des notifications */
 //        mNotificationsManager = new NotificationsManager(getContentResolver());
 //

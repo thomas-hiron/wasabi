@@ -3,20 +3,6 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <!--android:background="@drawable/home">-->
-
-    <project.gobelins.wasabi.homeAnimation.views.AnimationLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-
-        <ImageView
-            android:id="@+id/images_animation"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/anim1"
-            android:contentDescription="@string/animation"/>
-
-        </project.gobelins.wasabi.homeAnimation.views.AnimationLayout>
 
     <ImageView
         android:id="@+id/open_notification"

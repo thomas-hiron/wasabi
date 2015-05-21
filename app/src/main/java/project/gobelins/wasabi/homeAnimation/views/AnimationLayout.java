@@ -3,20 +3,26 @@ package project.gobelins.wasabi.homeAnimation.views;
 import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.view.View;
-import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import io.codetail.animation.SupportAnimator;
+import io.codetail.animation.ViewAnimationUtils;
+import io.codetail.widget.RevealFrameLayout;
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.listeners.CircleAnimationListener;
 
 /**
  * Gestion de l'animation
  * Created by ThomasHiron on 21/05/2015.
  */
-public class AnimationLayout extends FrameLayout
+public class AnimationLayout extends RevealFrameLayout
 {
     private final int TIMING = 200;
+    private final int REVEAL_DURATION = 2000;
+
     private int mIndex;
     private int[] mImagesInt;
     private Handler mHandler;
@@ -74,7 +80,38 @@ public class AnimationLayout extends FrameLayout
 
         mImages = (ImageView) findViewById(R.id.images_animation);
 
-        /* On joue l'animation */
-        mHandler.postDelayed(mRunnable, TIMING);
+        /* Animation du rond */
+        reveal();
+
+//        /* On joue l'animation */
+//        mHandler.postDelayed(mRunnable, TIMING);
+    }
+
+    /**
+     * Affiche la vue
+     */
+    private void reveal()
+    {
+        int w = Wasabi.SCREEN_WIDTH;
+        int h = Wasabi.SCREEN_HEIGHT;
+
+        /* Le rayon final */
+        float finalRadius = hypo(w, h);
+
+        /* Instanciation et paramétrage de l'anim */
+        SupportAnimator reveal = ViewAnimationUtils.createCircularReveal(mImages, w / 2, h / 2, 0, finalRadius);
+        reveal.setInterpolator(new AccelerateDecelerateInterpolator());
+        reveal.setDuration(REVEAL_DURATION);
+        reveal.start();
+    }
+
+    /**
+     * @param width  La taille
+     * @param height La hauteur
+     * @return Le rayon de fin
+     */
+    private float hypo(int width, int height)
+    {
+        return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
     }
 }
