@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project.gobelins.wasabi.views.FormCode xmlns:android="http://schemas.android.com/apk/res/android"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/home">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingEnd="50dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:paddingStart="50dp">
+
+        <ImageView
+            android:id="@+id/logo_wasabi"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="70dp"
+            android:adjustViewBounds="true"
+            android:background="@drawable/logo_wasabi"
+            android:contentDescription="@string/logo"/>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="45dp"
+            android:gravity="center"
+            android:text="@string/form_code_instructions"
+            android:textColor="@color/white"
+            android:textSize="20sp"/>
+
+        <project.gobelins.wasabi.views.EditTextQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:background="@color/active_hide"
+            android:hint="@string/your_code"
+            android:textColorHint="@color/active_show"
+            android:textColor="@color/active_show"
+            android:textSize="20sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="45dp"
+            android:background="@color/active_show"/>
+
+        <project.gobelins.wasabi.views.ButtonQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@color/active_show"
+            android:text="@string/validate"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+</project.gobelins.wasabi.views.FormCode>

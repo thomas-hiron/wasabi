@@ -5,7 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Canvas;
 import android.graphics.Matrix;
+import android.graphics.Paint;
+import android.graphics.RectF;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -19,6 +24,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -28,7 +34,6 @@ import java.text.SimpleDateFormat;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
-import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
@@ -70,14 +75,14 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onStart();
 
         /* Le parent */
-        FrameLayout container = (FrameLayout) findViewById(R.id.app_container);
-
-        /* Inflation de la home */
-        AnimationLayout animLayout = (AnimationLayout) getLayoutInflater().inflate(
-                R.layout.home_animation, container, false);
-
-        /* Ajout de la vue */
-        container.addView(animLayout);
+//        FrameLayout container = (FrameLayout) findViewById(R.id.app_container);
+//
+//        /* Inflation de la home */
+//        AnimationLayout animLayout = (AnimationLayout) getLayoutInflater().inflate(
+//                R.layout.home_animation, container, false);
+//
+//        /* Ajout de la vue */
+//        container.addView(animLayout);
     }
 
     @Override
@@ -86,7 +91,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onCreate(savedInstanceState);
 
         /* Ajout de la vue */
-        setContentView(R.layout.activity_wasabi);
+        setContentView(R.layout.form_code);
 
         /* Récupération des dimensions de l'écran */
         getScreenMetrics();

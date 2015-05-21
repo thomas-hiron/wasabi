@@ -20,5 +20,9 @@
     <string name="image">Image</string>
     <string name="delete">Supprimer</string>
     <string name="animation">Animation</string>
+    <string name="logo">Logo</string>
+    <string name="form_code_instructions">Rentrez le code présent sur la brochure ou lors de votre inscription :</string>
+    <string name="your_code"><i>Votre code</i></string>
+    <string name="validate">VALIDER</string>
 
 </resources>
