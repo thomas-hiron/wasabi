@@ -71,46 +71,48 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Ajout de la vue */
         setContentView(R.layout.activity_wasabi);
 
-        /* Récupération des dimensions de l'écran */
-        getScreenMetrics();
+        /* On joue l'animation */
 
-        /* Instanciation du manager des notifications */
-        mNotificationsManager = new NotificationsManager(getContentResolver());
-
-        /* Récupération de la dernière notification */
-        mLastNotification = mNotificationsManager.getLast();
-
-        /* On envoie le registration_id si première connexion */
-        RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
-        registrationIdManager.getRegistrationID();
-
-        /* Ajout des listeners d'animation */
-        mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
-        mNotificationButton = (ImageView) findViewById(R.id.open_notification);
-
-        /* L'élément racine de la vue de l'application */
-        mAppContainer = (FrameLayout) findViewById(R.id.app_container);
-
-        /* La fresque toujours présente (inflate, ajout de la vue et du listener) */
-        mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
-        mAppContainer.addView(mRevealContainerFresco);
-        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
-
-        /* On initialise la fresque et le viewPager */
-        mFresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
-        mFresco.initViewPager(getSupportFragmentManager());
-        mFresco.setPictureListener(this);
-
-        /* La notif si != null (inflate, ajout de la vue et du listener) */
-        if(mLastNotification != null)
-        {
-            mRevealContainerNotification = getLayoutInflater().inflate(R.layout.notification, mAppContainer, false);
-            mAppContainer.addView(mRevealContainerNotification);
-            mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerNotification));
-        }
-        /* Sinon on cache le bouton */
-        else
-            mNotificationButton.setVisibility(View.GONE);
+//        /* Récupération des dimensions de l'écran */
+//        getScreenMetrics();
+//
+//        /* Instanciation du manager des notifications */
+//        mNotificationsManager = new NotificationsManager(getContentResolver());
+//
+//        /* Récupération de la dernière notification */
+//        mLastNotification = mNotificationsManager.getLast();
+//
+//        /* On envoie le registration_id si première connexion */
+//        RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
+//        registrationIdManager.getRegistrationID();
+//
+//        /* Ajout des listeners d'animation */
+//        mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
+//        mNotificationButton = (ImageView) findViewById(R.id.open_notification);
+//
+//        /* L'élément racine de la vue de l'application */
+//        mAppContainer = (FrameLayout) findViewById(R.id.app_container);
+//
+//        /* La fresque toujours présente (inflate, ajout de la vue et du listener) */
+//        mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
+//        mAppContainer.addView(mRevealContainerFresco);
+//        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
+//
+//        /* On initialise la fresque et le viewPager */
+//        mFresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
+//        mFresco.initViewPager(getSupportFragmentManager());
+//        mFresco.setPictureListener(this);
+//
+//        /* La notif si != null (inflate, ajout de la vue et du listener) */
+//        if(mLastNotification != null)
+//        {
+//            mRevealContainerNotification = getLayoutInflater().inflate(R.layout.notification, mAppContainer, false);
+//            mAppContainer.addView(mRevealContainerNotification);
+//            mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerNotification));
+//        }
+//        /* Sinon on cache le bouton */
+//        else
+//            mNotificationButton.setVisibility(View.GONE);
     }
 
     /**

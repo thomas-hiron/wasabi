@@ -19,5 +19,6 @@
     <string name="error_play_sound">Une erreur s\'est produite lors de la lecture</string>
     <string name="image">Image</string>
     <string name="delete">Supprimer</string>
+    <string name="animation">Animation</string>
 
 </resources>
