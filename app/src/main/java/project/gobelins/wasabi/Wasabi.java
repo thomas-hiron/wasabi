@@ -5,12 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
 import android.graphics.Matrix;
-import android.graphics.Paint;
-import android.graphics.RectF;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -22,9 +17,9 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -34,6 +29,7 @@ import java.text.SimpleDateFormat;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
@@ -60,6 +56,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
+    private AnimationLayout mAnimLayout;
     private View mRevealContainerFresco;
     private View mRevealContainerNotification;
     private ImageView mFrescoButton;
@@ -74,15 +71,14 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     {
         super.onStart();
 
-        /* Le parent */
-//        FrameLayout container = (FrameLayout) findViewById(R.id.app_container);
-//
-//        /* Inflation de la home */
-//        AnimationLayout animLayout = (AnimationLayout) getLayoutInflater().inflate(
-//                R.layout.home_animation, container, false);
-//
-//        /* Ajout de la vue */
-//        container.addView(animLayout);
+        /* Inflation de la home */
+        mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
+                R.layout.home_animation, mAppContainer, false);
+
+        mAnimLayout.setActivity(this);
+
+        /* Ajout de la vue */
+        mAppContainer.addView(mAnimLayout);
     }
 
     @Override
@@ -91,7 +87,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onCreate(savedInstanceState);
 
         /* Ajout de la vue */
-        setContentView(R.layout.form_code);
+        setContentView(R.layout.activity_wasabi);
 
         /* Récupération des dimensions de l'écran */
         getScreenMetrics();
@@ -109,10 +105,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 //        /* Ajout des listeners d'animation */
 //        mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
 //        mNotificationButton = (ImageView) findViewById(R.id.open_notification);
-//
-//        /* L'élément racine de la vue de l'application */
-//        mAppContainer = (FrameLayout) findViewById(R.id.app_container);
-//
+
+        /* L'élément racine de la vue de l'application */
+        mAppContainer = (FrameLayout) findViewById(R.id.app_container);
+
 //        /* La fresque toujours présente (inflate, ajout de la vue et du listener) */
 //        mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
 //        mAppContainer.addView(mRevealContainerFresco);
@@ -392,5 +388,35 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             SCREEN_WIDTH = displayMetrics.widthPixels;
             SCREEN_HEIGHT = displayMetrics.heightPixels;
         }
+    }
+
+    /**
+     * Supprime l'animation de départ
+     */
+    public void removeAnimationView()
+    {
+        mAppContainer.removeView(mAnimLayout);
+        mAnimLayout = null;
+
+        mAppContainer.setBackgroundResource(R.drawable.home);
+    }
+
+    /**
+     * Fait apparaître le formulaire pour renseigner le code
+     */
+    public void addFormCode()
+    {
+        /* Inflation du formulaire */
+        FrameLayout form = (FrameLayout) getLayoutInflater().inflate(R.layout.form_code, mAppContainer, false);
+
+        /* Ajout de la vue */
+        mAppContainer.addView(form);
+
+        form.setVisibility(View.VISIBLE);
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(1000);
+        form.startAnimation(alphaAnimation);
     }
 }

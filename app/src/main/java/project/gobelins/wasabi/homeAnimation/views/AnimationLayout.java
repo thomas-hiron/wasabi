@@ -28,6 +28,7 @@ public class AnimationLayout extends RevealFrameLayout
     private Handler mHandler;
     private Runnable mRunnable;
     private ImageView mImages;
+    private Wasabi mWasabi;
 
     public AnimationLayout(Context context)
     {
@@ -65,9 +66,8 @@ public class AnimationLayout extends RevealFrameLayout
                     e.printStackTrace();
 
                     /* On supprime la vue */
-                    FrameLayout parent = (FrameLayout) getParent();
-                    parent.removeView(animationLayout);
-                    parent.setBackgroundResource(R.drawable.home);
+                    mWasabi.removeAnimationView();
+                    mWasabi.addFormCode();
                 }
 
             }
@@ -105,5 +105,10 @@ public class AnimationLayout extends RevealFrameLayout
 
         /* On joue l'animation avec une bidouille dégueulasse */
         mHandler.postDelayed(mRunnable, REVEAL_DURATION);
+    }
+
+    public void setActivity(Wasabi activity)
+    {
+        this.mWasabi = activity;
     }
 }

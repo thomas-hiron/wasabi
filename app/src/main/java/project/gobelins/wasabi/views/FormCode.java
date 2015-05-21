@@ -16,7 +16,7 @@ import project.gobelins.wasabi.Wasabi;
 
 /**
  * La vue contenant le formulaire de renseignement du code
- *
+ * <p/>
  * Created by ThomasHiron on 21/05/2015.
  */
 public class FormCode extends FrameLayout
@@ -32,11 +32,11 @@ public class FormCode extends FrameLayout
     }
 
     @Override
-    protected void onSizeChanged(int w, int h, int oldw, int oldh)
+    protected void onAttachedToWindow()
     {
-        super.onSizeChanged(w, h, oldw, oldh);
+        super.onAttachedToWindow();
 
-        /*  */
+        /* On scale le logo correctement */
         ImageView view = (ImageView) findViewById(R.id.logo_wasabi);
         Drawable drawing = view.getBackground();
 
