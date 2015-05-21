@@ -12,7 +12,7 @@ import io.codetail.animation.ViewAnimationUtils;
 import io.codetail.widget.RevealFrameLayout;
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
-import project.gobelins.wasabi.listeners.CircleAnimationListener;
+import project.gobelins.wasabi.utils.Hypo;
 
 /**
  * Gestion de l'animation
@@ -21,7 +21,7 @@ import project.gobelins.wasabi.listeners.CircleAnimationListener;
 public class AnimationLayout extends RevealFrameLayout
 {
     private final int TIMING = 200;
-    private final int REVEAL_DURATION = 2000;
+    private final int REVEAL_DURATION = 1500;
 
     private int mIndex;
     private int[] mImagesInt;
@@ -74,17 +74,15 @@ public class AnimationLayout extends RevealFrameLayout
     }
 
     @Override
-    protected void onAttachedToWindow()
+    protected void onSizeChanged(int w, int h, int oldw, int oldh)
     {
-        super.onAttachedToWindow();
+        super.onSizeChanged(w, h, oldw, oldh);
 
         mImages = (ImageView) findViewById(R.id.images_animation);
 
         /* Animation du rond */
-        reveal();
-
-//        /* On joue l'animation */
-//        mHandler.postDelayed(mRunnable, TIMING);
+        if(mImages.getWidth() > 0)
+            reveal();
     }
 
     /**
@@ -96,22 +94,15 @@ public class AnimationLayout extends RevealFrameLayout
         int h = Wasabi.SCREEN_HEIGHT;
 
         /* Le rayon final */
-        float finalRadius = hypo(w, h);
+        float finalRadius = Hypo.hypo(w / 2, h / 2);
 
         /* Instanciation et paramétrage de l'anim */
         SupportAnimator reveal = ViewAnimationUtils.createCircularReveal(mImages, w / 2, h / 2, 0, finalRadius);
         reveal.setInterpolator(new AccelerateDecelerateInterpolator());
         reveal.setDuration(REVEAL_DURATION);
         reveal.start();
-    }
 
-    /**
-     * @param width  La taille
-     * @param height La hauteur
-     * @return Le rayon de fin
-     */
-    private float hypo(int width, int height)
-    {
-        return (float) Math.sqrt(Math.pow(width, 2) + Math.pow(height, 2));
+        /* On joue l'animation avec une bidouille dégueulasse */
+        mHandler.postDelayed(mRunnable, REVEAL_DURATION);
     }
 }
