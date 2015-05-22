@@ -6,15 +6,21 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.httpRequests.AsyncPostCodeRequest;
 
 /**
  * La vue contenant le formulaire de renseignement du code
@@ -108,6 +114,17 @@ public class FormCode extends FrameLayout implements View.OnClickListener
         mValidate.setAlpha(0.7f);
 
         boolean isValid = checkValidCode();
+
+        /* Envoi de la requête */
+        if(isValid)
+        {
+            /* Construction des données POST */
+            List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+            nameValuePairs.add(new BasicNameValuePair("code", mCode.getText().toString().toUpperCase()));
+
+            new AsyncPostCodeRequest(nameValuePairs, this)
+                    .execute(Wasabi.URL + "/api/code");
+        }
     }
 
     /**
@@ -119,13 +136,19 @@ public class FormCode extends FrameLayout implements View.OnClickListener
 
         /* On remet l'alpha, le listener et on affiche un toast */
         if(code.length() < 4)
-        {
-            mValidate.setAlpha(1);
-            Toast.makeText(getContext(), "Le code n'est pas valide", Toast.LENGTH_SHORT).show();
-
-            mValidate.setOnClickListener(this);
-        }
+            error();
 
         return code.length() >= 4;
+    }
+
+    /**
+     * Réinitialise l'alpha et le listener
+     */
+    public void error()
+    {
+        mValidate.setAlpha(1);
+        Toast.makeText(getContext(), "Le code n'est pas valide, veuillez réessayer", Toast.LENGTH_SHORT).show();
+
+        mValidate.setOnClickListener(this);
     }
 }

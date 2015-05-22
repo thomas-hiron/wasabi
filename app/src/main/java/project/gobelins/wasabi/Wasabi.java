@@ -46,6 +46,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         OnNotificationClosed, OnPictureListener
 {
     public final static String TAG = "Wasabi";
+    public final static String API_KEY = "api_key";
     private final int REQUEST_IMAGE = 1;
     private final int IMAGE_WIDTH = 500;
 
