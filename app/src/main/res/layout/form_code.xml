@@ -36,6 +36,7 @@
             android:textSize="20sp"/>
 
         <project.gobelins.wasabi.views.EditTextQuicksand
+            android:id="@+id/code"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="12dp"
@@ -54,6 +55,7 @@
             android:background="@color/active_show"/>
 
         <project.gobelins.wasabi.views.ButtonQuicksand
+            android:id="@+id/validate_code"
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:background="@color/active_show"

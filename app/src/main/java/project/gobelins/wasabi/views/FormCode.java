@@ -6,10 +6,12 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
@@ -19,8 +21,11 @@ import project.gobelins.wasabi.Wasabi;
  * <p/>
  * Created by ThomasHiron on 21/05/2015.
  */
-public class FormCode extends FrameLayout
+public class FormCode extends FrameLayout implements View.OnClickListener
 {
+    private View mValidate;
+    private EditTextQuicksand mCode;
+
     public FormCode(Context context, AttributeSet attrs)
     {
         super(context, attrs);
@@ -75,11 +80,52 @@ public class FormCode extends FrameLayout
         params.width = width;
         params.height = height;
         view.setLayoutParams(params);
+
+        /* Le mCode */
+        mCode = (EditTextQuicksand) findViewById(R.id.code);
+
+        /* Ajout du listener sur le bouton */
+        mValidate = findViewById(R.id.validate_code);
+        mValidate.setOnClickListener(this);
     }
 
     private int dpToPx(int dp)
     {
         float density = getContext().getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+
+    /**
+     * Clic sur le bouton valider
+     */
+    @Override
+    public void onClick(View view)
+    {
+        /* Suppression du listener */
+        mValidate.setOnClickListener(null);
+
+        /* Changement de l'alpha pour le retour */
+        mValidate.setAlpha(0.7f);
+
+        boolean isValid = checkValidCode();
+    }
+
+    /**
+     * Vérifie la longueur du code
+     */
+    private boolean checkValidCode()
+    {
+        String code = mCode.getText().toString();
+
+        /* On remet l'alpha, le listener et on affiche un toast */
+        if(code.length() < 4)
+        {
+            mValidate.setAlpha(1);
+            Toast.makeText(getContext(), "Le code n'est pas valide", Toast.LENGTH_SHORT).show();
+
+            mValidate.setOnClickListener(this);
+        }
+
+        return code.length() >= 4;
     }
 }

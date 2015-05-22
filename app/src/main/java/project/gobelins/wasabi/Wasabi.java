@@ -72,13 +72,13 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onStart();
 
         /* Inflation de la home */
-        mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
-                R.layout.home_animation, mAppContainer, false);
-
-        mAnimLayout.setActivity(this);
-
-        /* Ajout de la vue */
-        mAppContainer.addView(mAnimLayout);
+//        mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
+//                R.layout.home_animation, mAppContainer, false);
+//
+//        mAnimLayout.setActivity(this);
+//
+//        /* Ajout de la vue */
+//        mAppContainer.addView(mAnimLayout);
     }
 
     @Override
@@ -87,7 +87,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onCreate(savedInstanceState);
 
         /* Ajout de la vue */
-        setContentView(R.layout.activity_wasabi);
+        setContentView(R.layout.form_code);
 
         /* Récupération des dimensions de l'écran */
         getScreenMetrics();
