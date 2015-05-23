@@ -157,6 +157,7 @@ public class FormCode extends FrameLayout implements View.OnClickListener
      */
     public void success()
     {
+        mWasabi.getApiKeyFromPrefs();
         mWasabi.removeFormCode();
         mWasabi.addHome();
     }

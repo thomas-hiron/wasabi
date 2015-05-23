@@ -182,7 +182,7 @@ public class RegistrationIdManager
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
-                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/notifications/register-id"
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/notifications/register-id"
         );
     }
 

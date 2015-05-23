@@ -662,7 +662,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
-                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/deleteLastDrawing"
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/deleteLastDrawing"
         );
     }
 
@@ -829,7 +829,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
-                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/drawing"
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/drawing"
         );
     }
 
@@ -860,7 +860,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
-                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/image"
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/image"
         );
     }
 
@@ -884,7 +884,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
-                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/updateImage"
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/updateImage"
         );
     }
 
@@ -919,7 +919,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
-                Wasabi.URL + "/api/f52279eccde7a1809eab621ed0a2eba682ccf0f2/fresco/deleteImage"
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/deleteImage"
         );
     }
 

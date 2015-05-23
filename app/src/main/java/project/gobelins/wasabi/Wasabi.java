@@ -11,7 +11,6 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
@@ -72,7 +71,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private Notification mLastNotification;
     private String mCurrentPhotoPath;
     private Fresco mFresco;
-    private String mApiKey;
+    private static String mApiKey;
     private FormCode mFormCode;
 
     @Override
@@ -102,7 +101,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         getScreenMetrics();
 
         /* Récupération de la clé API */
-        mApiKey = getApiKey();
+        getApiKeyFromPrefs();
 
 //        /* Instanciation du manager des notifications */
 //        mNotificationsManager = new NotificationsManager(getContentResolver());
@@ -495,15 +494,22 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Récupére la clé api
      */
-    private String getApiKey()
+    public void getApiKeyFromPrefs()
     {
-        SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+        if(mApiKey == null)
+        {
+            SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
 
-        SharedPreferences.Editor edit = prefs.edit();
-        edit.remove(API_KEY);
-        edit.apply();
+            mApiKey = prefs.getString(API_KEY, null);
+        }
+    }
 
-        return prefs.getString(API_KEY, null);
+    /**
+     * @return La clé API
+     */
+    public static String getApiKey()
+    {
+        return mApiKey;
     }
 
     /* Rentre dans le mode immersif */
