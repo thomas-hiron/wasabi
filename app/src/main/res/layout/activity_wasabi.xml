@@ -5,6 +5,14 @@
     android:layout_height="match_parent">
 
     <ImageView
+        android:id="@+id/unexpected_text"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:contentDescription="@string/unexpected_text"
+        android:background="@drawable/home_unexpected"
+        android:visibility="invisible"/>
+
+    <ImageView
         android:id="@+id/open_notification"
         android:layout_width="@dimen/action_buttons"
         android:layout_height="@dimen/action_buttons"

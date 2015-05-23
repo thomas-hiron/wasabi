@@ -24,5 +24,6 @@
     <string name="form_code_instructions">Rentrez le code présent sur la brochure ou lors de votre inscription :</string>
     <string name="your_code"><i>Votre code</i></string>
     <string name="validate">VALIDER</string>
+    <string name="unexpected_text">L\'inattendu peut survenir n\'importe où et n\'importe quand</string>
 
 </resources>

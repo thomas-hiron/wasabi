@@ -3,6 +3,7 @@ package project.gobelins.wasabi;
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
@@ -47,6 +48,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 {
     public final static String TAG = "Wasabi";
     public final static String API_KEY = "api_key";
+
     private final int REQUEST_IMAGE = 1;
     private final int IMAGE_WIDTH = 500;
 
@@ -66,6 +68,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private Notification mLastNotification;
     private String mCurrentPhotoPath;
     private Fresco mFresco;
+    private String mApiKey;
 
     @Override
     public void onStart()
@@ -73,13 +76,13 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onStart();
 
         /* Inflation de la home */
-//        mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
-//                R.layout.home_animation, mAppContainer, false);
-//
-//        mAnimLayout.setActivity(this);
-//
-//        /* Ajout de la vue */
-//        mAppContainer.addView(mAnimLayout);
+        mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
+                R.layout.home_animation, mAppContainer, false);
+
+        mAnimLayout.setActivity(this);
+
+        /* Ajout de la vue */
+        mAppContainer.addView(mAnimLayout);
     }
 
     @Override
@@ -88,10 +91,13 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onCreate(savedInstanceState);
 
         /* Ajout de la vue */
-        setContentView(R.layout.form_code);
+        setContentView(R.layout.activity_wasabi);
 
         /* Récupération des dimensions de l'écran */
         getScreenMetrics();
+
+        /* Récupération de la clé API */
+        mApiKey = getApiKey();
 
 //        /* Instanciation du manager des notifications */
 //        mNotificationsManager = new NotificationsManager(getContentResolver());
@@ -102,24 +108,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 //        /* On envoie le registration_id si première connexion */
 //        RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
 //        registrationIdManager.getRegistrationID();
-//
-//        /* Ajout des listeners d'animation */
-//        mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
-//        mNotificationButton = (ImageView) findViewById(R.id.open_notification);
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
 
-//        /* La fresque toujours présente (inflate, ajout de la vue et du listener) */
-//        mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
-//        mAppContainer.addView(mRevealContainerFresco);
-//        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
-//
-//        /* On initialise la fresque et le viewPager */
-//        mFresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
-//        mFresco.initViewPager(getSupportFragmentManager());
-//        mFresco.setPictureListener(this);
-//
 //        /* La notif si != null (inflate, ajout de la vue et du listener) */
 //        if(mLastNotification != null)
 //        {
@@ -392,14 +384,21 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     }
 
     /**
-     * Supprime l'animation de départ
+     * Animation terminée, supprime l'animation de départ
      */
-    public void removeAnimationView()
+    public void homeAnimationEnd()
     {
         mAppContainer.removeView(mAnimLayout);
         mAnimLayout = null;
 
+        /* Changement du background */
         mAppContainer.setBackgroundResource(R.drawable.home);
+
+        /* On affiche le formulaire */
+        if(mApiKey == null)
+            addFormCode();
+        else
+            addHome();
     }
 
     /**
@@ -419,5 +418,49 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
         alphaAnimation.setDuration(1500);
         form.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Ajoute la home
+     */
+    public void addHome()
+    {
+        /* Ajout des listeners d'animation */
+        mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
+        mNotificationButton = (ImageView) findViewById(R.id.open_notification);
+
+        /* La fresque toujours présente (inflate, ajout de la vue et du listener) */
+        mRevealContainerFresco = getLayoutInflater().inflate(R.layout.fresco, mAppContainer, false);
+        mAppContainer.addView(mRevealContainerFresco);
+        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
+
+        /* On initialise la fresque et le viewPager */
+        mFresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
+        mFresco.initViewPager(getSupportFragmentManager());
+        mFresco.setPictureListener(this);
+
+        /* Le texte */
+        ImageView text = (ImageView) findViewById(R.id.unexpected_text);
+
+        /* Animation des éléments */
+        mFrescoButton.setVisibility(View.VISIBLE);
+        text.setVisibility(View.VISIBLE);
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(1500);
+
+        text.startAnimation(alphaAnimation);
+        mFrescoButton.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Récupére la clé api
+     */
+    private String getApiKey()
+    {
+        SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+
+        return prefs.getString(API_KEY, null);
     }
 }

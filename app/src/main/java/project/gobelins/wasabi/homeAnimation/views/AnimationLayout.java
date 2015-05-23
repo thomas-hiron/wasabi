@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.animation.AccelerateDecelerateInterpolator;
-import android.widget.FrameLayout;
 import android.widget.ImageView;
 
 import io.codetail.animation.SupportAnimator;
@@ -66,8 +65,7 @@ public class AnimationLayout extends RevealFrameLayout
                     e.printStackTrace();
 
                     /* On supprime la vue */
-                    mWasabi.removeAnimationView();
-                    mWasabi.addFormCode();
+                    mWasabi.homeAnimationEnd();
                 }
 
             }
