@@ -31,6 +31,7 @@ public class FormCode extends FrameLayout implements View.OnClickListener
 {
     private View mValidate;
     private EditTextQuicksand mCode;
+    private Wasabi mWasabi;
 
     public FormCode(Context context, AttributeSet attrs)
     {
@@ -54,7 +55,6 @@ public class FormCode extends FrameLayout implements View.OnClickListener
         /* Les dimensions du parent */
         View parent = (View) view.getParent();
         int paddingLeft = parent.getPaddingLeft();
-        int parentWidth = parent.getWidth() - paddingLeft * 2;
 
         /* Eviter les bugs */
         if(drawing == null)
@@ -150,5 +150,19 @@ public class FormCode extends FrameLayout implements View.OnClickListener
         Toast.makeText(getContext(), "Le code n'est pas valide, veuillez réessayer", Toast.LENGTH_SHORT).show();
 
         mValidate.setOnClickListener(this);
+    }
+
+    /**
+     * Liaison OK, on cache la vue
+     */
+    public void success()
+    {
+        mWasabi.removeFormCode();
+        mWasabi.addHome();
+    }
+
+    public void setActivity(Wasabi activity)
+    {
+        this.mWasabi = activity;
     }
 }

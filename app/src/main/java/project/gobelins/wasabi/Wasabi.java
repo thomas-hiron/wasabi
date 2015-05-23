@@ -11,14 +11,17 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
+import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
@@ -42,6 +45,7 @@ import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
 import project.gobelins.wasabi.utils.DateFormater;
+import project.gobelins.wasabi.views.FormCode;
 
 public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened,
         OnNotificationClosed, OnPictureListener
@@ -55,7 +59,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public static int SCREEN_WIDTH;
     public static int SCREEN_HEIGHT;
 
-    public static final String URL = "http://www.wasabi-experience.fr";
+    public static final String URL = "http://wasabi-experience.fr";
 
     private NotificationsManager mNotificationsManager;
     private FrameLayout mAppContainer;
@@ -69,6 +73,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private String mCurrentPhotoPath;
     private Fresco mFresco;
     private String mApiKey;
+    private FormCode mFormCode;
 
     @Override
     public void onStart()
@@ -122,6 +127,16 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 //        /* Sinon on cache le bouton */
 //        else
 //            mNotificationButton.setVisibility(View.GONE);
+
+        /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
+        mAppContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            @Override
+            public void onGlobalLayout()
+            {
+                immersiveMode(true);
+            }
+        });
     }
 
     /**
@@ -133,18 +148,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public void onWindowFocusChanged(boolean hasFocus)
     {
         super.onWindowFocusChanged(hasFocus);
-        if(hasFocus && android.os.Build.VERSION.SDK_INT >= 19) // Mode immersif
-        {
-            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
-            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
-
-            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
-                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
-                    | View.SYSTEM_UI_FLAG_FULLSCREEN
-                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
-        }
+        immersiveMode(hasFocus);
     }
 
     /**
@@ -407,17 +411,51 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public void addFormCode()
     {
         /* Inflation du formulaire */
-        FrameLayout form = (FrameLayout) getLayoutInflater().inflate(R.layout.form_code, mAppContainer, false);
+        mFormCode = (FormCode) getLayoutInflater().inflate(R.layout.form_code, mAppContainer, false);
 
         /* Ajout de la vue */
-        mAppContainer.addView(form);
+        mAppContainer.addView(mFormCode);
 
-        form.setVisibility(View.VISIBLE);
+        mFormCode.setActivity(this);
+        mFormCode.setVisibility(View.VISIBLE);
 
         /* Animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
         alphaAnimation.setDuration(1500);
-        form.startAnimation(alphaAnimation);
+        mFormCode.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Supprime le formulaire
+     */
+    public void removeFormCode()
+    {
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(1500);
+
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                mAppContainer.removeView(mFormCode);
+            }
+
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+
+        mFormCode.startAnimation(alphaAnimation);
     }
 
     /**
@@ -461,6 +499,27 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     {
         SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
 
+        SharedPreferences.Editor edit = prefs.edit();
+        edit.remove(API_KEY);
+        edit.apply();
+
         return prefs.getString(API_KEY, null);
+    }
+
+    /* Rentre dans le mode immersif */
+    private void immersiveMode(boolean hasFocus)
+    {
+        if(hasFocus && android.os.Build.VERSION.SDK_INT >= 19) // Mode immersif
+        {
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_FORCE_NOT_FULLSCREEN);
+
+            getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 }

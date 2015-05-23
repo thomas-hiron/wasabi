@@ -56,6 +56,9 @@ public class AsyncPostCodeRequest extends AsyncPostRequests
                 SharedPreferences.Editor editor = prefs.edit();
                 editor.putString(Wasabi.API_KEY, api_key);
                 editor.apply();
+
+                /* On affiche le texte */
+                mForm.success();
             }
         }
         catch(NullPointerException | JSONException e)
