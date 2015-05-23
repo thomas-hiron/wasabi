@@ -73,20 +73,27 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private Fresco mFresco;
     private static String mApiKey;
     private FormCode mFormCode;
+    private boolean mAnimPlayed;
 
     @Override
     public void onStart()
     {
         super.onStart();
 
-        /* Inflation de la home */
-        mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
-                R.layout.home_animation, mAppContainer, false);
+        /* Pour ne jouer l'animation qu'une seule fois */
+        if(!mAnimPlayed)
+        {
+            /* Inflation de la home */
+            mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
+                    R.layout.home_animation, mAppContainer, false);
 
-        mAnimLayout.setActivity(this);
+            mAnimLayout.setActivity(this);
 
-        /* Ajout de la vue */
-        mAppContainer.addView(mAnimLayout);
+            /* Ajout de la vue */
+            mAppContainer.addView(mAnimLayout);
+
+            mAnimPlayed = true;
+        }
     }
 
     @Override
@@ -115,6 +122,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
+
+        /* Animation jamais jouée */
+        mAnimPlayed = false;
 
 //        /* La notif si != null (inflate, ajout de la vue et du listener) */
 //        if(mLastNotification != null)
