@@ -115,10 +115,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 //
 //        /* Récupération de la dernière notification */
 //        mLastNotification = mNotificationsManager.getLast();
-//
-//        /* On envoie le registration_id si première connexion */
-//        RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
-//        registrationIdManager.getRegistrationID();
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
@@ -435,9 +431,28 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     }
 
     /**
+     * Liaison du code OK
+     */
+    public void formCodeSuccess()
+    {
+        /* Récupération de la clé */
+        getApiKeyFromPrefs();
+
+        /* Suppression de la vue */
+        removeFormCode();
+
+        /* Ajout de la home */
+        addHome();
+
+        /* On envoie le registration_id si première connexion */
+        RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
+        registrationIdManager.getRegistrationID();
+    }
+
+    /**
      * Supprime le formulaire
      */
-    public void removeFormCode()
+    private void removeFormCode()
     {
         /* Animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
@@ -470,7 +485,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Ajoute la home
      */
-    public void addHome()
+    private void addHome()
     {
         /* Ajout des listeners d'animation */
         mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
@@ -504,7 +519,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Récupére la clé api
      */
-    public void getApiKeyFromPrefs()
+    private void getApiKeyFromPrefs()
     {
         if(mApiKey == null)
         {
