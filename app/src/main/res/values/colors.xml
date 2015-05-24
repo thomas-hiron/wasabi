@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="red">#FF0000</color>
-    <color name="green">#00FF00</color>
     <color name="blue">#0000FF</color>
+    <color name="green_button">#8dcccf</color>
     <color name="fresco_background">#FFFFFF</color>
     <color name="white">#ffffff</color>
     <color name="active_hide">#00f26667</color>
