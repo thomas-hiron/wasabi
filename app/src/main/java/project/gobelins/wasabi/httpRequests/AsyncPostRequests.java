@@ -58,14 +58,11 @@ public class AsyncPostRequests extends AsyncTask<String, String, String>
                 throw new IOException(statusLine.getReasonPhrase());
             }
         }
-        catch(ClientProtocolException e)
-        {
-            //TODO Handle problems..
-        }
         catch(IOException e)
         {
-            //TODO Handle problems..
+            e.printStackTrace();
         }
+
         return responseString;
     }
 }

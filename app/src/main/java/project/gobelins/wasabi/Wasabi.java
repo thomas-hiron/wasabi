@@ -122,6 +122,11 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Animation jamais jouée */
         mAnimPlayed = false;
 
+        /* ---- TEMPORAIRE ---- */
+        mAnimPlayed = true;
+        homeAnimationEnd();
+        /* ---- FIN TEMPORAIRE ---- */
+
 //        /* La notif si != null (inflate, ajout de la vue et du listener) */
 //        if(mLastNotification != null)
 //        {

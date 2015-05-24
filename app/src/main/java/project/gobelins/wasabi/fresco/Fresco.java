@@ -933,6 +933,17 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Enregistrement et renseignement de l'id */
         int id = mSoundsManager.saveSound(soundButton.getFileName());
         soundButton.setDbId(id);
+
+        /* Appel à l'API */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+        nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(soundButton.getDbId())));
+        nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
+        nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/sound"
+        );
     }
 
     /**
