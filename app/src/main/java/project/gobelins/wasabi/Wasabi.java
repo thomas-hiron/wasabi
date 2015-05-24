@@ -41,6 +41,7 @@ import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
+import project.gobelins.wasabi.notifications.views.ChallengeView;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
 import project.gobelins.wasabi.utils.DateFormater;
@@ -197,7 +198,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
             default:
 
-                mCustomView = new project.gobelins.wasabi.notifications.views.ImageView(this);
+                mCustomView = new ChallengeView(this);
 
                 break;
         }
