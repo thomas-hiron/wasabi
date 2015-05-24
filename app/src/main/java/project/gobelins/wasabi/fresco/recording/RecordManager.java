@@ -8,6 +8,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
+import project.gobelins.wasabi.utils.AudioRecorder;
 import project.gobelins.wasabi.utils.DateFormater;
 
 /**
@@ -17,7 +18,7 @@ public class RecordManager
 {
     private File mFile;
     private String mFileName;
-    private MediaRecorder mRecorder;
+    private AudioRecorder mRecorder;
 
     public RecordManager()
     {
@@ -30,7 +31,7 @@ public class RecordManager
             folder.mkdirs();
 
         /* Formatage du fichier */
-        mFileName += DateFormater.getToday().getTime() + ".3gp";
+        mFileName += DateFormater.getNow().getTime() + ".wav";
         mFile = new File(mFileName);
     }
 
@@ -39,27 +40,10 @@ public class RecordManager
      */
     public void start()
     {
-        /* Instanciation et initialisation des paramètres */
-        mRecorder = new MediaRecorder();
-        mRecorder.setAudioSource(MediaRecorder.AudioSource.MIC);
-        mRecorder.setOutputFormat(MediaRecorder.OutputFormat.THREE_GPP);
+        mRecorder = AudioRecorder.getInstance(false);
+
         mRecorder.setOutputFile(mFile.getAbsolutePath());
-        mRecorder.setAudioEncoder(MediaRecorder.AudioEncoder.AMR_NB);
-
-        try
-        {
-            mRecorder.prepare();
-        }
-        catch(IOException e)
-        {
-            Log.v("test", "Recording failed");
-        }
-        catch(IllegalStateException e) /* Si on supprime un dossier, erreur */
-        {
-            Log.v("test", "Recording failed");
-        }
-
-        /* Démarrage de l'enregistrement */
+        mRecorder.prepare();
         mRecorder.start();
     }
 

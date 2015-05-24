@@ -61,4 +61,9 @@ public class DateFormater
     {
         return mToday;
     }
+
+    public static Date getNow()
+    {
+        return new Date();
+    }
 }

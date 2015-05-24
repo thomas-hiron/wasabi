@@ -19,6 +19,9 @@ import org.apache.http.message.BasicNameValuePair;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -934,11 +937,38 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         int id = mSoundsManager.saveSound(soundButton.getFileName());
         soundButton.setDbId(id);
 
+        /* Encodage du fichier en base64 */
+        File file = new File(soundButton.getFileName());
+        FileInputStream objFileIS = null;
+        try
+        {
+            objFileIS = new FileInputStream(file);
+        }
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        ByteArrayOutputStream objByteArrayOS = new ByteArrayOutputStream();
+        byte[] byteBufferString = new byte[1024];
+        try
+        {
+            for(int readNum; (readNum = objFileIS.read(byteBufferString)) != -1; )
+                objByteArrayOS.write(byteBufferString, 0, readNum);
+        }
+        catch(NullPointerException | IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        String byteBinaryData = Base64.encodeToString((objByteArrayOS.toByteArray()), Base64.DEFAULT);
+
         /* Appel à l'API */
         List<NameValuePair> nameValuePairs = new ArrayList<>(3);
         nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(soundButton.getDbId())));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
         nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
+        nameValuePairs.add(new BasicNameValuePair("sound64", byteBinaryData));
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(
@@ -958,6 +988,16 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Mise à jour des coordonnées */
         mSoundsManager.updateSound(point, soundButton.getDbId());
+
+        /* Appel à l'API */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+        nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(soundButton.getDbId())));
+        nameValuePairs.add(new BasicNameValuePair("points", point.toString()));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/updateSound"
+        );
     }
 
     public void deleteSound(SoundButton soundButton)
@@ -974,5 +1014,14 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Suppression sur le téléphone */
         File file = new File(soundButton.getFileName());
         file.delete();
+
+        /* Suppression dans la base */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(soundButton.getDbId())));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/deleteSound"
+        );
     }
 }
