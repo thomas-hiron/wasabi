@@ -4,8 +4,11 @@ import android.app.IntentService;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
 
@@ -14,6 +17,8 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.RegistrationIdManager;
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.sqlite.tables.Notifications;
+import project.gobelins.wasabi.utils.DateFormater;
 
 public class GCMNotificationIntentService extends IntentService
 {
@@ -44,6 +49,15 @@ public class GCMNotificationIntentService extends IntentService
                 sendNotification(extras.getString(RegistrationIdManager.TITLE_KEY), extras.getString(RegistrationIdManager.MSG_KEY));
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
+
+        /* Les valeurs */
+        ContentValues contentValues = new ContentValues(3);
+        contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
+        contentValues.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, DateFormater.getTodayAsString());
+        contentValues.put(Notifications.NOTIFICATIONS_ID, Integer.parseInt(extras.getString(Wasabi.REQUEST_ID)));
+
+        /* Insertion dans la table */
+        getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
     }
 
     /**
