@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
               android:layout_width="match_parent"
               android:layout_height="match_parent"
+              android:background="@color/white"
               android:orientation="vertical">
 
     <project.gobelins.wasabi.views.TextViewQuicksand
@@ -9,9 +10,9 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="14dp"
         android:layout_marginTop="14dp"
-        android:textSize="16sp"
         android:gravity="center"
-        android:text="@string/challenge"/>
+        android:text="@string/challenge"
+        android:textSize="16sp"/>
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -20,8 +21,8 @@
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:adjustViewBounds="true"
             android:layout_gravity="center"
+            android:adjustViewBounds="true"
             android:contentDescription="@string/challenge_infos"
             android:src="@drawable/challenge_header"/>
 
@@ -29,51 +30,51 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:gravity="center"
-            android:textSize="22sp"
-            android:textColor="@color/white"
-            android:layout_marginStart="40dp"
-            android:layout_marginLeft="40dp"
             android:layout_marginEnd="40dp"
+            android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
-            android:text="@string/challenge_infos"/>
+            android:layout_marginStart="40dp"
+            android:gravity="center"
+            android:text="@string/challenge_infos"
+            android:textColor="@color/white"
+            android:textSize="22sp"/>
 
     </FrameLayout>
 
     <project.gobelins.wasabi.views.TextViewQuicksand
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
         android:layout_marginBottom="10dp"
-        android:textSize="17sp"
+        android:layout_marginTop="15dp"
         android:gravity="center"
-        android:text="@string/address_lafayette"/>
+        android:text="@string/address_lafayette"
+        android:textSize="17sp"/>
 
     <Button
         android:layout_width="160dp"
         android:layout_height="33dp"
+        android:layout_gravity="center"
         android:background="@color/green_button"
         android:text="@string/see_map"
         android:textAllCaps="true"
-        android:layout_gravity="center"
-        android:textSize="12sp"
-        android:textColor="@color/white"/>
+        android:textColor="@color/white"
+        android:textSize="12sp"/>
 
     <project.gobelins.wasabi.views.TextViewQuicksand
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/quick"
         android:layout_marginTop="22dp"
-        android:textSize="18sp"
         android:gravity="center"
-        android:textColor="@color/active_show"/>
+        android:text="@string/quick"
+        android:textColor="@color/active_show"
+        android:textSize="18sp"/>
 
     <project.gobelins.wasabi.views.TextViewQuicksand
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/time_remaining"
-        android:textSize="18sp"
         android:gravity="center"
-        android:textColor="@color/active_show"/>
+        android:text="@string/time_remaining"
+        android:textColor="@color/active_show"
+        android:textSize="18sp"/>
 
 </LinearLayout>

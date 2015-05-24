@@ -32,5 +32,10 @@
     <string name="see_map">Voir le plan</string>
     <string name="quick">Vite !</string>
     <string name="time_remaining">Il ne vous reste plus que :</string>
+    <string name="follow_arrow">Suivez la direction indiquée par la flèche</string>
+    <string name="lets_guide">Laissez-vous guidez</string>
+    <string name="meter">m</string>
+    <string name="gps_distance">parcourus</string>
+    <string name="gps_distance_left">restants</string>
 
 </resources>
