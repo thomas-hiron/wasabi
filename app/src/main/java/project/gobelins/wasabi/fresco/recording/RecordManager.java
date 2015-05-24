@@ -1,14 +1,9 @@
 package project.gobelins.wasabi.fresco.recording;
 
-import android.media.MediaRecorder;
 import android.os.Environment;
-import android.util.Log;
 
 import java.io.File;
-import java.io.IOException;
-import java.util.Date;
 
-import project.gobelins.wasabi.utils.AudioRecorder;
 import project.gobelins.wasabi.utils.DateFormater;
 
 /**

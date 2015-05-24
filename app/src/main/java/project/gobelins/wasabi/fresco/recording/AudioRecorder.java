@@ -1,4 +1,4 @@
-package project.gobelins.wasabi.utils;
+package project.gobelins.wasabi.fresco.recording;
 
 import android.media.AudioFormat;
 import android.media.AudioRecord;
