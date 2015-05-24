@@ -25,8 +25,7 @@
         android:theme="@android:style/Theme.Light.NoTitleBar">
         <activity
             android:name=".Wasabi"
-            android:label="@string/app_name"
-            android:screenOrientation="sensorPortrait">
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
