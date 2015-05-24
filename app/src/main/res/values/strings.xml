@@ -37,5 +37,7 @@
     <string name="meter">m</string>
     <string name="gps_distance">parcourus</string>
     <string name="gps_distance_left">restants</string>
+    <string name="distance_140">140</string>
+    <string name="distance_340">340</string>
 
 </resources>

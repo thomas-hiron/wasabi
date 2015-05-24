@@ -60,7 +60,7 @@
                 android:id="@+id/gps_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="140"
+                android:text="@string/distance_140"
                 android:textColor="@color/green_button"
                 android:textSize="33sp"/>
 
@@ -96,7 +96,7 @@
                 android:id="@+id/gps_distance_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="340"
+                android:text="@string/distance_340"
                 android:textColor="@color/active_show"
                 android:textSize="33sp"/>
 
@@ -122,6 +122,35 @@
                 android:textSize="20sp"/>
 
         </RelativeLayout>
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="50dp"
+        android:layout_marginLeft="50dp"
+        android:layout_marginRight="50dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="20dp">
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_gravity="center"
+            android:background="@drawable/gps_progress_gradient"/>
+
+        <Button
+            android:layout_width="19dp"
+            android:layout_height="19dp"
+            android:layout_gravity="start|center"
+            android:background="@drawable/gps_distance_button"/>
+
+        <Button
+            android:layout_width="27dp"
+            android:layout_height="27dp"
+            android:layout_gravity="end|center"
+            android:background="@drawable/gps_final_distance_button"/>
 
     </FrameLayout>
 
