@@ -111,12 +111,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Récupération de la clé API */
         getApiKeyFromPrefs();
 
-//        /* Instanciation du manager des notifications */
-//        mNotificationsManager = new NotificationsManager(getContentResolver());
-//
-//        /* Récupération de la dernière notification */
-//        mLastNotification = mNotificationsManager.getLast();
-
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
 
@@ -127,17 +121,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mAnimPlayed = true;
         homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
-
-//        /* La notif si != null (inflate, ajout de la vue et du listener) */
-//        if(mLastNotification != null)
-//        {
-//            mRevealContainerNotification = getLayoutInflater().inflate(R.layout.notification, mAppContainer, false);
-//            mAppContainer.addView(mRevealContainerNotification);
-//            mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerNotification));
-//        }
-//        /* Sinon on cache le bouton */
-//        else
-//            mNotificationButton.setVisibility(View.GONE);
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
         mAppContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
@@ -227,7 +210,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* On cache la vue */
         mRevealContainerNotification.setVisibility(View.INVISIBLE);
 
-        int id = 6;
+        int id = mLastNotification.getType();
 
         /* Selon les notifs, on stoppe le processus (vidéo, son,...) */
         switch(id)
@@ -507,6 +490,23 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mFresco.initViewPager(getSupportFragmentManager());
         mFresco.setPictureListener(this);
 
+        /* Instanciation du manager des notifications */
+        mNotificationsManager = new NotificationsManager(getContentResolver());
+
+        /* Récupération de la dernière notification */
+        mLastNotification = mNotificationsManager.getLast();
+
+        /* La notif si != null (inflate, ajout de la vue et du listener) */
+        if(mLastNotification != null)
+        {
+            mRevealContainerNotification = getLayoutInflater().inflate(R.layout.notification, mAppContainer, false);
+            mAppContainer.addView(mRevealContainerNotification);
+            mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerNotification));
+
+            /* Affichage du bouton */
+            mNotificationButton.setVisibility(View.VISIBLE);
+        }
+
         /* Le texte */
         ImageView text = (ImageView) findViewById(R.id.unexpected_text);
 
@@ -520,6 +520,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         text.startAnimation(alphaAnimation);
         mFrescoButton.startAnimation(alphaAnimation);
+        mNotificationButton.startAnimation(alphaAnimation);
     }
 
     /**
