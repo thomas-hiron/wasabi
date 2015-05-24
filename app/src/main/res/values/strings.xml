@@ -25,5 +25,6 @@
     <string name="your_code"><i>Votre code</i></string>
     <string name="validate">VALIDER</string>
     <string name="unexpected_text">L\'inattendu peut survenir n\'importe où et n\'importe quand</string>
+    <string name="fun_image">L\'image super rigolote</string>
 
 </resources>

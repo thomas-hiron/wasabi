@@ -179,23 +179,33 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* En fonction de la notification */
         switch(mLastNotification.getType())
         {
+            /* Une image */
+            case NotificationsTypes.IMAGES:
+
+                /* Création de la vue */
+                mCustomView = new project.gobelins.wasabi.notifications.views.ImageView(this);
+
+                break;
+
             /* Les messages (à faire apparaître ou non) */
             case NotificationsTypes.MESSAGES:
 
                 /* Création de la vue */
                 mCustomView = new MessageView(this);
 
-                /* Ajout du message à la vue */
-                child.addView(mCustomView);
-
-                mCustomView.initialize();
-
                 break;
 
             default:
 
+                mCustomView = new project.gobelins.wasabi.notifications.views.ImageView(this);
+
                 break;
         }
+
+        /* Ajout du message à la vue */
+        child.addView(mCustomView);
+
+        mCustomView.initialize();
     }
 
     /**
