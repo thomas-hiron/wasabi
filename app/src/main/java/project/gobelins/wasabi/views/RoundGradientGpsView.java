@@ -10,6 +10,9 @@ import android.graphics.SweepGradient;
 import android.os.Handler;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.OvershootInterpolator;
+import android.view.animation.ScaleAnimation;
 import android.widget.FrameLayout;
 
 import project.gobelins.wasabi.R;
@@ -35,6 +38,7 @@ public class RoundGradientGpsView extends View
     private Runnable mRunnable;
     private TextViewQuicksand mMinutes;
     private TextViewQuicksand mSeconds;
+    private FrameLayout mTimerContainer;
 
     public RoundGradientGpsView(Context context)
     {
@@ -83,11 +87,11 @@ public class RoundGradientGpsView extends View
     {
         super.onAttachedToWindow();
 
-        FrameLayout parent = (FrameLayout) getParent();
+        mTimerContainer = (FrameLayout) getParent();
 
         /* Récupération des champs */
-        mMinutes = (TextViewQuicksand) parent.findViewById(R.id.challenge_minutes);
-        mSeconds = (TextViewQuicksand) parent.findViewById(R.id.challenge_seconds);
+        mMinutes = (TextViewQuicksand) mTimerContainer.findViewById(R.id.challenge_minutes);
+        mSeconds = (TextViewQuicksand) mTimerContainer.findViewById(R.id.challenge_seconds);
 
         /* Démarrage temporaire */
         start();
@@ -154,6 +158,18 @@ public class RoundGradientGpsView extends View
      */
     public void start()
     {
+        /* Animation du timer */
+        mTimerContainer.setVisibility(VISIBLE);
+
+        ScaleAnimation scaleAnimation = new ScaleAnimation(
+                0, 1, 0, 1,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF, 0.5f);
+        scaleAnimation.setDuration(300);
+        scaleAnimation.setInterpolator(new OvershootInterpolator());
+
+        mTimerContainer.startAnimation(scaleAnimation);
+
         /* Début de l'animation */
         mStartTime = System.currentTimeMillis();
 
