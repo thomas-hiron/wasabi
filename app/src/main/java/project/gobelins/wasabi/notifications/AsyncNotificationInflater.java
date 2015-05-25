@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.notifications.views.ChallengeView;
+import project.gobelins.wasabi.notifications.views.ErrorView;
 import project.gobelins.wasabi.notifications.views.FacebookView;
 import project.gobelins.wasabi.notifications.views.GPSView;
 import project.gobelins.wasabi.notifications.views.MessageView;
@@ -81,7 +82,7 @@ public class AsyncNotificationInflater extends AsyncTask
 
             default:
 
-                mCustomView = new ChallengeView(mWasabi.getApplicationContext());
+                mCustomView = new ErrorView(mWasabi.getApplicationContext());
 
                 break;
         }

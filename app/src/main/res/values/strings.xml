@@ -40,5 +40,6 @@
     <string name="distance_140">140</string>
     <string name="distance_340">340</string>
     <string name="invit_facebook">Vous êtes invité à un événement !</string>
+    <string name="error">Une erreur s\'est produite :(</string>
 
 </resources>
