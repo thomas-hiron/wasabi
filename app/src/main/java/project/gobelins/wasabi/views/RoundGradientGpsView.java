@@ -35,6 +35,7 @@ public class RoundGradientGpsView extends View
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
         mPaint.setStrokeWidth(50);
+        mPaint.setStrokeCap(Paint.Cap.ROUND);
 
         mRed = Color.parseColor("#f26667");
         mGreen = Color.parseColor("#baeff2");
@@ -56,9 +57,11 @@ public class RoundGradientGpsView extends View
         /* Le dégradé */
         mGradient = new SweepGradient(
                 mWidth / 2, mWidth / 2,
-                new int[] {mGreen, mGreen, mRed, mRed},
-                new float[] {0, 0.4f, 0.6f, 1}
+                new int[]{mRed, mGreen, mGreen, mRed, mRed},
+                new float[]{0, 0.05f, 0.4f, 0.6f, 1}
         );
+
+        mPaint.setShader(mGradient);
 
         /* Dessin */
         invalidate();
@@ -70,10 +73,6 @@ public class RoundGradientGpsView extends View
         super.onDraw(canvas);
 
         if(mWidth != 0)
-        {
-            mPaint.setShader(mGradient);
-            RectF rectF = mPosition;
-            canvas.drawArc(rectF, -90, -360, false, mPaint);
-        }
+            canvas.drawArc(mPosition, 0, -360, false, mPaint);
     }
 }
