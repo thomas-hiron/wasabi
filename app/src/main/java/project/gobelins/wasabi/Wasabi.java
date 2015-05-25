@@ -178,6 +178,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     {
         if(mCustomView != null)
             mCustomView.initialize();
+
+        /* On marque la notif comme lu */
+        mNotificationsManager.markRead(mLastNotification);
     }
 
     /**

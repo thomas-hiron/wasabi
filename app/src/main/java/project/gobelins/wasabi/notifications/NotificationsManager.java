@@ -28,11 +28,8 @@ public class NotificationsManager extends ArrayList<Notification>
      *
      * @param i
      */
-    public void markRead(int i)
+    public void markRead(Notification notification)
     {
-        /* Récupération de la notification */
-        Notification notification = get(i);
-
         /* Insertion de la nouvelle valeur modifiée */
         ContentValues contentValues = new ContentValues(1);
         contentValues.put(Notifications.NOTIFICATIONS_READ, 1);
