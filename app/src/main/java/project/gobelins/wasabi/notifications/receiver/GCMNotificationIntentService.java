@@ -23,7 +23,6 @@ public class GCMNotificationIntentService extends IntentService
 {
     // Sets an ID for the notification, so it can be updated
     public static final int notifyID = 9001;
-    NotificationCompat.Builder builder;
 
     public GCMNotificationIntentService()
     {
@@ -50,14 +49,21 @@ public class GCMNotificationIntentService extends IntentService
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
         /* Les valeurs */
-        ContentValues contentValues = new ContentValues(4);
-        contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
-        contentValues.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, DateFormater.getTodayAsString());
-        contentValues.put(Notifications.NOTIFICATIONS_ID, Integer.parseInt(extras.getString(Wasabi.REQUEST_ID)));
-        contentValues.put(Notifications.NOTIFICATIONS_TYPE, Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE)));
+        if(extras.getString(Wasabi.REQUEST_ID) != null)
+        {
+            int requestId = Integer.parseInt(extras.getString(Wasabi.REQUEST_ID));
+            ContentValues contentValues = new ContentValues(4);
+            contentValues.put(Notifications.NOTIFICATIONS_ID, requestId);
+            contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
+            contentValues.put(Notifications.NOTIFICATIONS_TYPE, Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE)));
+            contentValues.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, DateFormater.getTodayAsString());
 
-        /* Insertion dans la table */
-        getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
+            /* Suppression de sécurité pour ne pas générer une erreur si id existant */
+            getContentResolver().delete(Uri.parse(Notifications.URL_NOTIFICATIONS),
+                    Notifications.NOTIFICATIONS_ID + " = " + requestId, null);
+           /* Insertion dans la table */
+            getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
+        }
     }
 
     /**
