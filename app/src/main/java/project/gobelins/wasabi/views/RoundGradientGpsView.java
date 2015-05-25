@@ -9,8 +9,10 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
+import android.widget.FrameLayout;
+
+import project.gobelins.wasabi.R;
 
 /**
  * Created by ThomasHiron on 25/05/2015.
@@ -25,12 +27,14 @@ public class RoundGradientGpsView extends View
     private RectF mPosition;
 
     /* Paramétrage */
-    private final int TOTAL_LENGTH = 10000; /* 10s */
+    private final int TOTAL_LENGTH = 63000;
     private long mStartTime;
     private long mCurrentTime;
 
     private Handler mHandler;
     private Runnable mRunnable;
+    private TextViewQuicksand mMinutes;
+    private TextViewQuicksand mSeconds;
 
     public RoundGradientGpsView(Context context)
     {
@@ -61,14 +65,32 @@ public class RoundGradientGpsView extends View
             {
                 mCurrentTime = System.currentTimeMillis() - mStartTime;
 
+                /* On décrémente le chrono */
+                changeTimer();
+
                 /* On redessine la vue */
                 invalidate();
 
                 /* On relance */
                 if(mCurrentTime < TOTAL_LENGTH)
-                    mHandler.postDelayed(this, 300);
+                    mHandler.postDelayed(this, 200);
             }
         };
+    }
+
+    @Override
+    protected void onAttachedToWindow()
+    {
+        super.onAttachedToWindow();
+
+        FrameLayout parent = (FrameLayout) getParent();
+
+        /* Récupération des champs */
+        mMinutes = (TextViewQuicksand) parent.findViewById(R.id.challenge_minutes);
+        mSeconds = (TextViewQuicksand) parent.findViewById(R.id.challenge_seconds);
+
+        /* Démarrage temporaire */
+        start();
     }
 
     @Override
@@ -92,9 +114,31 @@ public class RoundGradientGpsView extends View
 
         /* Dessin */
         invalidate();
+    }
 
-        /* Démarrage temporaire */
-        start();
+    /**
+     * Change le timer
+     */
+    private void changeTimer()
+    {
+        /* Temps restant en secondes */
+        int time_left = (int) ((TOTAL_LENGTH - mCurrentTime) / 1000);
+
+        /* Nombre de minutes restantes */
+        int minutes_left = (int) Math.floor(time_left / 60);
+
+        /* On enlève les minutes */
+        time_left -= minutes_left * 60;
+
+        /* Nombre de secondes restantes */
+        int seconds_left = time_left;
+
+        /* Changement des textes */
+        if(mMinutes != null)
+        {
+            mMinutes.setText(String.valueOf(minutes_left));
+            mSeconds.setText(String.valueOf(seconds_left));
+        }
     }
 
     @Override
