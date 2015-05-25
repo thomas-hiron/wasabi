@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
+import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.notifications.views.ChallengeView;
@@ -35,7 +36,7 @@ public class AsyncNotificationInflater extends AsyncTask
     protected Object doInBackground(Object[] objects)
     {
         /* Récupération du premier enfant */
-        FrameLayout child = (FrameLayout) ((ViewGroup) mRevealContainerNotification).getChildAt(0);
+        FrameLayout child = (FrameLayout) mRevealContainerNotification.findViewById(R.id.notification_container);
 
         /* En fonction de la notification */
         switch(mLastNotification.getType())
@@ -88,7 +89,7 @@ public class AsyncNotificationInflater extends AsyncTask
         }
 
         /* Ajout du message à la vue */
-        child.addView(mCustomView);
+        child.addView(mCustomView, 0);
 
         mWasabi.setCustomView(mCustomView);
 
