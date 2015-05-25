@@ -208,10 +208,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
                 break;
         }
-
-        /* Récupération du premier enfant pour supprimer la customView */
-        FrameLayout child = (FrameLayout) ((ViewGroup) mRevealContainerNotification).getChildAt(0);
-        child.removeView(mCustomView);
     }
 
     /**
