@@ -111,7 +111,6 @@
                     android:id="@+id/challenge_minutes"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="52"
                     android:textColor="@color/active_show"
                     android:textSize="85sp"
                     wasabi:font_style="light"/>
@@ -121,7 +120,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:layout_marginStart="7dp"
-                    android:text="min"
+                    android:text="@string/minutes"
                     android:textColor="@color/active_show"
                     android:textSize="24sp"/>
 
@@ -137,7 +136,6 @@
                     android:id="@+id/challenge_seconds"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="26"
                     android:textColor="@color/active_show"
                     android:textSize="40sp"
                     wasabi:font_style="light"/>
@@ -147,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
                     android:layout_marginStart="7dp"
-                    android:text="sec"
+                    android:text="@string/seconds"
                     android:textColor="@color/active_show"
                     android:textSize="24sp"/>
 

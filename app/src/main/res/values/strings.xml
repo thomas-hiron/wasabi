@@ -41,5 +41,7 @@
     <string name="distance_340">340</string>
     <string name="invit_facebook">Vous êtes invité à un événement !</string>
     <string name="error">Une erreur s\'est produite :(</string>
+    <string name="minutes">min</string>
+    <string name="seconds">sec</string>
 
 </resources>
