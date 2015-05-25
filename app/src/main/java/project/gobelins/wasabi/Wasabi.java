@@ -504,7 +504,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         text.startAnimation(alphaAnimation);
         mFrescoButton.startAnimation(alphaAnimation);
-        mNotificationButton.startAnimation(alphaAnimation);
+        if(mLastNotification != null)
+            mNotificationButton.startAnimation(alphaAnimation);
     }
 
     /**
