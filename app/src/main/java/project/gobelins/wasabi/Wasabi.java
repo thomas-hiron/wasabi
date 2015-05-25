@@ -39,6 +39,7 @@ import project.gobelins.wasabi.interfaces.OnNotificationClosed;
 import project.gobelins.wasabi.interfaces.OnNotificationOpened;
 import project.gobelins.wasabi.interfaces.OnPictureListener;
 import project.gobelins.wasabi.listeners.CircleAnimationListener;
+import project.gobelins.wasabi.notifications.AsyncNotificationInflater;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.ChallengeView;
@@ -175,39 +176,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     @Override
     public void onNotificationOpened()
     {
-        /* Récupération du premier enfant */
-        FrameLayout child = (FrameLayout) ((ViewGroup) mRevealContainerNotification).getChildAt(0);
-
-        /* En fonction de la notification */
-        switch(mLastNotification.getType())
-        {
-            /* Une image */
-            case NotificationsTypes.IMAGES:
-
-                /* Création de la vue */
-                mCustomView = new project.gobelins.wasabi.notifications.views.ImageView(this);
-
-                break;
-
-            /* Les messages (à faire apparaître ou non) */
-            case NotificationsTypes.MESSAGES:
-
-                /* Création de la vue */
-                mCustomView = new MessageView(this);
-
-                break;
-
-            default:
-
-                mCustomView = new ChallengeView(this);
-
-                break;
-        }
-
-        /* Ajout du message à la vue */
-        child.addView(mCustomView);
-
-        mCustomView.initialize();
+        if(mCustomView != null)
+            mCustomView.initialize();
     }
 
     /**
@@ -517,6 +487,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
             /* Affichage du bouton */
             mNotificationButton.setVisibility(View.VISIBLE);
+
+            /* On ajoute la vue en background */
+            new AsyncNotificationInflater(this, mLastNotification, mRevealContainerNotification).execute();
         }
 
         /* Le texte */
@@ -571,5 +544,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                     | View.SYSTEM_UI_FLAG_FULLSCREEN
                     | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
         }
+    }
+
+    public void setCustomView(MyLayout customView)
+    {
+        mCustomView = customView;
     }
 }
