@@ -8,6 +8,7 @@ import android.widget.FrameLayout;
 import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.notifications.views.ChallengeView;
+import project.gobelins.wasabi.notifications.views.FacebookView;
 import project.gobelins.wasabi.notifications.views.GPSView;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
@@ -66,7 +67,7 @@ public class AsyncNotificationInflater extends AsyncTask
             case NotificationsTypes.FACEBOOKEVENTS:
 
                 /* Création de la vue */
-                mCustomView = new MessageView(mWasabi.getApplicationContext());
+                mCustomView = new FacebookView(mWasabi.getApplicationContext());
 
                 break;
 
