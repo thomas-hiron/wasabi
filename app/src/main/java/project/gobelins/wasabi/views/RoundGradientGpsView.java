@@ -7,7 +7,9 @@ import android.graphics.Paint;
 import android.graphics.RectF;
 import android.graphics.Shader;
 import android.graphics.SweepGradient;
+import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 /**
@@ -21,6 +23,14 @@ public class RoundGradientGpsView extends View
     private int mWidth;
     private Shader mGradient;
     private RectF mPosition;
+
+    /* Paramétrage */
+    private final int TOTAL_LENGTH = 10000; /* 10s */
+    private long mStartTime;
+    private long mCurrentTime;
+
+    private Handler mHandler;
+    private Runnable mRunnable;
 
     public RoundGradientGpsView(Context context)
     {
@@ -42,6 +52,23 @@ public class RoundGradientGpsView extends View
 
         /* On rotate la vue pour que le dégradé commence au bon endroit */
         setRotation(-90);
+
+        mHandler = new Handler();
+        mRunnable = new Runnable()
+        {
+            @Override
+            public void run()
+            {
+                mCurrentTime = System.currentTimeMillis() - mStartTime;
+
+                /* On redessine la vue */
+                invalidate();
+
+                /* On relance */
+                if(mCurrentTime < TOTAL_LENGTH)
+                    mHandler.postDelayed(this, 300);
+            }
+        };
     }
 
     @Override
@@ -65,6 +92,9 @@ public class RoundGradientGpsView extends View
 
         /* Dessin */
         invalidate();
+
+        /* Démarrage temporaire */
+        start();
     }
 
     @Override
@@ -72,7 +102,18 @@ public class RoundGradientGpsView extends View
     {
         super.onDraw(canvas);
 
-        if(mWidth != 0)
-            canvas.drawArc(mPosition, 0, -360, false, mPaint);
+        canvas.drawArc(mPosition, 0, -360 * mCurrentTime / TOTAL_LENGTH, false, mPaint);
+    }
+
+    /**
+     * Démarre le compteur
+     */
+    public void start()
+    {
+        /* Début de l'animation */
+        mStartTime = System.currentTimeMillis();
+
+        /* Démarrage du runnable */
+        mHandler.post(mRunnable);
     }
 }
