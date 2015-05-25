@@ -80,8 +80,8 @@
     <FrameLayout
         android:layout_width="250dp"
         android:layout_height="250dp"
-        android:layout_marginTop="10dp"
-        android:layout_gravity="center">
+        android:layout_gravity="center"
+        android:layout_marginTop="10dp">
 
         <project.gobelins.wasabi.views.DottedCircleView
             android:layout_width="match_parent"
@@ -94,13 +94,63 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"/>
 
-        <project.gobelins.wasabi.views.TextViewQuicksand
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textSize="40sp"
-            android:textColor="@color/active_show"
-            android:text="@string/distance_140"/>
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:id="@+id/challenge_minutes"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="52"
+                    android:textColor="@color/active_show"
+                    android:textSize="85sp"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginStart="7dp"
+                    android:text="min"
+                    android:textColor="@color/active_show"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:id="@+id/challenge_seconds"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="26"
+                    android:textColor="@color/active_show"
+                    android:textSize="40sp"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginStart="7dp"
+                    android:text="sec"
+                    android:textColor="@color/active_show"
+                    android:textSize="24sp"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
 
     </FrameLayout>
 
