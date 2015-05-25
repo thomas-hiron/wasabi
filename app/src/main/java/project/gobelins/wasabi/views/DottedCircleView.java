@@ -54,7 +54,7 @@ public class DottedCircleView extends View
             mPaint.setPathEffect(mDashPath);
             mPaint.setStyle(Paint.Style.STROKE);
             mPaint.setStrokeWidth(6);
-            canvas.drawCircle(mWidth / 2, mWidth / 2, mWidth / 2 - 40, mPaint);
+            canvas.drawCircle(mWidth / 2, mWidth / 2, mWidth / 2 - 70, mPaint);
         }
     }
 }

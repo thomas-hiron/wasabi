@@ -34,10 +34,10 @@ public class RoundGradientGpsView extends View
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
         mPaint.setStyle(Paint.Style.STROKE);
-        mPaint.setStrokeWidth(30);
+        mPaint.setStrokeWidth(50);
 
         mRed = Color.parseColor("#f26667");
-        mGreen = Color.parseColor("#8dcccf");
+        mGreen = Color.parseColor("#baeff2");
 
         /* On rotate la vue pour que le dégradé commence au bon endroit */
         setRotation(-90);
@@ -54,7 +54,11 @@ public class RoundGradientGpsView extends View
         mPosition = new RectF(30, 30, mWidth - 30, mWidth - 30);
 
         /* Le dégradé */
-        mGradient = new SweepGradient(mWidth / 2, mWidth / 2, mGreen, mRed);
+        mGradient = new SweepGradient(
+                mWidth / 2, mWidth / 2,
+                new int[] {mGreen, mGreen, mRed, mRed},
+                new float[] {0, 0.4f, 0.6f, 1}
+        );
 
         /* Dessin */
         invalidate();
