@@ -106,7 +106,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onCreate(savedInstanceState);
 
         /* Ajout de la vue */
-        setContentView(R.layout.challenge_view);
+        setContentView(R.layout.activity_wasabi);
 
         /* Récupération des dimensions de l'écran */
         getScreenMetrics();
@@ -122,18 +122,18 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* ---- TEMPORAIRE ---- */
         mAnimPlayed = true;
-//        homeAnimationEnd();
-//        /* ---- FIN TEMPORAIRE ---- */
-//
-//        /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
-//        mAppContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
-//        {
-//            @Override
-//            public void onGlobalLayout()
-//            {
-//                immersiveMode(true);
-//            }
-//        });
+        homeAnimationEnd();
+        /* ---- FIN TEMPORAIRE ---- */
+
+        /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
+        mAppContainer.getViewTreeObserver().addOnGlobalLayoutListener(new ViewTreeObserver.OnGlobalLayoutListener()
+        {
+            @Override
+            public void onGlobalLayout()
+            {
+                immersiveMode(true);
+            }
+        });
     }
 
     /**

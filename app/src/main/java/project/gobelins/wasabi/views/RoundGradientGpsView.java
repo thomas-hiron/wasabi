@@ -61,7 +61,6 @@ public class RoundGradientGpsView extends View
         /* On rotate la vue pour que le dégradé commence au bon endroit */
         setRotation(-90);
 
-        mHandler = new Handler();
         mRunnable = new Runnable()
         {
             @Override
@@ -92,9 +91,6 @@ public class RoundGradientGpsView extends View
         /* Récupération des champs */
         mMinutes = (TextViewQuicksand) mTimerContainer.findViewById(R.id.challenge_minutes);
         mSeconds = (TextViewQuicksand) mTimerContainer.findViewById(R.id.challenge_seconds);
-
-        /* Démarrage temporaire */
-        start();
     }
 
     @Override
@@ -172,6 +168,9 @@ public class RoundGradientGpsView extends View
 
         /* Début de l'animation */
         mStartTime = System.currentTimeMillis();
+
+        /* Instanciation ici (dans le thread principal) */
+        mHandler = new Handler();
 
         /* Démarrage du runnable */
         mHandler.post(mRunnable);
