@@ -26,7 +26,7 @@ public class NotificationsManager extends ArrayList<Notification>
     /**
      * Marque comme lu la notification
      *
-     * @param i
+     * @param notification
      */
     public void markRead(Notification notification)
     {
@@ -54,7 +54,7 @@ public class NotificationsManager extends ArrayList<Notification>
         /* Tous les messages non lus ou date égale à aujourd'hui */
         String readCondition = Notifications.NOTIFICATIONS_READ + " = 0 OR " +
                 Notifications.NOTIFICATIONS_RECEIVED_DATE + " = '" + date + "'";
-        String sortOrder = Notifications.NOTIFICATIONS_ID + " DESC";
+        String sortOrder = Notifications.NOTIFICATIONS_ID;
 
         Cursor c = mContentResolver.query(Uri.parse(Notifications.URL_NOTIFICATIONS), null, readCondition, null, sortOrder);
 
