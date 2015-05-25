@@ -5,10 +5,7 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.net.Uri;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
@@ -89,11 +86,9 @@ public class NotificationsManager extends ArrayList<Notification>
      */
     public Notification getLast()
     {
+        /* On récupère toutes les notifs */
         if(size() == 0)
-        {
-            /* On récupère toutes les notifs */
             getNotifications();
-        }
 
         return size() > 0 ? get(size() - 1) : null;
     }

@@ -7,7 +7,6 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -51,10 +50,11 @@ public class GCMNotificationIntentService extends IntentService
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
         /* Les valeurs */
-        ContentValues contentValues = new ContentValues(3);
+        ContentValues contentValues = new ContentValues(4);
         contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
         contentValues.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, DateFormater.getTodayAsString());
         contentValues.put(Notifications.NOTIFICATIONS_ID, Integer.parseInt(extras.getString(Wasabi.REQUEST_ID)));
+        contentValues.put(Notifications.NOTIFICATIONS_TYPE, Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE)));
 
         /* Insertion dans la table */
         getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
