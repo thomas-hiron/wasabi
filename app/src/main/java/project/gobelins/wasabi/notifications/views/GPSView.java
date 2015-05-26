@@ -17,7 +17,7 @@ import project.gobelins.wasabi.gps.GeolocationManager;
 
 /**
  * La vue du GPS
- *
+ * <p/>
  * Created by ThomasHiron on 24/05/2015.
  */
 public class GPSView extends MyLayout implements SensorEventListener, Animation.AnimationListener
@@ -46,9 +46,6 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
 
         mSenAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSenMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
-
-        mSensorManager.registerListener(this, mSenAccelerometer, SensorManager.SENSOR_DELAY_UI);
-        mSensorManager.registerListener(this, mSenMagnetometer, SensorManager.SENSOR_DELAY_UI);
 
         /* Initialisation de l'imageView */
         mArrow = (android.widget.ImageView) findViewById(R.id.gps_arrow);
@@ -128,7 +125,8 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     @Override
     public void initialize()
     {
-
+        mSensorManager.registerListener(this, mSenAccelerometer, SensorManager.SENSOR_DELAY_UI);
+        mSensorManager.registerListener(this, mSenMagnetometer, SensorManager.SENSOR_DELAY_UI);
     }
 
     /**
@@ -137,7 +135,8 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     @Override
     public void stop()
     {
-
+        mSensorManager.unregisterListener(this, mSenAccelerometer);
+        mSensorManager.unregisterListener(this, mSenMagnetometer);
     }
 
     @Override
