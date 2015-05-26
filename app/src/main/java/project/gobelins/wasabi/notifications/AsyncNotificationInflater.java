@@ -35,9 +35,6 @@ public class AsyncNotificationInflater extends AsyncTask
     @Override
     protected Object doInBackground(Object[] objects)
     {
-        /* Récupération du premier enfant */
-        FrameLayout child = (FrameLayout) mRevealContainerNotification.findViewById(R.id.notification_container);
-
         /* En fonction de la notification */
         switch(mLastNotification.getType())
         {
@@ -87,9 +84,6 @@ public class AsyncNotificationInflater extends AsyncTask
 
                 break;
         }
-
-        /* Ajout du message à la vue */
-        child.addView(mCustomView, 0);
 
         mWasabi.setCustomView(mCustomView);
 

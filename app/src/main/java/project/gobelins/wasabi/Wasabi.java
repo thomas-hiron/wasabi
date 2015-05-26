@@ -546,8 +546,20 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         }
     }
 
+    /**
+     * Ajoute la vue perso
+     *
+     * @param customView
+     */
     public void setCustomView(MyLayout customView)
     {
         mCustomView = customView;
+
+        /* Récupération du premier enfant */
+        FrameLayout child = (FrameLayout) mRevealContainerNotification.findViewById(R.id.notification_container);
+
+        /* Ajout du message à la vue */
+        child.removeView(mCustomView);
+        child.addView(mCustomView, 0);
     }
 }
