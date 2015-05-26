@@ -31,10 +31,10 @@ public class GeolocationManager implements LocationListener,
     {
         mGpsView = gps_view;
 
-        /* La piscine des marquisats */
+        /* Bonlieu */
         mHome = new Location("");
-        mHome.setLatitude(45.905365);
-        mHome.setLongitude(6.133305);
+        mHome.setLatitude(45.901892);
+        mHome.setLongitude(6.128723);
 
         mGoogleApiClient = new GoogleApiClient.Builder(mGpsView.getContext())
                 .addConnectionCallbacks(this)
