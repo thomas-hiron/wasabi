@@ -22,7 +22,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.VideoView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
