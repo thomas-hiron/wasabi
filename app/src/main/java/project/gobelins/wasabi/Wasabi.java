@@ -203,14 +203,14 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             /* Les messages (à faire apparaître ou non) */
             case NotificationsTypes.MESSAGES:
 
-                mCustomView.stop();
-
                 break;
 
             default:
 
                 break;
         }
+
+        mCustomView.stop();
     }
 
     /**

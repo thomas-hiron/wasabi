@@ -39,6 +39,6 @@ public class ChallengeView extends MyLayout
     @Override
     public void stop()
     {
-
+        mCounter.stop();
     }
 }

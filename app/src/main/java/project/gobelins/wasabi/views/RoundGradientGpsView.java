@@ -39,6 +39,7 @@ public class RoundGradientGpsView extends View
     private TextViewQuicksand mMinutes;
     private TextViewQuicksand mSeconds;
     private FrameLayout mTimerContainer;
+    private boolean mStart;
 
     public RoundGradientGpsView(Context context)
     {
@@ -48,6 +49,8 @@ public class RoundGradientGpsView extends View
     public RoundGradientGpsView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+
+        mStart = false;
 
         mPaint = new Paint();
         mPaint.setAntiAlias(true);
@@ -75,7 +78,7 @@ public class RoundGradientGpsView extends View
                 invalidate();
 
                 /* On relance */
-                if(mCurrentTime < TOTAL_LENGTH)
+                if(mCurrentTime < TOTAL_LENGTH && mStart)
                     mHandler.postDelayed(this, 200);
             }
         };
@@ -154,25 +157,43 @@ public class RoundGradientGpsView extends View
      */
     public void start()
     {
-        /* Animation du timer */
-        mTimerContainer.setVisibility(VISIBLE);
+        if(!mStart)
+        {
+            /* Animation démarrée */
+            mStart = true;
 
-        ScaleAnimation scaleAnimation = new ScaleAnimation(
-                0, 1, 0, 1,
-                Animation.RELATIVE_TO_SELF, 0.5f,
-                Animation.RELATIVE_TO_SELF, 0.5f);
-        scaleAnimation.setDuration(300);
-        scaleAnimation.setInterpolator(new OvershootInterpolator());
+            /* Animation du timer */
+            mTimerContainer.setVisibility(VISIBLE);
 
-        mTimerContainer.startAnimation(scaleAnimation);
+            /* Premier lancement, on lance l'animation et initialise le compteur */
+            if(mStartTime == 0)
+            {
+                ScaleAnimation scaleAnimation = new ScaleAnimation(
+                        0, 1, 0, 1,
+                        Animation.RELATIVE_TO_SELF, 0.5f,
+                        Animation.RELATIVE_TO_SELF, 0.5f);
+                scaleAnimation.setDuration(300);
+                scaleAnimation.setInterpolator(new OvershootInterpolator());
 
-        /* Début de l'animation */
-        mStartTime = System.currentTimeMillis();
+                mTimerContainer.startAnimation(scaleAnimation);
 
-        /* Instanciation ici (dans le thread principal) */
-        mHandler = new Handler();
+                /* Début de l'animation */
+                mStartTime = System.currentTimeMillis();
 
-        /* Démarrage du runnable */
-        mHandler.post(mRunnable);
+                /* Instanciation ici (dans le thread principal) */
+                mHandler = new Handler();
+            }
+
+            /* Démarrage du runnable */
+            mHandler.post(mRunnable);
+        }
+    }
+
+    /**
+     * Stoppe le compteur
+     */
+    public void stop()
+    {
+        mStart = false;
     }
 }
