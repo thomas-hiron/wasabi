@@ -176,6 +176,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         if(mCustomView != null)
             mCustomView.initialize();
 
+        /* On supprime le listener du bouton sur la fresque */
+        mFrescoButton.setOnClickListener(null);
+
         /* On marque la notif comme lu */
         mNotificationsManager.markRead(mLastNotification);
     }
@@ -186,8 +189,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     @Override
     public void onNotificationClosed()
     {
-        /* On remet le listener */
+        /* On remet les listeners */
         mNotificationButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerNotification));
+        mFrescoButton.setOnClickListener(new CircleAnimationListener(this, mRevealContainerFresco));
 
         /* On cache la vue */
         mRevealContainerNotification.setVisibility(View.INVISIBLE);
