@@ -16,13 +16,13 @@ import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.VideoView;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -42,8 +42,6 @@ import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.AsyncNotificationInflater;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
-import project.gobelins.wasabi.notifications.views.ChallengeView;
-import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
 import project.gobelins.wasabi.utils.DateFormater;
 import project.gobelins.wasabi.views.FormCode;
@@ -90,6 +88,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             /* Inflation de la home */
             mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
                     R.layout.home_animation, mAppContainer, false);
+
+            mAnimLayout.setActivity(this);
 
             /* Ajout de la vue */
             mAppContainer.addView(mAnimLayout);
@@ -365,9 +365,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     public void homeAnimationEnd()
     {
-        mAppContainer.removeView(mAnimLayout);
-        mAnimLayout = null;
-
         /* Changement du background */
         mAppContainer.setBackgroundResource(R.drawable.home);
 
@@ -376,6 +373,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             addFormCode();
         else
             addHome();
+
+        /* Suppression de la vidéo */
+        mAppContainer.removeView(mAnimLayout);
+        mAnimLayout = null;
     }
 
     /**
