@@ -1,8 +1,10 @@
 package project.gobelins.wasabi.gps;
 
+import android.content.Context;
 import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -51,6 +53,20 @@ public class GeolocationManager implements LocationListener,
     public void onConnected(Bundle bundle)
     {
         addLocationUpdates();
+
+        checkGpsEnabled();
+    }
+
+    /**
+     * Vérifie que le GPS est activé
+     */
+    private void checkGpsEnabled()
+    {
+        LocationManager locationManager = (LocationManager) mGpsView.getContext().getSystemService(Context.LOCATION_SERVICE);
+        boolean isGPS = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+
+        if(!isGPS)
+            Toast.makeText(mGpsView.getContext(), "Veuillez activer le GPS", Toast.LENGTH_SHORT).show();
     }
 
     @Override
