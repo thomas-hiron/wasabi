@@ -7,6 +7,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
@@ -15,6 +16,8 @@ import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.gps.GeolocationManager;
 
 /**
+ * La vue du GPS
+ *
  * Created by ThomasHiron on 24/05/2015.
  */
 public class GPSView extends MyLayout implements SensorEventListener, Animation.AnimationListener
@@ -51,6 +54,7 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
         mArrow = (android.widget.ImageView) findViewById(R.id.gps_arrow);
 
         mCurrentLocation = null;
+        mNoAnimation = true;
 
         /* Gestion et connexion de la géolocalisation */
         mGeolocation = new GeolocationManager(this);
