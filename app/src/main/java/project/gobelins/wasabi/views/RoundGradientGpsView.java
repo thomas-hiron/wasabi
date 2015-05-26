@@ -9,6 +9,7 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Handler;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
@@ -30,7 +31,7 @@ public class RoundGradientGpsView extends View
     private RectF mPosition;
 
     /* Paramétrage */
-    private final int TOTAL_LENGTH = 63000;
+    private final int TOTAL_LENGTH = 1800000;
     private long mStartTime;
     private long mCurrentTime;
 
@@ -153,7 +154,7 @@ public class RoundGradientGpsView extends View
     {
         super.onDraw(canvas);
 
-        canvas.drawArc(mPosition, 0, -360 * mCurrentTime / TOTAL_LENGTH, false, mPaint);
+        canvas.drawArc(mPosition, 0, -360f * mCurrentTime / TOTAL_LENGTH, false, mPaint);
     }
 
     /**
