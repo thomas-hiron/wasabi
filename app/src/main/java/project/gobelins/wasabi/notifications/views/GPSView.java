@@ -7,10 +7,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.location.LocationManager;
 import android.util.Log;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.gps.GeolocationManager;
@@ -27,6 +29,8 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     private GeolocationManager mGeolocation;
     private Location mCurrentLocation;
     private android.widget.ImageView mArrow;
+    private TextView mDistance;
+    private TextView mDistanceLeft;
     private Sensor mSenMagnetometer;
     private Sensor mSenAccelerometer;
     private SensorManager mSensorManager;
@@ -34,6 +38,7 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     private float[] mGeomagnetic;
     private boolean mNoAnimation;
     private float mCurrentAngle;
+    private int mTotalDistance;
 
     public GPSView(Context context)
     {
@@ -47,15 +52,16 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
         mSenAccelerometer = mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
         mSenMagnetometer = mSensorManager.getDefaultSensor(Sensor.TYPE_MAGNETIC_FIELD);
 
-        /* Initialisation de l'imageView */
+        /* Initialisation des vues */
         mArrow = (android.widget.ImageView) findViewById(R.id.gps_arrow);
+        mDistance = (TextView) findViewById(R.id.gps_distance);
+        mDistanceLeft = (TextView) findViewById(R.id.gps_distance_left);
 
         mCurrentLocation = null;
         mNoAnimation = true;
 
         /* Gestion et connexion de la géolocalisation */
         mGeolocation = new GeolocationManager(this);
-        mGeolocation.connect();
     }
 
     @Override
@@ -113,8 +119,21 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
                 mNoAnimation = false;
 
                 /* La distance entre les deux locations */
-                int distance = (int) mCurrentLocation.distanceTo(mGeolocation.getTarget());
-//                mDistance.setText(distance + "m");
+                int distanceLeft = (int) mCurrentLocation.distanceTo(mGeolocation.getTarget());
+
+                /* Premier passe, on renseigne la distance totale */
+                if(mTotalDistance == 0)
+                    mTotalDistance = distanceLeft;
+
+                /* Distance parcourue */
+                int currentDistance = mTotalDistance - distanceLeft;
+
+                /* Prévention */
+                if(currentDistance < 0)
+                    currentDistance = 0;
+
+                mDistance.setText(String.valueOf(currentDistance));
+                mDistanceLeft.setText(String.valueOf(distanceLeft));
             }
         }
     }
@@ -125,6 +144,8 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     @Override
     public void initialize()
     {
+        mGeolocation.start();
+
         mSensorManager.registerListener(this, mSenAccelerometer, SensorManager.SENSOR_DELAY_UI);
         mSensorManager.registerListener(this, mSenMagnetometer, SensorManager.SENSOR_DELAY_UI);
     }
@@ -135,6 +156,8 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     @Override
     public void stop()
     {
+        mGeolocation.stop();
+
         mSensorManager.unregisterListener(this, mSenAccelerometer);
         mSensorManager.unregisterListener(this, mSenMagnetometer);
     }

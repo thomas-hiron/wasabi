@@ -1,14 +1,13 @@
 package project.gobelins.wasabi.gps;
 
-import android.content.Context;
 import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.util.Log;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.location.LocationServices;
 
 import project.gobelins.wasabi.notifications.views.GPSView;
@@ -21,15 +20,14 @@ import project.gobelins.wasabi.notifications.views.GPSView;
 public class GeolocationManager implements LocationListener,
         GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener
 {
+    private LocationRequest mLocationRequest;
     private GPSView mGpsView;
     private GoogleApiClient mGoogleApiClient;
-    private LocationManager mLocationManager;
     private Location mHome;
-    private Location mCurrentLocation;
 
-    public GeolocationManager(GPSView unknownGPS)
+    public GeolocationManager(GPSView gps_view)
     {
-        mGpsView = unknownGPS;
+        mGpsView = gps_view;
 
         /* La piscine des marquisats */
         mHome = new Location("");
@@ -42,14 +40,17 @@ public class GeolocationManager implements LocationListener,
                 .addApi(LocationServices.API)
                 .build();
 
-        /* Géolocalisation */
-        mLocationManager = (LocationManager) mGpsView.getContext().getSystemService(Context.LOCATION_SERVICE);
+        /* La requête */
+        mLocationRequest = new LocationRequest();
+        mLocationRequest.setInterval(5000);
+        mLocationRequest.setFastestInterval(2000);
+        mLocationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
     }
 
     @Override
     public void onConnected(Bundle bundle)
     {
-        getLocation();
+        addLocationUpdates();
     }
 
     @Override
@@ -61,75 +62,13 @@ public class GeolocationManager implements LocationListener,
     @Override
     public void onLocationChanged(Location location)
     {
-        getLocation();
-    }
-
-    @Override
-    public void onStatusChanged(String provider, int status, Bundle extras)
-    {
-
-    }
-
-    @Override
-    public void onProviderEnabled(String provider)
-    {
-
-    }
-
-    @Override
-    public void onProviderDisabled(String provider)
-    {
-
+        mGpsView.setCurrentLocation(location);
     }
 
     @Override
     public void onConnectionFailed(ConnectionResult connectionResult)
     {
 
-    }
-
-    /**
-     * Recupère la localisation courante
-     */
-    private void getLocation()
-    {
-        // TODO : Tester si haute précision activée sinon requête
-
-        try
-        {
-            /* Statut du GPS */
-            boolean isGPSEnabled = mLocationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
-
-            /* Statut du network */
-            boolean isNetworkEnabled = mLocationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
-
-            /* Rien n'est activé */
-            if(!isGPSEnabled && !isNetworkEnabled)
-            {
-                Log.d("Network", "Network Disabled");
-            }
-            else
-            {
-                /* On prend le GPS */
-                if(isGPSEnabled)
-                {
-                    mLocationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 0, 0, this);
-                    mCurrentLocation = mLocationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-                }
-                /* On prend le network si GPS null */
-                if(isNetworkEnabled && mCurrentLocation == null)
-                {
-                    mLocationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 0, 0, this);
-                    mCurrentLocation = mLocationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
-                }
-
-                mGpsView.setCurrentLocation(mCurrentLocation);
-            }
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
     }
 
     public Location getTarget()
@@ -143,5 +82,33 @@ public class GeolocationManager implements LocationListener,
     public void connect()
     {
         mGoogleApiClient.connect();
+    }
+
+    /**
+     * Démarre la récupération de la localisation
+     */
+    public void start()
+    {
+        connect();
+
+        /* Si déjà connecté */
+        if(mGoogleApiClient.isConnected())
+            addLocationUpdates();
+    }
+
+    /**
+     * Ajoute le requestLocationUpdates
+     */
+    public void addLocationUpdates()
+    {
+        LocationServices.FusedLocationApi.requestLocationUpdates(mGoogleApiClient, mLocationRequest, this);
+    }
+
+    /**
+     * Suppression des mises à jour
+     */
+    public void stop()
+    {
+        LocationServices.FusedLocationApi.removeLocationUpdates(mGoogleApiClient, this);
     }
 }
