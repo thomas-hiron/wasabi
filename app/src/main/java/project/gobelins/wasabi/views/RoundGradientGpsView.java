@@ -127,6 +127,10 @@ public class RoundGradientGpsView extends View
         /* Temps restant en secondes */
         int time_left = (int) ((TOTAL_LENGTH - mCurrentTime) / 1000);
 
+        /* Pour éviter les valeurs négatives */
+        if(time_left < 0)
+            time_left = 0;
+
         /* Nombre de minutes restantes */
         int minutes_left = (int) Math.floor(time_left / 60);
 
