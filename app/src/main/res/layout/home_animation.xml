@@ -4,11 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/images_animation"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/anim1"
-        android:contentDescription="@string/animation"/>
+    <VideoView
+        android:id="@+id/video"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"/>
 
 </project.gobelins.wasabi.homeAnimation.views.AnimationLayout>

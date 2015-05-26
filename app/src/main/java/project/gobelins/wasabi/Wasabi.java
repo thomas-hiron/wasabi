@@ -91,8 +91,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             mAnimLayout = (AnimationLayout) getLayoutInflater().inflate(
                     R.layout.home_animation, mAppContainer, false);
 
-            mAnimLayout.setActivity(this);
-
             /* Ajout de la vue */
             mAppContainer.addView(mAnimLayout);
 
@@ -121,8 +119,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mAnimPlayed = false;
 
         /* ---- TEMPORAIRE ---- */
-        mAnimPlayed = true;
-        homeAnimationEnd();
+//        mAnimPlayed = true;
+//        homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
