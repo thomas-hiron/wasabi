@@ -60,7 +60,7 @@
                 android:id="@+id/gps_distance"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/distance_140"
+                android:text="@string/initial_distance"
                 android:textColor="@color/green_button"
                 android:textSize="33sp"/>
 
@@ -96,7 +96,7 @@
                 android:id="@+id/gps_distance_left"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/distance_340"
+                android:text="@string/initial_distance"
                 android:textColor="@color/active_show"
                 android:textSize="33sp"/>
 
