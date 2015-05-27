@@ -13,6 +13,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
@@ -42,6 +43,7 @@ import project.gobelins.wasabi.fresco.listeners.AlphaAnimationListener;
 import project.gobelins.wasabi.fresco.listeners.BeginDrawListener;
 import project.gobelins.wasabi.fresco.listeners.CancelLastDrawListener;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
+import project.gobelins.wasabi.fresco.listeners.GoToLastFragmentListener;
 import project.gobelins.wasabi.fresco.listeners.RecordAudioListener;
 import project.gobelins.wasabi.fresco.listeners.TakePictureListener;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
@@ -79,6 +81,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     private FrescoActionButton mPictureButton;
     private FrescoActionButton mRecordButton;
     private CancelButton mCancelButton;
+    private ImageView mGoToLastButton;
 
     private DrawView mDrawView;
     private DrawedView mDrawedView;
@@ -114,11 +117,13 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mPictureButton = (PictureButton) findViewById(R.id.take_picture);
         mRecordButton = (RecordButton) findViewById(R.id.record_audio);
         mCancelButton = (CancelButton) findViewById(R.id.cancel_last_draw);
+        mGoToLastButton = (ImageView) findViewById(R.id.go_to_last_fragment);
 
         /* Ajout des listeners */
         mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
         mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
         mPictureButton.setOnClickListener(new TakePictureListener(this));
+        mGoToLastButton.setOnClickListener(new GoToLastFragmentListener(this));
     }
 
     /**
@@ -523,7 +528,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void showGoToLastButton()
     {
-        toggleViewOpacity(true, R.id.go_to_last_fragment);
+        toggleViewOpacity(mGoToLastButton, 0, 1);
     }
 
     /**
@@ -531,7 +536,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
      */
     public void hideGoToLastButton()
     {
-        toggleViewOpacity(false, R.id.go_to_last_fragment);
+        toggleViewOpacity(mGoToLastButton, 1, 0);
     }
 
     /**
