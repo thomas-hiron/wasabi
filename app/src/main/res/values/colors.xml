@@ -9,4 +9,5 @@
     <color name="active_hide">#00f26667</color>
     <color name="active_show">#f26667</color>
     <color name="record_button">#f26667</color>
+    <color name="grey_date">#a7a7a7</color>
 </resources>

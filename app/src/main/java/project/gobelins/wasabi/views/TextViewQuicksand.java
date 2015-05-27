@@ -13,7 +13,8 @@ import project.gobelins.wasabi.R;
  */
 public class TextViewQuicksand extends TextView
 {
-    private String mFontStyle;
+    private String mFontWeight;
+    private boolean mItalic;
 
     public TextViewQuicksand(Context context, AttributeSet attrs, int defStyle)
     {
@@ -27,7 +28,8 @@ public class TextViewQuicksand extends TextView
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.TextViewQuicksand);
 
-        mFontStyle = "Regular";
+        mFontWeight = "Regular";
+        mItalic = false;
 
         final int N = a.getIndexCount();
         for(int i = 0; i < N; ++i)
@@ -35,10 +37,16 @@ public class TextViewQuicksand extends TextView
             int attr = a.getIndex(i);
             switch(attr)
             {
+                case R.styleable.TextViewQuicksand_font_weight:
+
+                    mFontWeight = a.getString(attr).toLowerCase();
+                    mFontWeight = mFontWeight.substring(0,1).toUpperCase() + mFontWeight.substring(1);
+
+                    break;
+
                 case R.styleable.TextViewQuicksand_font_style:
 
-                    mFontStyle = a.getString(attr).toLowerCase();
-                    mFontStyle = mFontStyle.substring(0,1).toUpperCase() + mFontStyle.substring(1);
+                    mItalic = true;
 
                     break;
             }
@@ -56,7 +64,7 @@ public class TextViewQuicksand extends TextView
 
     private void init()
     {
-        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "Quicksand-" + mFontStyle + ".ttf");
-        setTypeface(tf);
+        Typeface tf = Typeface.createFromAsset(getContext().getAssets(), "Quicksand-" + mFontWeight + ".ttf");
+        setTypeface(tf, mItalic ? Typeface.ITALIC : Typeface.NORMAL);
     }
 }

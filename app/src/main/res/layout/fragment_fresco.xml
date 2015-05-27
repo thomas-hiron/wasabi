@@ -1,9 +1,11 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-             xmlns:tools="http://schemas.android.com/tools"
-             android:id="@+id/fresco_fragment"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             tools:context="project.gobelins.wasabi.fragments.FrescoFragment">
+<FrameLayout
+    android:id="@+id/fresco_fragment"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="project.gobelins.wasabi.fragments.FrescoFragment">
 
     <FrameLayout
         android:id="@+id/pictures_view"
@@ -24,5 +26,15 @@
         android:id="@+id/draw_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>
+
+    <project.gobelins.wasabi.views.TextViewQuicksand
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|center"
+        android:layout_marginBottom="30dp"
+        android:text="Jeudi 20 janvier"
+        android:textColor="@color/grey_date"
+        android:textSize="20sp"
+        app:font_style="italic"/>
 
 </FrameLayout>
