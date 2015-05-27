@@ -7,6 +7,7 @@ import android.app.PendingIntent;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
@@ -49,9 +50,10 @@ public class GCMNotificationIntentService extends IntentService
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
         /* Les valeurs */
-        if(extras.getString(Wasabi.REQUEST_ID) != null)
+        String requestIdString = extras.getString(Wasabi.REQUEST_ID);
+        if(requestIdString != null && !requestIdString.equals("0"))
         {
-            int requestId = Integer.parseInt(extras.getString(Wasabi.REQUEST_ID));
+            int requestId = Integer.parseInt(requestIdString);
             ContentValues contentValues = new ContentValues(4);
             contentValues.put(Notifications.NOTIFICATIONS_ID, requestId);
             contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
@@ -63,6 +65,14 @@ public class GCMNotificationIntentService extends IntentService
                     Notifications.NOTIFICATIONS_ID + " = " + requestId, null);
            /* Insertion dans la table */
             getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
+        }
+        /* Dessin, on met dans les sharedPref */
+        else if(requestIdString != null && requestIdString.equals("0"))
+        {
+            SharedPreferences sharedPreferences = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putBoolean(Wasabi.ACCOMPLICE_DRAWED, true);
+            edit.apply();
         }
     }
 
