@@ -9,7 +9,6 @@ import android.graphics.Shader;
 import android.graphics.SweepGradient;
 import android.os.Handler;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
@@ -31,7 +30,7 @@ public class RoundGradientGpsView extends View
     private RectF mPosition;
 
     /* Paramétrage */
-    private final int TOTAL_LENGTH = 1800000;
+    private final int TOTAL_LENGTH = 600000;
     private long mStartTime;
     private long mCurrentTime;
 
@@ -70,7 +69,7 @@ public class RoundGradientGpsView extends View
             @Override
             public void run()
             {
-                mCurrentTime = System.currentTimeMillis() - mStartTime;
+                mCurrentTime = TOTAL_LENGTH - (System.currentTimeMillis() - mStartTime);
 
                 /* On décrémente le chrono */
                 changeTimer();
@@ -79,7 +78,7 @@ public class RoundGradientGpsView extends View
                 invalidate();
 
                 /* On relance */
-                if(mCurrentTime < TOTAL_LENGTH && mStart)
+                if(mCurrentTime > 0 && mStart)
                     mHandler.postDelayed(this, 200);
             }
         };
@@ -110,8 +109,8 @@ public class RoundGradientGpsView extends View
         /* Le dégradé */
         mGradient = new SweepGradient(
                 mWidth / 2, mWidth / 2,
-                new int[]{mRed, mGreen, mGreen, mRed, mRed},
-                new float[]{0, 0.05f, 0.4f, 0.6f, 1}
+                new int[]{mRed, mRed, mGreen, mGreen, mRed, mRed},
+                new float[]{0, 0.01f, 0.03f, 0.4f, 0.6f, 1}
         );
 
         mPaint.setShader(mGradient);
@@ -126,7 +125,7 @@ public class RoundGradientGpsView extends View
     private void changeTimer()
     {
         /* Temps restant en secondes */
-        int time_left = (int) ((TOTAL_LENGTH - mCurrentTime) / 1000);
+        int time_left = (int) (mCurrentTime / 1000);
 
         /* Pour éviter les valeurs négatives */
         if(time_left < 0)
