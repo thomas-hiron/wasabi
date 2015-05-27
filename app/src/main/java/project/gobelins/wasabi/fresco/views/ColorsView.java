@@ -53,6 +53,9 @@ public class ColorsView extends LinearLayout
             /* Ajout au tableau */
             mColors.add(b);
         }
+
+        /* Activation de la couleur noire */
+        mColors.get(0).setActive();
     }
 
     /**

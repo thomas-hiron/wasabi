@@ -4,7 +4,6 @@ import android.content.Context;
 import android.graphics.LightingColorFilter;
 import android.graphics.drawable.Drawable;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
@@ -20,6 +19,7 @@ public class ColorButton extends FrameLayout
     private Button mButton;
     private View mActiveState;
     private int mColor;
+    private boolean mActive;
 
     public ColorButton(Context context)
     {
@@ -29,6 +29,8 @@ public class ColorButton extends FrameLayout
     public ColorButton(Context context, AttributeSet attrs)
     {
         super(context, attrs);
+
+        mActive = false;
     }
 
     @Override
@@ -45,6 +47,10 @@ public class ColorButton extends FrameLayout
 
         /* Ajout du listener */
         addListener();
+
+        /* Si bouton activé */
+        if(mActive)
+            activate();
     }
 
     public int getColor()
@@ -85,5 +91,13 @@ public class ColorButton extends FrameLayout
     public void addListener()
     {
         mButton.setOnClickListener(new ChangeDrawingColorListener());
+    }
+
+    /**
+     * Pour activer le bouton par défaut
+     */
+    public void setActive()
+    {
+        mActive = true;
     }
 }
