@@ -1,6 +1,7 @@
 package project.gobelins.wasabi;
 
 import android.annotation.TargetApi;
+import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
@@ -50,6 +51,7 @@ import project.gobelins.wasabi.notifications.AsyncNotificationInflater;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.MyLayout;
+import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.utils.DateFormater;
 import project.gobelins.wasabi.views.FormCode;
 
@@ -594,7 +596,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                     .execute(Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/drawings");
 
             /* Suppression des préférences */
-//            sharedPreferences.edit().remove(ACCOMPLICE_DRAWED).apply();
+            sharedPreferences.edit().remove(ACCOMPLICE_DRAWED).apply();
         }
     }
 }

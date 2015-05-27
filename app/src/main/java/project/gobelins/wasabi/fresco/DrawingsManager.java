@@ -49,6 +49,7 @@ public class DrawingsManager
                 drawing.setDate(c.getString(c.getColumnIndex(Drawings.DRAWINGS_DATE)));
                 drawing.setColor(c.getInt(c.getColumnIndex(Drawings.DRAWINGS_COLOR)));
                 drawing.setPoints(c.getString(c.getColumnIndex(Drawings.DRAWINGS_POINTS)));
+                drawing.setFromAccomplice(c.getInt(c.getColumnIndex(Drawings.DRAWINGS_ACCOMPLICE)));
 
                 /* Récupération et initialisation si null */
                 ArrayList<Entity> dateDrawings = drawings.get(drawing.getDate());
