@@ -38,7 +38,7 @@ public class GCMNotificationIntentService extends IntentService
 
         String messageType = gcm.getMessageType(intent);
 
-        if(!extras.isEmpty())
+        if(!extras.isEmpty() && !extras.getString(Wasabi.REQUEST_ID).equals("0"))
         {
             if(GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType))
                 sendNotification("Error", extras.toString());
@@ -63,7 +63,7 @@ public class GCMNotificationIntentService extends IntentService
             /* Suppression de sécurité pour ne pas générer une erreur si id existant */
             getContentResolver().delete(Uri.parse(Notifications.URL_NOTIFICATIONS),
                     Notifications.NOTIFICATIONS_ID + " = " + requestId, null);
-           /* Insertion dans la table */
+            /* Insertion dans la table */
             getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
         }
         /* Dessin, on met dans les sharedPref */
