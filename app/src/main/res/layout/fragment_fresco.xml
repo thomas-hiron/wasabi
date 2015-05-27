@@ -18,6 +18,11 @@
         android:layout_height="match_parent"/>
 
     <project.gobelins.wasabi.fresco.drawing.DrawedView
+        android:id="@+id/accomplice_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+    <project.gobelins.wasabi.fresco.drawing.DrawedView
         android:id="@+id/drawed_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"/>

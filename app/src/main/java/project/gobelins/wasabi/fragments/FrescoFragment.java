@@ -37,6 +37,7 @@ public class FrescoFragment extends Fragment
     private boolean mIsLastFragment;
     private Date mDate;
     private DrawedView mDrawedView;
+    private DrawedView mAccompliceView;
     private Button mStartRecordingButton;
     private ArrayList<Drawing> mDrawings;
     private ArrayList<Image> mImages;
@@ -137,6 +138,8 @@ public class FrescoFragment extends Fragment
 
         /* La vue du dessin */
         mDrawedView = (DrawedView) view.findViewById(R.id.drawed_view);
+        /* La vue du complice */
+        mAccompliceView = (DrawedView) view.findViewById(R.id.accomplice_view);
 
         /* La date */
         TextView date = (TextView) view.findViewById(R.id.date_fragment);
@@ -174,7 +177,12 @@ public class FrescoFragment extends Fragment
         if(mDrawings != null)
         {
             for(Drawing drawing : mDrawings)
-                mDrawedView.draw(drawing.getPoints());
+            {
+                if(drawing.getFromAccomplice())
+                    mAccompliceView.draw(drawing.getPoints());
+                else
+                    mDrawedView.draw(drawing.getPoints());
+            }
         }
 
         /* On ajoute toutes les images */
