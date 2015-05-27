@@ -70,7 +70,7 @@ public class FrescoViewPager extends ViewPager
             public void onPageScrollStateChanged(int state)
             {
                 /* Si page à l'arrêt */
-                if(state == SCROLL_STATE_IDLE)
+                if(state == SCROLL_STATE_IDLE && getAdapter().getCount() > 1)
                 {
                     /* On cache la flèche */
                     if(getCurrentItem() == getAdapter().getCount() - 1)
