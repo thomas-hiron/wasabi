@@ -5,7 +5,20 @@
         android:layout_height="25dp"
         android:layout_marginEnd="7dp"
         android:layout_marginRight="7dp"
-        android:layout_gravity="center"
-        android:background="@drawable/round_button">
+        android:layout_gravity="center">
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/round_button"/>
+
+    <!-- Pour l'état actif -->
+    <View
+        android:id="@+id/color_active_stroke"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_gravity="center_vertical"
+        android:background="@drawable/color_active"
+        android:visibility="invisible"/>
 
 </project.gobelins.wasabi.fresco.views.ColorButton>
