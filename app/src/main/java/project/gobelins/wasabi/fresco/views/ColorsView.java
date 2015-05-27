@@ -7,6 +7,8 @@ import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.fresco.Colors;
 import project.gobelins.wasabi.fresco.listeners.ChangeDrawingColorListener;
@@ -16,6 +18,8 @@ import project.gobelins.wasabi.fresco.listeners.ChangeDrawingColorListener;
  */
 public class ColorsView extends LinearLayout
 {
+    private ArrayList<ColorButton> mColors;
+
     public ColorsView(Context context)
     {
         super(context);
@@ -28,6 +32,8 @@ public class ColorsView extends LinearLayout
         /* Récupértation des couleurs */
         Colors colorsObject = new Colors();
         int[] colors = colorsObject.getColors();
+
+        mColors = new ArrayList<>(colors.length);
 
         /* L'inflater */
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -44,8 +50,18 @@ public class ColorsView extends LinearLayout
             /* Ajout de la vue */
             addView(b);
 
-            /* Ajout des listeners */
-            b.setOnClickListener(new ChangeDrawingColorListener());
+            /* Ajout au tableau */
+            mColors.add(b);
         }
+    }
+
+    /**
+     * Désactive tous les boutons
+     */
+    public void disableAll()
+    {
+        for(ColorButton button : mColors)
+            button.disable();
+
     }
 }
