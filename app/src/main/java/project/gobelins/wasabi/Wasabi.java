@@ -1,6 +1,7 @@
 package project.gobelins.wasabi;
 
 import android.annotation.TargetApi;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -23,15 +24,22 @@ import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
+import project.gobelins.wasabi.httpRequests.AsyncPostCodeRequest;
+import project.gobelins.wasabi.httpRequests.AsyncPostDrawingsRequest;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
 import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
@@ -132,6 +140,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 immersiveMode(true);
             }
         });
+
+        /* On récupère les dessins du complice s'il y en a */
+        getAccompliceDrawings();
     }
 
     /**
@@ -564,5 +575,26 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Ajout du message à la vue */
         child.removeView(mCustomView);
         child.addView(mCustomView, 0);
+    }
+
+    /**
+     * Récupère les dessins du complice
+     */
+    private void getAccompliceDrawings()
+    {
+        SharedPreferences sharedPreferences = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
+
+        boolean accompliceDrawed = sharedPreferences.getBoolean(ACCOMPLICE_DRAWED, false);
+
+        /* Récupération en asyncTask */
+        if(accompliceDrawed)
+        {
+            /* Construction des données POST */
+            new AsyncPostDrawingsRequest(new ArrayList<NameValuePair>(0), this)
+                    .execute(Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/fresco/drawings");
+
+            /* Suppression des préférences */
+//            sharedPreferences.edit().remove(ACCOMPLICE_DRAWED).apply();
+        }
     }
 }
