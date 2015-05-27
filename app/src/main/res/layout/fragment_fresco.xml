@@ -28,11 +28,11 @@
         android:layout_height="match_parent"/>
 
     <project.gobelins.wasabi.views.TextViewQuicksand
+        android:id="@+id/date_fragment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center"
         android:layout_marginBottom="30dp"
-        android:text="Jeudi 20 janvier"
         android:textColor="@color/grey_date"
         android:textSize="20sp"
         app:font_style="italic"/>

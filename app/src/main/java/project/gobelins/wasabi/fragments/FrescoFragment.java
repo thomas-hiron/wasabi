@@ -8,9 +8,12 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.entities.Drawing;
@@ -135,6 +138,21 @@ public class FrescoFragment extends Fragment
         /* La vue du dessin */
         mDrawedView = (DrawedView) view.findViewById(R.id.drawed_view);
 
+        /* La date */
+        TextView date = (TextView) view.findViewById(R.id.date_fragment);
+
+        /* Changement de la date */
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTime(mDate);
+
+        String day = calendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.FRANCE);
+        day = day.substring(0, 1).toUpperCase() + day.substring(1);
+
+        String month = calendar.getDisplayName(Calendar.MONTH, Calendar.LONG, Locale.FRANCE);
+
+        String date_formated = day + " " + calendar.get(Calendar.DATE) + " " + month;
+        date.setText(date_formated);
+
         /* Si dernier fragment, on ajoute recordAudio */
         if(mIsLastFragment)
         {
@@ -147,6 +165,9 @@ public class FrescoFragment extends Fragment
 
             /* Récupération du bouton enregistrer */
             mStartRecordingButton = (Button) recordView.findViewById(R.id.start_recording);
+
+            /* On vire la date */
+            view.removeView(date);
         }
 
         /* On dessine toutes les courbes */
