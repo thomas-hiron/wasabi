@@ -42,5 +42,6 @@
     <string name="error">Une erreur s\'est produite :(</string>
     <string name="minutes">min</string>
     <string name="seconds">sec</string>
+    <string name="go_to_last_fragment">Go to last fragment</string>
 
 </resources>
