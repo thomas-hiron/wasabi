@@ -202,6 +202,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Ajout de l'adapter */
         mViewPager.setAdapter(mViewPagerAdapter);
+        mViewPager.setFresco(this);
     }
 
     /**
@@ -515,6 +516,22 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void showDustbin()
     {
         toggleViewOpacity(true, R.id.fresco_dustbin);
+    }
+
+    /**
+     * Affiche le bouton pour aller au dernier fragment
+     */
+    public void showGoToLastButton()
+    {
+        toggleViewOpacity(true, R.id.go_to_last_fragment);
+    }
+
+    /**
+     * Cache le bouton pour aller au dernier fragment
+     */
+    public void hideGoToLastButton()
+    {
+        toggleViewOpacity(false, R.id.go_to_last_fragment);
     }
 
     /**

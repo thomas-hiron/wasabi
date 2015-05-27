@@ -4,13 +4,12 @@ import android.content.Context;
 import android.support.v4.view.ViewPager;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.GestureDetector;
 import android.view.MotionEvent;
-import android.widget.Scroller;
 
 import java.lang.reflect.Field;
 
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerAdapter;
 import project.gobelins.wasabi.fresco.viewPager.ViewPagerScroller;
 
@@ -22,6 +21,8 @@ import project.gobelins.wasabi.fresco.viewPager.ViewPagerScroller;
 public class FrescoViewPager extends ViewPager
 {
     private boolean mLock;
+    private Fresco mFresco;
+    private boolean mButtonHidden;
 
     public FrescoViewPager(Context context)
     {
@@ -47,6 +48,44 @@ public class FrescoViewPager extends ViewPager
         {
             Log.e(Wasabi.TAG, "Error of change scroller ", e);
         }
+
+        mButtonHidden = false;
+
+        /* Listener de scroll */
+        setOnPageChangeListener(new OnPageChangeListener()
+        {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels)
+            {
+
+            }
+
+            @Override
+            public void onPageSelected(int position)
+            {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state)
+            {
+                /* Si page à l'arrêt */
+                if(state == SCROLL_STATE_IDLE)
+                {
+                    /* On cache la flèche */
+                    if(getCurrentItem() == getAdapter().getCount() - 1)
+                    {
+                        mFresco.hideGoToLastButton();
+                        mButtonHidden = true;
+                    }
+                    else if(mButtonHidden)
+                    {
+                        mFresco.showGoToLastButton();
+                        mButtonHidden = false;
+                    }
+                }
+            }
+        });
     }
 
     @Override
@@ -81,5 +120,10 @@ public class FrescoViewPager extends ViewPager
     public void unlock()
     {
         mLock = false;
+    }
+
+    public void setFresco(Fresco fresco)
+    {
+        mFresco = fresco;
     }
 }
