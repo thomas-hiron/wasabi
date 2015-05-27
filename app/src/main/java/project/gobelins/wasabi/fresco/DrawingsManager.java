@@ -78,10 +78,11 @@ public class DrawingsManager
         int color = ((ColorPoint) points.get(0)).getColor();
 
         /* Nouvelles valeurs */
-        ContentValues contentValues = new ContentValues(3);
+        ContentValues contentValues = new ContentValues(4);
         contentValues.put(Drawings.DRAWINGS_DATE, DateFormater.getTodayAsString());
         contentValues.put(Drawings.DRAWINGS_POINTS, points.toString().replaceAll("\\[(.*)\\]", "$1"));
         contentValues.put(Drawings.DRAWINGS_COLOR, color);
+        contentValues.put(Drawings.DRAWINGS_ACCOMPLICE, 0);
 
         /* Insertion */
         mContentResolver.insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);

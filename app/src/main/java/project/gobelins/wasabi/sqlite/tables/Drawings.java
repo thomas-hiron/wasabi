@@ -15,6 +15,7 @@ public class Drawings
     public static final String DRAWINGS_DATE = "date"; /* La date du dessin */
     public static final String DRAWINGS_POINTS = "points"; /* Tous les points */
     public static final String DRAWINGS_COLOR = "color"; /* La date de réception */
+    public static final String DRAWINGS_ACCOMPLICE = "fromAccomplice"; /* Si dessiné par le complice */
 
     public static final String TABLE_DRAWINGS = "drawings";
 
@@ -26,6 +27,7 @@ public class Drawings
             DRAWINGS_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
             DRAWINGS_DATE + " TEXT," +
             DRAWINGS_POINTS + " TEXT," +
-            DRAWINGS_COLOR + " INTEGER" +
+            DRAWINGS_COLOR + " INTEGER," +
+            DRAWINGS_ACCOMPLICE + " INTEGER" +
             ")";
 }

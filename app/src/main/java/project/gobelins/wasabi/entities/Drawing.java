@@ -23,6 +23,7 @@ public class Drawing extends Entity
     private Date date;
     private ArrayList<Point> points;
     private int color;
+    private boolean fromAccomplice;
 
     public Date getDate()
     {
@@ -69,11 +70,21 @@ public class Drawing extends Entity
         this.color = color;
     }
 
+    public boolean getFromAccomplice()
+    {
+        return fromAccomplice;
+    }
+
+    public void setFromAccomplice(int fromAccomplice)
+    {
+        this.fromAccomplice = fromAccomplice == 1;
+    }
+
     public void setPoints(String string)
     {
         /* Extraction des points */
         String[] coords = string.split(",");
-        ArrayList<Point> points = new ArrayList<Point>(coords.length / 2);
+        ArrayList<Point> points = new ArrayList<>(coords.length / 2);
 
         /* Instanciation et ajout */
         for(int i = 0, l = coords.length; i < l; i += 2)

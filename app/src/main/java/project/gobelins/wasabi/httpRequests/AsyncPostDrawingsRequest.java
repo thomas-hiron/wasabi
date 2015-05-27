@@ -56,10 +56,11 @@ public class AsyncPostDrawingsRequest extends AsyncPostRequests
                     String points = (String) currentDrawing.get("points");
                     String color = (String) currentDrawing.get("color");
 
-                    ContentValues contentValues = new ContentValues(3);
+                    ContentValues contentValues = new ContentValues(4);
                     contentValues.put(Drawings.DRAWINGS_POINTS, points.replaceAll("\\[(.*)\\]", "$1"));
                     contentValues.put(Drawings.DRAWINGS_DATE, currentDate);
                     contentValues.put(Drawings.DRAWINGS_COLOR, Color.parseColor(color));
+                    contentValues.put(Drawings.DRAWINGS_ACCOMPLICE, 1);
 
                     /* Enregistrement */
                     mContext.getContentResolver().insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);
