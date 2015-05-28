@@ -47,5 +47,13 @@
     <string name="sing_to_discover">Chantez pour découvrir le message envoyé par votre proche mystère</string>
     <string name="message_mask">Masque du message</string>
     <string name="experience_ending">Votre expérience touche à sa fin !</string>
+    <string name="revelation">Révélation</string>
+    <string name="in_7_days">Dans 7 jours, vous recevrez un défi. A la clé : la rencontre de votre proche mystère !</string>
+    <string name="consignes">Consignes :</string>
+    <string name="get_ready">Tenez-vous prêt chez vous,</string>
+    <string name="date_final_event">Jeudi 12 août à 18h</string>
+    <string name="dress_code">Dress code : Explorateur</string>
+    <string name="address_communicated">Nous vous communiquerons l’adresse le moment venu !</string>
+    <string name="can_go_with_someone">Vous pouvez venir accompagné</string>
 
 </resources>
