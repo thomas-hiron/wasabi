@@ -12,8 +12,10 @@ import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.gps.GeolocationManager;
@@ -42,6 +44,7 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     private int mTotalDistance;
     private LinearLayout mGpsView;
     private LinearLayout mGpsOverView;
+    private ImageView mTakePictureButton;
 
     public GPSView(Context context)
     {
@@ -61,6 +64,7 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
         mDistanceLeft = (TextView) findViewById(R.id.gps_distance_left);
         mGpsView = (LinearLayout) findViewById(R.id.gps);
         mGpsOverView = (LinearLayout) findViewById(R.id.gps_over);
+        mTakePictureButton = (ImageView) findViewById(R.id.take_picture_gps);
 
         mCurrentLocation = null;
         mNoAnimation = true;
@@ -208,8 +212,19 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     @Override
     public void onClick(View view)
     {
+        if(view.getId() == mArrow.getId())
+            clickOnArrow();
+        else if(view.getId() == mTakePictureButton.getId())
+            takePicture();
+    }
+
+    /**
+     * Clic sur la flèche pour simuler la complétion
+     */
+    private void clickOnArrow()
+    {
         /* Suppression du listener */
-        view.setOnClickListener(null);
+        mArrow.setOnClickListener(null);
 
         /* Arrêt */
         stop();
@@ -226,5 +241,16 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
 
         mGpsOverView.setVisibility(VISIBLE);
         mGpsOverView.startAnimation(alphaAnimation);
+
+        /* Ajout du listener sur le bouton prendre une photo */
+        mTakePictureButton.setOnClickListener(this);
+    }
+
+    /**
+     * Prise d'une photo
+     */
+    private void takePicture()
+    {
+        Toast.makeText(getContext(), "Photo", Toast.LENGTH_SHORT).show();
     }
 }
