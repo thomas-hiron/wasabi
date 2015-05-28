@@ -5,9 +5,32 @@
              android:layout_gravity="center"
              tools:context=".Wasabi">
 
+    <FrameLayout
+        android:id="@+id/message_container"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_gravity="center">
+
+        <ImageView
+            android:layout_width="300dp"
+            android:layout_height="300dp"
+            android:layout_gravity="center"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/panda"
+            android:src="@drawable/message_sung"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:contentDescription="@string/message_mask"
+            android:src="@drawable/message_mask"/>
+
+    </FrameLayout>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="top"
         android:orientation="vertical">
 
         <project.gobelins.wasabi.views.TextViewQuicksand
@@ -31,27 +54,5 @@
             android:background="@drawable/drop_shadow"/>
 
     </LinearLayout>
-
-    <FrameLayout
-        android:id="@+id/message_container"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="300dp"
-            android:layout_height="300dp"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/panda"
-            android:src="@drawable/message_sung"/>
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:contentDescription="@string/message_mask"
-            android:src="@drawable/message_mask"/>
-
-    </FrameLayout>
 
 </FrameLayout>
