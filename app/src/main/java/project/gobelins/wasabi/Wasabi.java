@@ -123,8 +123,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mAnimPlayed = false;
 
         /* ---- TEMPORAIRE ---- */
-//        mAnimPlayed = true;
-//        homeAnimationEnd();
+        mAnimPlayed = true;
+        homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */

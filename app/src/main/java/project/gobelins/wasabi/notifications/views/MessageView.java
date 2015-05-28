@@ -41,47 +41,6 @@ public class MessageView extends MyLayout
 
         /* On inflate la vue */
         inflate(context, R.layout.message_view, this);
-
-        /* Changement du texte */
-        final TextView messageTv = (TextView) findViewById(R.id.message);
-        messageTv.setText(mCurrentMessage);
-
-        /* Instanciation et initialisation du handler et du runnable */
-        mHandler = new Handler();
-        mRunnable = new Runnable()
-        {
-            private int counter = 0;
-
-            @Override
-            public void run()
-            {
-                double amplitude = mSoundMeter.getAmplitude();
-
-                /* On affiche le texte */
-                if(amplitude >= MIN_AMPLITUDE || mInterval < MAX_INTERVAL)
-                {
-                    /* On incrémente le message courant */
-                    mCurrentMessage = mMessage.substring(0, counter++);
-
-                    /* On affiche le message courant */
-                    messageTv.setText(mCurrentMessage);
-
-                    /* On accélère l'intervalle s'il chante */
-                    if(mInterval > MIN_INTERVAL && amplitude >= MIN_AMPLITUDE)
-                        mInterval -= PAS_INTERVAL;
-                    /* Sinon on décélère l'intervalle */
-                    else if(mInterval < MAX_INTERVAL)
-                        mInterval += PAS_INTERVAL;
-                }
-
-                /* Message non affiché en entier, on relance */
-                if(mCurrentMessage.length() != mMessage.length())
-                    mHandler.postDelayed(this, mInterval);
-                /* Sinon on stoppe l'enregistrement */
-                else
-                    mSoundMeter.stop();
-            }
-        };
     }
 
     /**
@@ -90,6 +49,42 @@ public class MessageView extends MyLayout
     @Override
     public void initialize()
     {
+        if(mHandler == null)
+        {
+            /* Instanciation et initialisation du handler et du runnable */
+            mHandler = new Handler();
+            mRunnable = new Runnable()
+            {
+                private int counter = 0;
+
+                @Override
+                public void run()
+                {
+                    double amplitude = mSoundMeter.getAmplitude();
+
+                    /* On affiche le texte */
+                    if(amplitude >= MIN_AMPLITUDE || mInterval < MAX_INTERVAL)
+                    {
+                        /* On incrémente le message courant */
+                        mCurrentMessage = mMessage.substring(0, counter++);
+
+                        /* On accélère l'intervalle s'il chante */
+                        if(mInterval > MIN_INTERVAL && amplitude >= MIN_AMPLITUDE)
+                            mInterval -= PAS_INTERVAL;
+                        /* Sinon on décélère l'intervalle */
+                        else if(mInterval < MAX_INTERVAL)
+                            mInterval += PAS_INTERVAL;
+                    }
+
+                    /* Message non affiché en entier, on relance */
+                    if(mCurrentMessage.length() != mMessage.length())
+                        mHandler.postDelayed(this, mInterval);
+                    /* Sinon on stoppe l'enregistrement */
+                    else
+                        mSoundMeter.stop();
+                }
+            };
+        }
         /* Début de la détection du son */
         mSoundMeter = new SoundMeter();
         mSoundMeter.start();
