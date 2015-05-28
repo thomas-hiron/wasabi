@@ -7,12 +7,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
-import android.location.LocationManager;
-import android.util.Log;
+import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.gps.GeolocationManager;
@@ -22,7 +22,7 @@ import project.gobelins.wasabi.gps.GeolocationManager;
  * <p/>
  * Created by ThomasHiron on 24/05/2015.
  */
-public class GPSView extends MyLayout implements SensorEventListener, Animation.AnimationListener
+public class GPSView extends MyLayout implements SensorEventListener, Animation.AnimationListener, View.OnClickListener
 {
     private final int ROTATION_DURATION = 750;
 
@@ -62,6 +62,9 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
 
         /* Gestion et connexion de la géolocalisation */
         mGeolocation = new GeolocationManager(this);
+
+        /* On force l'arrivée */
+        mArrow.setOnClickListener(this);
     }
 
     @Override
@@ -190,5 +193,16 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     public void setCurrentLocation(Location currentLocation)
     {
         mCurrentLocation = currentLocation;
+    }
+
+    /**
+     * On est arrivé à destination
+     *
+     * @param view La flèche
+     */
+    @Override
+    public void onClick(View view)
+    {
+        Toast.makeText(getContext(), "Arrivé !", Toast.LENGTH_SHORT).show();
     }
 }

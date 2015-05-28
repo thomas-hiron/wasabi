@@ -1,158 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white"
+             android:orientation="vertical">
 
-    <project.gobelins.wasabi.views.TextViewQuicksand
+    <!-- Vue du GPS -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:layout_marginTop="14dp"
-        android:gravity="center"
-        android:text="@string/follow_arrow"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/drop_shadow"/>
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/follow_arrow"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
-    <FrameLayout
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/drop_shadow"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/challenge_infos"
+                android:src="@drawable/lets_guide"/>
+
+        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/gps_arrow"
+            android:layout_width="220dp"
+            android:layout_height="220dp"
+            android:layout_gravity="center"
+            android:background="@drawable/arrow_gps"
+            android:contentDescription="@string/follow_arrow"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="15dp">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="start">
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:id="@+id/gps_distance"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/initial_distance"
+                    android:textColor="@color/green_button"
+                    android:textSize="33sp"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/gps_distance"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/gps_distance"
+                    android:layout_toRightOf="@id/gps_distance"
+                    android:paddingBottom="5dp"
+                    android:text="@string/meter"
+                    android:textColor="@color/green_button"
+                    android:textSize="20sp"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gps_distance"
+                    android:text="@string/gps_distance"
+                    android:textColor="@color/green_button"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end">
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:id="@+id/gps_distance_left"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/initial_distance"
+                    android:textColor="@color/active_show"
+                    android:textSize="33sp"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@id/gps_distance_left"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_toEndOf="@id/gps_distance_left"
+                    android:layout_toRightOf="@id/gps_distance_left"
+                    android:paddingBottom="5dp"
+                    android:text="@string/meter"
+                    android:textColor="@color/active_show"
+                    android:textSize="20sp"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/gps_distance_left"
+                    android:text="@string/gps_distance_left"
+                    android:textColor="@color/active_show"
+                    android:textSize="20sp"/>
+
+            </RelativeLayout>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="50dp"
+            android:layout_marginLeft="50dp"
+            android:layout_marginRight="50dp"
+            android:layout_marginStart="50dp"
+            android:layout_marginTop="20dp">
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_gravity="center"
+                android:background="@drawable/gps_progress_gradient"/>
+
+            <Button
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:layout_gravity="start|center"
+                android:background="@drawable/gps_distance_button"/>
+
+            <Button
+                android:layout_width="27dp"
+                android:layout_height="27dp"
+                android:layout_gravity="end|center"
+                android:background="@drawable/gps_final_distance_button"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!-- Vue du GPS arrivé -->
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="invisible">
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/destination"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/drop_shadow"/>
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginTop="60dp"
             android:adjustViewBounds="true"
-            android:contentDescription="@string/challenge_infos"
-            android:src="@drawable/lets_guide"/>
+            android:contentDescription="@string/bravo"
+            android:src="@drawable/bravo"/>
 
-    </FrameLayout>
-
-    <ImageView
-        android:id="@+id/gps_arrow"
-        android:layout_width="220dp"
-        android:layout_height="220dp"
-        android:layout_gravity="center"
-        android:background="@drawable/arrow_gps"
-        android:contentDescription="@string/follow_arrow"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="15dp">
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="start">
-
-            <project.gobelins.wasabi.views.TextViewQuicksand
-                android:id="@+id/gps_distance"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/initial_distance"
-                android:textColor="@color/green_button"
-                android:textSize="33sp"/>
-
-            <project.gobelins.wasabi.views.TextViewQuicksand
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/gps_distance"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/gps_distance"
-                android:layout_toRightOf="@id/gps_distance"
-                android:paddingBottom="5dp"
-                android:text="@string/meter"
-                android:textColor="@color/green_button"
-                android:textSize="20sp"/>
-
-            <project.gobelins.wasabi.views.TextViewQuicksand
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/gps_distance"
-                android:text="@string/gps_distance"
-                android:textColor="@color/green_button"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end">
-
-            <project.gobelins.wasabi.views.TextViewQuicksand
-                android:id="@+id/gps_distance_left"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/initial_distance"
-                android:textColor="@color/active_show"
-                android:textSize="33sp"/>
-
-            <project.gobelins.wasabi.views.TextViewQuicksand
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignBottom="@id/gps_distance_left"
-                android:layout_marginLeft="10dp"
-                android:layout_marginStart="10dp"
-                android:layout_toEndOf="@id/gps_distance_left"
-                android:layout_toRightOf="@id/gps_distance_left"
-                android:paddingBottom="5dp"
-                android:text="@string/meter"
-                android:textColor="@color/active_show"
-                android:textSize="20sp"/>
-
-            <project.gobelins.wasabi.views.TextViewQuicksand
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/gps_distance_left"
-                android:text="@string/gps_distance_left"
-                android:textColor="@color/active_show"
-                android:textSize="20sp"/>
-
-        </RelativeLayout>
-
-    </FrameLayout>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="50dp"
-        android:layout_marginLeft="50dp"
-        android:layout_marginRight="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="20dp">
-
-        <View
+        <project.gobelins.wasabi.views.TextViewQuicksand
             android:layout_width="match_parent"
-            android:layout_height="2dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="@string/take_picture_to_illustrate"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
             android:layout_gravity="center"
-            android:background="@drawable/gps_progress_gradient"/>
+            android:layout_marginTop="30dp"
+            android:contentDescription="@string/take_picture_to_illustrate"
+            android:src="@drawable/take_picture"/>
 
-        <Button
-            android:layout_width="19dp"
-            android:layout_height="19dp"
-            android:layout_gravity="start|center"
-            android:background="@drawable/gps_distance_button"/>
+    </LinearLayout>
 
-        <Button
-            android:layout_width="27dp"
-            android:layout_height="27dp"
-            android:layout_gravity="end|center"
-            android:background="@drawable/gps_final_distance_button"/>
-
-    </FrameLayout>
-
-</LinearLayout>
+</FrameLayout>
