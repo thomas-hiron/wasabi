@@ -46,5 +46,6 @@
     <string name="panda">Et le panda il fait quoi ?</string>
     <string name="sing_to_discover">Chantez pour découvrir le message envoyé par votre proche mystère</string>
     <string name="message_mask">Masque du message</string>
+    <string name="experience_ending">Votre expérience touche à sa fin !</string>
 
 </resources>

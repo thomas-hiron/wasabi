@@ -11,6 +11,7 @@ import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.notifications.views.ChallengeView;
 import project.gobelins.wasabi.notifications.views.ErrorView;
 import project.gobelins.wasabi.notifications.views.FacebookView;
+import project.gobelins.wasabi.notifications.views.FinalEventView;
 import project.gobelins.wasabi.notifications.views.GPSView;
 import project.gobelins.wasabi.notifications.views.MessageView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
@@ -75,6 +76,14 @@ public class AsyncNotificationInflater extends AsyncTask
 
                 /* Création de la vue */
                 mCustomView = new ChallengeView(mWasabi.getApplicationContext());
+
+                break;
+
+            /* Evénement final */
+            case NotificationsTypes.FINALEVENTS:
+
+                /* Création de la vue */
+                mCustomView = new FinalEventView(mWasabi.getApplicationContext());
 
                 break;
 
