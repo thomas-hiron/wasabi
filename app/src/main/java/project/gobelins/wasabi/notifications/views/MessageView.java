@@ -2,6 +2,7 @@ package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
 import android.os.Handler;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -36,6 +37,7 @@ public class MessageView extends MyLayout
     private ValueAnimator mAnimator;
     private int mMaxWidth;
     private boolean mDown;
+    private boolean mStopped;
 
     public MessageView(Context context)
     {
@@ -51,6 +53,11 @@ public class MessageView extends MyLayout
     @Override
     public void initialize()
     {
+        /* Initialisation de la taille et des données membres */
+        mCurrentWidth = 0;
+        mDown = false;
+        mStopped = false;
+
         if(mHandler == null)
         {
             /* Instanciation et initialisation du handler et du runnable */
@@ -73,7 +80,8 @@ public class MessageView extends MyLayout
                             animate(0);
                     }
 
-                    mHandler.postDelayed(this, INTERVAL);
+                    if(!mStopped)
+                        mHandler.postDelayed(this, INTERVAL);
                 }
             };
         }
@@ -86,11 +94,7 @@ public class MessageView extends MyLayout
         mSoundMeter.start();
 
         /* Lancement du runnable */
-        mHandler.postDelayed(mRunnable, 0);
-
-        /* Initialisation de la taille */
-        mCurrentWidth = 0;
-        mDown = false;
+        mHandler.post(mRunnable);
 
         /* Le conteneur animé */
         mMessageContainer = (FrameLayout) findViewById(R.id.message_container);
@@ -160,5 +164,6 @@ public class MessageView extends MyLayout
     public void stop()
     {
         mSoundMeter.stop();
+        mStopped = true;
     }
 }
