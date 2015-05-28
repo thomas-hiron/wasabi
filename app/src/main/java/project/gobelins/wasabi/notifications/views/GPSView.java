@@ -1,12 +1,15 @@
 package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.GeomagneticField;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.util.Base64;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -17,9 +20,18 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
+
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.gps.GeolocationManager;
+import project.gobelins.wasabi.httpRequests.AsyncPostRequests;
 
 /**
  * La vue du GPS
@@ -47,12 +59,15 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     private LinearLayout mGpsView;
     private LinearLayout mGpsOverView;
     private ImageView mTakePictureButton;
+    private Notification mNotification;
 
-    public GPSView(Wasabi wasabi)
+    public GPSView(Wasabi wasabi, Notification notification)
     {
         super(wasabi);
 
         mWasabi = wasabi;
+        mNotification = notification;
+
         inflate(mWasabi, R.layout.gps_view, this);
 
         /* Ajout du listener accéléromètre */
@@ -259,9 +274,26 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
 
     /**
      * La photo a bien été prise
+     *
+     * @param photoPath Le chemin de la photo
      */
-    public void photoOk()
+    public void photoOk(String photoPath)
     {
-        Toast.makeText(getContext(), "Photo OK !\nEnvoi au serveur en cours...", Toast.LENGTH_SHORT).show();
+        /* Encodage du fichier en base64 */
+        Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+        byte[] b = baos.toByteArray();
+        String picture64 = Base64.encodeToString(b, Base64.DEFAULT);
+
+        /* Appel à l'API */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(2);
+        nameValuePairs.add(new BasicNameValuePair("picture64", picture64));
+        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(mNotification.getId())));
+
+        /* Exécution de la requête */
+        new AsyncPostRequests(nameValuePairs).execute(
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/request/gps"
+        );
     }
 }

@@ -349,7 +349,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             else
             {
                 /* On change la vue */
-                ((GPSView) mCustomView).photoOk();
+                ((GPSView) mCustomView).photoOk(mCurrentPhotoPath);
             }
         }
     }
