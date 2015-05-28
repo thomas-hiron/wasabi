@@ -25,8 +25,7 @@ public class MessageView extends MyLayout
     private Runnable mRunnable;
 
     /* L'amplitude  */
-//    private final int MIN_AMPLITUDE = 20000;
-    private final int MIN_AMPLITUDE = 10000;
+    private final int MIN_AMPLITUDE = 20000;
     private final int APPEAR_DURATION = 10000;
     private final int DISAPPEAR_DURATION = 2000;
 
