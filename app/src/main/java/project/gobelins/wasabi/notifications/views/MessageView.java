@@ -2,11 +2,10 @@ package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
 import android.os.Handler;
-import android.view.View;
+import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
-import android.widget.TextView;
 
 import com.nineoldandroids.animation.ValueAnimator;
 
@@ -20,8 +19,6 @@ import project.gobelins.wasabi.notifications.utils.SoundMeter;
  */
 public class MessageView extends MyLayout
 {
-    private String mMessage;
-    private String mCurrentMessage;
     private FrameLayout mMessageContainer;
 
     private SoundMeter mSoundMeter;
@@ -29,23 +26,22 @@ public class MessageView extends MyLayout
     private Runnable mRunnable;
 
     /* L'amplitude  */
-    private final int MIN_AMPLITUDE = 20000;
+//    private final int MIN_AMPLITUDE = 20000;
+    private final int MIN_AMPLITUDE = 10000;
+    private final int APPEAR_DURATION = 10000;
 
     /* L'intervalle de rechargement */
     private int mInterval = 300;
     private final int MAX_INTERVAL = 300;
     private final int MIN_INTERVAL = 10;
     private final int PAS_INTERVAL = 50;
+    private Integer mCurrentWidth;
+    private ValueAnimator mAnimator;
+    private int mMaxWidth;
 
     public MessageView(Context context)
     {
         super(context);
-
-        /* Le message temporairement stocké en dur */
-        mMessage = "Le Lorem Ipsum est simplement du faux texte employé dans la composition et la mise en page avant impression.";
-
-        /* Le message qui s'affiche progressivement à l'écran */
-        mCurrentMessage = "";
 
         /* On inflate la vue */
         inflate(context, R.layout.message_view, this);
@@ -63,8 +59,6 @@ public class MessageView extends MyLayout
             mHandler = new Handler();
             mRunnable = new Runnable()
             {
-                private int counter = 0;
-
                 @Override
                 public void run()
                 {
@@ -73,26 +67,33 @@ public class MessageView extends MyLayout
                     /* On affiche le texte */
                     if(amplitude >= MIN_AMPLITUDE || mInterval < MAX_INTERVAL)
                     {
-                        /* On incrémente le message courant */
-                        mCurrentMessage = mMessage.substring(0, counter++);
-
                         /* On accélère l'intervalle s'il chante */
                         if(mInterval > MIN_INTERVAL && amplitude >= MIN_AMPLITUDE)
+                        {
                             mInterval -= PAS_INTERVAL;
+                            animate(mMaxWidth);
+                        }
                         /* Sinon on décélère l'intervalle */
                         else if(mInterval < MAX_INTERVAL)
+                        {
                             mInterval += PAS_INTERVAL;
+                            animate(0);
+                        }
                     }
 
-                    /* Message non affiché en entier, on relance */
-                    if(mCurrentMessage.length() != mMessage.length())
-                        mHandler.postDelayed(this, mInterval);
-                    /* Sinon on stoppe l'enregistrement */
-                    else
-                        mSoundMeter.stop();
+//                    /* Message non affiché en entier, on relance */
+//                    if(mCurrentMessage.length() != mMessage.length())
+                    mHandler.postDelayed(this, mInterval);
+//                    /* Sinon on stoppe l'enregistrement */
+//                    else
+//                        mSoundMeter.stop();
                 }
             };
         }
+
+        /* Largeur max */
+        mMaxWidth = Wasabi.SCREEN_WIDTH * 2;
+
         /* Début de la détection du son */
         mSoundMeter = new SoundMeter();
         mSoundMeter.start();
@@ -100,11 +101,27 @@ public class MessageView extends MyLayout
         /* Lancement du runnable */
         mHandler.postDelayed(mRunnable, 0);
 
-        mMessageContainer = (FrameLayout) findViewById(R.id.message_container);
+        /* Initialisation de la taille */
+        mCurrentWidth = 0;
 
-        /* On lance l'animation */
-        ValueAnimator mAnimator = slideAnimator(0, Wasabi.SCREEN_WIDTH);
-        mAnimator.setDuration(5000);
+        /* Le conteneur animé */
+        mMessageContainer = (FrameLayout) findViewById(R.id.message_container);
+    }
+
+    /**
+     * @param to La valeur de destination
+     */
+    private void animate(int to)
+    {
+        /* On annule */
+        if(mAnimator != null)
+            mAnimator.cancel();
+
+        mAnimator = slideAnimator(mCurrentWidth, to);
+
+        int duration = mMaxWidth - mCurrentWidth * mMaxWidth / APPEAR_DURATION;
+
+        mAnimator.setDuration(duration);
         mAnimator.setInterpolator(new LinearInterpolator());
         mAnimator.start();
     }
@@ -127,10 +144,10 @@ public class MessageView extends MyLayout
             public void onAnimationUpdate(ValueAnimator valueAnimator)
             {
                 /* On met à jour la hauteur */
-                int value = (Integer) valueAnimator.getAnimatedValue();
+                mCurrentWidth = (Integer) valueAnimator.getAnimatedValue();
                 ViewGroup.LayoutParams layoutParams = mMessageContainer.getLayoutParams();
-                layoutParams.width = value;
-                layoutParams.height = value;
+                layoutParams.width = mCurrentWidth;
+                layoutParams.height = mCurrentWidth;
                 mMessageContainer.setLayoutParams(layoutParams);
             }
         });
