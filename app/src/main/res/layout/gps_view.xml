@@ -12,6 +12,7 @@
         android:layout_marginTop="14dp"
         android:gravity="center"
         android:text="@string/follow_arrow"
+        android:textColor="@color/black"
         android:textSize="16sp"/>
 
     <View

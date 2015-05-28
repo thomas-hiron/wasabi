@@ -43,5 +43,7 @@
     <string name="minutes">min</string>
     <string name="seconds">sec</string>
     <string name="go_to_last_fragment">Go to last fragment</string>
+    <string name="panda">Et le panda il fait quoi ?</string>
+    <string name="sing_to_discover">Chantez pour découvrir le message envoyé par votre proche mystère</string>
 
 </resources>
