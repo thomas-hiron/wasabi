@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.ConcurrentModificationException;
 import java.util.Date;
 import java.util.Locale;
 
@@ -331,7 +332,13 @@ public class FrescoFragment extends Fragment
      */
     public void cancelLastDraw()
     {
-        mDrawings.remove(mDrawings.size() - 1);
+        try
+        {
+            mDrawings.remove(mDrawings.size() - 1);
+        }
+        catch(ArrayIndexOutOfBoundsException ignored)
+        {
+        }
     }
 
     /**
@@ -355,10 +362,17 @@ public class FrescoFragment extends Fragment
      */
     public void updateImage(ImageButton imageButton, Point point)
     {
-        for(Image image : mImages)
+        try
         {
-            if(image.getId() == imageButton.getDbId())
-                image.setPoint(point);
+            for(Image image : mImages)
+            {
+                if(image.getId() == imageButton.getDbId())
+                    image.setPoint(point);
+            }
+        }
+        catch(ConcurrentModificationException ignored)
+        {
+
         }
     }
 
@@ -367,10 +381,17 @@ public class FrescoFragment extends Fragment
      */
     public void removeImage(ImageButton imageButton)
     {
-        for(Image image : mImages)
+        try
         {
-            if(image.getId() == imageButton.getDbId())
-                mImages.remove(mImages.indexOf(image));
+            for(Image image : mImages)
+            {
+                if(image.getId() == imageButton.getDbId())
+                    mImages.remove(mImages.indexOf(image));
+            }
+        }
+        catch(ConcurrentModificationException ignored)
+        {
+
         }
     }
 
@@ -388,14 +409,21 @@ public class FrescoFragment extends Fragment
 
     /**
      * @param soundButton Le son à mettre à jour
-     * @param point Les nouveaux coordonnées
+     * @param point       Les nouveaux coordonnées
      */
     public void updateSound(SoundButton soundButton, Point point)
     {
-        for(Sound sound : mSounds)
+        try
         {
-            if(sound.getId() == soundButton.getDbId())
-                sound.setPoint(point);
+            for(Sound sound : mSounds)
+            {
+                if(sound.getId() == soundButton.getDbId())
+                    sound.setPoint(point);
+            }
+        }
+        catch(ConcurrentModificationException ignored)
+        {
+
         }
     }
 
@@ -404,10 +432,17 @@ public class FrescoFragment extends Fragment
      */
     public void removeSound(SoundButton soundButton)
     {
-        for(Sound sound : mSounds)
+        try
         {
-            if(sound.getId() == soundButton.getDbId())
-                mSounds.remove(mSounds.indexOf(sound));
+            for(Sound sound : mSounds)
+            {
+                if(sound.getId() == soundButton.getDbId())
+                    mSounds.remove(mSounds.indexOf(sound));
+            }
+        }
+        catch(ConcurrentModificationException ignored)
+        {
+
         }
     }
 }
