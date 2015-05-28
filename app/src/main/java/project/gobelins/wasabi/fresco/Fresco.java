@@ -700,6 +700,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     {
         mDrawedView.cancelLastDraw();
         mDrawingsManager.deleteLastDraw();
+        getLastFragment().cancelLastDraw();
 
         /* Appel à l'API */
         List<NameValuePair> nameValuePairs = new ArrayList<>();
@@ -862,6 +863,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void saveDrawing(ArrayList<Point> points)
     {
         mDrawingsManager.saveDrawing(points);
+
+        /* On ajoute au fragment */
+        getLastFragment().addDrawing(points);
 
         /* Appel à l'API */
         ColorPoint colorPoint = (ColorPoint) points.get(0);

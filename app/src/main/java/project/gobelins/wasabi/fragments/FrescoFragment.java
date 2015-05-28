@@ -3,7 +3,6 @@ package project.gobelins.wasabi.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -22,7 +21,9 @@ import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.entities.Image;
 import project.gobelins.wasabi.entities.Sound;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
+import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
 import project.gobelins.wasabi.interfaces.Listeners;
@@ -94,6 +95,20 @@ public class FrescoFragment extends Fragment
     public void addDrawing(Drawing drawing)
     {
         mDrawings.add(drawing);
+    }
+
+    /**
+     * Ajoute une liste de points au fragment (pour ne pas les perdre lorsque la vue est recyclée
+     *
+     * @param points Les points
+     */
+    public void addDrawing(ArrayList<Point> points)
+    {
+        Drawing drawing = new Drawing();
+        drawing.setColor(((ColorPoint) points.get(0)).getColor());
+        drawing.setPoints(points);
+
+        addDrawing(drawing);
     }
 
     /**
@@ -175,6 +190,9 @@ public class FrescoFragment extends Fragment
 
             /* On met le listener de dessin */
             fresco.resetViews();
+
+            /* On récupère les dessins et images */
+
         }
 
         /* On dessine toutes les courbes */
@@ -304,5 +322,13 @@ public class FrescoFragment extends Fragment
                 button.addListeners();
             }
         }
+    }
+
+    /**
+     * Supprime le dernier dessin
+     */
+    public void cancelLastDraw()
+    {
+        mDrawings.remove(mDrawings.size() - 1);
     }
 }
