@@ -33,7 +33,7 @@ public class MessageView extends MyLayout
     /* L'intervalle de rechargement */
     private int mInterval = 300;
     private final int MAX_INTERVAL = 300;
-    private final int MIN_INTERVAL = 10;
+    private final int MIN_INTERVAL = 50;
     private final int PAS_INTERVAL = 50;
     private Integer mCurrentWidth;
     private ValueAnimator mAnimator;
