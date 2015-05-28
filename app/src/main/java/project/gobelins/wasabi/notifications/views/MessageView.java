@@ -2,9 +2,16 @@ package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
 import android.os.Handler;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.LinearInterpolator;
+import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.nineoldandroids.animation.ValueAnimator;
+
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.notifications.utils.SoundMeter;
 
 /**
@@ -15,6 +22,7 @@ public class MessageView extends MyLayout
 {
     private String mMessage;
     private String mCurrentMessage;
+    private FrameLayout mMessageContainer;
 
     private SoundMeter mSoundMeter;
     private Handler mHandler;
@@ -91,6 +99,43 @@ public class MessageView extends MyLayout
 
         /* Lancement du runnable */
         mHandler.postDelayed(mRunnable, 0);
+
+        mMessageContainer = (FrameLayout) findViewById(R.id.message_container);
+
+        /* On lance l'animation */
+        ValueAnimator mAnimator = slideAnimator(0, Wasabi.SCREEN_WIDTH);
+        mAnimator.setDuration(5000);
+        mAnimator.setInterpolator(new LinearInterpolator());
+        mAnimator.start();
+    }
+
+
+    /**
+     * Anime la hauteur du conteneur du dégradé
+     *
+     * @param start La valeur de départ
+     * @param end   La hauteur finale
+     * @return L'animator
+     */
+    private ValueAnimator slideAnimator(int start, int end)
+    {
+        ValueAnimator animator = ValueAnimator.ofInt(start, end);
+
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener()
+        {
+            @Override
+            public void onAnimationUpdate(ValueAnimator valueAnimator)
+            {
+                /* On met à jour la hauteur */
+                int value = (Integer) valueAnimator.getAnimatedValue();
+                ViewGroup.LayoutParams layoutParams = mMessageContainer.getLayoutParams();
+                layoutParams.width = value;
+                layoutParams.height = value;
+                mMessageContainer.setLayoutParams(layoutParams);
+            }
+        });
+
+        return animator;
     }
 
     /**
