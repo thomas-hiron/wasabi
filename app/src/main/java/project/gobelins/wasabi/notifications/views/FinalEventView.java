@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
+import android.view.View;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.views.RoundGradientGpsView;
@@ -17,6 +18,16 @@ public class FinalEventView extends MyLayout
         super(context);
 
         inflate(context, R.layout.final_event_view, this);
+    }
+
+    @Override
+    protected void onAttachedToWindow()
+    {
+        super.onAttachedToWindow();
+
+        /* On désactive le bouton retour */
+        View closeNotification = getRootView().findViewById(R.id.close_notification);
+        closeNotification.setVisibility(GONE);
     }
 
     /**
