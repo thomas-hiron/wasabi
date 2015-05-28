@@ -8,8 +8,8 @@
         android:id="@+id/unexpected_text"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:contentDescription="@string/unexpected_text"
         android:background="@drawable/home_unexpected"
+        android:contentDescription="@string/unexpected_text"
         android:visibility="invisible"/>
 
     <ImageView
@@ -33,7 +33,7 @@
         android:layout_marginLeft="10dp"
         android:layout_marginStart="10dp"
         android:contentDescription="@string/fresco"
-        android:src="@drawable/open_notification"
+        android:src="@drawable/open_fresco"
         android:visibility="invisible"/>
 
 </FrameLayout>
