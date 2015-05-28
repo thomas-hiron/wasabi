@@ -27,6 +27,7 @@ import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
 import project.gobelins.wasabi.fresco.views.ImageButton;
+import project.gobelins.wasabi.fresco.views.SoundButton;
 import project.gobelins.wasabi.interfaces.Listeners;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -370,6 +371,43 @@ public class FrescoFragment extends Fragment
         {
             if(image.getId() == imageButton.getDbId())
                 mImages.remove(mImages.indexOf(image));
+        }
+    }
+
+    /**
+     * @param soundButton Le son à enregistrer
+     */
+    public void addSound(SoundButton soundButton)
+    {
+        Sound sound = new Sound();
+        sound.setFileName(soundButton.getFileName());
+        sound.setId(sound.getId());
+
+        addSound(sound);
+    }
+
+    /**
+     * @param soundButton Le son à mettre à jour
+     * @param point Les nouveaux coordonnées
+     */
+    public void updateSound(SoundButton soundButton, Point point)
+    {
+        for(Sound sound : mSounds)
+        {
+            if(sound.getId() == soundButton.getDbId())
+                sound.setPoint(point);
+        }
+    }
+
+    /**
+     * @param soundButton Le son à supprimer
+     */
+    public void removeSound(SoundButton soundButton)
+    {
+        for(Sound sound : mSounds)
+        {
+            if(sound.getId() == soundButton.getDbId())
+                mSounds.remove(mSounds.indexOf(sound));
         }
     }
 }

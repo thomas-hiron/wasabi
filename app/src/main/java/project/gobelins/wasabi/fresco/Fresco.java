@@ -991,6 +991,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         int id = mSoundsManager.saveSound(soundButton.getFileName());
         soundButton.setDbId(id);
 
+        /* Ajout au fragment */
+        getLastFragment().addSound(soundButton);
+
         /* Encodage du fichier en base64 */
         File file = new File(soundButton.getFileName());
         FileInputStream objFileIS = null;
@@ -1043,6 +1046,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Mise à jour des coordonnées */
         mSoundsManager.updateSound(point, soundButton.getDbId());
 
+        /* ise à jour du fragment */
+        getLastFragment().updateSound(soundButton, point);
+
         /* Appel à l'API */
         List<NameValuePair> nameValuePairs = new ArrayList<>(2);
         nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(soundButton.getDbId())));
@@ -1064,6 +1070,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Suppression dans la base */
         mSoundsManager.delete(soundButton);
+
+        /* Suppression dans le fragment */
+        getLastFragment().removeSound(soundButton);
 
         /* Suppression sur le téléphone */
         File file = new File(soundButton.getFileName());
