@@ -58,5 +58,6 @@
     <string name="accept">Accepter</string>
     <string name="accept_invitation">Accepter\nl\'invitation</string>
     <string name="chose_other_date">Choisir une\nautre date</string>
+    <string name="accomplice_meeting">Vous allez enfin rencontrer votre proche mystère !\n</string>
 
 </resources>
