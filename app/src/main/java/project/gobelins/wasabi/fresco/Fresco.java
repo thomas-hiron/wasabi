@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -249,6 +250,17 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void unlock()
     {
         mViewPager.unlock();
+    }
+
+    /**
+     * Réinitialise les vues, cela permet de repasser dans les initialiseurs si le fragment est recyclé (et vues perdues)
+     */
+    public void resetViews()
+    {
+        mDrawView = null;
+        mDrawedView = null;
+        mSoundsView = null;
+        mImagesView = null;
     }
 
     /**

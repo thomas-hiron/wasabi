@@ -3,6 +3,7 @@ package project.gobelins.wasabi.fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -171,6 +172,9 @@ public class FrescoFragment extends Fragment
 
             /* On vire la date */
             view.removeView(date);
+
+            /* On met le listener de dessin */
+            fresco.resetViews();
         }
 
         /* On dessine toutes les courbes */
