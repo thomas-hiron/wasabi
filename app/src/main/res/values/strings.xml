@@ -55,5 +55,8 @@
     <string name="dress_code">Dress code : Explorateur</string>
     <string name="address_communicated">Nous vous communiquerons l’adresse le moment venu !</string>
     <string name="can_go_with_someone">Vous pouvez venir accompagné</string>
+    <string name="accept">Accepter</string>
+    <string name="accept_invitation">Accepter\nl\'invitation</string>
+    <string name="chose_other_date">Choisir une\nautre date</string>
 
 </resources>
