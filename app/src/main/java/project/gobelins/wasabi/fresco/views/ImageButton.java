@@ -152,9 +152,6 @@ public class ImageButton extends CircularImageView implements Listeners, Draggab
         {
             setX(Wasabi.SCREEN_WIDTH / 2 - getWidth() / 2);
             setY(Wasabi.SCREEN_HEIGHT / 2 - getHeight() / 2);
-
-            /* Mise à jour */
-            mFresco.updateImage(this);
         }
 
     }

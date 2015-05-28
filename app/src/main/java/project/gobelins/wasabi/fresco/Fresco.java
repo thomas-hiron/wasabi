@@ -892,6 +892,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         int id = mImagesManager.saveImage(imageButton.getFileName());
         imageButton.setDbId(id);
 
+        /* Enregistrement dans le fragment */
+        getLastFragment().addImage(imageButton);
+
         /* Encodage du fichier en base64 */
         Bitmap bitmap = BitmapFactory.decodeFile(imageButton.getFileName());
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -922,6 +925,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         Point point = new Point();
         point.set(imageButton.getX(), imageButton.getY());
 
+        /* Mise à jour dans le fragment */
+        getLastFragment().updateImage(imageButton, point);
+
         /* Mise à jour des coordonnées */
         mImagesManager.updateImage(point, imageButton.getDbId());
 
@@ -949,6 +955,9 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Suppression dans la base */
         mImagesManager.delete(imageButton);
+
+        /* Suppression dans le fragment */
+        getLastFragment().removeImage(imageButton);
 
         /* Suppression sur le téléphone */
         File file = new File(imageButton.getFileName());

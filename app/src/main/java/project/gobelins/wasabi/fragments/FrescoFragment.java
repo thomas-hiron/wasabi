@@ -26,6 +26,7 @@ import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.BeginRecordListener;
 import project.gobelins.wasabi.fresco.recording.RecordView;
+import project.gobelins.wasabi.fresco.views.ImageButton;
 import project.gobelins.wasabi.interfaces.Listeners;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -330,5 +331,45 @@ public class FrescoFragment extends Fragment
     public void cancelLastDraw()
     {
         mDrawings.remove(mDrawings.size() - 1);
+    }
+
+    /**
+     * @param imageButton L'image à ajouter
+     */
+    public void addImage(ImageButton imageButton)
+    {
+        Image image = new Image();
+        image.setFileName(imageButton.getFileName());
+        image.setPoint(imageButton.getPoint());
+        image.setId(image.getId());
+
+        addImage(image);
+    }
+
+    /**
+     * Met à jour les coordonnées d'une image
+     *
+     * @param imageButton L'image
+     * @param point
+     */
+    public void updateImage(ImageButton imageButton, Point point)
+    {
+        for(Image image : mImages)
+        {
+            if(image.getId() == imageButton.getDbId())
+                image.setPoint(point);
+        }
+    }
+
+    /**
+     * @param imageButton L'image à supprimer
+     */
+    public void removeImage(ImageButton imageButton)
+    {
+        for(Image image : mImages)
+        {
+            if(image.getId() == imageButton.getDbId())
+                mImages.remove(mImages.indexOf(image));
+        }
     }
 }
