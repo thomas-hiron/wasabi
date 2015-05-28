@@ -2,7 +2,6 @@ package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -29,15 +28,15 @@ public class MessageView extends MyLayout
 //    private final int MIN_AMPLITUDE = 20000;
     private final int MIN_AMPLITUDE = 10000;
     private final int APPEAR_DURATION = 10000;
+    private final int DISAPPEAR_DURATION = 2000;
 
     /* L'intervalle de rechargement */
-    private int mInterval = 300;
-    private final int MAX_INTERVAL = 300;
-    private final int MIN_INTERVAL = 50;
-    private final int PAS_INTERVAL = 50;
+    private final int INTERVAL = 300;
+
     private Integer mCurrentWidth;
     private ValueAnimator mAnimator;
     private int mMaxWidth;
+    private boolean mDown;
 
     public MessageView(Context context)
     {
@@ -65,28 +64,17 @@ public class MessageView extends MyLayout
                     double amplitude = mSoundMeter.getAmplitude();
 
                     /* On affiche le texte */
-                    if(amplitude >= MIN_AMPLITUDE || mInterval < MAX_INTERVAL)
+                    if(amplitude != 0)
                     {
-                        /* On accélère l'intervalle s'il chante */
-                        if(mInterval > MIN_INTERVAL && amplitude >= MIN_AMPLITUDE)
-                        {
-                            mInterval -= PAS_INTERVAL;
+                        /* On agrandit s'il chante */
+                        if(amplitude >= MIN_AMPLITUDE)
                             animate(mMaxWidth);
-                        }
-                        /* Sinon on décélère l'intervalle */
-                        else if(mInterval < MAX_INTERVAL)
-                        {
-                            mInterval += PAS_INTERVAL;
+                        /* Sinon on diminue */
+                        else
                             animate(0);
-                        }
                     }
 
-//                    /* Message non affiché en entier, on relance */
-//                    if(mCurrentMessage.length() != mMessage.length())
-                    mHandler.postDelayed(this, mInterval);
-//                    /* Sinon on stoppe l'enregistrement */
-//                    else
-//                        mSoundMeter.stop();
+                    mHandler.postDelayed(this, INTERVAL);
                 }
             };
         }
@@ -103,6 +91,7 @@ public class MessageView extends MyLayout
 
         /* Initialisation de la taille */
         mCurrentWidth = 0;
+        mDown = false;
 
         /* Le conteneur animé */
         mMessageContainer = (FrameLayout) findViewById(R.id.message_container);
@@ -113,17 +102,26 @@ public class MessageView extends MyLayout
      */
     private void animate(int to)
     {
-        /* On annule */
-        if(mAnimator != null)
-            mAnimator.cancel();
+        if(!mDown)
+        {
+            /* On annule */
+            if(mAnimator != null)
+                mAnimator.cancel();
 
-        mAnimator = slideAnimator(mCurrentWidth, to);
+            /* Nouveau animator */
+            mAnimator = slideAnimator(mCurrentWidth, to);
 
-        int duration = mMaxWidth - mCurrentWidth * mMaxWidth / APPEAR_DURATION;
+            /* Calcul de la durée */
+            int duration = to == 0 ? DISAPPEAR_DURATION : Math.abs(mMaxWidth - mCurrentWidth * mMaxWidth / APPEAR_DURATION);
 
-        mAnimator.setDuration(duration);
-        mAnimator.setInterpolator(new LinearInterpolator());
-        mAnimator.start();
+            /* Changement des paramètres et lancement */
+            mAnimator.setDuration(duration);
+            mAnimator.setInterpolator(new LinearInterpolator());
+            mAnimator.start();
+        }
+
+        /* Pour ne faire l'anim descendante qu'une seule fois */
+        mDown = to == 0;
     }
 
 
@@ -145,6 +143,7 @@ public class MessageView extends MyLayout
             {
                 /* On met à jour la hauteur */
                 mCurrentWidth = (Integer) valueAnimator.getAnimatedValue();
+
                 ViewGroup.LayoutParams layoutParams = mMessageContainer.getLayoutParams();
                 layoutParams.width = mCurrentWidth;
                 layoutParams.height = mCurrentWidth;
