@@ -9,10 +9,11 @@ import android.hardware.SensorManager;
 import android.location.Location;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
+import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.RotateAnimation;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.gps.GeolocationManager;
@@ -39,6 +40,8 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     private boolean mNoAnimation;
     private float mCurrentAngle;
     private int mTotalDistance;
+    private LinearLayout mGpsView;
+    private LinearLayout mGpsOverView;
 
     public GPSView(Context context)
     {
@@ -56,6 +59,8 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
         mArrow = (android.widget.ImageView) findViewById(R.id.gps_arrow);
         mDistance = (TextView) findViewById(R.id.gps_distance);
         mDistanceLeft = (TextView) findViewById(R.id.gps_distance_left);
+        mGpsView = (LinearLayout) findViewById(R.id.gps);
+        mGpsOverView = (LinearLayout) findViewById(R.id.gps_over);
 
         mCurrentLocation = null;
         mNoAnimation = true;
@@ -203,6 +208,23 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     @Override
     public void onClick(View view)
     {
-        Toast.makeText(getContext(), "Arrivé !", Toast.LENGTH_SHORT).show();
+        /* Suppression du listener */
+        view.setOnClickListener(null);
+
+        /* Arrêt */
+        stop();
+
+        /* Animations */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(500);
+        alphaAnimation.setFillAfter(true);
+
+        mGpsView.startAnimation(alphaAnimation);
+
+        alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(500);
+
+        mGpsOverView.setVisibility(VISIBLE);
+        mGpsOverView.startAnimation(alphaAnimation);
     }
 }

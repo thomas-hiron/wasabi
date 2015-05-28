@@ -7,6 +7,7 @@
 
     <!-- Vue du GPS -->
     <LinearLayout
+        android:id="@+id/gps"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical">
@@ -165,6 +166,7 @@
 
     <!-- Vue du GPS arrivé -->
     <LinearLayout
+        android:id="@+id/gps_over"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
