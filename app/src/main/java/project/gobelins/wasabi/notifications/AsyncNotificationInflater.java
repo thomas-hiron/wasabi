@@ -59,7 +59,7 @@ public class AsyncNotificationInflater extends AsyncTask
             case NotificationsTypes.PLACES:
 
                 /* Création de la vue */
-                mCustomView = new GPSView(mWasabi.getApplicationContext());
+                mCustomView = new GPSView(mWasabi);
 
                 break;
 

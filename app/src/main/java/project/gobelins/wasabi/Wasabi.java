@@ -45,6 +45,7 @@ import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.AsyncNotificationInflater;
 import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.notifications.NotificationsTypes;
+import project.gobelins.wasabi.notifications.views.GPSView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
 import project.gobelins.wasabi.utils.DateFormater;
 import project.gobelins.wasabi.views.FormCode;
@@ -59,6 +60,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public final static String ACCOMPLICE_DRAWED = "accomplice_drawed";
 
     private final int REQUEST_IMAGE = 1;
+    private final int REQUEST_GPS = 2;
     private final int IMAGE_WIDTH = 500;
 
     public static int SCREEN_WIDTH;
@@ -228,6 +230,24 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     @Override
     public void onTakePicture()
     {
+        takePicture(REQUEST_IMAGE);
+    }
+
+    /**
+     * On a cliqué sur le bouton prendre une photo du GPS
+     */
+    public void onTakePictureGPS()
+    {
+        takePicture(REQUEST_GPS);
+    }
+
+    /**
+     * On prendre une photo
+     *
+     * @param request L'id de la requête
+     */
+    public void takePicture(int request)
+    {
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
         /* Il y a bien une activité pour le résultat */
@@ -249,7 +269,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             {
                 takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photoFile));
-                startActivityForResult(takePictureIntent, REQUEST_IMAGE);
+                startActivityForResult(takePictureIntent, request);
             }
         }
     }
@@ -260,7 +280,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onActivityResult(requestCode, resultCode, data);
 
         /* Photo bien prise */
-        if(requestCode == REQUEST_IMAGE && resultCode == RESULT_OK)
+        if(resultCode == RESULT_OK && (requestCode == REQUEST_IMAGE || requestCode == REQUEST_GPS))
         {
             /* Dimensions de la source */
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -312,16 +332,25 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
             scaledBitmap = null;
 
-            /* On l'ajoute à la fresque */
-            if(mFresco != null)
-                mFresco.addNewPicture(mCurrentPhotoPath);
-
             /* On met à jour la galerie */
             Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
             File f = new File(mCurrentPhotoPath);
             Uri contentUri = Uri.fromFile(f);
             mediaScanIntent.setData(contentUri);
             sendBroadcast(mediaScanIntent);
+
+            /* Traitements spécifiques */
+            if(requestCode == REQUEST_IMAGE)
+            {
+                /* On l'ajoute à la fresque */
+                if(mFresco != null)
+                    mFresco.addNewPicture(mCurrentPhotoPath);
+            }
+            else
+            {
+                /* On change la vue */
+                ((GPSView) mCustomView).photoOk();
+            }
         }
     }
 

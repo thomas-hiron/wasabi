@@ -18,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.gps.GeolocationManager;
 
 /**
@@ -40,17 +41,19 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     private float[] mGravity;
     private float[] mGeomagnetic;
     private boolean mNoAnimation;
+    private Wasabi mWasabi;
     private float mCurrentAngle;
     private int mTotalDistance;
     private LinearLayout mGpsView;
     private LinearLayout mGpsOverView;
     private ImageView mTakePictureButton;
 
-    public GPSView(Context context)
+    public GPSView(Wasabi wasabi)
     {
-        super(context);
+        super(wasabi);
 
-        inflate(context, R.layout.gps_view, this);
+        mWasabi = wasabi;
+        inflate(mWasabi, R.layout.gps_view, this);
 
         /* Ajout du listener accéléromètre */
         mSensorManager = (SensorManager) getContext().getSystemService(Context.SENSOR_SERVICE);
@@ -251,6 +254,14 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
      */
     private void takePicture()
     {
-        Toast.makeText(getContext(), "Photo", Toast.LENGTH_SHORT).show();
+        mWasabi.onTakePictureGPS();
+    }
+
+    /**
+     * La photo a bien été prise
+     */
+    public void photoOk()
+    {
+        Toast.makeText(getContext(), "Photo OK !\nEnvoi au serveur en cours...", Toast.LENGTH_SHORT).show();
     }
 }
