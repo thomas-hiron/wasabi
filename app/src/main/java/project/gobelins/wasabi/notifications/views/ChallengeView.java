@@ -3,15 +3,14 @@ package project.gobelins.wasabi.notifications.views;
 import android.content.Context;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.Wasabi;
-import project.gobelins.wasabi.views.RoundGradientGpsView;
+import project.gobelins.wasabi.views.RoundGradientChallengeView;
 
 /**
  * Created by ThomasHiron on 24/05/2015.
  */
 public class ChallengeView extends MyLayout
 {
-    private RoundGradientGpsView mCounter;
+    private RoundGradientChallengeView mCounter;
 
     public ChallengeView(Context context)
     {
@@ -28,7 +27,7 @@ public class ChallengeView extends MyLayout
     {
         /* On démarre le compteur */
         if(mCounter == null)
-            mCounter = (RoundGradientGpsView) findViewById(R.id.rounded_gradient);
+            mCounter = (RoundGradientChallengeView) findViewById(R.id.rounded_gradient);
 
         mCounter.start();
     }

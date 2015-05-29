@@ -4,21 +4,20 @@ import android.content.Context;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
-import android.view.animation.AnimationUtils;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.views.RoundGradientGpsView;
+import project.gobelins.wasabi.views.RoundGradientChallengeView;
 
 /**
  * Created by ThomasHiron on 24/05/2015.
  */
 public class FinalEventView extends MyLayout implements View.OnClickListener
 {
-    private RoundGradientGpsView mCounter;
+    private RoundGradientChallengeView mCounter;
     private ImageView mAcceptButton;
     private ImageView mDeclineButton;
     private TextView mAcceptText;

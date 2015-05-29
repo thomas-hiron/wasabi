@@ -20,7 +20,7 @@ import project.gobelins.wasabi.R;
 /**
  * Created by ThomasHiron on 25/05/2015.
  */
-public class RoundGradientGpsView extends View
+public class RoundGradientChallengeView extends View
 {
     private int mGreen;
     private int mRed;
@@ -41,12 +41,12 @@ public class RoundGradientGpsView extends View
     private FrameLayout mTimerContainer;
     private boolean mStart;
 
-    public RoundGradientGpsView(Context context)
+    public RoundGradientChallengeView(Context context)
     {
         super(context);
     }
 
-    public RoundGradientGpsView(Context context, AttributeSet attrs)
+    public RoundGradientChallengeView(Context context, AttributeSet attrs)
     {
         super(context, attrs);
 
@@ -110,7 +110,7 @@ public class RoundGradientGpsView extends View
         mGradient = new SweepGradient(
                 mWidth / 2, mWidth / 2,
                 new int[]{mRed, mRed, mGreen, mGreen, mRed, mRed},
-                new float[]{0, 0.01f, 0.03f, 0.4f, 0.6f, 1}
+                new float[]{0, 0.0115f, 0.012f, 0.4f, 0.6f, 1}
         );
 
         mPaint.setShader(mGradient);
@@ -153,7 +153,7 @@ public class RoundGradientGpsView extends View
     {
         super.onDraw(canvas);
 
-        canvas.drawArc(mPosition, 0, -360f * mCurrentTime / TOTAL_LENGTH, false, mPaint);
+        canvas.drawArc(mPosition, 0, -351.5f * mCurrentTime / TOTAL_LENGTH, false, mPaint);
     }
 
     /**

@@ -91,7 +91,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="center"/>
 
-        <project.gobelins.wasabi.views.RoundGradientGpsView
+        <project.gobelins.wasabi.views.RoundGradientChallengeView
             android:id="@+id/rounded_gradient"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
