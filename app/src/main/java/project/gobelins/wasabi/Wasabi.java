@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.net.Uri;
 import android.os.Build;
@@ -412,14 +413,28 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     public void homeAnimationEnd()
     {
-        /* Changement du background */
-        mAppContainer.setBackgroundResource(R.drawable.home);
+        switch(mLastNotification.getType())
+        {
+            /* Affichage du challenge */
+            case NotificationsTypes.CHALLENGES:
 
-        /* On affiche le formulaire */
-        if(mApiKey == null)
-            addFormCode();
-        else
-            addHome();
+                mAppContainer.setBackgroundColor(Color.WHITE);
+
+                break;
+
+            default:
+
+                /* Changement du background */
+                mAppContainer.setBackgroundResource(R.drawable.home);
+
+                /* On affiche le formulaire */
+                if(mApiKey == null)
+                    addFormCode();
+                else
+                    addHome();
+
+                break;
+        }
 
         /* Suppression de la vidéo */
         mAppContainer.removeView(mAnimLayout);

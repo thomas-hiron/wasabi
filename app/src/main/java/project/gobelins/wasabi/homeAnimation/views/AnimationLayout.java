@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.homeAnimation.views;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.util.AttributeSet;
@@ -41,7 +42,11 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
         mVideo = (VideoView) findViewById(R.id.video);
 
         /* La bonne animation */
-        int videoId = 0;
+        int videoId = R.raw.home_animation;
+
+        /* Pour prévenir les bugs */
+        if(mNotification == null)
+            mNotification = new Notification();
 
         switch(mNotification.getType())
         {
@@ -50,10 +55,6 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
                 videoId = R.raw.challenge_animation;
 
                 break;
-
-            default:
-
-                videoId = R.raw.home_animation;
         }
 
         /* Changement de la source et lecture */
@@ -86,6 +87,20 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
     @Override
     public void onPrepared(MediaPlayer mediaPlayer)
     {
-        mVideo.setBackgroundResource(R.drawable.home);
+        /* On change le fond de la vidéo */
+        switch(mNotification.getType())
+        {
+            case NotificationsTypes.CHALLENGES:
+
+                mVideo.setBackgroundColor(Color.WHITE);
+
+                break;
+
+            default:
+
+                mVideo.setBackgroundResource(R.drawable.home);
+
+                break;
+        }
     }
 }
