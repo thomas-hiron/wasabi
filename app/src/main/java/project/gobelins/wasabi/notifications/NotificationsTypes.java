@@ -22,4 +22,5 @@ public class NotificationsTypes
     public final static int PLACES = 13;
     public final static int CHALLENGES = 14;
     public final static int FINALEVENTS = 15;
+    public final static int CUSTOM_IMAGE = 16;
 }

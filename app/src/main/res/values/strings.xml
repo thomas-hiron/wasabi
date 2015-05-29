@@ -62,5 +62,6 @@
     <string name="destination">Vous êtes arrivé à destination</string>
     <string name="bravo">Bravo !</string>
     <string name="take_picture_to_illustrate">Prenez une photo pour illustrer votre expérience</string>
+    <string name="custom_image">Custom image</string>
 
 </resources>

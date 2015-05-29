@@ -2,10 +2,7 @@ package project.gobelins.wasabi.notifications;
 
 import android.os.AsyncTask;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.FrameLayout;
 
-import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.notifications.views.ChallengeView;
@@ -41,9 +38,13 @@ public class AsyncNotificationInflater extends AsyncTask
         {
             /* Une image */
             case NotificationsTypes.IMAGES:
+            case NotificationsTypes.CUSTOM_IMAGE:
 
                 /* Création de la vue */
-                mCustomView = new project.gobelins.wasabi.notifications.views.ImageView(mWasabi.getApplicationContext());
+                mCustomView = new project.gobelins.wasabi.notifications.views.ImageView(
+                        mWasabi.getApplicationContext(),
+                        mLastNotification
+                );
 
                 break;
 

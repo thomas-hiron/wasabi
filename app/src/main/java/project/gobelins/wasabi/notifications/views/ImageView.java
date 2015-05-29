@@ -1,11 +1,20 @@
 package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
-import android.os.Handler;
-import android.widget.TextView;
+import android.util.AttributeSet;
+
+import com.squareup.picasso.Picasso;
+
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.notifications.utils.SoundMeter;
+import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.entities.Notification;
+import project.gobelins.wasabi.httpRequests.AsyncPostImageRequest;
 
 /**
  * Affiche un message à l'écran, si caché, prend aléatoirement entre chant et toucher
@@ -16,8 +25,25 @@ public class ImageView extends MyLayout
     public ImageView(Context context)
     {
         super(context);
+    }
 
-        inflate(context, R.layout.image_view, this);
+    public ImageView(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
+    }
+
+    public ImageView(Context context, Notification notification)
+    {
+        super(context);
+
+        /* Récupération de l'image via une requête */
+        List<NameValuePair> nameValuePairs = new ArrayList<>(1);
+        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(notification.getId())));
+
+        /* Exécution de la requête */
+        new AsyncPostImageRequest(nameValuePairs, this).execute(
+                Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/request/customImage"
+        );
     }
 
     /**
@@ -36,5 +62,29 @@ public class ImageView extends MyLayout
     public void stop()
     {
 
+    }
+
+    /**
+     * Réception de l'image OK
+     *
+     * @param imageUrl L'url relative de l'image
+     */
+    public void imageSuccess(String imageUrl)
+    {
+        inflate(getContext(), R.layout.image_view, this);
+
+        /* Récupération de l'image */
+        android.widget.ImageView image = (android.widget.ImageView) findViewById(R.id.custom_image);
+
+        /* Ajout de l'image dans la vue */
+        Picasso.with(getContext()).load(Wasabi.URL + "/" + imageUrl).into(image);
+    }
+
+    /**
+     * Une erreur s'est produite
+     */
+    public void imageError()
+    {
+        inflate(getContext(), R.layout.error_view, this);
     }
 }

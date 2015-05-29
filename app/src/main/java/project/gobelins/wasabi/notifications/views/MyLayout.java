@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
+import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
 /**
@@ -13,6 +14,11 @@ public abstract class MyLayout extends LinearLayout
     public MyLayout(Context context)
     {
         super(context);
+    }
+
+    public MyLayout(Context context, AttributeSet attrs)
+    {
+        super(context, attrs);
     }
 
     /**
