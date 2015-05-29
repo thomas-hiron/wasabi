@@ -83,6 +83,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private static String mApiKey;
     private FormCode mFormCode;
     private boolean mAnimPlayed;
+    private boolean mDisplayCustomView;
+    private ImageView mUnexpectedText;
 
     @Override
     public void onStart()
@@ -125,6 +127,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* Animation jamais jouée */
         mAnimPlayed = false;
+        mDisplayCustomView = false;
 
         /* Instanciation du manager des notifications */
         mNotificationsManager = new NotificationsManager(getContentResolver());
@@ -420,6 +423,19 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
                 mAppContainer.setBackgroundColor(Color.WHITE);
 
+                /* Pour forcer l'affichage de la customView */
+                mDisplayCustomView = true;
+
+                /* On ajoute la home sans l'animer */
+                addHome(false);
+
+                /* On cache la home */
+                mUnexpectedText.setVisibility(View.INVISIBLE);
+                mFrescoButton.setVisibility(View.INVISIBLE);
+                mUnexpectedText.setVisibility(View.INVISIBLE);
+                if(mNotificationButton != null)
+                    mNotificationButton.setVisibility(View.INVISIBLE);
+
                 break;
 
             default:
@@ -517,9 +533,19 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     }
 
     /**
-     * Ajoute la home
+     * Ajoute la home avec animation par défaut
      */
     private void addHome()
+    {
+        addHome(true);
+    }
+
+    /**
+     * Ajoute la home
+     *
+     * @param animate Si on doit animer
+     */
+    private void addHome(boolean animate)
     {
         /* Ajout des listeners d'animation */
         mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
@@ -546,24 +572,27 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             mNotificationButton.setVisibility(View.VISIBLE);
 
             /* On ajoute la vue en background */
-            new AsyncNotificationInflater(this, mLastNotification, mRevealContainerNotification).execute();
+            new AsyncNotificationInflater(this, mLastNotification).execute();
         }
 
         /* Le texte */
-        ImageView text = (ImageView) findViewById(R.id.unexpected_text);
+        mUnexpectedText = (ImageView) findViewById(R.id.unexpected_text);
 
         /* Animation des éléments */
         mFrescoButton.setVisibility(View.VISIBLE);
-        text.setVisibility(View.VISIBLE);
+        mUnexpectedText.setVisibility(View.VISIBLE);
 
-        /* Animation */
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(1500);
+        if(animate)
+        {
+            /* Animation */
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+            alphaAnimation.setDuration(1500);
 
-        text.startAnimation(alphaAnimation);
-        mFrescoButton.startAnimation(alphaAnimation);
-        if(mLastNotification != null)
-            mNotificationButton.startAnimation(alphaAnimation);
+            mUnexpectedText.startAnimation(alphaAnimation);
+            mFrescoButton.startAnimation(alphaAnimation);
+            if(mLastNotification != null)
+                mNotificationButton.startAnimation(alphaAnimation);
+        }
     }
 
     /**
@@ -619,6 +648,39 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Ajout du message à la vue */
         child.removeView(mCustomView);
         child.addView(mCustomView, 0);
+
+        /* On l'affiche si forcé */
+        if(mDisplayCustomView)
+        {
+            mRevealContainerNotification.setVisibility(View.VISIBLE);
+            final AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+            alphaAnimation.setDuration(1500);
+
+            mCustomView.startAnimation(alphaAnimation);
+
+            /* Pour initialiser à la fin */
+            alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+            {
+                @Override
+                public void onAnimationStart(Animation animation)
+                {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation)
+                {
+                    alphaAnimation.setAnimationListener(null);
+                    mCustomView.initialize();
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation)
+                {
+
+                }
+            });
+        }
     }
 
     /**
