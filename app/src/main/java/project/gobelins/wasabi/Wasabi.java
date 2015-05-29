@@ -433,8 +433,14 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 mUnexpectedText.setVisibility(View.INVISIBLE);
                 mFrescoButton.setVisibility(View.INVISIBLE);
                 mUnexpectedText.setVisibility(View.INVISIBLE);
+
+                /* Suppression des listeners */
+                mFrescoButton.setOnClickListener(null);
                 if(mNotificationButton != null)
+                {
                     mNotificationButton.setVisibility(View.INVISIBLE);
+                    mNotificationButton.setOnClickListener(null);
+                }
 
                 break;
 
@@ -657,6 +663,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             alphaAnimation.setDuration(1500);
 
             mCustomView.startAnimation(alphaAnimation);
+            findViewById(R.id.close_notification).startAnimation(alphaAnimation);
 
             /* Pour initialiser à la fin */
             alphaAnimation.setAnimationListener(new Animation.AnimationListener()
@@ -672,6 +679,13 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 {
                     alphaAnimation.setAnimationListener(null);
                     mCustomView.initialize();
+
+                    /* On remet la home derrière */
+                    mUnexpectedText.setVisibility(View.VISIBLE);
+                    mFrescoButton.setVisibility(View.VISIBLE);
+                    mUnexpectedText.setVisibility(View.VISIBLE);
+                    if(mNotificationButton != null)
+                        mNotificationButton.setVisibility(View.VISIBLE);
                 }
 
                 @Override
