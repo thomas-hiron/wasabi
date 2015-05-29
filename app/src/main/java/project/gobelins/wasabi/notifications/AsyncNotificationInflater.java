@@ -19,15 +19,13 @@ import project.gobelins.wasabi.notifications.views.MyLayout;
 public class AsyncNotificationInflater extends AsyncTask
 {
     private Wasabi mWasabi;
-    private View mRevealContainerNotification;
     private Notification mLastNotification;
     private MyLayout mCustomView;
 
-    public AsyncNotificationInflater(Wasabi wasabi, Notification lastNotification, View revealContainerNotification)
+    public AsyncNotificationInflater(Wasabi wasabi, Notification lastNotification)
     {
         mWasabi = wasabi;
         mLastNotification = lastNotification;
-        mRevealContainerNotification = revealContainerNotification;
     }
 
     @Override
@@ -95,8 +93,14 @@ public class AsyncNotificationInflater extends AsyncTask
                 break;
         }
 
-        mWasabi.setCustomView(mCustomView);
-
         return null;
+    }
+
+    @Override
+    protected void onPostExecute(Object o)
+    {
+        super.onPostExecute(o);
+
+        mWasabi.setCustomView(mCustomView);
     }
 }
