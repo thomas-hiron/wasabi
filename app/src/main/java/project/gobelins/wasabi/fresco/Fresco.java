@@ -210,7 +210,7 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mViewPager.setFresco(this);
 
         /* Si un seul fragment, on cache le bouton et supprime l'écouteur */
-        if(mViewPagerAdapter.getCount() == 1)
+        if(mViewPagerAdapter.getCount() == 1 && mGoToLastButton != null)
         {
             mGoToLastButton.setVisibility(GONE);
             mGoToLastButton.setOnClickListener(null);

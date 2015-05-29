@@ -63,5 +63,7 @@
     <string name="bravo">Bravo !</string>
     <string name="take_picture_to_illustrate">Prenez une photo pour illustrer votre expérience</string>
     <string name="custom_image">Custom image</string>
+    <string name="border">Bordure</string>
+    <string name="pattern">Motif</string>
 
 </resources>
