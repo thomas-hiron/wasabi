@@ -75,6 +75,8 @@ public class NotificationsManager extends ArrayList<Notification>
             while(c.moveToNext());
         }
 
+        c.close();
+
         return this;
     }
 
