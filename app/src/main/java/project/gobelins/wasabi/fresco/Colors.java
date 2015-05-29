@@ -18,7 +18,7 @@ public class Colors
      */
     public Colors()
     {
-        mColors = new int[5];
+        mColors = new int[3];
 
         mColors[0] = Color.parseColor(BLACK);
         mColors[1] = Color.parseColor(RED1);
