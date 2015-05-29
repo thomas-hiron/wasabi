@@ -9,7 +9,6 @@ import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.util.AttributeSet;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -234,6 +233,10 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
     public void goToLastFragment(boolean smoothScroll)
     {
         mViewPager.setCurrentItem(mViewPagerAdapter.getCount() - 1, smoothScroll);
+
+        /* Pas de smoothscroll, on ne passera pas dans le onScrollEnd, on force le bouton à se cacher */
+        if(!smoothScroll)
+            hideGoToLastButton();
     }
 
     /**
