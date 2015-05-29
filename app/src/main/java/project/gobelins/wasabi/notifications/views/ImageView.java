@@ -2,6 +2,7 @@ package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -68,16 +69,21 @@ public class ImageView extends MyLayout
      * Réception de l'image OK
      *
      * @param imageUrl L'url relative de l'image
+     * @param legend
      */
-    public void imageSuccess(String imageUrl)
+    public void imageSuccess(String imageUrl, String legend)
     {
         inflate(getContext(), R.layout.image_view, this);
 
         /* Récupération de l'image */
         android.widget.ImageView image = (android.widget.ImageView) findViewById(R.id.custom_image);
+        TextView legendText = (TextView) findViewById(R.id.legend);
 
         /* Ajout de l'image dans la vue */
         Picasso.with(getContext()).load(Wasabi.URL + "/" + imageUrl).into(image);
+
+        /* Changement de la légende */
+        legendText.setText(legend);
     }
 
     /**

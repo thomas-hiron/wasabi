@@ -1,8 +1,5 @@
 package project.gobelins.wasabi.httpRequests;
 
-import android.content.Context;
-import android.util.Log;
-
 import org.apache.http.NameValuePair;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -36,8 +33,9 @@ public class AsyncPostImageRequest extends AsyncPostRequests
             JSONObject jsonObject = new JSONObject(s);
 
             String imageUrl = jsonObject.getString("image_url");
+            String legend = jsonObject.getString("legend");
 
-            mImageView.imageSuccess(imageUrl);
+            mImageView.imageSuccess(imageUrl, legend);
         }
         catch(NullPointerException | JSONException e)
         {
