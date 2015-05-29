@@ -33,28 +33,15 @@ public class CircleAnimationListener implements View.OnClickListener
     {
         mRevealContainer = revealContainer;
         mView = ((ViewGroup) mRevealContainer).getChildAt(0);
-        mClose = false;
 
         mListener = wasabi;
-    }
-
-    /**
-     * On ferme la page
-     *
-     * @param revealContainer
-     * @param b
-     */
-    public CircleAnimationListener(Wasabi wasabi, View revealContainer, boolean b)
-    {
-        mListener = wasabi;
-        mRevealContainer = revealContainer;
-        mView = ((ViewGroup) mRevealContainer).getChildAt(0);
-        mClose = b;
     }
 
     @Override
     public void onClick(final View view)
     {
+        mClose = view.getId() == R.id.close_fresco || view.getId() == R.id.close_notification;
+
         /* Suppression du listener */
         view.setOnClickListener(null);
 
@@ -81,7 +68,7 @@ public class CircleAnimationListener implements View.OnClickListener
         {
             int id = view.getId() == R.id.open_fresco ? R.id.close_fresco : R.id.close_notification;
             ImageView close = (ImageView) mRevealContainer.findViewById(id);
-            close.setOnClickListener(new CircleAnimationListener(mListener, mRevealContainer, true));
+            close.setOnClickListener(new CircleAnimationListener(mListener, mRevealContainer));
         }
 
         /* Si animation fermante, on supprime la vue lorsque l'animation est terminée */

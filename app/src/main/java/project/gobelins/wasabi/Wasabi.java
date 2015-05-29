@@ -85,6 +85,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private boolean mAnimPlayed;
     private boolean mDisplayCustomView;
     private ImageView mUnexpectedText;
+    private ImageView mNotificationCloseButton;
 
     @Override
     public void onStart()
@@ -647,6 +648,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public void setCustomView(MyLayout customView)
     {
         mCustomView = customView;
+        mNotificationCloseButton = (ImageView) findViewById(R.id.close_notification);
 
         /* Récupération du premier enfant */
         FrameLayout child = (FrameLayout) mRevealContainerNotification.findViewById(R.id.notification_container);
@@ -663,7 +665,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             alphaAnimation.setDuration(1500);
 
             mCustomView.startAnimation(alphaAnimation);
-            findViewById(R.id.close_notification).startAnimation(alphaAnimation);
+            mNotificationCloseButton.startAnimation(alphaAnimation);
+
+            final CircleAnimationListener circleAnimationListener = new CircleAnimationListener(this, mRevealContainerNotification);
 
             /* Pour initialiser à la fin */
             alphaAnimation.setAnimationListener(new Animation.AnimationListener()
@@ -686,6 +690,12 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                     mUnexpectedText.setVisibility(View.VISIBLE);
                     if(mNotificationButton != null)
                         mNotificationButton.setVisibility(View.VISIBLE);
+
+                    /* Changement du background de la home */
+                    mAppContainer.setBackgroundResource(R.drawable.home);
+
+                    /* Listener au clic sur le bouton fermer */
+                    mNotificationCloseButton.setOnClickListener(circleAnimationListener);
                 }
 
                 @Override
