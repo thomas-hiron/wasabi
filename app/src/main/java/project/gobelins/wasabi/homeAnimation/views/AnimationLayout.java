@@ -9,6 +9,8 @@ import android.widget.VideoView;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.entities.Notification;
+import project.gobelins.wasabi.notifications.NotificationsTypes;
 
 /**
  * Gestion de l'animation
@@ -18,6 +20,7 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
 {
     private Wasabi mWasabi;
     private VideoView mVideo;
+    private Notification mNotification;
 
     public AnimationLayout(Context context)
     {
@@ -37,9 +40,25 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
         /* La vidéo */
         mVideo = (VideoView) findViewById(R.id.video);
 
+        /* La bonne animation */
+        int videoId = 0;
+
+        switch(mNotification.getType())
+        {
+            case NotificationsTypes.CHALLENGES:
+
+                videoId = R.raw.challenge_animation;
+
+                break;
+
+            default:
+
+                videoId = R.raw.home_animation;
+        }
+
         /* Changement de la source et lecture */
         mVideo.setVideoURI(
-                Uri.parse("android.resource://" + getContext().getPackageName() + "/" + R.raw.home_animation)
+                Uri.parse("android.resource://" + getContext().getPackageName() + "/" + videoId)
         );
         mVideo.setZOrderOnTop(true);
         mVideo.start();
@@ -51,6 +70,11 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
     public void setActivity(Wasabi activity)
     {
         mWasabi = activity;
+    }
+
+    public void setNotification(Notification notification)
+    {
+        mNotification = notification;
     }
 
     @Override

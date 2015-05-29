@@ -96,6 +96,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                     R.layout.home_animation, mAppContainer, false);
 
             mAnimLayout.setActivity(this);
+            mAnimLayout.setNotification(mLastNotification);
 
             /* Ajout de la vue */
             mAppContainer.addView(mAnimLayout);
@@ -124,9 +125,15 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Animation jamais jouée */
         mAnimPlayed = false;
 
+        /* Instanciation du manager des notifications */
+        mNotificationsManager = new NotificationsManager(getContentResolver());
+
+        /* Récupération de la dernière notification */
+        mLastNotification = mNotificationsManager.getLast();
+
         /* ---- TEMPORAIRE ---- */
-        mAnimPlayed = true;
-        homeAnimationEnd();
+//        mAnimPlayed = true;
+//        homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
@@ -512,12 +519,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mFresco = (Fresco) mRevealContainerFresco.findViewById(R.id.fresco_container);
         mFresco.initViewPager(getSupportFragmentManager());
         mFresco.setPictureListener(this);
-
-        /* Instanciation du manager des notifications */
-        mNotificationsManager = new NotificationsManager(getContentResolver());
-
-        /* Récupération de la dernière notification */
-        mLastNotification = mNotificationsManager.getLast();
 
         /* La notif si != null (inflate, ajout de la vue et du listener) */
         if(mLastNotification != null)
