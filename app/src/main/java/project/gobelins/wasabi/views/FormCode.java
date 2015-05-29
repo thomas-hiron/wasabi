@@ -2,6 +2,7 @@ package project.gobelins.wasabi.views;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -110,8 +111,8 @@ public class FormCode extends FrameLayout implements View.OnClickListener
         /* Suppression du listener */
         mValidate.setOnClickListener(null);
 
-        /* Changement de l'alpha pour le retour */
-        mValidate.setAlpha(0.7f);
+        /* Changement de la couleur pour le retour */
+        mValidate.setBackgroundColor(Color.parseColor("#F58585"));
 
         boolean isValid = checkValidCode();
 
@@ -146,7 +147,7 @@ public class FormCode extends FrameLayout implements View.OnClickListener
      */
     public void error()
     {
-        mValidate.setAlpha(1);
+        mValidate.setBackgroundColor(Color.parseColor("#f26667"));
         Toast.makeText(getContext(), "Le code n'est pas valide, veuillez réessayer", Toast.LENGTH_SHORT).show();
 
         mValidate.setOnClickListener(this);
