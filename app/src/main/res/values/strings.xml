@@ -65,5 +65,6 @@
     <string name="custom_image">Custom image</string>
     <string name="border">Bordure</string>
     <string name="pattern">Motif</string>
+    <string name="mystery_present">Voici un cadeau de votre proche mystère</string>
 
 </resources>

@@ -1,16 +1,85 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              tools:context=".Wasabi">
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:orientation="vertical"
+             tools:context=".Wasabi">
 
-    <ImageView
-        android:id="@+id/custom_image"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:adjustViewBounds="true"
-        android:layout_gravity="center"
-        android:contentDescription="@string/custom_image"/>
+        android:layout_gravity="top"
+        android:orientation="vertical">
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/mystery_present"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/drop_shadow"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_gravity="center">
+
+        <FrameLayout
+            android:layout_width="325dp"
+            android:layout_height="325dp"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:layout_width="325dp"
+                android:layout_height="325dp"
+                android:contentDescription="@string/pattern"
+                android:src="@drawable/custom_picture_pattern"/>
+
+            <ImageView
+                android:id="@+id/custom_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/custom_image"/>
+
+            <ImageView
+                android:layout_width="325dp"
+                android:layout_height="325dp"
+                android:contentDescription="@string/border"
+                android:src="@drawable/custom_picture_border"/>
+
+        </FrameLayout>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:layout_marginEnd="80dp"
+            android:layout_marginLeft="80dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginStart="80dp"
+            android:gravity="center"
+            android:text="@string/mystery_present"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
 
 </FrameLayout>
