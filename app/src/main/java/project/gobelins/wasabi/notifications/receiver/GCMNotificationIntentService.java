@@ -65,6 +65,12 @@ public class GCMNotificationIntentService extends IntentService
                     Notifications.NOTIFICATIONS_ID + " = " + requestId, null);
             /* Insertion dans la table */
             getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
+
+            /* Ajout d'un marqueur pour jouer l'animation une seule fois */
+            SharedPreferences sharedPreferences = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
+            SharedPreferences.Editor edit = sharedPreferences.edit();
+            edit.putBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, true);
+            edit.apply();
         }
         /* Dessin, on met dans les sharedPref */
         else if(requestIdString != null && requestIdString.equals("0"))

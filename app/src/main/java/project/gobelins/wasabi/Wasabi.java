@@ -59,6 +59,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public final static String REQUEST_ID = "request_id";
     public final static String REQUEST_TYPE = "request_type";
     public final static String ACCOMPLICE_DRAWED = "accomplice_drawed";
+    public final static String CUSTOM_ANIM_NOT_PLAYED = "custom_anim_played";
 
     private final int REQUEST_IMAGE = 1;
     private final int REQUEST_GPS = 2;
@@ -422,26 +423,37 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             /* Affichage du challenge */
             case NotificationsTypes.CHALLENGES:
 
-                mAppContainer.setBackgroundColor(Color.WHITE);
+                SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
+                boolean customAnimNotPlayed = prefs.getBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, false);
 
                 /* Pour forcer l'affichage de la customView */
-                mDisplayCustomView = true;
+                mDisplayCustomView = customAnimNotPlayed;
+
+                /* Suppression du marqueur */
+                prefs.edit().remove(Wasabi.CUSTOM_ANIM_NOT_PLAYED).apply();
 
                 /* On ajoute la home sans l'animer */
-                addHome(false);
+                addHome(!customAnimNotPlayed);
 
-                /* On cache la home */
-                mUnexpectedText.setVisibility(View.INVISIBLE);
-                mFrescoButton.setVisibility(View.INVISIBLE);
-                mUnexpectedText.setVisibility(View.INVISIBLE);
-
-                /* Suppression des listeners */
-                mFrescoButton.setOnClickListener(null);
-                if(mNotificationButton != null)
+                if(customAnimNotPlayed)
                 {
-                    mNotificationButton.setVisibility(View.INVISIBLE);
-                    mNotificationButton.setOnClickListener(null);
+                    mAppContainer.setBackgroundColor(Color.WHITE);
+
+                    /* On cache la home */
+                    mUnexpectedText.setVisibility(View.INVISIBLE);
+                    mFrescoButton.setVisibility(View.INVISIBLE);
+                    mUnexpectedText.setVisibility(View.INVISIBLE);
+
+                    /* Suppression des listeners */
+                    mFrescoButton.setOnClickListener(null);
+                    if(mNotificationButton != null)
+                    {
+                        mNotificationButton.setVisibility(View.INVISIBLE);
+                        mNotificationButton.setOnClickListener(null);
+                    }
                 }
+                else
+                    mAppContainer.setBackgroundResource(R.drawable.home);
 
                 break;
 

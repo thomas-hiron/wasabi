@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.homeAnimation.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -44,8 +45,12 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
         /* La bonne animation */
         int videoId = R.raw.home_animation;
 
-        /* Pour prévenir les bugs */
-        if(mNotification == null)
+        /* Répération des sharedPref pour savoir si la vidéo a été lue */
+        SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+        boolean customAnimNotPlayed = prefs.getBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, false);
+
+        /* Pour prévenir les bugs ou si la vidéo a déjà été jouée */
+        if(mNotification == null || !customAnimNotPlayed)
             mNotification = new Notification();
 
         switch(mNotification.getType())
