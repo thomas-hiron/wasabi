@@ -418,7 +418,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     public void homeAnimationEnd()
     {
-        switch(mLastNotification.getType())
+        /* Pour passer dans defaut si aucune notif */
+        Notification notification = mLastNotification != null ? mLastNotification : new Notification();
+
+        switch(notification.getType())
         {
             /* Affichage du challenge */
             case NotificationsTypes.CHALLENGES:
