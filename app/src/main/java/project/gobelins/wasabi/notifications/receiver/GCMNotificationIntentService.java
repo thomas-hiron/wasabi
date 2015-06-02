@@ -66,9 +66,13 @@ public class GCMNotificationIntentService extends IntentService
             getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
 
             /* Ajout d'un marqueur pour jouer l'animation une seule fois */
-            SharedPreferences sharedPreferences = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
-            SharedPreferences.Editor edit = sharedPreferences.edit();
+            SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
+            SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, true);
+            edit.putInt(Wasabi.REQUEST_PHASE, Math.max(
+                            prefs.getInt(Wasabi.REQUEST_PHASE, 1),
+                            Integer.parseInt(extras.getString(Wasabi.REQUEST_PHASE)))
+            );
             edit.apply();
         }
         /* Dessin, on met dans les sharedPref */

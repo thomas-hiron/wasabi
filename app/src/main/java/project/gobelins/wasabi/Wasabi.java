@@ -58,6 +58,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public final static String API_KEY = "api_key";
     public final static String REQUEST_ID = "request_id";
     public final static String REQUEST_TYPE = "request_type";
+    public final static String REQUEST_PHASE = "request_phase";
     public final static String ACCOMPLICE_DRAWED = "accomplice_drawed";
     public final static String CUSTOM_ANIM_NOT_PLAYED = "custom_anim_played";
 
@@ -82,6 +83,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private String mCurrentPhotoPath;
     private Fresco mFresco;
     private static String mApiKey;
+    private static int mPhaseNumber;
     private FormCode mFormCode;
     private boolean mAnimPlayed;
     private boolean mDisplayCustomView;
@@ -123,6 +125,11 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* Récupération de la clé API */
         getApiKeyFromPrefs();
+
+        /* Récupération de la phase */
+        getPhaseNumber();
+
+        Log.v("test", getPhaseNumber()+"");
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
@@ -628,6 +635,21 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
             mApiKey = prefs.getString(API_KEY, null);
         }
+    }
+
+    /**
+     * Récupére le numéro de la phase
+     */
+    private int getPhaseNumber()
+    {
+        if(mPhaseNumber == 0)
+        {
+            SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+
+            mPhaseNumber = prefs.getInt(REQUEST_PHASE, 1);
+        }
+
+        return mPhaseNumber;
     }
 
     /**
