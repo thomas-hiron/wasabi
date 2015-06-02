@@ -60,9 +60,8 @@ public class GCMNotificationIntentService extends IntentService
             contentValues.put(Notifications.NOTIFICATIONS_TYPE, Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE)));
             contentValues.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, DateFormater.getTodayAsString());
 
-            /* Suppression de sécurité pour ne pas générer une erreur si id existant */
-            getContentResolver().delete(Uri.parse(Notifications.URL_NOTIFICATIONS),
-                    Notifications.NOTIFICATIONS_ID + " = " + requestId, null);
+            /* Suppression de toutes les notifs pour la soutenance */
+            getContentResolver().delete(Uri.parse(Notifications.URL_NOTIFICATIONS), null, null);
             /* Insertion dans la table */
             getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
 

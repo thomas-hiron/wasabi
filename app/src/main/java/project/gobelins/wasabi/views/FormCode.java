@@ -55,7 +55,6 @@ public class FormCode extends FrameLayout implements View.OnClickListener
 
         /* Les dimensions du parent */
         View parent = (View) view.getParent();
-        int paddingLeft = parent.getPaddingLeft();
 
         /* Eviter les bugs */
         if(drawing == null)
