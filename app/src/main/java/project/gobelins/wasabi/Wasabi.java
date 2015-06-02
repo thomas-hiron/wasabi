@@ -127,9 +127,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         getApiKeyFromPrefs();
 
         /* Récupération de la phase */
-        getPhaseNumber();
+        getPhaseNumberFromPrefs();
 
-        Log.v("test", getPhaseNumber()+"");
+        Log.v("test", getPhaseNumber() + "");
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
@@ -640,7 +640,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Récupére le numéro de la phase
      */
-    private int getPhaseNumber()
+    private void getPhaseNumberFromPrefs()
     {
         if(mPhaseNumber == 0)
         {
@@ -648,7 +648,13 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
             mPhaseNumber = prefs.getInt(REQUEST_PHASE, 1);
         }
+    }
 
+    /**
+     * Récupére le numéro de la phase
+     */
+    public static int getPhaseNumber()
+    {
         return mPhaseNumber;
     }
 
