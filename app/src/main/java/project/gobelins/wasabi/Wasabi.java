@@ -489,7 +489,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mApiKey == null)
                     addFormCode();
                 else
-                    addHome();
+                    addWelcome();
+//                    addDrawingAccomplice();
+//                    addHome();
 
                 break;
         }
@@ -688,6 +690,21 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         mDrawAccompliceView.setWasabi(this);
         mDrawAccompliceView.init();
+    }
+
+    private void addWelcome()
+    {
+        /* Inflation de la vue */
+        FrameLayout welcomeView = (FrameLayout)
+                getLayoutInflater().inflate(R.layout.welcome_view, mAppContainer, false);
+
+        mAppContainer.addView(welcomeView);
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(1500);
+
+        welcomeView.startAnimation(alphaAnimation);
     }
 
     /**

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project.gobelins.wasabi.views.WelcomeView xmlns:android="http://schemas.android.com/apk/res/android"
+                                           android:layout_width="match_parent"
+                                           android:layout_height="match_parent"
+                                           android:background="@drawable/home">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/welcome_logo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:background="@drawable/hello_antoine"
+                android:contentDescription="@string/hello_antoine"/>
+
+        </FrameLayout>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="60dp"
+            android:gravity="center"
+            android:text="@string/chose_adventure"
+            android:textSize="20sp"/>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginStart="40dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/lets_guide2"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/next_step"
+        android:layout_width="@dimen/action_buttons"
+        android:layout_height="@dimen/action_buttons"
+        android:layout_gravity="end|bottom"
+        android:layout_marginBottom="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/close"
+        android:src="@drawable/next_step"/>
+
+</project.gobelins.wasabi.views.WelcomeView>
