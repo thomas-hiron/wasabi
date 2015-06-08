@@ -43,6 +43,7 @@ import project.gobelins.wasabi.interfaces.OnFrescoOpened;
 import project.gobelins.wasabi.interfaces.OnNotificationClosed;
 import project.gobelins.wasabi.interfaces.OnNotificationOpened;
 import project.gobelins.wasabi.interfaces.OnPictureListener;
+import project.gobelins.wasabi.listeners.AlphaRemoveListener;
 import project.gobelins.wasabi.listeners.CircleAnimationListener;
 import project.gobelins.wasabi.notifications.AsyncNotificationInflater;
 import project.gobelins.wasabi.notifications.NotificationsManager;
@@ -557,28 +558,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
         alphaAnimation.setDuration(1500);
 
-        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                mAppContainer.removeView(mFormCode);
-            }
-
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
-
         mFormCode.startAnimation(alphaAnimation);
+
+        alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mFormCode));
+        mFormCode = null;
     }
 
     /**
@@ -612,27 +595,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mWelcomeView.startAnimation(alphaAnimation);
 
         /* Suppression de la vue */
-        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                mAppContainer.removeView(mWelcomeView);
-                mWelcomeView = null;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
+        alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mWelcomeView));
+        mWelcomeView = null;
     }
 
     /**
@@ -668,27 +632,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mDrawingAccompliceView.startAnimation(alphaAnimation);
 
         /* Suppression de la vue */
-        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                mAppContainer.removeView(mDrawingAccompliceView);
-                mDrawingAccompliceView = null;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
+        alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mDrawingAccompliceView));
+        mDrawingAccompliceView = null;
     }
 
     /**
@@ -723,27 +668,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mDrawedAccompliceView.startAnimation(alphaAnimation);
 
         /* Suppression de la vue */
-        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                mAppContainer.removeView(mDrawedAccompliceView);
-                mDrawedAccompliceView = null;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
+        alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mDrawedAccompliceView));
+        mDrawedAccompliceView = null;
     }
 
     /**
@@ -806,38 +732,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             mFrescoButton.startAnimation(alphaAnimation);
             if(mLastNotification != null)
                 mNotificationButton.startAnimation(alphaAnimation);
-        }
-
-        /* Si portrait robot actif, on supprime la vue */
-        if(mDrawingAccompliceView != null)
-        {
-            AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-            alphaAnimation.setDuration(1500);
-
-            mDrawingAccompliceView.startAnimation(alphaAnimation);
-
-            /* Suppression de la vue lorsque l'animation est terminée */
-            alphaAnimation.setAnimationListener(new Animation.AnimationListener()
-            {
-                @Override
-                public void onAnimationStart(Animation animation)
-                {
-
-                }
-
-                @Override
-                public void onAnimationEnd(Animation animation)
-                {
-                    mAppContainer.removeView(mDrawingAccompliceView);
-                    mDrawingAccompliceView = null;
-                }
-
-                @Override
-                public void onAnimationRepeat(Animation animation)
-                {
-
-                }
-            });
         }
     }
 
