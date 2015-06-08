@@ -54,6 +54,7 @@ import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.GPSView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
 import project.gobelins.wasabi.utils.DateFormater;
+import project.gobelins.wasabi.views.AccompliceDrawing;
 import project.gobelins.wasabi.views.FormCode;
 
 public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened,
@@ -94,7 +95,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private boolean mDisplayCustomView;
     private ImageView mUnexpectedText;
     private ImageView mNotificationCloseButton;
-    private FrameLayout mDrawAccompliceView;
+    private AccompliceDrawing mDrawAccompliceView;
 
     @Override
     public void onStart()
@@ -568,7 +569,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Ajoute la home avec animation par défaut
      */
-    private void addHome()
+    public void addHome()
     {
         addHome(true);
     }
@@ -666,7 +667,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private void addDrawingAccomplice()
     {
         /* Inflation de la vue */
-        mDrawAccompliceView = (FrameLayout)
+        mDrawAccompliceView = (AccompliceDrawing)
                 getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
 
         mAppContainer.addView(mDrawAccompliceView);
@@ -677,24 +678,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         mDrawAccompliceView.startAnimation(alphaAnimation);
 
-        /* Les vues */
-        DrawView drawView = (DrawView) mDrawAccompliceView.findViewById(R.id.draw_view);
-        DrawedView drawedView = (DrawedView) mDrawAccompliceView.findViewById(R.id.drawed_view);
-
-        drawView.setOnTouchListener(new DrawingListener(drawView, drawedView, this));
-
-        /* Bouton valider */
-        ImageView validate = (ImageView) mDrawAccompliceView.findViewById(R.id.identikit_completed);
-
-        /* Listener sur le bouton terminer */
-        validate.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                addHome();
-            }
-        });
+        mDrawAccompliceView.setWasabi(this);
+        mDrawAccompliceView.init();
     }
 
     /**
