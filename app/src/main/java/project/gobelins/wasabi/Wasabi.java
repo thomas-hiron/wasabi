@@ -696,14 +696,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     public void removeDrawingAccompliceView()
     {
-        /* Inflation de la vue */
-        mDrawingAccompliceView = (AccompliceDrawing)
-                getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
-
-        mAppContainer.addView(mDrawingAccompliceView);
-
-        mDrawingAccompliceView.setWasabi(this);
-        mDrawingAccompliceView.init();
+        mAppContainer.removeView(mDrawingAccompliceView);
+        mDrawingAccompliceView = null;
     }
 
     /**
@@ -716,6 +710,43 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 getLayoutInflater().inflate(R.layout.drawed_accomplice_view, mAppContainer, false);
 
         mAppContainer.addView(mDrawedAccompliceView);
+
+        mDrawedAccompliceView.setWasabi(this);
+    }
+
+    /**
+     * Supprime la vue du complice dessiné
+     */
+    public void removeDrawedAccompliceView()
+    {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(1500);
+
+        /* Animation */
+        mDrawedAccompliceView.startAnimation(alphaAnimation);
+
+        /* Suppression de la vue */
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                mAppContainer.removeView(mDrawedAccompliceView);
+                mDrawedAccompliceView = null;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
     }
 
     /**

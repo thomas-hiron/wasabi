@@ -23,6 +23,8 @@ import project.gobelins.wasabi.Wasabi;
  */
 public class AccompliceDrawed extends LinearLayout implements View.OnClickListener
 {
+    private Wasabi mWasabi;
+
     public AccompliceDrawed(Context context)
     {
         super(context);
@@ -77,6 +79,15 @@ public class AccompliceDrawed extends LinearLayout implements View.OnClickListen
             /* Ajout du surnom dans les sharedPref */
             SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
             prefs.edit().putString(Wasabi.SURNAME, text).apply();
+
+            /* Affichage de l'accueil */
+            mWasabi.removeDrawedAccompliceView();
+            mWasabi.addHome();
         }
+    }
+
+    public void setWasabi(Wasabi wasabi)
+    {
+        mWasabi = wasabi;
     }
 }
