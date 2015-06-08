@@ -3,8 +3,10 @@ package project.gobelins.wasabi.views;
 import android.content.Context;
 import android.os.Environment;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.squareup.picasso.Picasso;
 
@@ -17,7 +19,7 @@ import project.gobelins.wasabi.R;
  * <p/>
  * Created by ThomasHiron on 08/06/2015.
  */
-public class AccompliceDrawed extends LinearLayout
+public class AccompliceDrawed extends LinearLayout implements View.OnClickListener
 {
     public AccompliceDrawed(Context context)
     {
@@ -44,5 +46,28 @@ public class AccompliceDrawed extends LinearLayout
 
         /* Ajout dans l'imageView */
         Picasso.with(getContext()).load(file).into(imageView);
+
+        /* Listener sur le bouton valider */
+        ButtonQuicksand button = (ButtonQuicksand) findViewById(R.id.validate_surname);
+        button.setOnClickListener(this);
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        /* Suppression du listener */
+        view.setOnClickListener(null);
+
+        /* Validation du surnom si non vide */
+        EditTextQuicksand editText = (EditTextQuicksand) findViewById(R.id.surname);
+
+        /* Si champs valide */
+        if(editText.getText().toString().trim().length() == 0)
+        {
+            Toast.makeText(getContext(), "Le champ ne doit pas être vide", Toast.LENGTH_SHORT).show();
+            view.setOnClickListener(this);
+        }
+        else
+            Toast.makeText(getContext(), "Validation OK !", Toast.LENGTH_SHORT).show();
     }
 }
