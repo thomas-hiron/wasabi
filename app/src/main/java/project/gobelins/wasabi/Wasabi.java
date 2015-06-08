@@ -23,6 +23,7 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 
 import org.apache.http.NameValuePair;
 
@@ -89,6 +90,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private boolean mDisplayCustomView;
     private ImageView mUnexpectedText;
     private ImageView mNotificationCloseButton;
+    private LinearLayout mDrawAccompliceView;
 
     @Override
     public void onStart()
@@ -517,8 +519,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Suppression de la vue */
         removeFormCode();
 
-        /* Ajout de la home */
-        addHome();
+        /* Ajout de la vue pour dessiner */
+        addDrawingAccomplice();
 
         /* On envoie le registration_id si première connexion */
         RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
@@ -622,6 +624,24 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             if(mLastNotification != null)
                 mNotificationButton.startAnimation(alphaAnimation);
         }
+    }
+
+    /**
+     * Ajoute la vue permettant de dessiner le complice
+     */
+    private void addDrawingAccomplice()
+    {
+        /* Inflation de la vue */
+        mDrawAccompliceView = (LinearLayout)
+                getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
+
+        mAppContainer.addView(mDrawAccompliceView);
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(1500);
+
+        mDrawAccompliceView.startAnimation(alphaAnimation);
     }
 
     /**

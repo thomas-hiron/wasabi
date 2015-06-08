@@ -66,5 +66,6 @@
     <string name="border">Bordure</string>
     <string name="pattern">Motif</string>
     <string name="mystery_present">Voici un cadeau de votre proche mystère</string>
+    <string name="draw_complice">Dessinez vore complice</string>
 
 </resources>

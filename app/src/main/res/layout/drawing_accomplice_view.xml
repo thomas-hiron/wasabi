@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:background="@color/white"
+              android:orientation="vertical">
+
+    <!-- Vue du dessin du complice -->
+
+    <project.gobelins.wasabi.views.TextViewQuicksand
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="14dp"
+        android:layout_marginTop="14dp"
+        android:gravity="center"
+        android:text="@string/draw_complice"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="15dp"
+        android:layout_marginBottom="15dp"
+        android:background="@drawable/drop_shadow"/>
+
+</LinearLayout>
