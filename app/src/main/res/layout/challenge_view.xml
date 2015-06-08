@@ -49,6 +49,7 @@
         android:layout_marginBottom="10dp"
         android:layout_marginTop="15dp"
         android:gravity="center"
+        android:textColor="@color/black"
         android:text="@string/address_lafayette"
         android:textSize="17sp"/>
 

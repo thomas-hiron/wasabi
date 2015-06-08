@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.views;
 
 import android.content.Context;
+import android.graphics.drawable.TransitionDrawable;
 import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -11,6 +12,7 @@ import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
+import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 
 /**
  * Created by ThomasHiron on 08/06/2015.
@@ -57,5 +59,12 @@ public class AccompliceDrawing extends FrameLayout
                 mWasabi.addHome();
             }
         });
+
+        /* Activation du bouton de dessin */
+        DrawButton drawButton = (DrawButton) findViewById(R.id.draw_button);
+
+        /* On met l'état actif */
+        TransitionDrawable transition = (TransitionDrawable) drawButton.getBackground();
+        transition.startTransition(0);
     }
 }

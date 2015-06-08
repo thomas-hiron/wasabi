@@ -70,7 +70,8 @@
     <string name="deguise_toi">Pour recevoir un indice :\nDéguisez-vous avec les éléments dessinés et prenez-vous en photo.</string>
     <string name="hello_antoine">Bonjour Antoine !</string>
     <string name="chose_adventure">Vous avez choisi de tenter l’aventure, merci !</string>
-    <string name="lets_guide2">A présent,\nlaissez-vous guider...</string>
+    <string name="lets_guide2">A présent,\nlaissez-vous guider…</string>
     <string name="accomplice_border">Contour du mec</string>
+    <string name="respect_repers">Respectez les repères\nautant que possible.</string>
 
 </resources>

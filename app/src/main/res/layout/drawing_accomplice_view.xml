@@ -25,8 +25,19 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="15dp"
-            android:layout_marginBottom="15dp"
+            android:layout_marginBottom="5dp"
             android:background="@drawable/drop_shadow"/>
+
+        <project.gobelins.wasabi.fresco.views.buttons.DrawButton
+            android:id="@+id/draw_button"
+            android:layout_width="@dimen/fresco_tools"
+            android:layout_height="@dimen/fresco_tools"
+            android:layout_gravity="end"
+            android:layout_marginEnd="20dp"
+            android:layout_marginRight="20dp"
+            android:background="@drawable/transition_fresco_button_bg"
+            android:contentDescription="@string/draw"
+            android:src="@drawable/tool_pencil"/>
 
     </LinearLayout>
 
@@ -49,6 +60,16 @@
         android:layout_height="315dp"
         android:layout_gravity="center"/>
 
+    <project.gobelins.wasabi.views.TextViewQuicksand
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="100dp"
+        android:layout_gravity="center|bottom"
+        android:gravity="center"
+        android:text="@string/respect_repers"
+        android:textColor="@color/black"
+        android:textSize="16sp"/>
+
     <ImageView
         android:id="@+id/identikit_completed"
         android:layout_width="@dimen/action_buttons"
@@ -58,6 +79,7 @@
         android:layout_marginEnd="10dp"
         android:layout_marginRight="10dp"
         android:contentDescription="@string/close"
-        android:src="@drawable/open_notification"/>
+        android:src="@drawable/accept"
+        android:visibility="gone"/>
 
 </project.gobelins.wasabi.views.AccompliceDrawing>
