@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.View;
@@ -13,6 +14,7 @@ import com.squareup.picasso.Picasso;
 import java.io.File;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 
 /**
  * La vue du complice dessiné, permet de renseiger le surnom
@@ -61,13 +63,20 @@ public class AccompliceDrawed extends LinearLayout implements View.OnClickListen
         /* Validation du surnom si non vide */
         EditTextQuicksand editText = (EditTextQuicksand) findViewById(R.id.surname);
 
+        /* Le texte */
+        String text = editText.getText().toString().trim();
+
         /* Si champs valide */
-        if(editText.getText().toString().trim().length() == 0)
+        if(text.length() == 0)
         {
             Toast.makeText(getContext(), "Le champ ne doit pas être vide", Toast.LENGTH_SHORT).show();
             view.setOnClickListener(this);
         }
         else
-            Toast.makeText(getContext(), "Validation OK !", Toast.LENGTH_SHORT).show();
+        {
+            /* Ajout du surnom dans les sharedPref */
+            SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+            prefs.edit().putString(Wasabi.SURNAME, text).apply();
+        }
     }
 }
