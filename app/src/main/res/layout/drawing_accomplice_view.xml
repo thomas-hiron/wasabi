@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <project.gobelins.wasabi.views.AccompliceDrawing xmlns:android="http://schemas.android.com/apk/res/android"
-             android:layout_width="match_parent"
-             android:layout_height="match_parent"
-             android:background="@color/white"
-             android:orientation="vertical">
+                                                 android:layout_width="match_parent"
+                                                 android:layout_height="match_parent"
+                                                 android:background="@color/white"
+                                                 android:orientation="vertical">
 
     <!-- Vue du dessin du complice -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:layout_gravity="top">
+        android:layout_gravity="top"
+        android:orientation="vertical">
 
         <project.gobelins.wasabi.views.TextViewQuicksand
             android:layout_width="match_parent"
@@ -30,6 +30,13 @@
 
     </LinearLayout>
 
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="284dp"
+        android:layout_gravity="center"
+        android:background="@drawable/accomplice_border"
+        android:contentDescription="@string/accomplice_border"/>
+
     <project.gobelins.wasabi.fresco.drawing.DrawedView
         android:id="@+id/drawed_view"
         android:layout_width="match_parent"
@@ -46,9 +53,9 @@
         android:layout_height="@dimen/action_buttons"
         android:layout_gravity="end|bottom"
         android:layout_marginBottom="10dp"
-        android:layout_marginRight="10dp"
         android:layout_marginEnd="10dp"
-        android:src="@drawable/open_notification"
-        android:contentDescription="@string/close"/>
+        android:layout_marginRight="10dp"
+        android:contentDescription="@string/close"
+        android:src="@drawable/open_notification"/>
 
 </project.gobelins.wasabi.views.AccompliceDrawing>

@@ -71,5 +71,6 @@
     <string name="hello_antoine">Bonjour Antoine !</string>
     <string name="chose_adventure">Vous avez choisi de tenter l’aventure, merci !</string>
     <string name="lets_guide2">A présent,\nlaissez-vous guider...</string>
+    <string name="accomplice_border">Contour du mec</string>
 
 </resources>
