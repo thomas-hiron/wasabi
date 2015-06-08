@@ -23,7 +23,6 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import org.apache.http.NameValuePair;
 
@@ -36,6 +35,9 @@ import java.util.ArrayList;
 
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.Fresco;
+import project.gobelins.wasabi.fresco.drawing.DrawView;
+import project.gobelins.wasabi.fresco.drawing.DrawedView;
+import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.httpRequests.AsyncPostDrawingsRequest;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
@@ -90,7 +92,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private boolean mDisplayCustomView;
     private ImageView mUnexpectedText;
     private ImageView mNotificationCloseButton;
-    private LinearLayout mDrawAccompliceView;
+    private FrameLayout mDrawAccompliceView;
 
     @Override
     public void onStart()
@@ -478,7 +480,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mApiKey == null)
                     addFormCode();
                 else
-                    addHome();
+//                    addHome();
+                    addDrawingAccomplice();
 
                 break;
         }
@@ -632,7 +635,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private void addDrawingAccomplice()
     {
         /* Inflation de la vue */
-        mDrawAccompliceView = (LinearLayout)
+        mDrawAccompliceView = (FrameLayout)
                 getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
 
         mAppContainer.addView(mDrawAccompliceView);
@@ -642,6 +645,12 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         alphaAnimation.setDuration(1500);
 
         mDrawAccompliceView.startAnimation(alphaAnimation);
+
+        /* Les vues */
+        DrawView drawView = (DrawView) mDrawAccompliceView.findViewById(R.id.draw_view);
+        DrawedView drawedView = (DrawedView) mDrawAccompliceView.findViewById(R.id.drawed_view);
+
+        drawView.setOnTouchListener(new DrawingListener(drawView, drawedView, null));
     }
 
     /**

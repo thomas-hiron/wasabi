@@ -1,6 +1,5 @@
 package project.gobelins.wasabi.fresco.listeners;
 
-import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 
@@ -41,7 +40,8 @@ public class DrawingListener implements View.OnTouchListener
             mDrawView.setFirstPoint(p);
 
             /* On cache les boutons d'action (dessiner, image, son, fermer) */
-            mFresco.hideInterfaceButtons();
+            if(mFresco != null)
+                mFresco.hideInterfaceButtons();
         }
         else if(event.getAction() == MotionEvent.ACTION_MOVE)
         {
@@ -60,14 +60,17 @@ public class DrawingListener implements View.OnTouchListener
             /* Réinitialisation des points */
             mDrawView.clearPoints();
 
-            /* Enregistrement des points */
-            mFresco.saveDrawing(points);
-
             /* Dessin des points dans l'autre vue */
             mDrawedView.draw(points);
 
-            /* Affichage des boutons d'interface */
-            mFresco.showInterfaceButtons();
+            if(mFresco != null)
+            {
+                /* Enregistrement des points */
+                mFresco.saveDrawing(points);
+
+                /* Affichage des boutons d'interface */
+                mFresco.showInterfaceButtons();
+            }
 
             return false;
         }

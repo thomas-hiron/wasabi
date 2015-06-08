@@ -1,26 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white"
+             android:orientation="vertical">
 
     <!-- Vue du dessin du complice -->
-
-    <project.gobelins.wasabi.views.TextViewQuicksand
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:layout_marginTop="14dp"
-        android:gravity="center"
-        android:text="@string/draw_complice"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:orientation="vertical"
+        android:layout_gravity="top">
 
-    <View
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/draw_complice"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/drop_shadow"/>
+
+    </LinearLayout>
+
+    <project.gobelins.wasabi.fresco.drawing.DrawedView
+        android:id="@+id/drawed_view"
         android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/drop_shadow"/>
+        android:layout_height="match_parent"/>
 
-</LinearLayout>
+    <project.gobelins.wasabi.fresco.drawing.DrawView
+        android:id="@+id/draw_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+</FrameLayout>
