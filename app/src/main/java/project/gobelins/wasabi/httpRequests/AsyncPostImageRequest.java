@@ -33,9 +33,8 @@ public class AsyncPostImageRequest extends AsyncPostRequests
             JSONObject jsonObject = new JSONObject(s);
 
             String imageUrl = jsonObject.getString("image_url");
-            String legend = jsonObject.getString("legend");
 
-            mImageView.imageSuccess(imageUrl, legend);
+            mImageView.imageSuccess(imageUrl);
         }
         catch(NullPointerException | JSONException e)
         {

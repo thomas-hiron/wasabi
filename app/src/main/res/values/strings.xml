@@ -67,5 +67,6 @@
     <string name="pattern">Motif</string>
     <string name="mystery_present">Voici un cadeau de votre proche mystère</string>
     <string name="draw_complice">Dessinez vore complice</string>
+    <string name="deguise_toi">Pour recevoir un indice :\nDéguisez-vous avec les éléments dessinés et prenez-vous en photo.</string>
 
 </resources>
