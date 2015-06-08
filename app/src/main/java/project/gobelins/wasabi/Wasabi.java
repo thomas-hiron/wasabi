@@ -53,6 +53,7 @@ import project.gobelins.wasabi.notifications.views.MyLayout;
 import project.gobelins.wasabi.utils.DateFormater;
 import project.gobelins.wasabi.views.AccompliceDrawing;
 import project.gobelins.wasabi.views.FormCode;
+import project.gobelins.wasabi.views.WelcomeView;
 
 public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened,
         OnNotificationClosed, OnPictureListener
@@ -94,6 +95,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private ImageView mUnexpectedText;
     private ImageView mNotificationCloseButton;
     private AccompliceDrawing mDrawAccompliceView;
+    private WelcomeView mWelcomeView;
 
     @Override
     public void onStart()
@@ -489,7 +491,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mApiKey == null)
                     addFormCode();
                 else
-                    addWelcome();
+                    addWelcomeView();
 //                    addDrawingAccomplice();
 //                    addHome();
 
@@ -674,19 +676,13 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Ajoute la vue permettant de dessiner le complice
      */
-    private void addDrawingAccomplice()
+    public void addDrawingAccomplice()
     {
         /* Inflation de la vue */
         mDrawAccompliceView = (AccompliceDrawing)
                 getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
 
         mAppContainer.addView(mDrawAccompliceView);
-
-        /* Animation */
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(1500);
-
-        mDrawAccompliceView.startAnimation(alphaAnimation);
 
         mDrawAccompliceView.setWasabi(this);
         mDrawAccompliceView.init();
@@ -695,19 +691,29 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Ajoute la vue bienvenue
      */
-    private void addWelcome()
+    private void addWelcomeView()
     {
         /* Inflation de la vue */
-        FrameLayout welcomeView = (FrameLayout)
+        mWelcomeView = (WelcomeView)
                 getLayoutInflater().inflate(R.layout.welcome_view, mAppContainer, false);
 
-        mAppContainer.addView(welcomeView);
+        mAppContainer.addView(mWelcomeView);
+        mWelcomeView.setWasabi(this);
 
         /* Animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
         alphaAnimation.setDuration(1500);
 
-        welcomeView.startAnimation(alphaAnimation);
+        mWelcomeView.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Supprime la vue de bienvenue
+     */
+    public void removeWelcomeView()
+    {
+        mAppContainer.removeView(mWelcomeView);
+
     }
 
     /**

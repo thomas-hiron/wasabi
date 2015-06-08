@@ -19,6 +19,8 @@ import project.gobelins.wasabi.Wasabi;
  */
 public class WelcomeView extends FrameLayout implements View.OnClickListener
 {
+    private Wasabi mWasabi;
+
     public WelcomeView(Context context)
     {
         super(context);
@@ -88,5 +90,14 @@ public class WelcomeView extends FrameLayout implements View.OnClickListener
     public void onClick(View view)
     {
         view.setOnClickListener(null);
+
+        /* Suppression de la vue et ajoue de la suivante */
+        mWasabi.removeWelcomeView();
+        mWasabi.addDrawingAccomplice();
+    }
+
+    public void setWasabi(Wasabi wasabi)
+    {
+        mWasabi = wasabi;
     }
 }
