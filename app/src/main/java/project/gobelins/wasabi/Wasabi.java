@@ -480,8 +480,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mApiKey == null)
                     addFormCode();
                 else
-//                    addHome();
-                    addDrawingAccomplice();
+                    addHome();
 
                 break;
         }
@@ -627,6 +626,38 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             if(mLastNotification != null)
                 mNotificationButton.startAnimation(alphaAnimation);
         }
+
+        /* Si portrait robot actif, on supprime la vue */
+        if(mDrawAccompliceView != null)
+        {
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+            alphaAnimation.setDuration(1500);
+
+            mDrawAccompliceView.startAnimation(alphaAnimation);
+
+            /* Suppression de la vue lorsque l'animation est terminée */
+            alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+            {
+                @Override
+                public void onAnimationStart(Animation animation)
+                {
+
+                }
+
+                @Override
+                public void onAnimationEnd(Animation animation)
+                {
+                    mAppContainer.removeView(mDrawAccompliceView);
+                    mDrawAccompliceView = null;
+                }
+
+                @Override
+                public void onAnimationRepeat(Animation animation)
+                {
+
+                }
+            });
+        }
     }
 
     /**
@@ -651,6 +682,19 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         DrawedView drawedView = (DrawedView) mDrawAccompliceView.findViewById(R.id.drawed_view);
 
         drawView.setOnTouchListener(new DrawingListener(drawView, drawedView, this));
+
+        /* Bouton valider */
+        ImageView validate = (ImageView) mDrawAccompliceView.findViewById(R.id.identikit_completed);
+
+        /* Listener sur le bouton terminer */
+        validate.setOnClickListener(new View.OnClickListener()
+        {
+            @Override
+            public void onClick(View view)
+            {
+                addHome();
+            }
+        });
     }
 
     /**
