@@ -66,7 +66,7 @@
     <string name="border">Bordure</string>
     <string name="pattern">Motif</string>
     <string name="mystery_present">Voici un cadeau de votre proche mystère</string>
-    <string name="draw_complice">Dessinez vore complice</string>
+    <string name="draw_complice">Dessinez votre proche mystère\ntel que vous l’imaginez</string>
     <string name="deguise_toi">Pour recevoir un indice :\nDéguisez-vous avec les éléments dessinés et prenez-vous en photo.</string>
     <string name="hello_antoine">Bonjour Antoine !</string>
     <string name="chose_adventure">Vous avez choisi de tenter l’aventure, merci !</string>
