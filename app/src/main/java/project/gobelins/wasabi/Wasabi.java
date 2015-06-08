@@ -154,8 +154,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mLastNotification = mNotificationsManager.getLast();
 
         /* ---- TEMPORAIRE ---- */
-        mAnimPlayed = true;
-        homeAnimationEnd();
+//        mAnimPlayed = true;
+//        homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
@@ -495,9 +495,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mApiKey == null)
                     addFormCode();
                 else
-                    addWelcomeView();
-//                    addDrawingAccompliceView();
-//                    addHome();
+                    addHome();
 
                 break;
         }
