@@ -99,7 +99,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private AccompliceDrawing mDrawingAccompliceView;
     private AccompliceDrawed mDrawedAccompliceView;
     private WelcomeView mWelcomeView;
-    private DrawingsManager mDrawingsManager;
 
     @Override
     public void onStart()
@@ -154,8 +153,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mLastNotification = mNotificationsManager.getLast();
 
         /* ---- TEMPORAIRE ---- */
-        mAnimPlayed = true;
-        homeAnimationEnd();
+//        mAnimPlayed = true;
+//        homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
@@ -449,8 +448,11 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         switch(notification.getType())
         {
-            /* Affichage du challenge */
+            /* Affichage du challenge ou autre */
             case NotificationsTypes.CHALLENGES:
+            case NotificationsTypes.PLACES:
+            case NotificationsTypes.MESSAGES:
+            case NotificationsTypes.CUSTOM_IMAGE:
 
                 SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
                 boolean customAnimNotPlayed = prefs.getBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, false);

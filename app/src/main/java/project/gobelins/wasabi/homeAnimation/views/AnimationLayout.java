@@ -60,6 +60,24 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
                 videoId = R.raw.challenge_animation;
 
                 break;
+
+            case NotificationsTypes.PLACES:
+
+                videoId = R.raw.gps_animation;
+
+                break;
+
+            case NotificationsTypes.MESSAGES:
+
+                videoId = R.raw.message_animation;
+
+                break;
+
+            case NotificationsTypes.CUSTOM_IMAGE:
+
+                videoId = R.raw.custom_image_animation;
+
+                break;
         }
 
         /* Changement de la source et lecture */
@@ -96,6 +114,9 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
         switch(mNotification.getType())
         {
             case NotificationsTypes.CHALLENGES:
+            case NotificationsTypes.PLACES:
+            case NotificationsTypes.MESSAGES:
+            case NotificationsTypes.CUSTOM_IMAGE:
 
                 mVideo.setBackgroundColor(Color.WHITE);
 
