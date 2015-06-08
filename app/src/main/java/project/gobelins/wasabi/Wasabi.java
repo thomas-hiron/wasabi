@@ -692,6 +692,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mDrawAccompliceView.init();
     }
 
+    /**
+     * Ajoute la vue bienvenue
+     */
     private void addWelcome()
     {
         /* Inflation de la vue */

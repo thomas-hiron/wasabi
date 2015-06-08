@@ -9,7 +9,7 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
@@ -17,7 +17,7 @@ import project.gobelins.wasabi.Wasabi;
 /**
  * Created by ThomasHiron on 08/06/2015.
  */
-public class WelcomeView extends FrameLayout
+public class WelcomeView extends FrameLayout implements View.OnClickListener
 {
     public WelcomeView(Context context)
     {
@@ -33,6 +33,11 @@ public class WelcomeView extends FrameLayout
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
+
+        /* Clic sur le bouton suivant */
+        ImageView nextStep = (ImageView) findViewById(R.id.next_step);
+
+        nextStep.setOnClickListener(this);
 
         /* On scale le logo correctement */
         ImageView view = (ImageView) findViewById(R.id.welcome_logo);
@@ -77,5 +82,11 @@ public class WelcomeView extends FrameLayout
     {
         float density = getContext().getResources().getDisplayMetrics().density;
         return Math.round((float) dp * density);
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        view.setOnClickListener(null);
     }
 }
