@@ -582,6 +582,171 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     }
 
     /**
+     * Ajoute la vue bienvenue
+     */
+    private void addWelcomeView()
+    {
+        /* Inflation de la vue */
+        mWelcomeView = (WelcomeView)
+                getLayoutInflater().inflate(R.layout.welcome_view, mAppContainer, false);
+
+        mAppContainer.addView(mWelcomeView);
+        mWelcomeView.setWasabi(this);
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(1500);
+
+        mWelcomeView.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Supprime la vue de bienvenue
+     */
+    public void removeWelcomeView()
+    {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(1500);
+
+        /* Animation */
+        mWelcomeView.startAnimation(alphaAnimation);
+
+        /* Suppression de la vue */
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                mAppContainer.removeView(mWelcomeView);
+                mWelcomeView = null;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+
+    /**
+     * Ajoute la vue permettant de dessiner le complice
+     */
+    public void addDrawingAccompliceView()
+    {
+        /* Inflation de la vue */
+        mDrawingAccompliceView = (AccompliceDrawing)
+                getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
+
+        mAppContainer.addView(mDrawingAccompliceView);
+
+        mDrawingAccompliceView.setWasabi(this);
+        mDrawingAccompliceView.init();
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(500);
+
+        mDrawingAccompliceView.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Supprime la vue permettant de dessiner le complice
+     */
+    public void removeDrawingAccompliceView()
+    {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(500);
+
+        /* Animation */
+        mDrawingAccompliceView.startAnimation(alphaAnimation);
+
+        /* Suppression de la vue */
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                mAppContainer.removeView(mDrawingAccompliceView);
+                mDrawingAccompliceView = null;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+
+    /**
+     * Ajoute la vue du complice dessiné
+     */
+    public void addDrawedAccompliceView()
+    {
+        /* Inflation de la vue */
+        mDrawedAccompliceView = (AccompliceDrawed)
+                getLayoutInflater().inflate(R.layout.drawed_accomplice_view, mAppContainer, false);
+
+        mAppContainer.addView(mDrawedAccompliceView);
+
+        mDrawedAccompliceView.setWasabi(this);
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(500);
+
+        mDrawedAccompliceView.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Supprime la vue du complice dessiné
+     */
+    public void removeDrawedAccompliceView()
+    {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(1500);
+
+        /* Animation */
+        mDrawedAccompliceView.startAnimation(alphaAnimation);
+
+        /* Suppression de la vue */
+        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
+        {
+            @Override
+            public void onAnimationStart(Animation animation)
+            {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation)
+            {
+                mAppContainer.removeView(mDrawedAccompliceView);
+                mDrawedAccompliceView = null;
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation)
+            {
+
+            }
+        });
+    }
+
+    /**
      * Ajoute la home avec animation par défaut
      */
     public void addHome()
@@ -674,107 +839,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 }
             });
         }
-    }
-
-    /**
-     * Ajoute la vue permettant de dessiner le complice
-     */
-    public void addDrawingAccompliceView()
-    {
-        /* Inflation de la vue */
-        mDrawingAccompliceView = (AccompliceDrawing)
-                getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
-
-        mAppContainer.addView(mDrawingAccompliceView);
-
-        mDrawingAccompliceView.setWasabi(this);
-        mDrawingAccompliceView.init();
-    }
-
-    /**
-     * Supprime la vue permettant de dessiner le complice
-     */
-    public void removeDrawingAccompliceView()
-    {
-        mAppContainer.removeView(mDrawingAccompliceView);
-        mDrawingAccompliceView = null;
-    }
-
-    /**
-     * Ajoute la vue du complice dessiné
-     */
-    public void addDrawedAccompliceView()
-    {
-        /* Inflation de la vue */
-        mDrawedAccompliceView = (AccompliceDrawed)
-                getLayoutInflater().inflate(R.layout.drawed_accomplice_view, mAppContainer, false);
-
-        mAppContainer.addView(mDrawedAccompliceView);
-
-        mDrawedAccompliceView.setWasabi(this);
-    }
-
-    /**
-     * Supprime la vue du complice dessiné
-     */
-    public void removeDrawedAccompliceView()
-    {
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        alphaAnimation.setDuration(1500);
-
-        /* Animation */
-        mDrawedAccompliceView.startAnimation(alphaAnimation);
-
-        /* Suppression de la vue */
-        alphaAnimation.setAnimationListener(new Animation.AnimationListener()
-        {
-            @Override
-            public void onAnimationStart(Animation animation)
-            {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animation animation)
-            {
-                mAppContainer.removeView(mDrawedAccompliceView);
-                mDrawedAccompliceView = null;
-            }
-
-            @Override
-            public void onAnimationRepeat(Animation animation)
-            {
-
-            }
-        });
-    }
-
-    /**
-     * Ajoute la vue bienvenue
-     */
-    private void addWelcomeView()
-    {
-        /* Inflation de la vue */
-        mWelcomeView = (WelcomeView)
-                getLayoutInflater().inflate(R.layout.welcome_view, mAppContainer, false);
-
-        mAppContainer.addView(mWelcomeView);
-        mWelcomeView.setWasabi(this);
-
-        /* Animation */
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(1500);
-
-        mWelcomeView.startAnimation(alphaAnimation);
-    }
-
-    /**
-     * Supprime la vue de bienvenue
-     */
-    public void removeWelcomeView()
-    {
-        mAppContainer.removeView(mWelcomeView);
-
     }
 
     /**
