@@ -11,6 +11,7 @@ import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.drawing.Point;
+import project.gobelins.wasabi.views.AccompliceDrawing;
 
 /**
  * Permet de dessiner
@@ -19,7 +20,7 @@ import project.gobelins.wasabi.fresco.drawing.Point;
  */
 public class DrawingListener implements View.OnTouchListener
 {
-    private Wasabi mWasabi;
+    private AccompliceDrawing mAccompliceDrawing;
     private Fresco mFresco;
     private DrawView mDrawView;
     private DrawedView mDrawedView;
@@ -31,11 +32,11 @@ public class DrawingListener implements View.OnTouchListener
         mFresco = fresco;
     }
 
-    public DrawingListener(DrawView drawView, DrawedView drawedView, Wasabi wasabi)
+    public DrawingListener(DrawView drawView, DrawedView drawedView, AccompliceDrawing accompliceDrawing)
     {
         mDrawView = drawView;
         mDrawedView = drawedView;
-        mWasabi = wasabi;
+        mAccompliceDrawing = accompliceDrawing;
     }
 
     @Override
@@ -80,8 +81,8 @@ public class DrawingListener implements View.OnTouchListener
                 /* Affichage des boutons d'interface */
                 mFresco.showInterfaceButtons();
             }
-            else if(mWasabi != null)
-                mWasabi.saveDrawing(points);
+            else if(mAccompliceDrawing != null)
+                mAccompliceDrawing.saveDrawing(points);
             return false;
         }
 

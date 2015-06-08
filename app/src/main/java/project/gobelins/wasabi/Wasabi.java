@@ -96,6 +96,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private ImageView mNotificationCloseButton;
     private AccompliceDrawing mDrawAccompliceView;
     private WelcomeView mWelcomeView;
+    private DrawingsManager mDrawingsManager;
 
     @Override
     public void onStart()
@@ -721,10 +722,10 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      *
      * @param points
      */
-    public void saveDrawing(ArrayList<Point> points)
+    public void saveDrawingAccomplice(ArrayList<Point> points)
     {
-        DrawingsManager drawingsManager = new DrawingsManager(getContentResolver());
-        drawingsManager.saveDrawingAccomplice(points);
+        mDrawingsManager = new DrawingsManager(getContentResolver());
+        mDrawingsManager.saveDrawingAccomplice(points);
     }
 
     /**
