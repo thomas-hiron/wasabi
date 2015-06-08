@@ -5,6 +5,7 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
@@ -18,6 +19,7 @@ import project.gobelins.wasabi.fresco.drawing.Point;
  */
 public class DrawingListener implements View.OnTouchListener
 {
+    private Wasabi mWasabi;
     private Fresco mFresco;
     private DrawView mDrawView;
     private DrawedView mDrawedView;
@@ -27,6 +29,13 @@ public class DrawingListener implements View.OnTouchListener
         mDrawView = drawView;
         mDrawedView = drawedView;
         mFresco = fresco;
+    }
+
+    public DrawingListener(DrawView drawView, DrawedView drawedView, Wasabi wasabi)
+    {
+        mDrawView = drawView;
+        mDrawedView = drawedView;
+        mWasabi = wasabi;
     }
 
     @Override
@@ -71,7 +80,8 @@ public class DrawingListener implements View.OnTouchListener
                 /* Affichage des boutons d'interface */
                 mFresco.showInterfaceButtons();
             }
-
+            else if(mWasabi != null)
+                mWasabi.saveDrawing(points);
             return false;
         }
 

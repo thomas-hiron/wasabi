@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
+import project.gobelins.wasabi.sqlite.tables.AccompliceDrawing;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.sqlite.tables.Images;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
@@ -11,7 +12,7 @@ import project.gobelins.wasabi.sqlite.tables.Sounds;
 
 /**
  * Created by ThomasHiron on 24/10/2014.
- *
+ * <p/>
  * Exécute les requêtes
  */
 public class DatabaseHelper extends SQLiteOpenHelper
@@ -33,6 +34,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL(Drawings.CREATE_TABLE_DRAWINGS);
         sqLiteDatabase.execSQL(Images.CREATE_TABLE_IMAGES);
         sqLiteDatabase.execSQL(Sounds.CREATE_TABLE_SOUNDS);
+        sqLiteDatabase.execSQL(AccompliceDrawing.CREATE_TABLE_ACCOMPLICE_DRAWINGS);
     }
 
     @Override
@@ -43,6 +45,7 @@ public class DatabaseHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Drawings.TABLE_DRAWINGS);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Images.TABLE_IMAGES);
         sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + Sounds.TABLE_SOUNDS);
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + AccompliceDrawing.TABLE_ACCOMPLICE_DRAWINGS);
 
         /* Recréation */
         onCreate(sqLiteDatabase);

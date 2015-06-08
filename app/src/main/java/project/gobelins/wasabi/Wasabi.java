@@ -34,9 +34,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import project.gobelins.wasabi.entities.Notification;
+import project.gobelins.wasabi.fresco.DrawingsManager;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
+import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.httpRequests.AsyncPostDrawingsRequest;
@@ -132,8 +134,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* Récupération de la phase */
         getPhaseNumberFromPrefs();
-
-        Log.v("test", getPhaseNumber() + "");
 
         /* L'élément racine de la vue de l'application */
         mAppContainer = (FrameLayout) findViewById(R.id.app_container);
@@ -650,7 +650,18 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         DrawView drawView = (DrawView) mDrawAccompliceView.findViewById(R.id.draw_view);
         DrawedView drawedView = (DrawedView) mDrawAccompliceView.findViewById(R.id.drawed_view);
 
-        drawView.setOnTouchListener(new DrawingListener(drawView, drawedView, null));
+        drawView.setOnTouchListener(new DrawingListener(drawView, drawedView, this));
+    }
+
+    /**
+     * Enregistre le portrait robot
+     *
+     * @param points
+     */
+    public void saveDrawing(ArrayList<Point> points)
+    {
+        DrawingsManager drawingsManager = new DrawingsManager(getContentResolver());
+        drawingsManager.saveDrawingAccomplice(points);
     }
 
     /**

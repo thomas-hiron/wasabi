@@ -3,6 +3,7 @@ package project.gobelins.wasabi.fresco;
 import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.database.Cursor;
+import android.graphics.Color;
 import android.net.Uri;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import project.gobelins.wasabi.entities.Drawing;
 import project.gobelins.wasabi.entities.Entity;
 import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.Point;
+import project.gobelins.wasabi.sqlite.tables.AccompliceDrawing;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -99,5 +101,24 @@ public class DrawingsManager
 
         /* Suppression */
         mContentResolver.delete(Uri.parse(Drawings.URL_DRAWINGS), condition, null);
+    }
+
+    /**
+     * Enregistre les points du portrait robot
+     *
+     * @param points Les points
+     */
+    public void saveDrawingAccomplice(ArrayList<Point> points)
+    {
+        /* La couleur */
+        int color = Color.BLACK;
+
+        /* Nouvelles valeurs */
+        ContentValues contentValues = new ContentValues(2);
+        contentValues.put(AccompliceDrawing.ACCOMPLICE_DRAWINGS_POINTS, points.toString().replaceAll("\\[(.*)\\]", "$1"));
+        contentValues.put(AccompliceDrawing.ACCOMPLICE_DRAWINGS_COLOR, color);
+
+        /* Insertion */
+        mContentResolver.insert(Uri.parse(AccompliceDrawing.URL_ACCOMPLICE_DRAWINGS), contentValues);
     }
 }

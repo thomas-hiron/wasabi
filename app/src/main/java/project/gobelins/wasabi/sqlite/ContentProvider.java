@@ -9,6 +9,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteQueryBuilder;
 import android.net.Uri;
 
+import project.gobelins.wasabi.sqlite.tables.AccompliceDrawing;
 import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.sqlite.tables.Images;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
@@ -28,6 +29,7 @@ public class ContentProvider extends android.content.ContentProvider
     private static final int DRAWINGS = 2;
     private static final int IMAGES = 3;
     private static final int SOUNDS = 4;
+    private static final int ACCOMPLICE_DRAWING = 5;
 
     /* L'helper sqlite */
     DatabaseHelper mDBHelper;
@@ -41,6 +43,7 @@ public class ContentProvider extends android.content.ContentProvider
         mUriMatcher.addURI(PROVIDER_NAME, Drawings.TABLE_DRAWINGS, DRAWINGS);
         mUriMatcher.addURI(PROVIDER_NAME, Images.TABLE_IMAGES, IMAGES);
         mUriMatcher.addURI(PROVIDER_NAME, Sounds.TABLE_SOUNDS, SOUNDS);
+        mUriMatcher.addURI(PROVIDER_NAME, AccompliceDrawing.TABLE_ACCOMPLICE_DRAWINGS, ACCOMPLICE_DRAWING);
     }
 
     /* LA BDD */
@@ -99,6 +102,14 @@ public class ContentProvider extends android.content.ContentProvider
 
                 break;
 
+            /* Le dessin du complice (portrait robot) */
+            case ACCOMPLICE_DRAWING:
+
+                queryBuilder.setTables(AccompliceDrawing.TABLE_ACCOMPLICE_DRAWINGS);
+                sortOrder = sortOrder == null ? AccompliceDrawing.ACCOMPLICE_DRAWINGS_ID : sortOrder;
+
+                break;
+
             /* Erreur */
             default:
                 throw new IllegalArgumentException("Unknown URI " + uri);
@@ -143,6 +154,11 @@ public class ContentProvider extends android.content.ContentProvider
         {
             table = Sounds.TABLE_SOUNDS;
             contentUri = Sounds.CONTENT_URI_SOUNDS;
+        }
+        else if(id == ACCOMPLICE_DRAWING)
+        {
+            table = AccompliceDrawing.TABLE_ACCOMPLICE_DRAWINGS;
+            contentUri = AccompliceDrawing.CONTENT_URI_ACCOMPLICE_DRAWINGS;
         }
 
         /* Insertion et récupération de l'id inséré */
