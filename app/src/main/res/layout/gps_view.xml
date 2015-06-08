@@ -206,7 +206,7 @@
             android:layout_marginTop="60dp"
             android:gravity="center"
             android:text="@string/take_picture_to_illustrate"
-            android:textColor="@color/black"
+            android:textColor="@color/active_show"
             android:textSize="20sp"/>
 
         <ImageView
@@ -214,7 +214,7 @@
             android:layout_width="60dp"
             android:layout_height="60dp"
             android:layout_gravity="center"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="340dp"
             android:contentDescription="@string/take_picture_to_illustrate"
             android:src="@drawable/take_picture"/>
 
