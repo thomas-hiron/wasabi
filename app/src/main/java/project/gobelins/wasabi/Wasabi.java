@@ -681,6 +681,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     public void addDrawingAccompliceView()
     {
+        /* Suppression de tous les précédents dessins */
+        getContentResolver().delete(Uri.parse(project.gobelins.wasabi.sqlite.tables.AccompliceDrawing.URL_ACCOMPLICE_DRAWINGS), null, null);
+
         /* Inflation de la vue */
         mDrawingAccompliceView = (AccompliceDrawing)
                 getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);

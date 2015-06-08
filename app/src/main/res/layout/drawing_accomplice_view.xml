@@ -40,24 +40,25 @@
 
     </LinearLayout>
 
-    <ImageView
-        android:layout_width="200dp"
-        android:layout_height="284dp"
-        android:layout_gravity="center"
-        android:background="@drawable/accomplice_border"
-        android:contentDescription="@string/accomplice_border"/>
-
     <project.gobelins.wasabi.fresco.drawing.DrawedView
         android:id="@+id/drawed_view"
         android:layout_width="200dp"
         android:layout_height="315dp"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:background="@color/white"/>
 
     <project.gobelins.wasabi.fresco.drawing.DrawView
         android:id="@+id/draw_view"
         android:layout_width="200dp"
         android:layout_height="315dp"
         android:layout_gravity="center"/>
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="284dp"
+        android:layout_gravity="center"
+        android:background="@drawable/accomplice_border"
+        android:contentDescription="@string/accomplice_border"/>
 
     <project.gobelins.wasabi.views.TextViewQuicksand
         android:layout_width="match_parent"

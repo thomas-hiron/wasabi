@@ -1,13 +1,20 @@
 package project.gobelins.wasabi.views;
 
 import android.content.Context;
+import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.TransitionDrawable;
+import android.net.Uri;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.util.ArrayList;
 
 import project.gobelins.wasabi.R;
@@ -21,10 +28,11 @@ import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 /**
  * Created by ThomasHiron on 08/06/2015.
  */
-public class AccompliceDrawing extends FrameLayout
+public class AccompliceDrawing extends FrameLayout implements View.OnClickListener
 {
     private Wasabi mWasabi;
     private ImageView mValidate;
+    private DrawedView mDrawedView;
 
     public AccompliceDrawing(Context context)
     {
@@ -48,23 +56,15 @@ public class AccompliceDrawing extends FrameLayout
     {
         /* Les vues */
         DrawView drawView = (DrawView) findViewById(R.id.draw_view);
-        DrawedView drawedView = (DrawedView) findViewById(R.id.drawed_view);
+        mDrawedView = (DrawedView) findViewById(R.id.drawed_view);
 
-        drawView.setOnTouchListener(new DrawingListener(drawView, drawedView, this));
+        drawView.setOnTouchListener(new DrawingListener(drawView, mDrawedView, this));
 
         /* Bouton valider */
         mValidate = (ImageView) findViewById(R.id.identikit_completed);
 
         /* Listener sur le bouton terminer */
-        mValidate.setOnClickListener(new View.OnClickListener()
-        {
-            @Override
-            public void onClick(View view)
-            {
-                mWasabi.removeDrawingAccompliceView();
-                mWasabi.addDrawedAccompliceView();
-            }
-        });
+        mValidate.setOnClickListener(this);
 
         /* Activation du bouton de dessin */
         DrawButton drawButton = (DrawButton) findViewById(R.id.draw_button);
@@ -94,5 +94,41 @@ public class AccompliceDrawing extends FrameLayout
 
             mValidate.startAnimation(alphaAnimation);
         }
+    }
+
+    @Override
+    public void onClick(View view)
+    {
+        /* Enregistrement du complice */
+        mDrawedView.setDrawingCacheEnabled(true);
+        Bitmap b = mDrawedView.getDrawingCache();
+        try
+        {
+            String storageString = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) + "/wasabi";
+
+            /* Instanciation pour tester si dossier existant */
+            File file = new File(storageString);
+            if(!file.exists())
+                file.mkdirs();
+
+            file = new File(file.getAbsolutePath(), "identikit.jpg");
+
+            /* Compression */
+            b.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(file));
+
+            /* Mise à jour de la galerie */
+            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
+            Uri contentUri = Uri.fromFile(file);
+            mediaScanIntent.setData(contentUri);
+            getContext().sendBroadcast(mediaScanIntent);
+        }
+        catch(FileNotFoundException e)
+        {
+            e.printStackTrace();
+        }
+
+        /* Ajout de la nouvelle vue */
+        mWasabi.removeDrawingAccompliceView();
+        mWasabi.addDrawedAccompliceView();
     }
 }

@@ -22,23 +22,23 @@
         android:background="@drawable/drop_shadow"/>
 
     <FrameLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="200dp"
+        android:layout_height="315dp"
         android:layout_gravity="center"
         android:layout_marginBottom="15dp">
 
+        <project.gobelins.wasabi.fresco.drawing.DrawedView
+            android:id="@+id/drawed_view"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"/>
+
         <ImageView
-            android:layout_width="200dp"
+            android:layout_width="match_parent"
             android:layout_height="284dp"
             android:layout_gravity="center"
             android:background="@drawable/accomplice_background"
             android:contentDescription="@string/accomplice_border"/>
-
-        <project.gobelins.wasabi.fresco.drawing.DrawedView
-            android:id="@+id/drawed_view"
-            android:layout_width="200dp"
-            android:layout_height="315dp"
-            android:layout_gravity="center"/>
 
     </FrameLayout>
 

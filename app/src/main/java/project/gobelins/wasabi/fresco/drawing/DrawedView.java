@@ -37,7 +37,7 @@ public class DrawedView extends DrawView
         super(context, attrs);
 
         /* Initialisation de la paire Path/Paint */
-        mPathsColors = new ArrayList<Pair<Integer, Path>>();
+        mPathsColors = new ArrayList<>();
     }
 
     @Override
@@ -148,7 +148,7 @@ public class DrawedView extends DrawView
             newColor = ((ColorPoint) point).getColor();
 
         /* Ajout de la liste */
-        mPathsColors.add(new Pair<Integer, Path>(newColor, mPath));
+        mPathsColors.add(new Pair<>(newColor, mPath));
 
         /* Changement des points */
         mPoints = points;
