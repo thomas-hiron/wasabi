@@ -76,5 +76,8 @@
     <string name="give_surname">Donnez un surnom à votre\nproche mystère</string>
     <string name="enter_surname">Entrez un surnom</string>
     <string name="complice">Complice</string>
+    <string name="gps_indice">Merci ! Voici un indice concernant l\'identité de</string>
+    <string name="quote">Quote</string>
+    <string name="prefered_artist">Mon artiste préféré\nest Banksy</string>
 
 </resources>

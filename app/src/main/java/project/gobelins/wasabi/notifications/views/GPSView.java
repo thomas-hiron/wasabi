@@ -9,6 +9,7 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.location.Location;
+import android.os.Environment;
 import android.util.Base64;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
@@ -18,12 +19,14 @@ import android.view.animation.RotateAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -58,8 +61,10 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
     private int mTotalDistance;
     private LinearLayout mGpsView;
     private LinearLayout mGpsOverView;
+    private LinearLayout mGpsIndiceView;
     private ImageView mTakePictureButton;
     private Notification mNotification;
+    private ImageView mAccomplice;
 
     public GPSView(Wasabi wasabi, Notification notification)
     {
@@ -82,6 +87,7 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
         mDistanceLeft = (TextView) findViewById(R.id.gps_distance_left);
         mGpsView = (LinearLayout) findViewById(R.id.gps);
         mGpsOverView = (LinearLayout) findViewById(R.id.gps_over);
+        mGpsIndiceView = (LinearLayout) findViewById(R.id.gps_indice);
         mTakePictureButton = (ImageView) findViewById(R.id.take_picture_gps);
 
         mCurrentLocation = null;
@@ -178,6 +184,18 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
 
         mSensorManager.registerListener(this, mSenAccelerometer, SensorManager.SENSOR_DELAY_UI);
         mSensorManager.registerListener(this, mSenMagnetometer, SensorManager.SENSOR_DELAY_UI);
+
+        /* Chargement du complice dessiné */
+        if(mAccomplice == null)
+        {
+            mAccomplice = (ImageView) findViewById(R.id.drawed_accomplice);
+
+            /* Ajout de l'image */
+            String storageString = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
+                    "/wasabi/identikit.png";
+            File file = new File(storageString);
+            Picasso.with(getContext()).load(file).into(mAccomplice);
+        }
     }
 
     /**
@@ -295,5 +313,9 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
         new AsyncPostRequests(nameValuePairs).execute(
                 Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/request/gps"
         );
+
+        /* On change la vue affichée */
+        mGpsOverView.setVisibility(INVISIBLE);
+        mGpsIndiceView.setVisibility(VISIBLE);
     }
 }
