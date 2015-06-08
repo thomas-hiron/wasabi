@@ -51,6 +51,7 @@ import project.gobelins.wasabi.notifications.NotificationsTypes;
 import project.gobelins.wasabi.notifications.views.GPSView;
 import project.gobelins.wasabi.notifications.views.MyLayout;
 import project.gobelins.wasabi.utils.DateFormater;
+import project.gobelins.wasabi.views.AccompliceDrawed;
 import project.gobelins.wasabi.views.AccompliceDrawing;
 import project.gobelins.wasabi.views.FormCode;
 import project.gobelins.wasabi.views.WelcomeView;
@@ -94,7 +95,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private boolean mDisplayCustomView;
     private ImageView mUnexpectedText;
     private ImageView mNotificationCloseButton;
-    private AccompliceDrawing mDrawAccompliceView;
+    private AccompliceDrawing mDrawingAccompliceView;
+    private AccompliceDrawed mDrawedAccompliceView;
     private WelcomeView mWelcomeView;
     private DrawingsManager mDrawingsManager;
 
@@ -493,7 +495,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                     addFormCode();
                 else
                     addWelcomeView();
-//                    addDrawingAccomplice();
+//                    addDrawingAccompliceView();
 //                    addHome();
 
                 break;
@@ -536,7 +538,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         removeFormCode();
 
         /* Ajout de la vue pour dessiner */
-        addDrawingAccomplice();
+        addDrawingAccompliceView();
 
         /* On envoie le registration_id si première connexion */
         RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
@@ -642,12 +644,12 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         }
 
         /* Si portrait robot actif, on supprime la vue */
-        if(mDrawAccompliceView != null)
+        if(mDrawingAccompliceView != null)
         {
             AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
             alphaAnimation.setDuration(1500);
 
-            mDrawAccompliceView.startAnimation(alphaAnimation);
+            mDrawingAccompliceView.startAnimation(alphaAnimation);
 
             /* Suppression de la vue lorsque l'animation est terminée */
             alphaAnimation.setAnimationListener(new Animation.AnimationListener()
@@ -661,8 +663,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 @Override
                 public void onAnimationEnd(Animation animation)
                 {
-                    mAppContainer.removeView(mDrawAccompliceView);
-                    mDrawAccompliceView = null;
+                    mAppContainer.removeView(mDrawingAccompliceView);
+                    mDrawingAccompliceView = null;
                 }
 
                 @Override
@@ -677,16 +679,43 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     /**
      * Ajoute la vue permettant de dessiner le complice
      */
-    public void addDrawingAccomplice()
+    public void addDrawingAccompliceView()
     {
         /* Inflation de la vue */
-        mDrawAccompliceView = (AccompliceDrawing)
+        mDrawingAccompliceView = (AccompliceDrawing)
                 getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
 
-        mAppContainer.addView(mDrawAccompliceView);
+        mAppContainer.addView(mDrawingAccompliceView);
 
-        mDrawAccompliceView.setWasabi(this);
-        mDrawAccompliceView.init();
+        mDrawingAccompliceView.setWasabi(this);
+        mDrawingAccompliceView.init();
+    }
+
+    /**
+     * Supprime la vue permettant de dessiner le complice
+     */
+    public void removeDrawingAccompliceView()
+    {
+        /* Inflation de la vue */
+        mDrawingAccompliceView = (AccompliceDrawing)
+                getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
+
+        mAppContainer.addView(mDrawingAccompliceView);
+
+        mDrawingAccompliceView.setWasabi(this);
+        mDrawingAccompliceView.init();
+    }
+
+    /**
+     * Ajoute la vue du complice dessiné
+     */
+    public void addDrawedAccompliceView()
+    {
+        /* Inflation de la vue */
+        mDrawedAccompliceView = (AccompliceDrawed)
+                getLayoutInflater().inflate(R.layout.drawed_accomplice_view, mAppContainer, false);
+
+        mAppContainer.addView(mDrawedAccompliceView);
     }
 
     /**

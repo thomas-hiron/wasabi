@@ -61,7 +61,8 @@ public class AccompliceDrawing extends FrameLayout
             @Override
             public void onClick(View view)
             {
-                mWasabi.addHome();
+                mWasabi.removeDrawingAccompliceView();
+                mWasabi.addDrawedAccompliceView();
             }
         });
 

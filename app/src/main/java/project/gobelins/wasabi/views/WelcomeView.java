@@ -9,7 +9,6 @@ import android.util.AttributeSet;
 import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
@@ -93,7 +92,7 @@ public class WelcomeView extends FrameLayout implements View.OnClickListener
 
         /* Suppression de la vue et ajoue de la suivante */
         mWasabi.removeWelcomeView();
-        mWasabi.addDrawingAccomplice();
+        mWasabi.addDrawingAccompliceView();
     }
 
     public void setWasabi(Wasabi wasabi)

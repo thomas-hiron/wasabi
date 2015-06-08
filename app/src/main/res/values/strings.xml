@@ -73,5 +73,7 @@
     <string name="lets_guide2">A présent,\nlaissez-vous guider…</string>
     <string name="accomplice_border">Contour du mec</string>
     <string name="respect_repers">Respectez les repères\nautant que possible.</string>
+    <string name="give_surname">Donnez un surnom à votre\nproche mystère</string>
+    <string name="enter_surname">Entrez un surnom</string>
 
 </resources>
