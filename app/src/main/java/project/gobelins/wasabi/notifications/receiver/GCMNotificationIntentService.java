@@ -56,7 +56,7 @@ public class GCMNotificationIntentService extends IntentService
         {
             int requestId = Integer.parseInt(requestIdString);
             ContentValues contentValues = new ContentValues(4);
-            contentValues.put(Notifications.NOTIFICATIONS_DB_ID, requestId);
+            contentValues.put(Notifications.NOTIFICATIONS_ID, requestId);
             contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
             contentValues.put(Notifications.NOTIFICATIONS_TYPE, Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE)));
             contentValues.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, DateFormater.getTodayAsString());

@@ -48,7 +48,7 @@ public class ImageView extends MyLayout implements View.OnClickListener
 
         /* Récupération de l'image via une requête */
         List<NameValuePair> nameValuePairs = new ArrayList<>(1);
-        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(notification.getIdDb())));
+        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(notification.getId())));
 
         /* Exécution de la requête */
         new AsyncPostImageRequest(nameValuePairs, this).execute(
@@ -130,7 +130,7 @@ public class ImageView extends MyLayout implements View.OnClickListener
         /* Appel à l'API */
         List<NameValuePair> nameValuePairs = new ArrayList<>(2);
         nameValuePairs.add(new BasicNameValuePair("picture64", picture64));
-        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(mNotification.getIdDb())));
+        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(mNotification.getId())));
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(

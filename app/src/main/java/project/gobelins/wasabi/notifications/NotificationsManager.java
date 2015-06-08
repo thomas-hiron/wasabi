@@ -65,7 +65,6 @@ public class NotificationsManager extends ArrayList<Notification>
                 /* Instanciation de la notification */
                 Notification notification = new Notification();
                 notification.setId(c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_ID)));
-                notification.setIdDb(c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_DB_ID)));
                 notification.setRead(c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_READ)));
                 notification.setType(c.getInt(c.getColumnIndex(Notifications.NOTIFICATIONS_TYPE)));
                 notification.setDate(c.getString(c.getColumnIndex(Notifications.NOTIFICATIONS_RECEIVED_DATE)));
