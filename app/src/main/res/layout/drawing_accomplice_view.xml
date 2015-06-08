@@ -44,8 +44,7 @@
         android:id="@+id/drawed_view"
         android:layout_width="200dp"
         android:layout_height="315dp"
-        android:layout_gravity="center"
-        android:background="@color/white"/>
+        android:layout_gravity="center"/>
 
     <project.gobelins.wasabi.fresco.drawing.DrawView
         android:id="@+id/draw_view"

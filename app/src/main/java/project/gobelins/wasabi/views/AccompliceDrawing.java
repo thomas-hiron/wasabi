@@ -1,10 +1,8 @@
 package project.gobelins.wasabi.views;
 
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.TransitionDrawable;
-import android.net.Uri;
 import android.os.Environment;
 import android.util.AttributeSet;
 import android.view.View;
@@ -15,13 +13,11 @@ import android.widget.ImageView;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
-import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 
@@ -107,16 +103,10 @@ public class AccompliceDrawing extends FrameLayout implements View.OnClickListen
             if(!file.exists())
                 file.mkdirs();
 
-            file = new File(file.getAbsolutePath(), "identikit.jpg");
+            file = new File(file.getAbsolutePath(), "identikit.png");
 
             /* Compression */
-            b.compress(Bitmap.CompressFormat.JPEG, 95, new FileOutputStream(file));
-
-            /* Mise à jour de la galerie */
-            Intent mediaScanIntent = new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE);
-            Uri contentUri = Uri.fromFile(file);
-            mediaScanIntent.setData(contentUri);
-            getContext().sendBroadcast(mediaScanIntent);
+            b.compress(Bitmap.CompressFormat.PNG, 95, new FileOutputStream(file));
         }
         catch(FileNotFoundException e)
         {
