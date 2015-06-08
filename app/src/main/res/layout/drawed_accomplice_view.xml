@@ -27,18 +27,19 @@
         android:layout_gravity="center"
         android:layout_marginBottom="15dp">
 
-        <project.gobelins.wasabi.fresco.drawing.DrawedView
-            android:id="@+id/drawed_view"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"/>
-
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="284dp"
             android:layout_gravity="center"
             android:background="@drawable/accomplice_background"
             android:contentDescription="@string/accomplice_border"/>
+
+        <ImageView
+            android:id="@+id/drawed_accomplice"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
+            android:contentDescription="@string/complice"/>
 
     </FrameLayout>
 

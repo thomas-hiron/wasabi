@@ -1,14 +1,16 @@
 package project.gobelins.wasabi.views;
 
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
+import android.os.Environment;
 import android.util.AttributeSet;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
+import com.squareup.picasso.Picasso;
+
+import java.io.File;
+
 import project.gobelins.wasabi.R;
-import project.gobelins.wasabi.entities.Drawing;
-import project.gobelins.wasabi.fresco.drawing.DrawedView;
 
 /**
  * La vue du complice dessiné, permet de renseiger le surnom
@@ -31,5 +33,16 @@ public class AccompliceDrawed extends LinearLayout
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
+
+        /* Ajout du dessin du complice */
+        ImageView imageView = (ImageView) findViewById(R.id.drawed_accomplice);
+
+        /* Le fichier */
+        String storageString = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
+                "/wasabi/identikit.png";
+        File file = new File(storageString);
+
+        /* Ajout dans l'imageView */
+        Picasso.with(getContext()).load(file).into(imageView);
     }
 }
