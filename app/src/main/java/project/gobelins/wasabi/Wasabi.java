@@ -36,7 +36,6 @@ import java.util.ArrayList;
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.DrawingsManager;
 import project.gobelins.wasabi.fresco.Fresco;
-import project.gobelins.wasabi.fresco.drawing.Point;
 import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.httpRequests.AsyncPostDrawingsRequest;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
@@ -681,9 +680,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     public void addDrawingAccompliceView()
     {
-        /* Suppression de tous les précédents dessins */
-        getContentResolver().delete(Uri.parse(project.gobelins.wasabi.sqlite.tables.AccompliceDrawing.URL_ACCOMPLICE_DRAWINGS), null, null);
-
         /* Inflation de la vue */
         mDrawingAccompliceView = (AccompliceDrawing)
                 getLayoutInflater().inflate(R.layout.drawing_accomplice_view, mAppContainer, false);
@@ -747,17 +743,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     {
         mAppContainer.removeView(mWelcomeView);
 
-    }
-
-    /**
-     * Enregistre le portrait robot
-     *
-     * @param points
-     */
-    public void saveDrawingAccomplice(ArrayList<Point> points)
-    {
-        mDrawingsManager = new DrawingsManager(getContentResolver());
-        mDrawingsManager.saveDrawingAccomplice(points);
     }
 
     /**

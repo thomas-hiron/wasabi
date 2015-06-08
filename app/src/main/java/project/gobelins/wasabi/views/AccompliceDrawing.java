@@ -76,13 +76,9 @@ public class AccompliceDrawing extends FrameLayout implements View.OnClickListen
 
     /**
      * Enregistre le dessin
-     *
-     * @param points
      */
-    public void saveDrawing(ArrayList<Point> points)
+    public void nextStepAvailable()
     {
-        mWasabi.saveDrawingAccomplice(points);
-
         /* On affiche le bouton valider */
         if(mValidate.getVisibility() == GONE)
         {
