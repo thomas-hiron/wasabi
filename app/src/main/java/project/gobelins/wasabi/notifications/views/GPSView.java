@@ -289,7 +289,7 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
         /* Appel à l'API */
         List<NameValuePair> nameValuePairs = new ArrayList<>(2);
         nameValuePairs.add(new BasicNameValuePair("picture64", picture64));
-        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(mNotification.getId())));
+        nameValuePairs.add(new BasicNameValuePair("request_id", String.valueOf(mNotification.getIdDb())));
 
         /* Exécution de la requête */
         new AsyncPostRequests(nameValuePairs).execute(

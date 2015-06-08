@@ -40,7 +40,7 @@ public class AsyncNotificationInflater extends AsyncTask
 
                 /* Création de la vue */
                 mCustomView = new project.gobelins.wasabi.notifications.views.ImageView(
-                        mWasabi.getApplicationContext(),
+                        mWasabi,
                         mLastNotification
                 );
 

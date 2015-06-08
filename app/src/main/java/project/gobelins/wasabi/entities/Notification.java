@@ -3,13 +3,8 @@ package project.gobelins.wasabi.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.Locale;
 
-import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.utils.DateFormater;
 
 /**
@@ -18,6 +13,7 @@ import project.gobelins.wasabi.utils.DateFormater;
 public class Notification implements Parcelable
 {
     private int id;
+    private int id_db;
     private boolean read;
     private int type;
     private Date date;
@@ -35,6 +31,16 @@ public class Notification implements Parcelable
     public void setDate(String pDate)
     {
         date = DateFormater.getDateFromString(pDate);
+    }
+
+    public int getIdDb()
+    {
+        return id_db;
+    }
+
+    public void setIdDb(int id_db)
+    {
+        this.id_db = id_db;
     }
 
     public int getType()
@@ -88,6 +94,7 @@ public class Notification implements Parcelable
     private Notification(Parcel in)
     {
         setId(in.readInt());
+        setIdDb(in.readInt());
         setRead(in.readInt());
         setType(in.readInt());
 
@@ -111,6 +118,7 @@ public class Notification implements Parcelable
     public void writeToParcel(Parcel parcel, int i)
     {
         parcel.writeInt(getId());
+        parcel.writeInt(getIdDb());
         parcel.writeInt(isRead() ? 1 : 0);
         parcel.writeInt(getType());
         parcel.writeString(getDate().toString());

@@ -36,10 +36,7 @@ import java.util.ArrayList;
 import project.gobelins.wasabi.entities.Notification;
 import project.gobelins.wasabi.fresco.DrawingsManager;
 import project.gobelins.wasabi.fresco.Fresco;
-import project.gobelins.wasabi.fresco.drawing.DrawView;
-import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.drawing.Point;
-import project.gobelins.wasabi.fresco.listeners.DrawingListener;
 import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.httpRequests.AsyncPostDrawingsRequest;
 import project.gobelins.wasabi.interfaces.OnFrescoClosed;
@@ -70,6 +67,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
     private final int REQUEST_IMAGE = 1;
     private final int REQUEST_GPS = 2;
+    private final int REQUEST_CUSTOM_IMAGE = 3;
     private final int IMAGE_WIDTH = 500;
 
     public static int SCREEN_WIDTH;
@@ -267,6 +265,14 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     }
 
     /**
+     * On a cliqué sur le bouton prendre une photo du GPS
+     */
+    public void onTakePictureCustomImage()
+    {
+        takePicture(REQUEST_CUSTOM_IMAGE);
+    }
+
+    /**
      * On prendre une photo
      *
      * @param request L'id de la requête
@@ -305,7 +311,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         super.onActivityResult(requestCode, resultCode, data);
 
         /* Photo bien prise */
-        if(resultCode == RESULT_OK && (requestCode == REQUEST_IMAGE || requestCode == REQUEST_GPS))
+        if(resultCode == RESULT_OK &&
+                (requestCode == REQUEST_IMAGE || requestCode == REQUEST_GPS || requestCode == REQUEST_CUSTOM_IMAGE)
+                )
         {
             /* Dimensions de la source */
             BitmapFactory.Options options = new BitmapFactory.Options();
@@ -371,11 +379,11 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mFresco != null)
                     mFresco.addNewPicture(mCurrentPhotoPath);
             }
-            else
-            {
-                /* On change la vue */
+            /* On change la vue GPS */
+            else if(requestCode == REQUEST_GPS)
                 ((GPSView) mCustomView).photoOk(mCurrentPhotoPath);
-            }
+            else
+                ((project.gobelins.wasabi.notifications.views.ImageView) mCustomView).photoOk(mCurrentPhotoPath);
         }
     }
 
