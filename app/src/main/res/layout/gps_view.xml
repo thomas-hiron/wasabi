@@ -229,6 +229,7 @@
         android:visibility="invisible">
 
         <project.gobelins.wasabi.views.TextViewQuicksand
+            android:id="@+id/text_view_surname"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="14dp"

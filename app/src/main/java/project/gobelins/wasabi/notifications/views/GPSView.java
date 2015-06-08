@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.hardware.GeomagneticField;
@@ -195,6 +196,14 @@ public class GPSView extends MyLayout implements SensorEventListener, Animation.
                     "/wasabi/identikit.png";
             File file = new File(storageString);
             Picasso.with(getContext()).load(file).into(mAccomplice);
+
+            /* Le surnom */
+            SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+            String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
+
+            /* Changement du texte */
+            TextView textView = (TextView) findViewById(R.id.text_view_surname);
+            textView.setText(textView.getText() + " " + surname);
         }
     }
 
