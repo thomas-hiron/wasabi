@@ -7,9 +7,11 @@ import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
@@ -28,6 +30,8 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
     private TextView m7DaysText;
     private TextView mMeetingText;
     private View mCloseNotification;
+    private boolean mFinalEventAccepted;
+    private Button mValideFullName;
 
     public FinalEventView(Context context)
     {
@@ -45,21 +49,40 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
         mCloseNotification = getRootView().findViewById(R.id.close_notification);
         mCloseNotification.setVisibility(INVISIBLE);
 
-        /* Les éléments */
-        mAcceptButton = (ImageView) findViewById(R.id.accept_final_event);
-        mAcceptText = (TextView) findViewById(R.id.accept_final_event_text);
-        mDeclineButton = (ImageView) findViewById(R.id.decline_final_event);
-        mDeclineText = (TextView) findViewById(R.id.decline_final_event_text);
-        m7DaysText = (TextView) findViewById(R.id.in_7_days);
-        mMeetingText = (TextView) findViewById(R.id.accomplice_meeting);
-
         /* Le surnom */
         SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
-        String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
 
-        /* Ajout du surnom dans le tv */
-        TextView textView = (TextView) findViewById(R.id.guess_identity_text);
-        textView.setText(textView.getText() + " "  + surname + " ?");
+        /* Evenement déjà accepté */
+        mFinalEventAccepted = prefs.getBoolean(Wasabi.FINAL_EVENT_ACCEPTED, false);
+
+        /* Affichage de la vue par défaut, initialisation des variables */
+        if(!mFinalEventAccepted)
+        {
+            /* Les éléments */
+            mAcceptButton = (ImageView) findViewById(R.id.accept_final_event);
+            mAcceptText = (TextView) findViewById(R.id.accept_final_event_text);
+            mDeclineButton = (ImageView) findViewById(R.id.decline_final_event);
+            mDeclineText = (TextView) findViewById(R.id.decline_final_event_text);
+            m7DaysText = (TextView) findViewById(R.id.in_7_days);
+            mMeetingText = (TextView) findViewById(R.id.accomplice_meeting);
+        }
+        /* Evenement final déjà accepté, on affiche le formulaire */
+        else
+        {
+            String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
+
+            /* Ajout du surnom dans le tv */
+            TextView textView = (TextView) findViewById(R.id.guess_identity_text);
+            textView.setText(textView.getText() + " " + surname + " ?");
+
+            LinearLayout firstView = (LinearLayout) findViewById(R.id.final_event);
+            firstView.setVisibility(GONE);
+
+            LinearLayout formView = (LinearLayout) findViewById(R.id.final_event_form);
+            formView.setVisibility(VISIBLE);
+
+            mValideFullName = (Button) formView.findViewById(R.id.validate_full_name);
+        }
     }
 
     /**
@@ -69,7 +92,11 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
     public void initialize()
     {
         /* Ajout listener accepter */
-        mAcceptButton.setOnClickListener(this);
+        if(!mFinalEventAccepted)
+            mAcceptButton.setOnClickListener(this);
+        else
+            mValideFullName.setOnClickListener(this);
+
     }
 
     /**
@@ -79,11 +106,25 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
     public void stop()
     {
         /* Suppression du listener sur le bouton accepter */
-        mAcceptButton.setOnClickListener(null);
+        if(!mFinalEventAccepted)
+            mAcceptButton.setOnClickListener(null);
+        else
+            mValideFullName.setOnClickListener(null);
     }
 
     @Override
     public void onClick(View view)
+    {
+        if(view.getId() == R.id.accept_final_event)
+            acceptButtonClicked();
+        else if(view.getId() == R.id.validate_full_name)
+            validateFullNameClicked();
+    }
+
+    /**
+     * Bouton accepter le challenge cliqué
+     */
+    private void acceptButtonClicked()
     {
         /* Clic sur le bouton accepter, on anime les boutons */
         ScaleAnimation scaleAnimation = new ScaleAnimation(1, 0, 1, 0,
@@ -126,5 +167,13 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
         /* Ajout dans les sharedPrefs */
         SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
         prefs.edit().putBoolean(Wasabi.FINAL_EVENT_ACCEPTED, true).apply();
+    }
+
+    /**
+     * Bouton valider le formulaire cliqué
+     */
+    private void validateFullNameClicked()
+    {
+        Toast.makeText(getContext(), "Hey !", Toast.LENGTH_SHORT).show();
     }
 }
