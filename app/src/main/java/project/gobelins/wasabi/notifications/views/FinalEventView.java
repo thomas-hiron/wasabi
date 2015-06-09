@@ -8,6 +8,8 @@ import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -15,6 +17,7 @@ import android.widget.Toast;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.listeners.AlphaRemoveListener;
 import project.gobelins.wasabi.views.RoundGradientChallengeView;
 
 /**
@@ -32,6 +35,7 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
     private View mCloseNotification;
     private boolean mFinalEventAccepted;
     private Button mValideFullName;
+    private LinearLayout mFormView;
 
     public FinalEventView(Context context)
     {
@@ -78,10 +82,10 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
             LinearLayout firstView = (LinearLayout) findViewById(R.id.final_event);
             firstView.setVisibility(GONE);
 
-            LinearLayout formView = (LinearLayout) findViewById(R.id.final_event_form);
-            formView.setVisibility(VISIBLE);
+            mFormView = (LinearLayout) findViewById(R.id.final_event_form);
+            mFormView.setVisibility(VISIBLE);
 
-            mValideFullName = (Button) formView.findViewById(R.id.validate_full_name);
+            mValideFullName = (Button) mFormView.findViewById(R.id.validate_full_name);
         }
     }
 
@@ -174,6 +178,19 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
      */
     private void validateFullNameClicked()
     {
-        Toast.makeText(getContext(), "Hey !", Toast.LENGTH_SHORT).show();
+        EditText fullName = (EditText) findViewById(R.id.full_name);
+        String text = fullName.getText().toString().trim();
+
+        if(text.length() == 0)
+            Toast.makeText(getContext(), "Le champ ne doit pas être vide", Toast.LENGTH_SHORT).show();
+        else
+        {
+            /* Formulaire caché via animation */
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+            alphaAnimation.setDuration(1500);
+
+            mFormView.startAnimation(alphaAnimation);
+            alphaAnimation.setAnimationListener(new AlphaRemoveListener((FrameLayout) mFormView.getParent(), mFormView));
+        }
     }
 }
