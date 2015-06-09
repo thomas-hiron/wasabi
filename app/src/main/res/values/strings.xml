@@ -51,7 +51,7 @@
     <string name="in_7_days">Dans 7 jours, vous recevrez un défi. A la clé : la rencontre de votre proche mystère !</string>
     <string name="consignes">Consignes :</string>
     <string name="get_ready">Tenez-vous prêt chez vous,</string>
-    <string name="date_final_event">Jeudi 12 août à 18h</string>
+    <string name="date_final_event">Jeudi 18 juin à 18h</string>
     <string name="dress_code">Dress code : Explorateur</string>
     <string name="address_communicated">Nous vous communiquerons l’adresse le moment venu !</string>
     <string name="can_go_with_someone">Vous pouvez venir accompagné</string>
@@ -85,5 +85,7 @@
     <string name="full_name"><i>Prénom Nom</i></string>
     <string name="experience_over">Vous êtes arrivé au terme de votre expérience.</string>
     <string name="challenge_arrived">Le défi révélation est arrivé !\nVous allez rencontrer\nvotre proche mystère.</string>
+    <string name="giving_address">Nous allons vous communiquer l\'adresse</string>
+    <string name="ready">Prêt</string>
 
 </resources>
