@@ -83,14 +83,14 @@ public class ChallengeView extends MyLayout implements View.OnClickListener
     @Override
     public void onClick(View view)
     {
+        view.setOnClickListener(null);
+
         if(view.getId() == R.id.validate_full_name)
             validateFullNameClicked();
         else if(view.getId() == R.id.ready)
             startChallengeClicked();
         else if(view.getId() == R.id.counter)
             counterClicked();
-
-        view.setOnClickListener(null);
     }
 
     /**
