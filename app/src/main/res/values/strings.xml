@@ -44,7 +44,7 @@
     <string name="seconds">sec</string>
     <string name="go_to_last_fragment">Go to last fragment</string>
     <string name="panda">Et le panda il fait quoi ?</string>
-    <string name="sing_to_discover">Chantez pour découvrir le message envoyé par votre proche mystère</string>
+    <string name="sing_to_discover">Chantez pour découvrir le prochain indice : l\'expression préférée de votre proche mystère</string>
     <string name="message_mask">Masque du message</string>
     <string name="experience_ending">Votre expérience touche à sa fin !</string>
     <string name="revelation">Révélation</string>
@@ -67,7 +67,7 @@
     <string name="pattern">Motif</string>
     <string name="mystery_present">Voici un cadeau de votre proche mystère</string>
     <string name="draw_complice">Dessinez votre proche mystère\ntel que vous l’imaginez</string>
-    <string name="deguise_toi">Pour recevoir un indice :\nDéguisez-vous avec les éléments dessinés et prenez-vous en photo.</string>
+    <string name="deguise_toi">Pour recevoir un indice sur son identité :\nDéguisez-vous avec les éléments dessinés et prenez-vous en photo.</string>
     <string name="hello_antoine">Bonjour Antoine !</string>
     <string name="chose_adventure">Vous avez choisi de tenter l’aventure, merci !</string>
     <string name="lets_guide2">A présent,\nlaissez-vous guider…</string>

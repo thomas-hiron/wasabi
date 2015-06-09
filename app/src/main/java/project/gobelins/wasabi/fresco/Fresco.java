@@ -123,8 +123,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mDrawButton.setOnClickListener(new BeginDrawListener(this, mDrawButton));
         mGoToLastButton.setOnClickListener(new GoToLastFragmentListener(this));
 
-        /* On active les boutons si 3e phase */
-        if(Wasabi.getPhaseNumber() >= 3)
+        /* On active les boutons si 2e phase */
+        if(Wasabi.getPhaseNumber() >= 2)
         {
             mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
             mPictureButton.setOnClickListener(new TakePictureListener(this));
