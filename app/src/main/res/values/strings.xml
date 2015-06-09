@@ -86,7 +86,7 @@
     <string name="experience_over">Vous êtes arrivé au terme de votre expérience.</string>
     <string name="challenge_arrived">Le défi révélation est arrivé !\nVous allez rencontrer\nvotre proche mystère.</string>
     <string name="giving_address">Nous allons vous communiquer l\'adresse</string>
-    <string name="ready">Prêt</string>
+    <string name="ready">PRÊT</string>
     <string name="are_you_ready">Êtes-vous prêt à relever notre défi ?</string>
 
 </resources>

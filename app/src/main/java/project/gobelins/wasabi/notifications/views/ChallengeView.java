@@ -165,7 +165,7 @@ public class ChallengeView extends MyLayout implements View.OnClickListener
     {
          /* Décompte caché via animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        alphaAnimation.setDuration(500);
+        alphaAnimation.setDuration(1500);
 
         mChallenge.startAnimation(alphaAnimation);
         alphaAnimation.setAnimationListener(new AlphaRemoveListener((FrameLayout) mChallenge.getParent(), mChallenge));
@@ -173,9 +173,11 @@ public class ChallengeView extends MyLayout implements View.OnClickListener
         /* Affichage de la nouvelle vue */
         LinearLayout experienceOver = (LinearLayout) findViewById(R.id.experience_over);
         experienceOver.setVisibility(View.VISIBLE);
+        mCloseNotification.setVisibility(View.VISIBLE);
 
         alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(500);
+        alphaAnimation.setStartOffset(1500);
+        alphaAnimation.setDuration(1500);
 
         experienceOver.startAnimation(alphaAnimation);
         mCloseNotification.startAnimation(alphaAnimation);
