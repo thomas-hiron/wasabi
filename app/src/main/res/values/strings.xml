@@ -83,5 +83,7 @@
     <string name="guess_identity">Avez-vous deviné l\'identité\nde</string>
     <string name="no_idea">AUCUNE IDÉE !</string>
     <string name="full_name"><i>Prénom Nom</i></string>
+    <string name="experience_over">Vous êtes arrivé au terme de votre expérience.</string>
+    <string name="challenge_arrived">Le défi révélation est arrivé !\nVous allez rencontrer\nvotre proche mystère.</string>
 
 </resources>

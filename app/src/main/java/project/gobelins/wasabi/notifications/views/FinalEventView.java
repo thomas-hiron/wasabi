@@ -181,7 +181,7 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
         EditText fullName = (EditText) findViewById(R.id.full_name);
         String text = fullName.getText().toString().trim();
 
-        if(text.length() == 0)
+        if(text.length() != 0)
             Toast.makeText(getContext(), "Le champ ne doit pas être vide", Toast.LENGTH_SHORT).show();
         else
         {
@@ -191,6 +191,17 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
 
             mFormView.startAnimation(alphaAnimation);
             alphaAnimation.setAnimationListener(new AlphaRemoveListener((FrameLayout) mFormView.getParent(), mFormView));
+
+            /* Affichage de la nouvelle vue */
+            LinearLayout linearLayout = (LinearLayout) findViewById(R.id.experience_over);
+            linearLayout.setVisibility(View.VISIBLE);
+            mCloseNotification.setVisibility(VISIBLE);
+
+            alphaAnimation = new AlphaAnimation(0, 1);
+            alphaAnimation.setDuration(1500);
+
+            linearLayout.startAnimation(alphaAnimation);
+            mCloseNotification.startAnimation(alphaAnimation);
         }
     }
 }
