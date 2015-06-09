@@ -66,6 +66,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public final static String REQUEST_TYPE = "request_type";
     public final static String REQUEST_PHASE = "request_phase";
     public final static String ACCOMPLICE_DRAWED = "accomplice_drawed";
+    public final static String FINAL_EVENT_ACCEPTED = "final_event_accepted";
     public final static String CUSTOM_ANIM_NOT_PLAYED = "custom_anim_played";
 
     private final int REQUEST_IMAGE = 1;

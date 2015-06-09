@@ -8,6 +8,7 @@ import android.view.animation.Animation;
 import android.view.animation.OvershootInterpolator;
 import android.view.animation.ScaleAnimation;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
@@ -121,5 +122,9 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
 
         mCloseNotification.startAnimation(scaleAnimation);
         mMeetingText.startAnimation(alphaAnimation);
+
+        /* Ajout dans les sharedPrefs */
+        SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+        prefs.edit().putBoolean(Wasabi.FINAL_EVENT_ACCEPTED, true).apply();
     }
 }
