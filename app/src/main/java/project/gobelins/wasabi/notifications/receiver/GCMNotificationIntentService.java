@@ -11,13 +11,14 @@ import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.NotificationCompat;
-import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import project.gobelins.wasabi.R;
 import project.gobelins.wasabi.RegistrationIdManager;
 import project.gobelins.wasabi.Wasabi;
+import project.gobelins.wasabi.notifications.NotificationsTypes;
+import project.gobelins.wasabi.sqlite.tables.Drawings;
 import project.gobelins.wasabi.sqlite.tables.Notifications;
 import project.gobelins.wasabi.utils.DateFormater;
 
@@ -55,10 +56,12 @@ public class GCMNotificationIntentService extends IntentService
         if(requestIdString != null && !requestIdString.equals("0"))
         {
             int requestId = Integer.parseInt(requestIdString);
+            int requestType = Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE));
+
             ContentValues contentValues = new ContentValues(4);
             contentValues.put(Notifications.NOTIFICATIONS_ID, requestId);
             contentValues.put(Notifications.NOTIFICATIONS_READ, 0);
-            contentValues.put(Notifications.NOTIFICATIONS_TYPE, Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE)));
+            contentValues.put(Notifications.NOTIFICATIONS_TYPE, requestType);
             contentValues.put(Notifications.NOTIFICATIONS_RECEIVED_DATE, DateFormater.getTodayAsString());
 
             /* Suppression de toutes les notifs pour la soutenance */
@@ -75,6 +78,15 @@ public class GCMNotificationIntentService extends IntentService
                             Integer.parseInt(extras.getString(Wasabi.REQUEST_PHASE)))
             );
             edit.apply();
+
+            /* Si réception du message, on change la date des dessins POUR LA SOUTENANCE */
+            if(requestType == NotificationsTypes.MESSAGES)
+            {
+                ContentValues contentValues1 = new ContentValues(1);
+                contentValues1.put(Drawings.DRAWINGS_DATE, "2015-05-18");
+
+                getContentResolver().update(Uri.parse(Drawings.URL_DRAWINGS), contentValues1, null, null);
+            }
         }
         /* Dessin, on met dans les sharedPref */
         else if(requestIdString != null && requestIdString.equals("0"))
