@@ -2,7 +2,6 @@ package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
 import android.os.Handler;
-import android.util.Log;
 import android.view.ViewGroup;
 import android.view.animation.LinearInterpolator;
 import android.widget.FrameLayout;
@@ -28,7 +27,7 @@ public class MessageView extends MyLayout
     /* L'amplitude  */
     private final int MIN_AMPLITUDE = 10000;
     private final int APPEAR_DURATION = 10000;
-    private final int DISAPPEAR_DURATION = 2000;
+    private final int DISAPPEAR_DURATION = 700;
 
     /* L'intervalle de rechargement */
     private final int INTERVAL = 300;
