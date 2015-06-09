@@ -1,161 +1,518 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:wasabi="http://schemas.android.com/apk/res-auto"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:background="@color/white"
-              android:orientation="vertical">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:app="http://schemas.android.com/tools"
+             xmlns:wasabi="http://schemas.android.com/apk/res-auto"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             android:background="@color/white">
 
-    <project.gobelins.wasabi.views.TextViewQuicksand
+    <!-- Le formulaire -->
+    <LinearLayout
+        android:id="@+id/challenge_form"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:layout_marginTop="14dp"
-        android:gravity="center"
-        android:text="@string/challenge"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
-
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/challenge_infos"
-            android:src="@drawable/challenge_header"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
         <project.gobelins.wasabi.views.TextViewQuicksand
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/revelation_rang"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="@drawable/drop_shadow"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="40dp"
+            android:layout_marginTop="30dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/bravo"
+            android:src="@drawable/so"/>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginBottom="30dp"
+            android:gravity="center"
+            android:text="@string/challenge_arrived"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:id="@+id/guess_identity_text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="@string/guess_identity"
+            android:textColor="@color/black"
+            android:textSize="20sp"/>
+
+        <project.gobelins.wasabi.views.EditTextQuicksand
+            android:id="@+id/full_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="12dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="30dp"
+            android:background="@color/active_hide"
+            android:hint="@string/full_name"
+            android:maxLength="25"
+            android:textColor="@color/active_show"
+            android:textColorHint="@color/active_show"
+            android:textSize="20sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="45dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginStart="60dp"
+            android:background="@color/active_show"/>
+
+        <project.gobelins.wasabi.views.ButtonQuicksand
+            android:id="@+id/validate_full_name"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginStart="60dp"
+            android:background="@color/active_show"
+            android:text="@string/validate"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+        <project.gobelins.wasabi.views.ButtonQuicksand
+            android:id="@+id/no_idea_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="10dp"
+            android:background="@color/green_button"
+            android:text="@string/no_idea"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <!-- Démarrer le défi -->
+    <LinearLayout
+        android:id="@+id/start_challenge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/experience_ending"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/drop_shadow"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/revelation"
+                android:src="@drawable/revelation"/>
+
+        </FrameLayout>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginRight="25dp"
+            android:layout_marginStart="25dp"
+            android:layout_marginTop="25dp"
+            android:gravity="center"
+            android:text="@string/are_you_ready"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="30dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginStart="30dp"
+            android:layout_marginTop="30dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:layout_marginTop="12dp"
+                android:background="@drawable/border_blue"
+                android:orientation="vertical"
+                android:paddingEnd="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingStart="20dp">
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/date_final_event"
+                    android:textAllCaps="true"
+                    android:textColor="@color/active_show"
+                    android:textSize="25sp"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="20dp"
+                    android:text="@string/dress_code"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"
+                    app:font_style="italic"/>
+
+                <project.gobelins.wasabi.views.TextViewQuicksand
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="@string/giving_address"
+                    android:textColor="@color/black"
+                    android:textSize="17sp"/>
+
+            </LinearLayout>
+
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal|top"
+                android:background="@color/white"
+                android:paddingEnd="20dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:text="@string/consignes"
+                android:textColor="@color/active_show"
+                android:textSize="20sp"/>
+
+        </FrameLayout>
+
+        <project.gobelins.wasabi.views.ButtonQuicksand
+            android:id="@+id/ready"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_marginEnd="60dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_marginStart="60dp"
+            android:layout_marginTop="50dp"
+            android:background="@color/active_show"
+            android:text="@string/ready"
+            android:textColor="@color/white"
+            android:textSize="16sp"/>
+
+    </LinearLayout>
+
+    <!-- Décompte -->
+    <LinearLayout
+        android:id="@+id/challenge"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/challenge"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/challenge_infos"
+                android:src="@drawable/challenge_header"/>
+
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="40dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:layout_marginStart="40dp"
+                android:gravity="center"
+                android:text="@string/challenge_infos"
+                android:textColor="@color/white"
+                android:textSize="22sp"/>
+
+        </FrameLayout>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginTop="15dp"
+            android:gravity="center"
+            android:text="@string/address_lafayette"
+            android:textColor="@color/black"
+            android:textSize="17sp"/>
+
+        <Button
+            android:layout_width="160dp"
+            android:layout_height="33dp"
+            android:layout_gravity="center"
+            android:background="@color/green_button"
+            android:text="@string/see_map"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="12sp"/>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="22dp"
+            android:gravity="center"
+            android:text="@string/quick"
+            android:textColor="@color/active_show"
+            android:textSize="18sp"/>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="@string/time_remaining"
+            android:textColor="@color/active_show"
+            android:textSize="18sp"/>
+
+        <FrameLayout
+            android:layout_width="250dp"
+            android:layout_height="250dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:visibility="invisible">
+
+            <project.gobelins.wasabi.views.DottedCircleView
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>
+
+            <project.gobelins.wasabi.views.RoundGradientChallengeView
+                android:id="@+id/rounded_gradient"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"/>
+
+            <LinearLayout
+                android:id="@+id/counter"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <project.gobelins.wasabi.views.TextViewQuicksand
+                        android:id="@+id/challenge_minutes"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/active_show"
+                        android:textSize="85sp"
+                        wasabi:font_weight="light"/>
+
+                    <project.gobelins.wasabi.views.TextViewQuicksand
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginStart="7dp"
+                        android:text="@string/minutes"
+                        android:textColor="@color/active_show"
+                        android:textSize="24sp"/>
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <project.gobelins.wasabi.views.TextViewQuicksand
+                        android:id="@+id/challenge_seconds"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/active_show"
+                        android:textSize="40sp"
+                        wasabi:font_weight="light"/>
+
+                    <project.gobelins.wasabi.views.TextViewQuicksand
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        android:layout_marginStart="7dp"
+                        android:text="@string/seconds"
+                        android:textColor="@color/active_show"
+                        android:textSize="24sp"/>
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+    <!-- FFFFFFFFFFFIIIIIIIIIIIINNNNNNNNN -->
+    <LinearLayout
+        android:id="@+id/experience_over"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
             android:layout_marginEnd="40dp"
             android:layout_marginLeft="40dp"
             android:layout_marginRight="40dp"
             android:layout_marginStart="40dp"
+            android:layout_marginTop="14dp"
             android:gravity="center"
-            android:text="@string/challenge_infos"
-            android:textColor="@color/white"
-            android:textSize="22sp"/>
+            android:text="@string/experience_over"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
-    </FrameLayout>
-
-    <project.gobelins.wasabi.views.TextViewQuicksand
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="10dp"
-        android:layout_marginTop="15dp"
-        android:gravity="center"
-        android:text="@string/address_lafayette"
-        android:textColor="@color/black"
-        android:textSize="17sp"/>
-
-    <Button
-        android:layout_width="160dp"
-        android:layout_height="33dp"
-        android:layout_gravity="center"
-        android:background="@color/green_button"
-        android:text="@string/see_map"
-        android:textAllCaps="true"
-        android:textColor="@color/white"
-        android:textSize="12sp"/>
-
-    <project.gobelins.wasabi.views.TextViewQuicksand
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="22dp"
-        android:gravity="center"
-        android:text="@string/quick"
-        android:textColor="@color/active_show"
-        android:textSize="18sp"/>
-
-    <project.gobelins.wasabi.views.TextViewQuicksand
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:text="@string/time_remaining"
-        android:textColor="@color/active_show"
-        android:textSize="18sp"/>
-
-    <FrameLayout
-        android:layout_width="250dp"
-        android:layout_height="250dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:visibility="invisible">
-
-        <project.gobelins.wasabi.views.DottedCircleView
+        <View
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"/>
+            android:layout_height="15dp"
+            android:background="@drawable/drop_shadow"/>
 
-        <project.gobelins.wasabi.views.RoundGradientChallengeView
-            android:id="@+id/rounded_gradient"
+        <ImageView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"/>
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="30dp"
+            android:layout_marginTop="50dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/bravo"
+            android:src="@drawable/bravo"/>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_marginEnd="40dp"
+            android:layout_marginLeft="40dp"
+            android:layout_marginRight="40dp"
+            android:layout_marginStart="40dp"
             android:orientation="vertical">
 
-            <LinearLayout
+            <project.gobelins.wasabi.views.TextViewQuicksand
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Votre proche mystère est bien Antoine !"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
 
-                <project.gobelins.wasabi.views.TextViewQuicksand
-                    android:id="@+id/challenge_minutes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/active_show"
-                    android:textSize="85sp"
-                    wasabi:font_weight="light"/>
-
-                <project.gobelins.wasabi.views.TextViewQuicksand
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginStart="7dp"
-                    android:text="@string/minutes"
-                    android:textColor="@color/active_show"
-                    android:textSize="24sp"/>
-
-            </LinearLayout>
-
-            <LinearLayout
+            <project.gobelins.wasabi.views.TextViewQuicksand
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Il va vous remettre une enveloppe, qui constituera notre ultime surprise."
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
 
-                <project.gobelins.wasabi.views.TextViewQuicksand
-                    android:id="@+id/challenge_seconds"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/active_show"
-                    android:textSize="40sp"
-                    wasabi:font_weight="light"/>
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="Nous espérons de tout coeur que cette aventure vous a plu !"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
 
-                <project.gobelins.wasabi.views.TextViewQuicksand
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    android:layout_marginStart="7dp"
-                    android:text="@string/seconds"
-                    android:textColor="@color/active_show"
-                    android:textSize="24sp"/>
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:gravity="center"
+                android:text="A bientôt peut-être ;)"
+                android:textColor="@color/black"
+                android:textSize="20sp"/>
 
-            </LinearLayout>
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="L’équipe Wasabi"
+                android:textColor="@color/active_show"
+                android:textSize="20sp"
+                app:font_style="italic"/>
 
         </LinearLayout>
 
-    </FrameLayout>
+    </LinearLayout>
 
-</LinearLayout>
+</FrameLayout>

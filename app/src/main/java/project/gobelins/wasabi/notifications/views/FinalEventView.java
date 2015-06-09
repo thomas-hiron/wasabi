@@ -70,22 +70,10 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
             m7DaysText = (TextView) findViewById(R.id.in_7_days);
             mMeetingText = (TextView) findViewById(R.id.accomplice_meeting);
         }
-        /* Evenement final déjà accepté, on affiche le formulaire */
+        /* Evenement final déjà accepté, on cache les boutons */
         else
         {
-            String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
 
-            /* Ajout du surnom dans le tv */
-            TextView textView = (TextView) findViewById(R.id.guess_identity_text);
-            textView.setText(textView.getText() + " " + surname + " ?");
-
-            LinearLayout firstView = (LinearLayout) findViewById(R.id.final_event);
-            firstView.setVisibility(GONE);
-
-            mFormView = (LinearLayout) findViewById(R.id.final_event_form);
-            mFormView.setVisibility(VISIBLE);
-
-            mValideFullName = (Button) mFormView.findViewById(R.id.validate_full_name);
         }
     }
 
