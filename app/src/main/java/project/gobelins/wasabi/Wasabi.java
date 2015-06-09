@@ -34,7 +34,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import project.gobelins.wasabi.entities.Notification;
-import project.gobelins.wasabi.fresco.DrawingsManager;
 import project.gobelins.wasabi.fresco.Fresco;
 import project.gobelins.wasabi.homeAnimation.views.AnimationLayout;
 import project.gobelins.wasabi.httpRequests.AsyncPostDrawingsRequest;
@@ -234,21 +233,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* On cache la vue */
         mRevealContainerNotification.setVisibility(View.INVISIBLE);
-
-        int id = mLastNotification.getType();
-
-        /* Selon les notifs, on stoppe le processus (vidéo, son,...) */
-        switch(id)
-        {
-            /* Les messages (à faire apparaître ou non) */
-            case NotificationsTypes.MESSAGES:
-
-                break;
-
-            default:
-
-                break;
-        }
 
         mCustomView.stop();
     }
@@ -454,6 +438,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             case NotificationsTypes.PLACES:
             case NotificationsTypes.MESSAGES:
             case NotificationsTypes.CUSTOM_IMAGE:
+            case NotificationsTypes.FINALEVENTS:
 
                 SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
                 boolean customAnimNotPlayed = prefs.getBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, false);
@@ -540,7 +525,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         removeFormCode();
 
         /* Ajout de la vue pour dessiner */
-        addDrawingAccompliceView();
+        addWelcomeView();
 
         /* On envoie le registration_id si première connexion */
         RegistrationIdManager registrationIdManager = new RegistrationIdManager(this);
@@ -820,7 +805,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
             alphaAnimation.setDuration(1500);
 
             mCustomView.startAnimation(alphaAnimation);
-            mNotificationCloseButton.startAnimation(alphaAnimation);
+
+            if(mCustomView.getAnimateNotificationButton())
+                mNotificationCloseButton.startAnimation(alphaAnimation);
 
             final CircleAnimationListener circleAnimationListener = new CircleAnimationListener(this, mRevealContainerNotification);
 

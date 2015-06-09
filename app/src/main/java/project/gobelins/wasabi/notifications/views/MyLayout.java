@@ -11,6 +11,8 @@ import android.widget.LinearLayout;
  */
 public abstract class MyLayout extends LinearLayout
 {
+    protected boolean mDisplayCloseNotification = true;
+
     public MyLayout(Context context)
     {
         super(context);
@@ -30,4 +32,9 @@ public abstract class MyLayout extends LinearLayout
      * Stop (Met en pause la vidéo, le son,...)
      */
     public abstract void stop();
+
+    public boolean getAnimateNotificationButton()
+    {
+        return mDisplayCloseNotification;
+    }
 }

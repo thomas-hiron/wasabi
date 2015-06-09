@@ -31,6 +31,7 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
     {
         super(context);
 
+        mDisplayCloseNotification = false;
         inflate(context, R.layout.final_event_view, this);
     }
 

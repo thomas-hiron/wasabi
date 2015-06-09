@@ -30,7 +30,7 @@ public class RoundGradientChallengeView extends View
     private RectF mPosition;
 
     /* Paramétrage */
-    private final int TOTAL_LENGTH = 600000;
+    private final int TOTAL_LENGTH = 1800000;
     private long mStartTime;
     private long mCurrentTime;
 

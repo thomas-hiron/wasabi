@@ -33,6 +33,7 @@ public class ChallengeView extends MyLayout implements View.OnClickListener
     {
         super(context);
 
+        mDisplayCloseNotification = false;
         inflate(context, R.layout.challenge_view, this);
     }
 
@@ -52,6 +53,8 @@ public class ChallengeView extends MyLayout implements View.OnClickListener
         TextView textView = (TextView) findViewById(R.id.guess_identity_text);
         textView.setText(textView.getText() + " " + surname + " ?");
 
+        mCounter = (RoundGradientChallengeView) findViewById(R.id.rounded_gradient);
+
         mFormView = (LinearLayout) findViewById(R.id.challenge_form);
         mFormView.setVisibility(VISIBLE);
 
@@ -65,9 +68,7 @@ public class ChallengeView extends MyLayout implements View.OnClickListener
     @Override
     public void initialize()
     {
-        /* On démarre le compteur */
-        if(mCounter == null)
-            mCounter = (RoundGradientChallengeView) findViewById(R.id.rounded_gradient);
+
     }
 
     /**
@@ -100,7 +101,7 @@ public class ChallengeView extends MyLayout implements View.OnClickListener
         EditText fullName = (EditText) findViewById(R.id.full_name);
         String text = fullName.getText().toString().trim();
 
-        if(text.length() != 0)
+        if(text.length() == 0)
         {
             Toast.makeText(getContext(), "Le champ ne doit pas être vide", Toast.LENGTH_SHORT).show();
             mValidateFullName.setOnClickListener(this);
