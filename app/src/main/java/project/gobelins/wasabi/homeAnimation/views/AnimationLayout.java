@@ -68,6 +68,7 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
                 break;
 
             case NotificationsTypes.MESSAGES:
+            case NotificationsTypes.FINALEVENTS:
 
                 videoId = R.raw.message_animation;
 
@@ -117,6 +118,7 @@ public class AnimationLayout extends RelativeLayout implements MediaPlayer.OnCom
             case NotificationsTypes.PLACES:
             case NotificationsTypes.MESSAGES:
             case NotificationsTypes.CUSTOM_IMAGE:
+            case NotificationsTypes.FINALEVENTS:
 
                 mVideo.setBackgroundColor(Color.WHITE);
 
