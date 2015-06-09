@@ -43,6 +43,7 @@
             android:src="@drawable/so"/>
 
         <project.gobelins.wasabi.views.TextViewQuicksand
+            android:id="@+id/guess_identity_text"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/guess_identity"
