@@ -88,5 +88,10 @@
     <string name="giving_address">Nous allons vous communiquer l\'adresse</string>
     <string name="ready">PRÊT</string>
     <string name="are_you_ready">Êtes-vous prêt à relever notre défi ?</string>
+    <string name="your_mystery_friend_is">Votre proche mystère est bien <b>Antoine</b> !</string>
+    <string name="friend_envelop">Il va vous remettre une enveloppe, permettant d\'accéder à notre ultime surprise.</string>
+    <string name="great_adventure">Nous espérons que cette aventure vous a plu !</string>
+    <string name="see_you_soon">A bientôt ;)</string>
+    <string name="wasabi_team">L’équipe Wasabi</string>
 
 </resources>

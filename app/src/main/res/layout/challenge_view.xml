@@ -467,7 +467,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="Votre proche mystère est bien Antoine !"
+                android:text="@string/your_mystery_friend_is"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
 
@@ -477,7 +477,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="Il va vous remettre une enveloppe, qui constituera notre ultime surprise."
+                android:text="@string/friend_envelop"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
 
@@ -487,7 +487,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="Nous espérons de tout coeur que cette aventure vous a plu !"
+                android:text="@string/great_adventure"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
 
@@ -497,7 +497,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:gravity="center"
-                android:text="A bientôt peut-être ;)"
+                android:text="@string/see_you_soon"
                 android:textColor="@color/black"
                 android:textSize="20sp"/>
 
@@ -506,7 +506,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="L’équipe Wasabi"
+                android:text="@string/wasabi_team"
                 android:textColor="@color/active_show"
                 android:textSize="20sp"
                 app:font_style="italic"/>
