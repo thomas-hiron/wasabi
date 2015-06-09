@@ -74,10 +74,14 @@
     <string name="accomplice_border">Contour du mec</string>
     <string name="respect_repers">Respectez les repères\nautant que possible.</string>
     <string name="give_surname">Donnez un surnom à votre\nproche mystère</string>
-    <string name="enter_surname">Entrez un surnom</string>
+    <string name="enter_surname"><i>Entrez un surnom</i></string>
     <string name="complice">Complice</string>
     <string name="gps_indice">Merci ! Voici un indice concernant l\'identité de</string>
     <string name="quote">Quote</string>
     <string name="prefered_artist">Mon artiste préféré\nest Banksy</string>
+    <string name="revelation_rang">L\'heure de la révélation a sonné !</string>
+    <string name="guess_identity">Avez-vous deviné l\'identité\nde</string>
+    <string name="no_idea">AUCUNE IDÉE !</string>
+    <string name="full_name"><i>Prénom Nom</i></string>
 
 </resources>
