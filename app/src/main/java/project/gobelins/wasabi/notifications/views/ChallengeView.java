@@ -28,18 +28,6 @@ public class ChallengeView extends MyLayout
     protected void onAttachedToWindow()
     {
         super.onAttachedToWindow();
-
-        /* On désactive le bouton retour */
-        mCloseNotification = getRootView().findViewById(R.id.close_notification);
-        mCloseNotification.setVisibility(INVISIBLE);
-
-        /* Le surnom */
-        SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
-        String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
-
-        /* Ajout du surnom dans le tv */
-        TextView textView = (TextView) findViewById(R.id.guess_identity_text);
-        textView.setText(textView.getText() + " "  + surname + " ?");
     }
 
     /**

@@ -1,6 +1,7 @@
 package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.view.animation.Animation;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import project.gobelins.wasabi.R;
+import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.views.RoundGradientChallengeView;
 
 /**
@@ -49,6 +51,14 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
         mDeclineText = (TextView) findViewById(R.id.decline_final_event_text);
         m7DaysText = (TextView) findViewById(R.id.in_7_days);
         mMeetingText = (TextView) findViewById(R.id.accomplice_meeting);
+
+        /* Le surnom */
+        SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+        String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
+
+        /* Ajout du surnom dans le tv */
+        TextView textView = (TextView) findViewById(R.id.guess_identity_text);
+        textView.setText(textView.getText() + " "  + surname + " ?");
     }
 
     /**
