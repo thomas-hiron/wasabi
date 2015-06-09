@@ -50,21 +50,26 @@ public class FinalEventView extends MyLayout implements View.OnClickListener
         /* Evenement déjà accepté */
         mFinalEventAccepted = prefs.getBoolean(Wasabi.FINAL_EVENT_ACCEPTED, false);
 
-        /* Affichage de la vue par défaut, initialisation des variables */
-        if(!mFinalEventAccepted)
-        {
-            /* Les éléments */
-            mAcceptButton = (ImageView) findViewById(R.id.accept_final_event);
-            mAcceptText = (TextView) findViewById(R.id.accept_final_event_text);
-            mDeclineButton = (ImageView) findViewById(R.id.decline_final_event);
-            mDeclineText = (TextView) findViewById(R.id.decline_final_event_text);
-            m7DaysText = (TextView) findViewById(R.id.in_7_days);
-            mMeetingText = (TextView) findViewById(R.id.accomplice_meeting);
-        }
-        /* Evenement final déjà accepté, on cache les boutons */
-        else
-        {
+        /* Initialisation des variables */
+        mAcceptButton = (ImageView) findViewById(R.id.accept_final_event);
+        mAcceptText = (TextView) findViewById(R.id.accept_final_event_text);
+        mDeclineButton = (ImageView) findViewById(R.id.decline_final_event);
+        mDeclineText = (TextView) findViewById(R.id.decline_final_event_text);
+        m7DaysText = (TextView) findViewById(R.id.in_7_days);
+        mMeetingText = (TextView) findViewById(R.id.accomplice_meeting);
 
+        /* Evenement final déjà accepté, on cache les boutons */
+        if(mFinalEventAccepted)
+        {
+            mAcceptButton.setVisibility(GONE);
+            mAcceptText.setVisibility(GONE);
+            mDeclineButton.setVisibility(GONE);
+            mDeclineText.setVisibility(GONE);
+            m7DaysText.setVisibility(GONE);
+            mMeetingText.setVisibility(VISIBLE);
+
+            mDisplayCloseNotification = true;
+            mCloseNotification.setVisibility(VISIBLE);
         }
     }
 
