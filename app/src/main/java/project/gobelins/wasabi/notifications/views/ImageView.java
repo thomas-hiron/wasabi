@@ -1,11 +1,15 @@
 package project.gobelins.wasabi.notifications.views;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Environment;
 import android.util.AttributeSet;
 import android.util.Base64;
 import android.view.View;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
@@ -13,6 +17,7 @@ import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +36,7 @@ public class ImageView extends MyLayout implements View.OnClickListener
     private Notification mNotification;
     private Wasabi mWasabi;
     private android.widget.ImageView mTakePicture;
+    private android.widget.ImageView mAccomplice;
 
     public ImageView(Context context)
     {
@@ -70,6 +76,26 @@ public class ImageView extends MyLayout implements View.OnClickListener
 
         if(mTakePicture != null)
             mTakePicture.setOnClickListener(this);
+
+        /* Chargement du complice dessiné */
+        if(mAccomplice == null)
+        {
+            mAccomplice = (android.widget.ImageView) findViewById(R.id.drawed_accomplice);
+
+            /* Ajout de l'image */
+            String storageString = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
+                    "/wasabi/identikit.png";
+            File file = new File(storageString);
+            Picasso.with(getContext()).load(file).into(mAccomplice);
+
+            /* Le surnom */
+            SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+            String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
+
+            /* Changement du texte */
+            TextView textView = (TextView) findViewById(R.id.text_view_surname);
+            textView.setText(textView.getText() + " " + surname);
+        }
     }
 
     /**
@@ -120,6 +146,8 @@ public class ImageView extends MyLayout implements View.OnClickListener
      */
     public void photoOk(String photoPath)
     {
+        mTakePicture.setOnClickListener(null);
+
         /* Encodage du fichier en base64 */
         Bitmap bitmap = BitmapFactory.decodeFile(photoPath);
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
@@ -136,5 +164,12 @@ public class ImageView extends MyLayout implements View.OnClickListener
         new AsyncPostRequests(nameValuePairs).execute(
                 Wasabi.URL + "/api/" + Wasabi.getApiKey() + "/request/saveCustomImage"
         );
+
+        /* On change les vues */
+        LinearLayout customView = (LinearLayout) findViewById(R.id.custom_image_view);
+        LinearLayout indiceView = (LinearLayout) findViewById(R.id.custom_image_indice);
+
+        customView.setVisibility(GONE);
+        indiceView.setVisibility(VISIBLE);
     }
 }

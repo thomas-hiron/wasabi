@@ -1,79 +1,188 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-              xmlns:tools="http://schemas.android.com/tools"
-              android:layout_width="match_parent"
-              android:layout_height="match_parent"
-              android:orientation="vertical"
-              tools:context=".Wasabi">
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+             xmlns:tools="http://schemas.android.com/tools"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent"
+             tools:context=".Wasabi">
 
-    <project.gobelins.wasabi.views.TextViewQuicksand
+    <!-- L'image -->
+    <LinearLayout
+        android:id="@+id/custom_image_view"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="14dp"
-        android:layout_marginTop="14dp"
-        android:gravity="center"
-        android:text="@string/mystery_present"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="15dp"
-        android:layout_marginBottom="15dp"
-        android:background="@drawable/drop_shadow"/>
-
-    <FrameLayout
-        android:layout_marginTop="20dp"
-        android:layout_width="325dp"
-        android:layout_height="325dp"
-        android:layout_gravity="center">
-
-        <ImageView
-            android:layout_width="325dp"
-            android:layout_height="325dp"
-            android:contentDescription="@string/pattern"
-            android:src="@drawable/custom_picture_pattern"/>
-
-        <ImageView
-            android:id="@+id/custom_image"
+        <project.gobelins.wasabi.views.TextViewQuicksand
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginEnd="10dp"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
-            android:layout_marginStart="10dp"
-            android:adjustViewBounds="true"
-            android:contentDescription="@string/custom_image"/>
+            android:layout_marginBottom="14dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/mystery_present"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
-        <ImageView
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:layout_marginBottom="15dp"
+            android:background="@drawable/drop_shadow"/>
+
+        <FrameLayout
             android:layout_width="325dp"
             android:layout_height="325dp"
-            android:contentDescription="@string/border"
-            android:src="@drawable/custom_picture_border"/>
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp">
 
-    </FrameLayout>
+            <ImageView
+                android:layout_width="325dp"
+                android:layout_height="325dp"
+                android:contentDescription="@string/pattern"
+                android:src="@drawable/custom_picture_pattern"/>
 
-    <project.gobelins.wasabi.views.TextViewQuicksand
+            <ImageView
+                android:id="@+id/custom_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginEnd="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginStart="10dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/custom_image"/>
+
+            <ImageView
+                android:layout_width="325dp"
+                android:layout_height="325dp"
+                android:contentDescription="@string/border"
+                android:src="@drawable/custom_picture_border"/>
+
+        </FrameLayout>
+
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="20dp"
+            android:gravity="center"
+            android:text="@string/deguise_toi"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
+
+        <ImageView
+            android:id="@+id/take_picture"
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="20dp"
+            android:contentDescription="@string/take_picture_to_illustrate"
+            android:src="@drawable/take_picture"/>
+
+    </LinearLayout>
+
+    <!-- Vue de l'indice -->
+    <LinearLayout
+        android:id="@+id/custom_image_indice"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="@string/deguise_toi"
-        android:textColor="@color/black"
-        android:textSize="16sp"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:visibility="gone">
 
-    <ImageView
-        android:id="@+id/take_picture"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dp"
-        android:contentDescription="@string/take_picture_to_illustrate"
-        android:src="@drawable/take_picture"/>
+        <project.gobelins.wasabi.views.TextViewQuicksand
+            android:id="@+id/text_view_surname"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:layout_marginEnd="22dp"
+            android:layout_marginLeft="22dp"
+            android:layout_marginRight="22dp"
+            android:layout_marginStart="20dp"
+            android:layout_marginTop="14dp"
+            android:gravity="center"
+            android:text="@string/gps_indice"
+            android:textColor="@color/black"
+            android:textSize="16sp"/>
 
-</LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="15dp"
+            android:background="@drawable/drop_shadow"/>
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="50dp"
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/bravo"
+            android:src="@drawable/indice"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="50dp">
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="start|top"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
+                android:contentDescription="@string/quote"
+                android:src="@drawable/quote_left"/>
+
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:layout_marginEnd="60dp"
+                android:layout_marginLeft="60dp"
+                android:layout_marginRight="60dp"
+                android:layout_marginStart="60dp"
+                android:layout_marginTop="30dp"
+                android:gravity="center"
+                android:text="@string/last_is_batman"
+                android:textColor="@color/active_show"
+                android:textSize="20sp"/>
+
+            <ImageView
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="end|bottom"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:contentDescription="@string/quote"
+                android:src="@drawable/quote_right"/>
+
+        </FrameLayout>
+
+        <FrameLayout
+            android:layout_width="200dp"
+            android:layout_height="315dp"
+            android:layout_marginLeft="-15dp"
+            android:layout_marginStart="-15dp">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="284dp"
+                android:layout_gravity="center"
+                android:background="@drawable/accomplice_background"
+                android:contentDescription="@string/accomplice_border"/>
+
+            <ImageView
+                android:id="@+id/drawed_accomplice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:contentDescription="@string/complice"/>
+
+        </FrameLayout>
+
+    </LinearLayout>
+
+</FrameLayout>
