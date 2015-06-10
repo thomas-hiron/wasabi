@@ -80,12 +80,15 @@ public class GCMNotificationIntentService extends IntentService
             edit.apply();
 
             /* Si réception du message, on change la date des dessins POUR LA SOUTENANCE */
-            if(requestType == NotificationsTypes.MESSAGES)
+            if(requestType == NotificationsTypes.MESSAGES && !prefs.getBoolean(Wasabi.FAKE_FIRST_DRAW, false))
             {
                 ContentValues contentValues1 = new ContentValues(1);
-                contentValues1.put(Drawings.DRAWINGS_DATE, "2015-05-18");
+                contentValues1.put(Drawings.DRAWINGS_DATE, "2015-04-26");
 
                 getContentResolver().update(Uri.parse(Drawings.URL_DRAWINGS), contentValues1, null, null);
+
+                /* Pour ne pas modifier une deuxième fois */
+                edit.putBoolean(Wasabi.FAKE_FIRST_DRAW, true).apply();
             }
         }
         /* Dessin, on met dans les sharedPref */
