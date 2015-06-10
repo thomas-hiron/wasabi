@@ -2,6 +2,7 @@ package project.gobelins.wasabi.fresco;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.drawable.TransitionDrawable;
@@ -881,9 +882,13 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* On ajoute au fragment */
         getLastFragment().addDrawing(points);
 
+        /* Pour envoyer la phase courante */
+        SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+
         /* Appel à l'API */
         ColorPoint colorPoint = (ColorPoint) points.get(0);
-        List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+        List<NameValuePair> nameValuePairs = new ArrayList<>(5);
+        nameValuePairs.add(new BasicNameValuePair("phaseNumber", String.valueOf(prefs.getInt(Wasabi.REQUEST_PHASE, 1))));
         nameValuePairs.add(new BasicNameValuePair("points", String.valueOf(points.toString())));
         nameValuePairs.add(new BasicNameValuePair("color", String.format("#%06X", (0xFFFFFF & colorPoint.getColor()))));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
@@ -916,8 +921,12 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         byte[] b = baos.toByteArray();
         String picture64 = Base64.encodeToString(b, Base64.DEFAULT);
 
+        /* Pour envoyer la phase courante */
+        SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+
         /* Appel à l'API */
-        List<NameValuePair> nameValuePairs = new ArrayList<>(4);
+        List<NameValuePair> nameValuePairs = new ArrayList<>(5);
+        nameValuePairs.add(new BasicNameValuePair("phaseNumber", String.valueOf(prefs.getInt(Wasabi.REQUEST_PHASE, 1))));
         nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(imageButton.getDbId())));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
         nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
@@ -1032,10 +1041,14 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
             e.printStackTrace();
         }
 
+        /* Pour envoyer la phase courante */
+        SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+
         String byteBinaryData = Base64.encodeToString((objByteArrayOS.toByteArray()), Base64.DEFAULT);
 
         /* Appel à l'API */
-        List<NameValuePair> nameValuePairs = new ArrayList<>(3);
+        List<NameValuePair> nameValuePairs = new ArrayList<>(5);
+        nameValuePairs.add(new BasicNameValuePair("phaseNumber", String.valueOf(prefs.getInt(Wasabi.REQUEST_PHASE, 1))));
         nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(soundButton.getDbId())));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
         nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
