@@ -621,6 +621,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Suppression de la vue */
         alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mDrawingAccompliceView));
         mDrawingAccompliceView = null;
+
+        /* BG Blanc de l'app */
+        mAppContainer.setBackgroundColor(Color.WHITE);
     }
 
     /**
@@ -657,6 +660,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Suppression de la vue */
         alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mDrawedAccompliceView));
         mDrawedAccompliceView = null;
+
+        /* Changement du BG de l'app */
+        mAppContainer.setBackgroundResource(R.drawable.home);
     }
 
     /**
@@ -740,12 +746,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     private void getPhaseNumberFromPrefs()
     {
-        if(mPhaseNumber == 0)
-        {
-            SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
-
-            mPhaseNumber = prefs.getInt(REQUEST_PHASE, 1);
-        }
+        SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+        mPhaseNumber = prefs.getInt(REQUEST_PHASE, 1);
     }
 
     /**

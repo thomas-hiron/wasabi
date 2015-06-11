@@ -77,7 +77,6 @@ public class GCMNotificationIntentService extends IntentService
                             prefs.getInt(Wasabi.REQUEST_PHASE, 1),
                             Integer.parseInt(extras.getString(Wasabi.REQUEST_PHASE)))
             );
-            edit.apply();
 
             /* Si réception du message, on change la date des dessins POUR LA SOUTENANCE */
             if(requestType == NotificationsTypes.MESSAGES && !prefs.getBoolean(Wasabi.FAKE_FIRST_DRAW, false))
@@ -88,8 +87,11 @@ public class GCMNotificationIntentService extends IntentService
                 getContentResolver().update(Uri.parse(Drawings.URL_DRAWINGS), contentValues1, null, null);
 
                 /* Pour ne pas modifier une deuxième fois */
-                edit.putBoolean(Wasabi.FAKE_FIRST_DRAW, true).apply();
+                edit.putBoolean(Wasabi.FAKE_FIRST_DRAW, true);
             }
+
+            /* Enregistrement des données */
+            edit.apply();
         }
         /* Dessin, on met dans les sharedPref */
         else if(requestIdString != null && requestIdString.equals("0"))
