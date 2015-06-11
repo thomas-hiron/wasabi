@@ -86,15 +86,22 @@ public class ImageView extends MyLayout implements View.OnClickListener
             String storageString = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES) +
                     "/wasabi/identikit.png";
             File file = new File(storageString);
-            Picasso.with(getContext()).load(file).into(mAccomplice);
 
-            /* Le surnom */
-            SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
-            String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
+            try
+            {
+                Picasso.with(getContext()).load(file).into(mAccomplice);
 
-            /* Changement du texte */
-            TextView textView = (TextView) findViewById(R.id.text_view_surname);
-            textView.setText(textView.getText() + " " + surname);
+                /* Le surnom */
+                SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
+                String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
+
+                /* Changement du texte */
+                TextView textView = (TextView) findViewById(R.id.text_view_surname);
+                textView.setText(textView.getText() + " " + surname);
+            }
+            catch(IllegalArgumentException ignored)
+            {
+            }
         }
     }
 
