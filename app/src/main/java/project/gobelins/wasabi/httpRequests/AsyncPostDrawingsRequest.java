@@ -43,57 +43,51 @@ public class AsyncPostDrawingsRequest extends AsyncPostRequests
             JSONObject jsonObject = new JSONObject(s);
 
             /* Chaque date */
-            Object pointsUnparsed = jsonObject.getString("points");
+            JSONObject pointsObject = (JSONObject) jsonObject.get("points");
+            Iterator<String> keys = pointsObject.keys();
 
-            /* Si pas de points */
-            if(!pointsUnparsed.equals("[]"))
+            int deviceWidth = Wasabi.SCREEN_WIDTH;
+            int deviceHeight = Wasabi.SCREEN_HEIGHT;
+
+            while(keys.hasNext())
             {
-                JSONObject pointsObject = (JSONObject) pointsUnparsed;
-                Iterator<String> keys = pointsObject.keys();
+                String currentDate = keys.next();
+                JSONArray dateArray = (JSONArray) pointsObject.get(currentDate);
 
-                int deviceWidth = Wasabi.SCREEN_WIDTH;
-                int deviceHeight = Wasabi.SCREEN_HEIGHT;
-
-                while(keys.hasNext())
+                /* Enregistrement de chaque traits */
+                for(int i = 0, l = dateArray.length(); i < l; ++i)
                 {
-                    String currentDate = keys.next();
-                    JSONArray dateArray = (JSONArray) pointsObject.get(currentDate);
+                    /* Récupération des valeurs */
+                    JSONObject currentDrawing = (JSONObject) dateArray.get(i);
+                    String points = ((String) currentDrawing.get("points")).replaceAll("\\[(.*)\\]", "$1");
+                    String color = (String) currentDrawing.get("color");
+                    String screen = (String) currentDrawing.get("screen");
+                    String[] split = screen.split(",");
 
-                    /* Enregistrement de chaque traits */
-                    for(int i = 0, l = dateArray.length(); i < l; ++i)
+                    int width = Integer.parseInt(split[0]);
+                    int height = Integer.parseInt(split[1]);
+
+                    /* Changement du ratio des points */
+                    String[] pointsArray = points.split(",");
+                    ArrayList<Integer> pointsOutput = new ArrayList<>(pointsArray.length);
+                    for(int j = 0, k = pointsArray.length; j < k; j += 2)
                     {
-                        /* Récupération des valeurs */
-                        JSONObject currentDrawing = (JSONObject) dateArray.get(i);
-                        String points = ((String) currentDrawing.get("points")).replaceAll("\\[(.*)\\]", "$1");
-                        String color = (String) currentDrawing.get("color");
-                        String screen = (String) currentDrawing.get("screen");
-                        String[] split = screen.split(",");
-
-                        int width = Integer.parseInt(split[0]);
-                        int height = Integer.parseInt(split[1]);
-
-                        /* Changement du ratio des points */
-                        String[] pointsArray = points.split(",");
-                        ArrayList<Integer> pointsOutput = new ArrayList<>(pointsArray.length);
-                        for(int j = 0, k = pointsArray.length; j < k; j += 2)
-                        {
-                            pointsOutput.add(Integer.parseInt(pointsArray[j]) * deviceWidth / width);
-                            pointsOutput.add(Integer.parseInt(pointsArray[j + 1]) * deviceHeight / height);
-                        }
-
-                        ContentValues contentValues = new ContentValues(4);
-                        contentValues.put(Drawings.DRAWINGS_POINTS, TextUtils.join(",", pointsOutput));
-                        contentValues.put(Drawings.DRAWINGS_DATE, currentDate);
-                        contentValues.put(Drawings.DRAWINGS_COLOR, Color.parseColor(color));
-                        contentValues.put(Drawings.DRAWINGS_ACCOMPLICE, 1);
-
-                        /* Enregistrement */
-                        mContext.getContentResolver().insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);
+                        pointsOutput.add(Integer.parseInt(pointsArray[j]) * deviceWidth / width);
+                        pointsOutput.add(Integer.parseInt(pointsArray[j+1]) * deviceHeight / height);
                     }
+
+                    ContentValues contentValues = new ContentValues(4);
+                    contentValues.put(Drawings.DRAWINGS_POINTS, TextUtils.join(",", pointsOutput));
+                    contentValues.put(Drawings.DRAWINGS_DATE, currentDate);
+                    contentValues.put(Drawings.DRAWINGS_COLOR, Color.parseColor(color));
+                    contentValues.put(Drawings.DRAWINGS_ACCOMPLICE, 1);
+
+                    /* Enregistrement */
+                    mContext.getContentResolver().insert(Uri.parse(Drawings.URL_DRAWINGS), contentValues);
                 }
             }
         }
-        catch(NullPointerException | JSONException e)
+        catch(NullPointerException | JSONException | ClassCastException e)
         {
             e.printStackTrace();
         }
