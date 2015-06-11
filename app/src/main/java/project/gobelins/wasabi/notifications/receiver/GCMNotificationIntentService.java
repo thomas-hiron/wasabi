@@ -38,16 +38,33 @@ public class GCMNotificationIntentService extends IntentService
         Bundle extras = intent.getExtras();
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
 
+        SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
         String messageType = gcm.getMessageType(intent);
 
         if(!extras.isEmpty() && !extras.getString(Wasabi.REQUEST_ID, "0").equals("0"))
         {
-            if(GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType))
-                sendNotification("Error", extras.toString());
-            else if(GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType))
-                sendNotification("Deleted messages on server", extras.toString());
-            else if(GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType))
-                sendNotification(extras.getString(RegistrationIdManager.TITLE_KEY), extras.getString(RegistrationIdManager.MSG_KEY));
+            String title = extras.getString(RegistrationIdManager.TITLE_KEY);
+
+            /* Ajout du surnom au titre */
+            int requestType = Integer.parseInt(extras.getString(Wasabi.REQUEST_TYPE));
+            if(requestType == NotificationsTypes.FINALEVENTS)
+            {
+                String surname = prefs.getString(Wasabi.SURNAME, "M. Patate");
+                title += " " + surname + " !";
+            }
+
+            switch(messageType)
+            {
+                case GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR:
+                    sendNotification("Error", extras.toString());
+                    break;
+                case GoogleCloudMessaging.MESSAGE_TYPE_DELETED:
+                    sendNotification("Deleted messages on server", extras.toString());
+                    break;
+                case GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE:
+                    sendNotification(title, extras.getString(RegistrationIdManager.MSG_KEY));
+                    break;
+            }
         }
         GcmBroadcastReceiver.completeWakefulIntent(intent);
 
@@ -70,7 +87,6 @@ public class GCMNotificationIntentService extends IntentService
             getContentResolver().insert(Uri.parse(Notifications.URL_NOTIFICATIONS), contentValues);
 
             /* Ajout d'un marqueur pour jouer l'animation une seule fois */
-            SharedPreferences prefs = getSharedPreferences(Wasabi.class.getSimpleName(), MODE_PRIVATE);
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, true);
             edit.putInt(Wasabi.REQUEST_PHASE, Math.max(
