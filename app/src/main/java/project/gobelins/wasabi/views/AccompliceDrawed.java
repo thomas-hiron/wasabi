@@ -80,9 +80,9 @@ public class AccompliceDrawed extends LinearLayout implements View.OnClickListen
             SharedPreferences prefs = getContext().getSharedPreferences(Wasabi.class.getSimpleName(), Context.MODE_PRIVATE);
             prefs.edit().putString(Wasabi.SURNAME, text).apply();
 
-            /* Affichage de l'accueil */
+            /* Affichage du tutorial */
             mWasabi.removeDrawedAccompliceView();
-            mWasabi.addHome();
+            mWasabi.addTutorial();
         }
     }
 

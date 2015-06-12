@@ -156,8 +156,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mLastNotification = mNotificationsManager.getLast();
 
         /* ---- TEMPORAIRE ---- */
-        mAnimPlayed = true;
-        homeAnimationEnd();
+//        mAnimPlayed = true;
+//        homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
@@ -486,8 +486,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mApiKey == null)
                     addFormCode();
                 else
-                addTutorial();
-//                    addHome();
+                    addHome();
 
                 break;
         }
@@ -654,14 +653,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      */
     public void removeDrawedAccompliceView()
     {
-        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        alphaAnimation.setDuration(500);
-
-        /* Animation */
-        mDrawedAccompliceView.startAnimation(alphaAnimation);
-
-        /* Suppression de la vue */
-        alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mDrawedAccompliceView));
+        mAppContainer.removeView(mDrawedAccompliceView);
         mDrawedAccompliceView = null;
     }
 
@@ -675,14 +667,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 getLayoutInflater().inflate(R.layout.tutorial_view, mAppContainer, false);
 
         mAppContainer.addView(mTutorialView);
-
         mTutorialView.setWasabi(this);
-
-        /* Animation */
-        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-        alphaAnimation.setDuration(500);
-
-        mTutorialView.startAnimation(alphaAnimation);
     }
 
     /**
