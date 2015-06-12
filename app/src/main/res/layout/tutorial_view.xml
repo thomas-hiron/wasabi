@@ -64,7 +64,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/tutorial_bg_2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -98,6 +99,74 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
                 android:text="@string/text_tuto_2"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+            <FrameLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="start|bottom"
+                    android:contentDescription="@string/next"
+                    android:rotation="180"
+                    android:src="@drawable/tuto_next"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="25dp"
+                    android:layout_gravity="end|bottom"
+                    android:contentDescription="@string/next"
+                    android:src="@drawable/tuto_next"/>
+
+            </FrameLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+    <!-- Page 3 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/tutorial_bg_3"
+        android:orientation="vertical">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:layout_marginEnd="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginTop="200dp"
+            android:contentDescription="@string/next"
+            android:rotation="180"
+            android:src="@drawable/tuto_triangle"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginStart="45dp"
+            android:background="@color/red_tuto"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingEnd="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp">
+
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/text_tuto_3"
                 android:textColor="@color/white"
                 android:textSize="18sp"/>
 
