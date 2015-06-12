@@ -19,6 +19,7 @@ import project.gobelins.wasabi.Wasabi;
 import project.gobelins.wasabi.fresco.drawing.DrawView;
 import project.gobelins.wasabi.fresco.drawing.DrawedView;
 import project.gobelins.wasabi.fresco.listeners.DrawingListener;
+import project.gobelins.wasabi.fresco.views.buttons.CancelButton;
 import project.gobelins.wasabi.fresco.views.buttons.DrawButton;
 
 /**
@@ -29,6 +30,7 @@ public class AccompliceDrawing extends FrameLayout implements View.OnClickListen
     private Wasabi mWasabi;
     private ImageView mValidate;
     private DrawedView mDrawedView;
+    private CancelButton mCancelButton;
 
     public AccompliceDrawing(Context context)
     {
@@ -68,28 +70,26 @@ public class AccompliceDrawing extends FrameLayout implements View.OnClickListen
         /* On met l'état actif */
         TransitionDrawable transition = (TransitionDrawable) drawButton.getBackground();
         transition.startTransition(0);
-    }
 
-    /**
-     * Enregistre le dessin
-     */
-    public void nextStepAvailable()
-    {
-        /* On affiche le bouton valider */
-        if(mValidate.getVisibility() == GONE)
-        {
-            mValidate.setVisibility(VISIBLE);
-
-            /* Animation */
-            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
-            alphaAnimation.setDuration(300);
-
-            mValidate.startAnimation(alphaAnimation);
-        }
+         /* Clic sur le bouton annuler */
+        mCancelButton = (CancelButton) findViewById(R.id.cancel_last_draw);
+        mCancelButton.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View view)
+    {
+        /* Enregistrement du complice */
+        if(view.getId() == R.id.identikit_completed)
+            identikitCompleted();
+        else if(view.getId() == R.id.cancel_last_draw)
+            cancelLastDraw();
+    }
+
+    /**
+     * Enregistre le portrait robot
+     */
+    private void identikitCompleted()
     {
         /* Enregistrement du complice */
         mDrawedView.setDrawingCacheEnabled(true);
@@ -116,5 +116,90 @@ public class AccompliceDrawing extends FrameLayout implements View.OnClickListen
         /* Ajout de la nouvelle vue */
         mWasabi.removeDrawingAccompliceView();
         mWasabi.addDrawedAccompliceView();
+    }
+
+    /* Supprime le dernier dessin */
+    private void cancelLastDraw()
+    {
+        mDrawedView.cancelLastDraw();
+
+        /* On teste si on doit cacher la flèche */
+        if(mDrawedView.getCount() == 0)
+        {
+            hideCancelButton();
+            hideNextStep();
+        }
+    }
+
+    /**
+     * Affiche la flèche de retour
+     */
+    private void showCancelButton()
+    {
+        if(mDrawedView.getCount() <= 1)
+        {
+            mCancelButton.setVisibility(VISIBLE);
+
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+            alphaAnimation.setDuration(300);
+
+            mCancelButton.startAnimation(alphaAnimation);
+            mCancelButton.setOnClickListener(this);
+        }
+    }
+
+    /**
+     * Cache la flèche de retour
+     */
+    private void hideCancelButton()
+    {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(300);
+        alphaAnimation.setFillAfter(true);
+
+        mCancelButton.startAnimation(alphaAnimation);
+        mCancelButton.setOnClickListener(null);
+    }
+
+    /**
+     * Enregistre le dessin
+     */
+    public void showNextStep()
+    {
+        /* On affiche le bouton valider */
+        if(mDrawedView.getCount() <= 1)
+        {
+            mValidate.setVisibility(VISIBLE);
+
+            /* Animation */
+            AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+            alphaAnimation.setDuration(300);
+
+            mValidate.startAnimation(alphaAnimation);
+            mValidate.setOnClickListener(this);
+        }
+    }
+
+    /**
+     * Cache le bouton valider
+     */
+    private void hideNextStep()
+    {
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
+        alphaAnimation.setDuration(300);
+        alphaAnimation.setFillAfter(true);
+
+        mValidate.startAnimation(alphaAnimation);
+        mValidate.setOnClickListener(null);
+    }
+
+    /**
+     * Up, affiche le bouton valider et la flèche de retour
+     */
+    public void actionUp()
+    {
+        showCancelButton();
+        showNextStep();
     }
 }

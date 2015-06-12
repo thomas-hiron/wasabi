@@ -27,16 +27,34 @@
             android:layout_marginBottom="5dp"
             android:background="@drawable/drop_shadow"/>
 
-        <project.gobelins.wasabi.fresco.views.buttons.DrawButton
-            android:id="@+id/draw_button"
-            android:layout_width="@dimen/fresco_tools"
-            android:layout_height="@dimen/fresco_tools"
-            android:layout_gravity="end"
-            android:layout_marginEnd="20dp"
-            android:layout_marginRight="20dp"
-            android:background="@drawable/transition_fresco_button_bg"
-            android:contentDescription="@string/draw"
-            android:src="@drawable/tool_pencil"/>
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <!-- Annuler le dernier dessin -->
+            <project.gobelins.wasabi.fresco.views.buttons.CancelButton
+                android:id="@+id/cancel_last_draw"
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_gravity="start"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp"
+                android:adjustViewBounds="true"
+                android:contentDescription="@string/cancel_last_draw"
+                android:src="@drawable/cancel_last_draw"
+                android:visibility="invisible"/>
+
+            <project.gobelins.wasabi.fresco.views.buttons.DrawButton
+                android:id="@+id/draw_button"
+                android:layout_width="@dimen/fresco_tools"
+                android:layout_height="@dimen/fresco_tools"
+                android:layout_gravity="end"
+                android:layout_marginEnd="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/transition_fresco_button_bg"
+                android:contentDescription="@string/draw"
+                android:src="@drawable/tool_pencil"/>
+        </FrameLayout>
 
     </LinearLayout>
 
@@ -62,8 +80,8 @@
     <project.gobelins.wasabi.views.TextViewQuicksand
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="100dp"
         android:layout_gravity="center|bottom"
+        android:layout_marginBottom="100dp"
         android:gravity="center"
         android:text="@string/respect_repers"
         android:textColor="@color/black"

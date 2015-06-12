@@ -82,7 +82,7 @@ public class DrawingListener implements View.OnTouchListener
                 mFresco.showInterfaceButtons();
             }
             else if(mAccompliceDrawing != null)
-                mAccompliceDrawing.nextStepAvailable();
+                mAccompliceDrawing.actionUp();
 
             return false;
         }
