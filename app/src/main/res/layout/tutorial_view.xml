@@ -7,12 +7,12 @@
 
     <!-- Page 1 -->
     <LinearLayout
+        android:id="@+id/tutorial_page_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/tutorial_bg_1"
-        android:orientation="vertical"
-        android:visibility="invisible">
+        android:orientation="vertical">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -40,6 +40,7 @@
                 android:textSize="18sp"/>
 
             <ImageView
+                android:id="@+id/tutorial_next_1"
                 android:layout_width="30dp"
                 android:layout_height="25dp"
                 android:layout_gravity="end"
@@ -60,6 +61,7 @@
 
     <!-- Page 2 -->
     <LinearLayout
+        android:id="@+id/tutorial_page_2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -107,6 +109,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/tutorial_prev_2"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_gravity="start|bottom"
@@ -115,6 +118,7 @@
                     android:src="@drawable/tuto_next"/>
 
                 <ImageView
+                    android:id="@+id/tutorial_next_2"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end|bottom"
@@ -129,6 +133,7 @@
 
     <!-- Page 3 -->
     <LinearLayout
+        android:id="@+id/tutorial_page_3"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
@@ -176,6 +181,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/tutorial_prev_3"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_gravity="start|bottom"
@@ -184,6 +190,7 @@
                     android:src="@drawable/tuto_next"/>
 
                 <ImageView
+                    android:id="@+id/tutorial_next_3"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end|bottom"
@@ -198,11 +205,13 @@
 
     <!-- Page 4 -->
     <LinearLayout
+        android:id="@+id/tutorial_page_4"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:background="@drawable/tutorial_bg_2"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:visibility="gone">
 
         <ImageView
             android:layout_width="wrap_content"
@@ -245,6 +254,7 @@
                 android:layout_height="wrap_content">
 
                 <ImageView
+                    android:id="@+id/tutorial_prev_4"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_gravity="start|bottom"
@@ -253,6 +263,7 @@
                     android:src="@drawable/tuto_next"/>
 
                 <ImageView
+                    android:id="@+id/tutorial_next_4"
                     android:layout_width="30dp"
                     android:layout_height="25dp"
                     android:layout_gravity="end|bottom"
