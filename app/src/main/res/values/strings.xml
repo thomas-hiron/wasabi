@@ -97,5 +97,6 @@
     <string name="text_tuto_1">En cliquant ici, vous accédez à une fresque de communication. Elle vous permet d’interagir avec votre proche mystère.</string>
     <string name="text_tuto_2">Utilisez les outils disponibles ici. Ils se débloquent au fil de l’expérience.</string>
     <string name="text_tuto_3">La surface disponible par jour est limitée. Vous pouvez visionner les jours précédants, mais vous ne pouvez pas les modifier.</string>
+    <string name="text_tuto_4">Vous savez tout ! Commencez par saluer votre proche mystère sur la fresque de communication !</string>
 
 </resources>
