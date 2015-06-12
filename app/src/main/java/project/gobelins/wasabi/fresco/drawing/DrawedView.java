@@ -139,6 +139,9 @@ public class DrawedView extends DrawView
         /* Nouveau path */
         mPath = new Path();
 
+        if(points.size() == 0)
+            return;
+
         /* Nouvelle couleur, noir par défaut */
         int newColor = Color.BLACK;
         Point point = points.get(0);

@@ -1,15 +1,10 @@
 package project.gobelins.wasabi.entities;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.Locale;
 
 import project.gobelins.wasabi.fresco.drawing.ColorPoint;
 import project.gobelins.wasabi.fresco.drawing.Point;
-import project.gobelins.wasabi.notifications.NotificationsManager;
 import project.gobelins.wasabi.utils.DateFormater;
 
 /**
@@ -86,13 +81,16 @@ public class Drawing extends Entity
         String[] coords = string.split(",");
         ArrayList<Point> points = new ArrayList<>(coords.length / 2);
 
-        /* Instanciation et ajout */
-        for(int i = 0, l = coords.length; i < l; i += 2)
+        if(coords.length % 2 == 0)
         {
-            ColorPoint colorPoint = new ColorPoint();
-            colorPoint.set(Float.valueOf(coords[i]), Float.valueOf(coords[i + 1]));
-            colorPoint.setColor(getColor());
-            points.add(colorPoint);
+            /* Instanciation et ajout */
+            for(int i = 0, l = coords.length; i < l; i += 2)
+            {
+                ColorPoint colorPoint = new ColorPoint();
+                colorPoint.set(Float.valueOf(coords[i]), Float.valueOf(coords[i + 1]));
+                colorPoint.setColor(getColor());
+                points.add(colorPoint);
+            }
         }
 
         /* Set */

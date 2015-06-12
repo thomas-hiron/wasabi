@@ -101,7 +101,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private AccompliceDrawing mDrawingAccompliceView;
     private AccompliceDrawed mDrawedAccompliceView;
     private WelcomeView mWelcomeView;
-    private Tutorial mTutorial;
+    private Tutorial mTutorialView;
 
     @Override
     public void onStart()
@@ -663,9 +663,6 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         /* Suppression de la vue */
         alphaAnimation.setAnimationListener(new AlphaRemoveListener(mAppContainer, mDrawedAccompliceView));
         mDrawedAccompliceView = null;
-
-        /* Changement du BG de l'app */
-        mAppContainer.setBackgroundResource(R.drawable.home);
     }
 
     /**
@@ -674,18 +671,30 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public void addTutorial()
     {
         /* Inflation de la vue */
-        mTutorial = (Tutorial)
+        mTutorialView = (Tutorial)
                 getLayoutInflater().inflate(R.layout.tutorial_view, mAppContainer, false);
 
-        mAppContainer.addView(mTutorial);
+        mAppContainer.addView(mTutorialView);
 
-        mTutorial.setWasabi(this);
+        mTutorialView.setWasabi(this);
 
         /* Animation */
         AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
         alphaAnimation.setDuration(500);
 
-        mTutorial.startAnimation(alphaAnimation);
+        mTutorialView.startAnimation(alphaAnimation);
+    }
+
+    /**
+     * Supprime la vue du complice dessiné
+     */
+    public void removeTutorialView()
+    {
+        mAppContainer.removeView(mTutorialView);
+        mTutorialView = null;
+
+        /* Changement du BG de l'app */
+        mAppContainer.setBackgroundResource(R.drawable.home);
     }
 
     /**
@@ -701,7 +710,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
      *
      * @param animate Si on doit animer
      */
-    private void addHome(boolean animate)
+    public void addHome(boolean animate)
     {
         /* Ajout des listeners d'animation */
         mFrescoButton = (ImageView) findViewById(R.id.open_fresco);
