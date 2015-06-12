@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<project.gobelins.wasabi.views.Tutorial xmlns:android="http://schemas.android.com/apk/res/android"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="match_parent"
+                                        android:background="@drawable/tutorial_bg_1"
+                                        android:orientation="vertical">
+
+    <!-- Page 1 -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="115dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="45dp"
+            android:layout_marginLeft="45dp"
+            android:layout_marginRight="45dp"
+            android:layout_marginStart="45dp"
+            android:background="@color/red_tuto"
+            android:orientation="vertical"
+            android:paddingBottom="20dp"
+            android:paddingEnd="20dp"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingStart="20dp"
+            android:paddingTop="20dp">
+
+            <project.gobelins.wasabi.views.TextViewQuicksand
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="20dp"
+                android:text="@string/text_tuto_1"
+                android:textColor="@color/white"
+                android:textSize="18sp"/>
+
+            <ImageView
+                android:layout_width="30dp"
+                android:layout_height="25dp"
+                android:layout_gravity="end"
+                android:contentDescription="@string/next"
+                android:src="@drawable/tuto_next"/>
+
+        </LinearLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="45dp"
+            android:layout_marginStart="45dp"
+            android:contentDescription="@string/next"
+            android:src="@drawable/tuto_triangle"/>
+
+    </LinearLayout>
+
+
+</project.gobelins.wasabi.views.Tutorial>

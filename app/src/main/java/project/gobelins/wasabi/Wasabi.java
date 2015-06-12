@@ -53,6 +53,7 @@ import project.gobelins.wasabi.utils.DateFormater;
 import project.gobelins.wasabi.views.AccompliceDrawed;
 import project.gobelins.wasabi.views.AccompliceDrawing;
 import project.gobelins.wasabi.views.FormCode;
+import project.gobelins.wasabi.views.Tutorial;
 import project.gobelins.wasabi.views.WelcomeView;
 
 public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFrescoClosed, OnNotificationOpened,
@@ -100,6 +101,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     private AccompliceDrawing mDrawingAccompliceView;
     private AccompliceDrawed mDrawedAccompliceView;
     private WelcomeView mWelcomeView;
+    private Tutorial mTutorial;
 
     @Override
     public void onStart()
@@ -154,8 +156,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
         mLastNotification = mNotificationsManager.getLast();
 
         /* ---- TEMPORAIRE ---- */
-//        mAnimPlayed = true;
-//        homeAnimationEnd();
+        mAnimPlayed = true;
+        homeAnimationEnd();
         /* ---- FIN TEMPORAIRE ---- */
 
         /* Dès que la taille de la vue principale change, on remet le mode immersif (fermeture du clavier) */
@@ -484,7 +486,8 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
                 if(mApiKey == null)
                     addFormCode();
                 else
-                    addHome();
+                addTutorial();
+//                    addHome();
 
                 break;
         }
@@ -652,7 +655,7 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     public void removeDrawedAccompliceView()
     {
         AlphaAnimation alphaAnimation = new AlphaAnimation(1, 0);
-        alphaAnimation.setDuration(1500);
+        alphaAnimation.setDuration(500);
 
         /* Animation */
         mDrawedAccompliceView.startAnimation(alphaAnimation);
@@ -663,6 +666,26 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         /* Changement du BG de l'app */
         mAppContainer.setBackgroundResource(R.drawable.home);
+    }
+
+    /**
+     * La page de remerciement une fois le surnom renseigné
+     */
+    public void addTutorial()
+    {
+        /* Inflation de la vue */
+        mTutorial = (Tutorial)
+                getLayoutInflater().inflate(R.layout.tutorial_view, mAppContainer, false);
+
+        mAppContainer.addView(mTutorial);
+
+        mTutorial.setWasabi(this);
+
+        /* Animation */
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(500);
+
+        mTutorial.startAnimation(alphaAnimation);
     }
 
     /**
