@@ -78,7 +78,7 @@ public class AsyncPostDrawingsRequest extends AsyncPostRequests
 
                     ContentValues contentValues = new ContentValues(4);
                     contentValues.put(Drawings.DRAWINGS_POINTS, TextUtils.join(",", pointsOutput));
-                    contentValues.put(Drawings.DRAWINGS_DATE, currentDate);
+                    contentValues.put(Drawings.DRAWINGS_DATE, "2015-04-26");
                     contentValues.put(Drawings.DRAWINGS_COLOR, Color.parseColor(color));
                     contentValues.put(Drawings.DRAWINGS_ACCOMPLICE, 1);
 
