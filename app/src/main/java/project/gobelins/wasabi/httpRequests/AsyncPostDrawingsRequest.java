@@ -87,7 +87,7 @@ public class AsyncPostDrawingsRequest extends AsyncPostRequests
                 }
             }
         }
-        catch(NullPointerException | JSONException | ClassCastException e)
+        catch(NullPointerException | JSONException | ClassCastException | ArithmeticException e)
         {
             e.printStackTrace();
         }
