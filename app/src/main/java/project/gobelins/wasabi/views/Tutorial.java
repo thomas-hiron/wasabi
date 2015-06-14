@@ -36,11 +36,6 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
     {
         super.onAttachedToWindow();
 
-        mFirstPage = (LinearLayout) findViewById(R.id.tutorial_page_1);
-        mSecondPage = (LinearLayout) findViewById(R.id.tutorial_page_2);
-        mThirdPage = (LinearLayout) findViewById(R.id.tutorial_page_3);
-        mFourthPage = (LinearLayout) findViewById(R.id.tutorial_page_4);
-
         /* Affiche la première page */
         showFirstPage();
     }
@@ -105,7 +100,8 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void showFirstPage()
     {
-        mFirstPage.setVisibility(VISIBLE);
+        mFirstPage = (LinearLayout) inflate(getContext(), R.layout.tutorial_view_1, null);
+        addView(mFirstPage);
 
         /* Clic sur le bouton suivant de la première page */
         ImageView next = (ImageView) findViewById(R.id.tutorial_next_1);
@@ -118,7 +114,8 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void hideFirstPage()
     {
-        mFirstPage.setVisibility(GONE);
+        removeView(mFirstPage);
+        mFirstPage = null;
     }
 
     /**
@@ -126,7 +123,8 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void showSecondPage()
     {
-        mSecondPage.setVisibility(VISIBLE);
+        mSecondPage = (LinearLayout) inflate(getContext(), R.layout.tutorial_view_2, null);
+        addView(mSecondPage);
 
         /* Listener sur suivant et précédent */
         ImageView prev = (ImageView) findViewById(R.id.tutorial_prev_2);
@@ -141,7 +139,8 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void hideSecondPage()
     {
-        mSecondPage.setVisibility(GONE);
+        removeView(mSecondPage);
+        mSecondPage = null;
     }
 
     /**
@@ -149,7 +148,8 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void showThirdPage()
     {
-        mThirdPage.setVisibility(VISIBLE);
+        mThirdPage = (LinearLayout) inflate(getContext(), R.layout.tutorial_view_3, null);
+        addView(mThirdPage);
 
         /* Listener sur suivant et précédent */
         ImageView prev = (ImageView) findViewById(R.id.tutorial_prev_3);
@@ -164,7 +164,8 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void hideThirdPage()
     {
-        mThirdPage.setVisibility(GONE);
+        removeView(mThirdPage);
+        mThirdPage = null;
     }
 
     /**
@@ -172,7 +173,8 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void showFourthPage()
     {
-        mFourthPage.setVisibility(VISIBLE);
+        mFourthPage = (LinearLayout) inflate(getContext(), R.layout.tutorial_view_4, null);
+        addView(mFourthPage);
 
         /* Listener sur suivant et précédent */
         ImageView prev = (ImageView) findViewById(R.id.tutorial_prev_4);
@@ -187,6 +189,7 @@ public class Tutorial extends FrameLayout implements View.OnClickListener
      */
     private void hideFourthPage()
     {
-        mFourthPage.setVisibility(GONE);
+        removeView(mFourthPage);
+        mFourthPage = null;
     }
 }

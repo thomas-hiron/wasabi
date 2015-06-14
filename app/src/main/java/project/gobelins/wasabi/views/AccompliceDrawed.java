@@ -82,7 +82,7 @@ public class AccompliceDrawed extends LinearLayout implements View.OnClickListen
 
             /* Affichage du tutorial */
             mWasabi.removeDrawedAccompliceView();
-            mWasabi.addTutorial();
+            mWasabi.addTutorialView();
         }
     }
 

@@ -658,9 +658,9 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
     }
 
     /**
-     * La page de remerciement une fois le surnom renseigné
+     * Le tutorial
      */
-    public void addTutorial()
+    public void addTutorialView()
     {
         /* Inflation de la vue */
         mTutorialView = (Tutorial)
@@ -668,18 +668,18 @@ public class Wasabi extends FragmentActivity implements OnFrescoOpened, OnFresco
 
         mAppContainer.addView(mTutorialView);
         mTutorialView.setWasabi(this);
+
+        /* Changement du BG de l'app */
+        mAppContainer.setBackgroundResource(R.drawable.home);
     }
 
     /**
-     * Supprime la vue du complice dessiné
+     * Supprime la vue du tutorial
      */
     public void removeTutorialView()
     {
         mAppContainer.removeView(mTutorialView);
         mTutorialView = null;
-
-        /* Changement du BG de l'app */
-        mAppContainer.setBackgroundResource(R.drawable.home);
     }
 
     /**
