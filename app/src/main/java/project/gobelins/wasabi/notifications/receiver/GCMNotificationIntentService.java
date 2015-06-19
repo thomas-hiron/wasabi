@@ -89,22 +89,6 @@ public class GCMNotificationIntentService extends IntentService
             /* Ajout d'un marqueur pour jouer l'animation une seule fois */
             SharedPreferences.Editor edit = prefs.edit();
             edit.putBoolean(Wasabi.CUSTOM_ANIM_NOT_PLAYED, true);
-            edit.putInt(Wasabi.REQUEST_PHASE, Math.max(
-                            prefs.getInt(Wasabi.REQUEST_PHASE, 1),
-                            Integer.parseInt(extras.getString(Wasabi.REQUEST_PHASE)))
-            );
-
-            /* Si réception du message, on change la date des dessins POUR LA SOUTENANCE */
-            if(requestType == NotificationsTypes.MESSAGES && !prefs.getBoolean(Wasabi.FAKE_FIRST_DRAW, false))
-            {
-                ContentValues contentValues1 = new ContentValues(1);
-                contentValues1.put(Drawings.DRAWINGS_DATE, "2015-04-26");
-
-                getContentResolver().update(Uri.parse(Drawings.URL_DRAWINGS), contentValues1, null, null);
-
-                /* Pour ne pas modifier une deuxième fois */
-                edit.putBoolean(Wasabi.FAKE_FIRST_DRAW, true);
-            }
 
             /* Enregistrement des données */
             edit.apply();

@@ -125,17 +125,8 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         mGoToLastButton.setOnClickListener(new GoToLastFragmentListener(this));
 
         /* On active les boutons si 2e phase */
-        if(Wasabi.getPhaseNumber() >= 2)
-        {
-            mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
-            mPictureButton.setOnClickListener(new TakePictureListener(this));
-        }
-        /* Sinon on baisse l'alpha */
-        else
-        {
-            mRecordButton.setAlpha(0.5f);
-            mPictureButton.setAlpha(0.5f);
-        }
+        mRecordButton.setOnClickListener(new RecordAudioListener(this, mRecordButton));
+        mPictureButton.setOnClickListener(new TakePictureListener(this));
     }
 
     /**
@@ -888,7 +879,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
         /* Appel à l'API */
         ColorPoint colorPoint = (ColorPoint) points.get(0);
         List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-        nameValuePairs.add(new BasicNameValuePair("phaseNumber", String.valueOf(prefs.getInt(Wasabi.REQUEST_PHASE, 1))));
         nameValuePairs.add(new BasicNameValuePair("points", String.valueOf(points.toString())));
         nameValuePairs.add(new BasicNameValuePair("color", String.format("#%06X", (0xFFFFFF & colorPoint.getColor()))));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
@@ -926,7 +916,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Appel à l'API */
         List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-        nameValuePairs.add(new BasicNameValuePair("phaseNumber", String.valueOf(prefs.getInt(Wasabi.REQUEST_PHASE, 1))));
         nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(imageButton.getDbId())));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
         nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
@@ -1048,7 +1037,6 @@ public class Fresco extends FrameLayout implements OnToggleCancelArrowListener, 
 
         /* Appel à l'API */
         List<NameValuePair> nameValuePairs = new ArrayList<>(5);
-        nameValuePairs.add(new BasicNameValuePair("phaseNumber", String.valueOf(prefs.getInt(Wasabi.REQUEST_PHASE, 1))));
         nameValuePairs.add(new BasicNameValuePair("deviceId", String.valueOf(soundButton.getDbId())));
         nameValuePairs.add(new BasicNameValuePair("deviceWidth", String.valueOf(Wasabi.SCREEN_WIDTH)));
         nameValuePairs.add(new BasicNameValuePair("deviceHeight", String.valueOf(Wasabi.SCREEN_HEIGHT)));
