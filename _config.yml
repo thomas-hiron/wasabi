@@ -1,1 +1,4 @@
 theme: jekyll-theme-cayman
+title: "Wasabi"
+description: "Application created for a school project about unexpected events"
+show_downloads: "true"
