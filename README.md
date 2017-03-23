@@ -1,4 +1,4 @@
-**Wasabi** is a transmedia package to offer. The adressee is invited to live and accept the unexpected in his life.  
+**Wasabi** is a transmedia package to offer. The addressee is invited to live and accept the unexpected in his life.  
 Here is the application where the user can receive unexpected notifications, challenges, fun facts,...
 
 
